@@ -3,8 +3,8 @@
 Python 3.12+ FastAPI relay for the separately installed native Android app. This
 directory is independently installable; it does not serve or build the APK.
 No backend has been deployed. Automated tests use dummy credentials and mocked
-providers; separate live Luna smoke checks passed. Gnani streaming handshakes
-were rejected with HTTP 401 before audio transmission; see verification below.
+providers; separate live Luna smoke checks and Gnani streaming connection/PCM
+checks passed. Spoken-audio recognition remains unverified; see verification below.
 
 ## Install and test
 

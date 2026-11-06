@@ -1,29 +1,132 @@
 # QueueSaathi
 
-Android assistive queue-announcement listener, with a **separate, self-hosted backend**.
+**Hear the announcement. See your turn.**
 
-Speak Malayalam or English (or type) → model extracts a monitoring request → review the exact token and alert preference → confirm → native Android microphone foreground service listens → validated matching announcements produce visual / optional vibration / sound notifications.
+QueueSaathi is an Android assistive app that turns a matching queue announcement into a prominent visual alert, with optional vibration and sound. It is designed primarily for people who are deaf or hard of hearing, starting with Malayalam and English announcements at a hospital pharmacy.
 
-## Stack
+Tell it what to watch for, check the details, and confirm. A native Android microphone service then listens for announcements while a separate, self-hosted backend interprets them.
 
-- **App:** Expo SDK 58, React Native, TypeScript, Expo Router, React Native Paper / Material 3.
-- **Background runtime:** local Kotlin Expo module, `AudioRecord` (16 kHz mono PCM16LE), OkHttp WebSocket, Android foreground microphone service and notification channels. No background JavaScript timers or Expo Go dependency.
-- **Separate backend:** Python / FastAPI, authenticated session relay, Gnani Prisma v3.0 speech recognition. OpenAI structured text extraction is the explicitly requested Evon fallback; exact model is configured by the host. No invented Evon endpoint.
-- **Automatic language:** Prisma uses `indic-auto`; no language selection is required in the app. The configured text model is `gpt-6-luna`, verified against the operator's OpenAI account. Speech recognition supports more languages than the deliberately narrow Malayalam/English queue-number validation.
-- No database, accounts, persisted recordings, or transcript logging in this implementation. Only connection metadata and the expiring session credential are saved in Android encrypted storage. Active events stay in bounded memory.
+> “Listen for pharmacy token 442 and vibrate.”
+>
+> Review **442 · Hospital pharmacy · Visual + vibration** → confirm → hear “Token 442 to counter two” → see **442 · Go to counter 2**.
 
-## Run
+**Prototype, not an official queue system. Calls can be missed. Always check the venue display or staff.**
 
-1. Follow `backend/README.md` to configure the provider keys, exact `OPENAI_MODEL`, pairing code, HTTPS and persistent WebSockets. Hosting remains separate; no backend has been deployed for you.
-2. Install the preview APK on an Android phone. In **Backend connection**, enter your HTTPS origin and pairing code. Do not enter provider API keys in the app.
-3. Accept the processing disclosure. Speak a request or type, for example **“Listen for pharmacy token P042 and vibrate.”** Review every digit and confirm. Grant microphone and notification permissions.
-4. Keep the phone in useful acoustic range. An ongoing notification shows microphone activity and offers **Stop microphone**. Pause, resume, stop, acknowledge and edit are available in the app. Changing a target always requires confirmation.
+## Why this matters
 
-The initial configured venue is a hospital pharmacy, with exactly three token digits, an optional `A` or `P` prefix, and counters 1–10. Leading zeroes are preserved. Other token grammars require a coordinated backend configuration/schema change, not a guessed conversion. A model extracts natural-language intent/events; deterministic schema/evidence/grammar checks and the reducer decide alerts. Announcement text cannot create monitors or change preferences.
+Imagine waiting for medicine in a crowded pharmacy. Your turn is announced over a loudspeaker, but you cannot reliably hear it. You may need to watch the display continuously or depend on someone else to notice the call.
 
-## Build and checks
+QueueSaathi aims to make that moment more accessible: the person specifies their own token and receives a personal, visible cue when a matching announcement is detected.
 
-App details and reproducible APK commands: `mobile/README.md`.
+| Real-life need | Intended benefit |
+| --- | --- |
+| A deaf or hard-of-hearing patient cannot access an audio-only call. | Present the token and destination visually, with an optional vibration cue. |
+| A patient wants to manage their own turn rather than rely on a companion. | Let them set, review, pause and stop their own monitor. |
+| Announcements switch between Malayalam and English. | Detect speech language automatically, with deliberately limited Malayalam/English token validation. |
+| Staff correct a counter after calling a token. | Preserve the announcement history and visibly mark a resolved correction. |
+| Connectivity or microphone capture is interrupted. | Show a coverage gap instead of pretending the app is still listening. |
+
+These are **intended benefits, not measured outcomes**. We have not demonstrated fewer missed turns, reduced waiting time or real-world recognition accuracy. Banks, government offices and transport terminals are possible future settings, not currently supported deployments.
+
+## What it does today
+
+- **Speak or type a request.** A model proposes the monitoring intent; it does not start listening until you review and confirm the exact token and alert preferences.
+- **Listen through a native Android service.** Kotlin owns microphone capture, PCM framing, networking and notifications, rather than relying on background JavaScript timers.
+- **Check before alerting.** Structured model output passes deterministic schema, evidence, token-grammar and counter checks before matching the confirmed target.
+- **Handle changing announcements.** Calls, repeats, corrections, cancellations and uncertain interpretations are separate events. Unclear input is not coerced toward the user's token.
+- **Keep the session understandable.** Recent transcripts, listening status, coverage gaps, acknowledgment, pause and stop controls remain visible.
+- **Keep provider keys off the phone.** The APK connects to your separately hosted backend using an expiring session credential.
+
+### Current venue boundary
+
+One hospital-pharmacy monitor per session. Tokens contain **exactly three digits**, optionally prefixed with `A` or `P`: `442`, `A007`, `P042`. Counters are **1–10**. Prefixes and leading zeroes matter: `P042` is not `P42`.
+
+Other venues and token grammars need explicit implementation changes. Automatic speech-language detection does not mean every language or number format is validated.
+
+## How it works
+
+```text
+Spoken request ── Gnani Prisma ──┐
+Typed request ──────────────────┴─> Text intent extraction
+                                      │
+                              Review and confirmation
+                                      │
+                         Active monitoring rule
+
+Android microphone foreground service
+    │  16 kHz mono PCM16LE · 1,024-byte frames
+    ▼
+Authenticated HTTPS/WSS backend relay
+    ▼
+Gnani Prisma v3.0 · automatic language detection
+    ▼
+Completed transcript → structured event extraction
+    ▼
+Deterministic validation → ordered correction-aware reducer
+    ▼
+Exact token match → visual alert + optional vibration / sound
+```
+
+The user's target is **not** supplied as a speech-recognition hint or to announcement extraction. Announcements cannot create monitors or change alert preferences.
+
+| Layer | Stack |
+| --- | --- |
+| Android interface | React Native, Expo SDK 58, TypeScript, Expo Router, React Native Paper / Material 3 |
+| Native background runtime | Kotlin local Expo module, `AudioRecord`, OkHttp WebSocket, microphone foreground service, notification channels |
+| Separate backend | Python 3.12+, FastAPI, bounded in-memory sessions; one worker / one instance |
+| Speech | Gnani Prisma `prisma-v3.0`, `indic-auto`; audio goes only to Gnani |
+| Text intent and events | OpenAI structured output, configured as `gpt-6-luna` in the tested account; explicitly authorized fallback for Evon |
+| Persistence | No database or app/relay recording files; bounded session memory and encrypted Android connection metadata |
+
+Gnani Evon is **not integrated**: its usable API contract has not been supplied. There is no invented endpoint or silent speech-provider substitution. Provider retention policies are separate from the app's no-recording policy.
+
+## Try it / present a demo
+
+**Start with the complete demo guide:**
+https://github.com/mathew1046/QueueSaathi/blob/main/DEMO.md
+
+The shortest reliable presentation path is:
+
+1. Run the separate backend with your provider credentials and a random pairing code.
+2. Give it a publicly trusted HTTPS URL with WebSocket support. A temporary tunnel is an option for a staged demo.
+3. Install the standalone APK on an Android phone, then enter the backend URL and pairing code. **Never enter provider keys in the app.**
+4. Accept processing, type “Listen for pharmacy token 442 and vibrate,” review the proposal, and tap **Confirm & start listening**.
+5. Have a consenting speaker announce a non-target token, then **“Pharmacy token four four two, please go to counter two.”** Inspect the transcript and resulting alert.
+
+The guide includes exact commands, a three-minute script, correction and interruption checks, troubleshooting, and an honest fallback if the live pipeline fails. No backend has been deployed for you.
+
+Local preview APK, when using the implementation workspace:
+
+/home/mathew/Arrakis/QueueSaathi/artifacts/QueueSaathi-preview.apk
+
+This artifact is **not checked into GitHub or published as a release asset**. It is development-signed for review, not a production/store distribution. Build your own APK using:
+https://github.com/mathew1046/QueueSaathi/blob/main/mobile/README.md
+
+**Expo Go does not support the custom native service.** The current preview includes ARM64 phones and x86_64 emulators; older 32-bit phones need a different build.
+
+## Verification — what is and is not established
+
+| Check | Result |
+| --- | --- |
+| Backend tests | **189 passed**: validation, confirmation, correction/repeat aliases, acknowledgment, stale results, gaps, cleanup, language configuration, cancellations and authorization failures. Ruff checks passed. |
+| Native unit tests | **6 passed**: PCM16 framing/waveform boundaries and permanent versus retryable WebSocket rejection. TypeScript and lint checks passed. |
+| App build and rendering | Standalone APK builds and launches on an Android 16 emulator; light/dark, enlarged text, setup and error states inspected. |
+| Live text model | Staged English/Malayalam intent, call, negation, injection-abstention and correction checks passed using `gpt-6-luna`. HTTP lifecycle and leading-zero checks passed. |
+| Live speech connection | Gnani authentication and streaming negotiation succeeded at 16 kHz / 512 samples. Sent 48 paced synthetic tone/silence frames without a reported provider error. **This was not spoken-audio recognition testing.** |
+| Real PA recognition and user outcomes | **Not measured.** No speech-accuracy percentage, false-alert rate, missed-call rate or latency benchmark is claimed. |
+| Physical-phone accessibility and endurance | **Not yet verified:** TalkBack, vibration/sound, background/locked-screen delivery and OEM battery behavior. |
+
+Automated tests and emulator captures do not establish real-world reliability. A successful socket connection is not proof that a spoken token will be recognized correctly.
+
+## Development and hosting
+
+Backend installation, configuration, tests, TLS and single-worker hosting:
+https://github.com/mathew1046/QueueSaathi/blob/main/backend/README.md
+
+Android setup, APK build, native tests and device checklist:
+https://github.com/mathew1046/QueueSaathi/blob/main/mobile/README.md
+
+From the repository root, frontend checks are:
 
 ```sh
 cd mobile
@@ -32,24 +135,21 @@ npm run typecheck
 npm run lint
 ```
 
-Backend tests run with mocked provider boundaries; see its README. Native PCM tests verify signed little-endian samples, exact frame length and a known waveform across boundaries. These are not measurements of real PA recognition quality.
+Backend environment variables include `GNANI_API_KEY`, `GNANI_LANGUAGE_CODE=indic-auto`, `OPENAI_API_KEY`, an account-enabled `OPENAI_MODEL`, and a random `DEMO_ACCESS_CODE` of at least 16 characters. Keep them in the ignored backend environment or your host's secret manager.
 
-### Verification so far
+## Safety, privacy and limitations
 
-- 189 backend tests cover validation, confirmation, correction/repeat aliases, acknowledgment, stale results, gaps, cleanup, automatic-language configuration, cross-counter cancellations, oversized extraction rejection and permanent provider-authorization failures. Ruff checks pass.
-- Six native tests cover PCM16 framing/waveform boundaries and permanent versus retryable WebSocket rejection. TypeScript and lint checks pass.
-- The standalone APK builds and launches on an Android 16 emulator. Light theme, dark theme at 1.3× text scale, and backend setup have rendered captures; microphone and notification permissions are not requested at launch.
-- Live `gpt-6-luna` checks passed for English/Malayalam intent and call extraction, negation and instruction injection. Live HTTP confirmation/lifecycle checks passed for `442`, spoken cardinal words, and Malayalam spoken digits preserving `P042`; model-to-reducer checks issued counter 2 and corrected it to counter 3. A token-evidence prompt issue found during testing was tightened without relaxing validation. This small synthetic-text smoke set is not an accuracy benchmark.
-- Gnani authorization now succeeds: live streaming negotiated 16 kHz / 512-sample frames using `prisma-v3.0` and `indic-auto`. Sent 48 paced PCM frames of a synthetic tone/silence without a reported provider error; no spoken audio or speech accuracy was tested. Earlier HTTP 401 failures are resolved. Provider 401/403 errors stop retrying and show safe configuration guidance.
-- Recognition accuracy, TalkBack usability and physical-phone background/locked-screen delivery are **not yet verified**. Valid speech authorization and consented spoken samples are needed; unit tests and emulator renders do not establish those properties.
+- **Supplemental aid only.** Noise, incorrect recognition or interpretation, and network problems can cause missed or false alerts. It is not a medical alarm or a substitute for official staff/displays.
+- **Android-first, Android 7+.** iOS is not implemented. Start capture while the app is visible. The native service is designed for background capture, but Android privacy controls, battery management or the OEM can stop/silence it. No boot restart or background start is implemented.
+- **Notifications are conditional.** Vibration/sound depend on hardware, permission, channel settings and Do Not Disturb. Visual feedback accompanies alerts; lock-screen content is private by default.
+- **No offline recognition or catch-up.** Lost audio is not replayed as a current call. Gaps are visible. Sessions expire after four hours by default; provider streams recycle before the documented 15-minute cap.
+- **No queue-position prediction or PA-speaker identification.** Nearby conversation can be captured. Use staged recordings or consenting speakers; do not record a real venue without permission.
+- **Processing is disclosed.** Audio goes to Gnani; requests/transcripts go to the configured OpenAI text fallback. No audio or transcripts are persisted by the app/relay, but provider terms still apply. Disable sensitive payload logging in hosting/monitoring tools.
 
-## Important limitations
+## Project documents
 
-- Supplemental aid only. Recognition or interpretation can be wrong; calls can be missed. Check the official display or staff. No queue-position prediction or PA-speaker identification.
-- Android-first, Android 7+; iOS is not implemented. Start the microphone while the app is visible. The native service can continue when the screen locks, but Android, privacy controls, battery management or an OEM may stop/silence it. No boot restart or background start. A real target-phone test is required before relying on it.
-- Notification vibration/sound are requests, subject to Android channel settings, hardware and Do Not Disturb. Visual alerts always accompany them. Lock-screen content is private by default.
-- Reconnection drops old audio instead of replaying it. Coverage gaps are explicit. One monitor per session; sessions expire (four hours by default), and Gnani streams recycle before the documented 15-minute cap.
-- Audio goes only to Gnani. Text goes to the configured OpenAI fallback. The relay's no-persistence policy does **not** claim either provider has zero retention. Review current provider terms before real use. Evon remains unimplemented until its real contract is supplied.
-- Credentials stay in the ignored backend environment, never the repository or APK. Malayalam/code-switch speech performance, end-to-end latency, physical-phone haptics and background endurance remain unverified. No reliability percentage is claimed.
+- Original research architecture: https://github.com/mathew1046/QueueSaathi/blob/main/implementation.md
+- Current product scope and subsequent decisions: https://github.com/mathew1046/QueueSaathi/blob/main/PRODUCT.md
+- Interface principles and review record: https://github.com/mathew1046/QueueSaathi/blob/main/DESIGN.md
 
-`implementation.md` is the original research plan. `PRODUCT.md` records subsequent Android/background and OpenAI-fallback decisions; those explicit user decisions override the original foreground-web / Gnani-only scope. `DESIGN.md` describes the minimal native interface.
+The later Android/background and OpenAI-fallback decisions override the original plan's foreground-web / Gnani-only scope. The basic queue-alert concept has prior art; this prototype does not claim to have invented it. Its intended contribution is an accessible Malayalam/English workflow with explicit confirmation, correction-aware handling and honest coverage status—not a proven performance advantage.
