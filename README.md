@@ -2,13 +2,13 @@
 
 **Hear the announcement. See your turn.**
 
-CueBell is an Android assistive app that turns a matching queue announcement into a prominent visual alert, with optional vibration and sound. It is designed primarily for people who are deaf or hard of hearing, starting with Malayalam and English announcements at a hospital pharmacy.
+CueBell is an Android assistive app that turns a matching queue announcement into a prominent visual alert, vibration and an alarm sound by default. Users can explicitly request silent alerts. It is designed primarily for people who are deaf or hard of hearing.
 
 Tell it what to watch for, check the details, and confirm. A native Android microphone service then listens for announcements while a separate, self-hosted backend interprets them.
 
 > “Listen for pharmacy token 442 and vibrate.”
 >
-> Review **442 · Visual + vibration** → start → hear “Token 442 to counter two” → see **442 · Go to counter 2**.
+> Review **442 · Visual + vibration + sound** → start → hear “Token 442 to counter two” → see **442 · Go to counter 2**.
 
 **Prototype, not an official queue system. Calls can be missed. Always check the venue display or staff.**
 
@@ -22,7 +22,7 @@ CueBell aims to make that moment more accessible: the person specifies their own
 | --- | --- |
 | A deaf or hard-of-hearing patient cannot access an audio-only call. | Present the token and destination visually, with an optional vibration cue. |
 | A patient wants to manage their own turn rather than rely on a companion. | Let them set, review, pause and stop their own monitor. |
-| Announcements switch between Malayalam and English. | Detect speech language automatically, with deliberately limited Malayalam/English token validation. |
+| Announcements switch languages or number forms. | Detect speech language automatically and let the text model interpret equivalent identifiers. |
 | Staff correct a counter after calling a token. | Preserve the announcement history and visibly mark a resolved correction. |
 | Connectivity or microphone capture is interrupted. | Show a coverage gap instead of pretending the app is still listening. |
 
@@ -32,17 +32,17 @@ These are **intended benefits, not measured outcomes**. We have not demonstrated
 
 - **Speak or type a request.** A model proposes the monitoring intent; it does not start listening until you review and confirm the exact token and alert preferences.
 - **Listen through a native Android service.** Kotlin owns microphone capture, PCM framing, networking and notifications, rather than relying on background JavaScript timers.
-- **Check before alerting.** Structured model output passes deterministic schema, evidence, token-grammar and counter checks before matching the confirmed target.
+- **Check before alerting.** Structured model output passes schema and source-evidence checks before matching the confirmed target; no custom token grammar is imposed.
 - **Handle changing announcements.** Calls, repeats, corrections, cancellations and uncertain interpretations are separate events. Unclear input is not coerced toward the user's token.
 - **Keep the session understandable.** Recent transcripts, listening status, coverage gaps, acknowledgment, pause and stop controls remain visible.
 - **Keep provider keys off the phone.** The APK connects to your separately hosted backend using an expiring session credential.
 - **Open directly into the workflow.** No server URL, pairing code or developer settings screen. The release operator sets the service address before building; the app obtains its session automatically when you submit a request.
 
-### Current venue boundary
+### Token interpretation
 
-One hospital-pharmacy monitor per session. Tokens contain **exactly three digits**, optionally prefixed with `A` or `P`: `442`, `A007`, `P042`. Counters are **1–10**. Prefixes and leading zeroes matter: `P042` is not `P42`.
+One confirmed monitor per session, without assumed venue formats, digit counts, prefixes or counter ranges. The text model interprets spoken/written identifiers consistently across setup and announcements, without handwritten number parsers. Review its interpretation before confirming.
 
-Other venues and token grammars need explicit implementation changes. Automatic speech-language detection does not mean every language or number format is validated.
+Spoken setup waits for 3.5 seconds of transcript quiet after finalized speech instead of stopping on the first provider sentence; unfinished interim speech keeps capture open, up to 90 seconds overall. Recognition is limited by the speech provider's languages; model interpretation is not a guarantee of accuracy in every language or venue.
 
 ## How it works
 

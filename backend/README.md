@@ -44,6 +44,8 @@ provider keys or the operator pairing code in source control or the APK.
 | `MAX_SESSIONS` | `8`; allowed range 1–100. |
 | `SESSION_TTL_SECONDS` | `14400`; allowed range 60–86400. |
 | `CORRECTION_GRACE_SECONDS` | `1.2`; allowed range 0.2–10. Longer grace adds alert latency. |
+| `REQUEST_PAUSE_SECONDS` | `3.5`; allowed range 1–15. Quiet interval after finalized setup speech; interim speech keeps capture open. |
+| `REQUEST_TIMEOUT_SECONDS` | `90`; allowed range 20–180. Maximum spoken setup duration. |
 
 Generate a pairing code, for example, with
 `.venv/bin/python -c 'import secrets; print(secrets.token_urlsafe(32))'`.
@@ -170,13 +172,15 @@ or a substitute for edge rate limits and spending controls.
 - **Gnani only for speech**: wss://api.vachana.ai/stt/v3/stream,
   `model: prisma-v3.0`. Negotiation must contain
   `config.sample_rate: 16000` and `config.chunk_size: 512` before audio starts.
-   Final transcripts use `text`, `segment_id`, `is_final: true`; interim results
-  are ignored. Upstream connections are ended at 14 minutes, before the
+   Final transcripts use `text`, `segment_id`, `is_final: true`. Setup combines
+  sentence finals after a quiet interval; interim results keep setup capture open.
+  Monitoring interprets finals only. Upstream connections are ended at 14 minutes, before the
    documented 15-minute limit; the app must reconnect and show the coverage gap.
 - Automatic speech-language detection is enabled by `indic-auto`, not the
   unsupported value `auto`. Optional provider `detected_language_code` metadata
   derives from transcript script and may be absent; it is not acoustic confidence.
-  Queue normalization still supports only the tested Malayalam/English forms.
+  The text model interprets token languages/forms without a local number parser;
+  actual speech recognition remains limited by the provider's supported languages.
   Upstream HTTP 401/403 closes the app stream with 4403 and configuration guidance,
   avoiding repeated attempts with rejected credentials; transient failures retry.
 - **OpenAI is the explicitly authorized text fallback**, not a speech provider.
@@ -186,16 +190,17 @@ or a substitute for edge rate limits and spending controls.
    check current provider terms and obtain consent before any processing.
 - **Evon is unavailable**: no verified hosted API contract/endpoint is configured.
   There is no guessed endpoint, Evon integration, or silent model substitution.
-- The venue is hospital pharmacy, with exact string tokens `[AP]?[0-9]{3}` and
-  counters 1–10. Prefixes and zeros are never padded or dropped. Supported
-  Malayalam/English number forms are deliberately narrow; other native
-  languages, malformed/ambiguous forms, and broader venues require clarification
-   or remain uncertain, even if the speech provider recognizes them.
+- No venue token grammar, digit count, prefix whitelist, number dictionary or
+  counter range is enforced. The text model interprets setup and announcement
+  identifiers consistently; users review the proposed target before monitoring.
+  A clear token read-out alone can trigger a call, without a counter or keyword.
+  Visual, vibration and sound alerts are the default unless explicitly silenced.
 - Extraction does not receive the user's rule, target, alert preferences, or
   match state. Recent observed PA tokens are supplied only as bounded, filtered
   correction context; they are not the user's target. Evidence/source IDs,
-  chronology, exact token spans and normalization, and counter evidence are
-  checked deterministically before matching the locally confirmed target.
+  chronology and exact source spans are checked before matching the confirmed
+  model-normalized target. Language/number semantics and counter interpretation
+  are model judgments, not independently verified by handwritten rules.
 - Corrections/cancellations need a resolvable recent observation (30 seconds).
   Uncertain or unresolved corrections clear pending alerts instead of guessing.
   An already-issued alert can be marked corrected, not physically undone. Split

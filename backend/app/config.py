@@ -15,6 +15,8 @@ class Settings(BaseSettings):
     max_sessions: int = Field(default=8, ge=1, le=100)
     session_ttl_seconds: int = Field(default=14400, ge=60, le=86400)
     correction_grace_seconds: float = Field(default=1.2, ge=0.2, le=10)
+    request_pause_seconds: float = Field(default=3.5, ge=1, le=15)
+    request_timeout_seconds: float = Field(default=90, ge=20, le=180)
 
     @field_validator("gnani_language_code")
     @classmethod

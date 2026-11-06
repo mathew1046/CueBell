@@ -212,7 +212,7 @@ export default function Home() {
   const buttonStyle = { minHeight: 48, justifyContent: 'center' as const };
   const activeRule = rule && !['STOPPED', 'EXPIRED'].includes(rule.status);
   const listening = native.running && native.state === 'LISTENING';
-  const statusLabel = listening ? (native.mode === 'request' ? 'Speak, then pause' : 'Listening') :
+  const statusLabel = listening ? (native.mode === 'request' ? 'Speak · short pauses are OK' : 'Listening') :
     native.running ? (native.state === 'STARTING' ? 'Starting...' : 'Listening interrupted') : activeRule ? 'Paused' : 'Not listening';
   const statusDetail = native.message !== 'Microphone is off.' && (!listening || /gap|missed|interrupted/i.test(native.message)) ? native.message : '';
   const latestUnclear = events.find(event => event.observation)?.observation?.type === 'UNCERTAIN';
@@ -293,7 +293,7 @@ export default function Home() {
             <Text variant="headlineSmall" accessibilityRole="header">{activeRule ? 'Change token' : 'Your request'}</Text>
             <TextInput mode="outlined" label="Token and alert" multiline value={request}
               onChangeText={text => { setRequest(text); setProposal(null); setClarification(''); }}
-              placeholder="Token 442. Vibrate."
+              placeholder="Token 10. Alert me."
               style={styles.input} maxLength={1500} editable={!busy && !native.running} />
             <View style={styles.row}>
               {native.running ? <Button mode="outlined" icon="stop" contentStyle={buttonStyle}
@@ -348,7 +348,7 @@ export default function Home() {
           <Button contentStyle={buttonStyle} icon={showDetails ? 'chevron-up' : 'information-outline'}
             accessibilityState={{ expanded: showDetails }} onPress={() => setShowDetails(!showDetails)}>About & privacy</Button>
           {showDetails && <View style={styles.group}>
-            <Text variant="bodyLarge">For hospital pharmacy tokens: three digits, optionally starting with A or P. Speak Malayalam or English, or type.</Text>
+            <Text variant="bodyLarge">Speak or type your token as the venue uses it. Alerts include vibration and an alarm sound unless you ask for silent alerts.</Text>
             <Text variant="bodyLarge">Gnani Prisma processes microphone audio. OpenAI processes requests and announcement text. The app and relay save no recordings or transcripts on disk. Provider terms apply.</Text>
             <Text variant="bodyLarge">Android can interrupt listening in the background. Keep the microphone notification visible. This is an aid, not the official queue.</Text>
           </View>}

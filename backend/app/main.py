@@ -281,6 +281,9 @@ def create_app(settings: Settings | None = None, intelligence=None) -> FastAPI:
         interpreting = False
         seen_provider_ids: set[str] = set()
         connection_id = uuid.uuid4().hex
+        request_segments: list[Segment] = []
+        request_activity = started
+        request_partial = False
 
         async def send(payload):
             async with send_lock:
@@ -322,6 +325,7 @@ def create_app(settings: Settings | None = None, intelligence=None) -> FastAPI:
                         await send({"type": "pong"})
 
         async def receive_transcripts(provider):
+            nonlocal request_activity, request_partial
             async for raw in provider:
                 message = parse_message(raw)
                 kind = message.get("type")
@@ -333,9 +337,14 @@ def create_app(settings: Settings | None = None, intelligence=None) -> FastAPI:
                     await status("READY", "Speech stream ready; starting microphone.")
                 elif kind == "error":
                     raise ValueError("Provider reported an error.")
-                elif kind == "transcript" and message.get("is_final") is True:
+                elif kind == "transcript":
                     text = message.get("text", "")
                     if not isinstance(text, str) or not text.strip():
+                        continue
+                    if mode == "request":
+                        request_activity = time.monotonic()
+                        request_partial = message.get("is_final") is not True
+                    if message.get("is_final") is not True:
                         continue
                     if len(text) > 4000:
                         raise ValueError("Provider segment too long.")
@@ -348,13 +357,15 @@ def create_app(settings: Settings | None = None, intelligence=None) -> FastAPI:
                     segment = Segment(
                         id=f"{connection_id}:{provider_id}", text=text, received_at=time.time()
                     )
-                    await send(
-                        {"type": "transcript", "mode": mode, "segment": segment.model_dump()}
-                    )
                     if mode == "monitor":
+                        await send(
+                            {"type": "transcript", "mode": mode, "segment": segment.model_dump()}
+                        )
                         queue.put_nowait(segment)
                     else:
-                        return  # One push-to-talk utterance, separate from announcements.
+                        request_segments.append(segment)
+                        if len(" ".join(s.text for s in request_segments)) > 1500:
+                            raise ValueError("Spoken request too long. Please shorten it or type.")
 
         async def process_segments():
             nonlocal interpreting
@@ -399,7 +410,24 @@ def create_app(settings: Settings | None = None, intelligence=None) -> FastAPI:
                 now = time.monotonic()
                 if time.time() >= session.expires:
                     raise TimeoutError("Session expired.")
-                if mode == "request" and now - started > 35:
+                if (
+                    mode == "request"
+                    and request_segments
+                    and not request_partial
+                    and (now - request_activity >= settings.request_pause_seconds)
+                ):
+                    # Provider sentence finals are not the end of a user's request.
+                    # Keep capturing through short pauses and submit one combined request.
+                    segment = Segment(
+                        id=f"{connection_id}:request",
+                        text=" ".join(s.text for s in request_segments),
+                        received_at=time.time(),
+                    )
+                    await send(
+                        {"type": "transcript", "mode": mode, "segment": segment.model_dump()}
+                    )
+                    return
+                if mode == "request" and now - started > settings.request_timeout_seconds:
                     raise TimeoutError("No completed spoken request. Please try again or type.")
                 if now - started > 14 * 60:
                     raise TimeoutError("Renewing speech connection before provider expiry.")

@@ -116,6 +116,31 @@ def test_text_consent_and_strict_json(client, auth, intelligence):
         assert client.post("/v1/intent", headers=auth, json=body).status_code == 422
 
 
+def test_malayalam_token_ten_can_be_reviewed_and_confirmed(client, auth, intelligence):
+    intelligence.intent_result = make_intent(
+        token="10",
+        target_evidence="പത്ത്",
+        context="queue",
+        alert_preferences=["visual", "vibration", "sound"],
+    )
+    proposal = client.post(
+        "/v1/intent",
+        headers=auth,
+        json={
+            "text": "ടോക്കൺ പത്ത് ആകുമ്പോൾ വൈബ്രേറ്റ് ചെയ്യുക",
+            "consent_to_text_processing": True,
+        },
+    ).json()
+    assert proposal["status"] == "confirm"
+    confirmed = client.post(
+        "/v1/confirm",
+        headers=auth,
+        json={"proposal_id": proposal["proposal_id"]},
+    ).json()
+    assert confirmed["rule"]["token"] == "10"
+    assert set(confirmed["rule"]["alert_preferences"]) == {"visual", "vibration", "sound"}
+
+
 def test_clarification_invalidates_old_proposal(client, auth, intelligence):
     proposal = client.post(
         "/v1/intent",

@@ -1,69 +1,45 @@
 import pytest
 
-from app.validation import intent_errors, normalize_token, validate_event
+from app.validation import intent_errors, validate_event
 from tests.conftest import make_event, make_intent, make_segment
 
 
-@pytest.mark.parametrize(
-    ("raw", "expected"),
-    [
-        ("P042", "P042"),
-        ("p 0 4 2", "P042"),
-        ("A-0-0-7", "A007"),
-        ("042", "042"),
-        ("P zero four two", "P042"),
-        ("A oh oh seven", "A007"),
-        ("പി പൂജ്യം നാല് രണ്ട്", "P042"),
-        ("എ പൂജ്യം പൂജ്യം ഏഴ്", "A007"),
-        ("one hundred and twenty three", "123"),
-        ("P two hundred nineteen", "P219"),
-        ("നൂറ്റി ഇരുപത്തി മൂന്ന്", "123"),
-        ("പി ഇരുനൂറ്റി പത്ത്", "P210"),
-        ("തൊള്ളായിരത്തി തൊണ്ണൂറ്റി ഒമ്പത്", "999"),
-        ("000", "000"),
-        ("P42", None),
-        ("42", None),
-        ("forty two", None),
-        ("Q042", None),
-        ("P0042", None),
-        ("1000", None),
-        ("P042 and A007", None),
-        ("", None),
-        ("one hundred nineteen nine", None),
-        ("twenty hundred", None),
-        ("hundred", None),
-        ("one hundred two hundred", None),
-        ("P0🙂42", None),
-        ("٠٤٢", None),
-        ("പൂജ്യം നാല്", None),
-        ("P infinity", None),
-    ],
-)
-def test_normalize_token(raw, expected):
-    assert normalize_token(raw) == expected
-
-
-def test_intent_requires_grounded_prefix_and_leading_zeroes():
+def test_intent_requires_actual_source_evidence():
     assert intent_errors(make_intent(), "Vibrate for P042") == []
     assert intent_errors(make_intent(token="042", target_evidence="042"), "Vibrate for P042")
     assert intent_errors(make_intent(), "Vibrate for P0420")
-    assert intent_errors(make_intent(token="P042", target_evidence="forty two"), "forty two")
 
 
 @pytest.mark.parametrize(
     "changes",
     [
         {"intent": "unsupported"},
-        {"context": "airport"},
         {"target_evidence": None},
         {"token": None},
-        {"token": "P42"},
         {"alert_preferences": []},
         {"clarification": "Which token?"},
     ],
 )
-def test_intent_missing_and_unsupported_slots(changes):
+def test_intent_missing_slots(changes):
     assert intent_errors(make_intent(**changes), "Vibrate for P042")
+
+
+@pytest.mark.parametrize(
+    ("text", "raw", "token", "venue"),
+    [
+        ("ടോക്കൺ പത്ത് ആകുമ്പോൾ വൈബ്രേറ്റ് ചെയ്യുക", "പത്ത്", "10", "queue"),
+        ("Alert for token दस", "दस", "10", "queue"),
+        ("Alert for token பத்து", "பத்து", "10", "queue"),
+        ("Airport token AB/12345", "AB/12345", "AB/12345", "airport"),
+        ("Ticket 7", "7", "7", "queue"),
+        ("Ticket VIP", "VIP", "VIP", "bank"),
+        ("Ticket A-0-0-7", "A-0-0-7", "A-0-0-7", "queue"),
+        ("Ticket blue whale", "blue whale", "BLUE WHALE", "queue"),
+    ],
+)
+def test_intent_accepts_model_interpretation_without_custom_parsing(text, raw, token, venue):
+    intent = make_intent(token=token, target_evidence=raw, context=venue)
+    assert intent_errors(intent, text) == []
 
 
 def test_evidence_is_validated_without_mutating_proposal():
@@ -84,9 +60,6 @@ def test_evidence_is_validated_without_mutating_proposal():
         {"token_raw": "042", "token_normalized": "042"},
         {"token_raw": None},
         {"token_normalized": None},
-        {"token_normalized": "P420"},
-        {"counter": "11"},
-        {"counter": "4"},
         {"ambiguity_reason": "May be negated"},
     ],
 )
@@ -101,9 +74,19 @@ def test_invalid_evidence_is_uncertain(changes):
         ("P042 to counter two", "P042", "P042", "2"),
         ("പി പൂജ്യം നാല് രണ്ട് കൗണ്ടർ പത്ത്", "പി പൂജ്യം നാല് രണ്ട്", "P042", "10"),
         ("A007 is called", "A007", "A007", None),
+        ("പത്ത്", "പത്ത്", "10", None),
+        ("ten", "ten", "10", None),
+        ("दस", "दस", "10", None),
+        ("பத்து", "பத்து", "10", None),
+        ("١٠", "١٠", "10", None),
+        ("one zero", "one zero", "10", None),
+        ("Q7", "Q7", "Q7", None),
+        ("AB/12345 to counter 24", "AB/12345", "AB/12345", "24"),
+        ("7 to counter eleven", "7", "7", "11"),
+        ("blue whale to desk C", "blue whale", "BLUE WHALE", "C"),
     ],
 )
-def test_valid_evidence(text, raw, token, counter):
+def test_evidence_accepts_model_interpretation_without_custom_parsing(text, raw, token, counter):
     event = make_event(token_raw=raw, token_normalized=token, counter=counter, evidence_text=text)
     assert validate_event(event, [make_segment(text=text)]) == event
 

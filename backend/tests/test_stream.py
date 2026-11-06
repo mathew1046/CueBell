@@ -66,6 +66,7 @@ class FakePrisma:
 @pytest.fixture
 def relay(settings, intelligence, monkeypatch):
     settings.gnani_api_key = "dummy-test-key"
+    settings.request_pause_seconds = 1
     created = []
     options = {}
 
@@ -140,13 +141,55 @@ def test_request_stream_forwards_pcm_and_returns_one_final_transcript(relay):
         transcript = receive_type(socket, "transcript")
         assert transcript["mode"] == "request"
         assert transcript["segment"]["text"] == "പി പൂജ്യം നാല് രണ്ട്"
-        assert transcript["segment"]["id"].endswith(":p1")
+        assert transcript["segment"]["id"].endswith(":request")
         with pytest.raises(WebSocketDisconnect):
             socket.receive_json()
     assert created[0].audio == [b"\0" * 1024]
     state = client.get("/v1/state", headers=auth).json()
     assert state["rule"] is None
     assert not state["stream_connected"]
+
+
+def test_request_waits_through_sentence_pause_and_unfinished_partial(relay):
+    client, created, options = relay
+    options["transcripts"] = [
+        {"type": "transcript", "text": "Token ten.", "segment_id": "p1", "is_final": True},
+    ]
+    auth = pair(client)
+    with client.websocket_connect("/v1/stream?mode=request", headers={**auth, **CONSENT}) as socket:
+        ready(socket)
+        socket.send_bytes(b"\0" * 1024)
+        # Cross a short pause, then signal unfinished speech before the quiet deadline.
+        time.sleep(0.5)
+        socket.portal.call(
+            created[0].messages.put_nowait,
+            json.dumps(
+                {
+                    "type": "transcript",
+                    "text": "Vibrate",
+                    "segment_id": "p2",
+                    "is_final": False,
+                }
+            ),
+        )
+        time.sleep(1.2)
+        # Ping proves the connection did not close on the first final or on an interim pause.
+        socket.send_json({"type": "ping"})
+        receive_type(socket, "pong")
+        final = {
+            "type": "transcript",
+            "text": "Vibrate and sound an alarm.",
+            "segment_id": "p2",
+            "is_final": True,
+        }
+        finished = time.monotonic()
+        socket.portal.call(created[0].messages.put_nowait, json.dumps(final))
+        socket.portal.call(created[0].messages.put_nowait, json.dumps(final))
+        transcript = receive_type(socket, "transcript")
+        assert time.monotonic() - finished >= 0.9
+        assert transcript["segment"]["text"] == "Token ten. Vibrate and sound an alarm."
+        expect_closed(socket)
+    assert client.get("/v1/state", headers=auth).json()["rule"] is None
 
 
 def test_monitor_stream_dedups_provider_segments_and_alerts(relay, intelligence):

@@ -110,6 +110,21 @@ async def test_intent_contract_requires_token_only_evidence():
     assert data == {"request": "Listen for pharmacy token 442 and vibrate."}
     assert schema is Intent
     assert "Exclude surrounding words" in Intent.model_fields["target_evidence"].description
+    assert "Do not assume a token format or venue-specific rules" in system
+    assert "in any language" in system
+    assert "Default alerts are visual, vibration and sound" in system
+
+
+async def test_extraction_interprets_readouts_without_a_token_format():
+    fallback = object.__new__(OpenAIFallback)
+    fallback._parse = AsyncMock()
+    await fallback.extract([make_segment(text="പത്ത്")], [])
+    system, data, schema = fallback._parse.call_args.args
+    assert "Do not assume a token format or venue-specific rules" in system
+    assert "on its own is a CALL" in system
+    assert "in any language or spoken form" in system
+    assert data["segments"][0]["text"] == "പത്ത്"
+    assert schema is Extraction
 
 
 async def test_text_fallback_payload_and_target_independence(settings, monkeypatch):

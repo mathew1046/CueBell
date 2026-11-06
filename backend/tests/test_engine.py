@@ -40,6 +40,25 @@ def test_new_confirmation_purges_previous_monitor_history_without_resetting_sequ
     assert engine.flush(200) == []
 
 
+@pytest.mark.parametrize("raw", ["പത്ത്", "ten", "दस", "பத்து", "١٠", "one zero"])
+def test_model_interpreted_readout_alerts_with_vibration_and_sound(raw):
+    engine = Engine(grace=1.2)
+    engine.activate(
+        make_intent(
+            token="10",
+            target_evidence="പത്ത്",
+            context="queue",
+            alert_preferences=["visual", "vibration", "sound"],
+        )
+    )
+    # Model outputs are supplied here; this tests delivery, not live language accuracy.
+    call(engine, token_raw=raw, token_normalized="10", evidence_text=raw, counter=None)
+    alerts = engine.flush(102)
+    assert len(alerts) == 1
+    assert alerts[0]["alert"]["token"] == "10"
+    assert set(alerts[0]["alert"]["alert_preferences"]) == {"visual", "vibration", "sound"}
+
+
 @pytest.mark.parametrize("token", ["042", "P420", "A042", "P0042"])
 def test_no_fuzzy_prefix_or_zero_matching(engine, token):
     call(engine, token_raw=token, token_normalized=token, evidence_text=f"{token} to counter 2")
@@ -113,7 +132,6 @@ def test_corrected_target_can_alert_and_revoke_old_alert(engine):
         {"type": "UNCERTAIN", "ambiguity_reason": "Unclear correction"},
         {"type": "CORRECT", "replaces_event_id": "unknown"},
         {"type": "CANCEL", "replaces_event_id": "unknown"},
-        {"type": "CORRECT", "counter": "11"},
     ],
 )
 def test_uncertain_correction_withholds_prior_pending_alert(engine, changes):

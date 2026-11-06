@@ -4,8 +4,10 @@ import android.app.*
 import android.content.Intent
 import android.content.pm.ServiceInfo
 import android.media.AudioFormat
+import android.media.AudioAttributes
 import android.media.AudioRecord
 import android.media.MediaRecorder
+import android.media.RingtoneManager
 import android.os.*
 import androidx.core.app.NotificationCompat
 import okhttp3.*
@@ -134,7 +136,7 @@ class ListenerService : Service() {
                 "LISTENING" -> {
                   val gap = if (gapSince > 0) (SystemClock.elapsedRealtime() - gapSince) / 1000 else 0
                   status("LISTENING", if (gap > 0) "Listening again after a ${gap}s gap. Check the display."
-                    else if (mode == "request") "Speak your request, then pause."
+                    else if (mode == "request") "Speak your request. Short pauses are OK; wait for it to finish."
                     else "Listening · keep your phone near the announcement speaker.")
                   gapSince = 0
                 }
@@ -269,13 +271,18 @@ class ListenerService : Service() {
     } ?: listOf("visual")
     val vibration = "vibration" in preferences
     val sound = "sound" in preferences
-    val channel = "calls-${if (vibration) 1 else 0}-${if (sound) 1 else 0}"
+    // Version the channel: Android will not update an existing channel's sound.
+    val channel = "calls-v2-${if (vibration) 1 else 0}-${if (sound) 1 else 0}"
+    val alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
+      ?: RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
     if (Build.VERSION.SDK_INT >= 26) notificationManager.createNotificationChannel(NotificationChannel(channel,
       "Token calls${if (vibration) " · vibration" else ""}${if (sound) " · sound" else ""}",
       NotificationManager.IMPORTANCE_HIGH).apply {
       enableVibration(vibration)
       if (vibration) vibrationPattern = longArrayOf(0, 400, 200, 400, 200, 700)
-      if (!sound) setSound(null, null)
+      setSound(if (sound) alarmSound else null, if (sound) AudioAttributes.Builder()
+        .setUsage(AudioAttributes.USAGE_ALARM)
+        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION).build() else null)
       lockscreenVisibility = Notification.VISIBILITY_PRIVATE
     })
     val id = alert.getString("id")
@@ -289,8 +296,8 @@ class ListenerService : Service() {
     notificationManager.notify(tag, 100, NotificationCompat.Builder(this, channel)
       .setSmallIcon(android.R.drawable.ic_dialog_info).setContentTitle(title).setContentText(text)
       .setStyle(NotificationCompat.BigTextStyle().bigText(text)).setContentIntent(openApp())
-      .setPriority(NotificationCompat.PRIORITY_HIGH).setCategory(NotificationCompat.CATEGORY_EVENT)
-      .setDefaults(if (sound) Notification.DEFAULT_SOUND else 0)
+      .setPriority(NotificationCompat.PRIORITY_HIGH).setCategory(NotificationCompat.CATEGORY_ALARM)
+      .setSound(if (sound) alarmSound else null, android.media.AudioManager.STREAM_ALARM)
       .setVibrate(if (vibration) longArrayOf(0, 400, 200, 400, 200, 700) else longArrayOf(0))
       .setVisibility(NotificationCompat.VISIBILITY_PRIVATE).setAutoCancel(true)
       .setPublicVersion(NotificationCompat.Builder(this, channel)

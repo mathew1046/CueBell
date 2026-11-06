@@ -100,7 +100,7 @@ https://github.com/mathew1046/CueBell/blob/main/mobile/README.md
 1. Open CueBell. The request workflow appears immediately, with **no server fields, pairing or technical settings**.
 2. Check **Allow audio & text processing**. Audio goes to Gnani; requests and announcement text go to OpenAI. **About & privacy** contains the full explanation.
 3. For the first run, type **“Listen for pharmacy token 442 and vibrate.”** Tap **Continue**. Session setup happens automatically, not as a separate task.
-4. Check the **Is this right?** proposal: exact token `442` and visual/vibration preferences. If it is wrong, tap **Change**. Never confirm a wrong token for the sake of the demo. The configured venue remains hospital pharmacy, documented under **About & privacy**.
+4. Check the **Is this right?** proposal: token `442` and visual/vibration/sound preferences. If it is wrong, tap **Change**. Never confirm a wrong token for the sake of the demo. No venue token format is assumed.
 5. Tap **Start listening**. Grant microphone and notification permissions, then wait until the app reports **Listening**. A confirmed rule alone is not listening coverage.
 6. Check the ongoing microphone notification. Keep the app visible for the first rehearsal. Ensure microphone privacy is off, the notification channel is enabled, vibration is enabled, and Do Not Disturb is not suppressing delivery.
 
@@ -118,7 +118,7 @@ Show the typed request, the extracted proposal, and explicit confirmation. Say:
 
 > “The model interprets the request, but the user checks the exact token before any monitor starts. Announcements cannot change what this person is watching for.”
 
-Typing first isolates the monitoring demonstration from speech-setup errors. After rehearsal, optionally tap **Speak** instead: speak the full instruction in one utterance and pause. The app stops request capture and interprets the final transcript; it must still be confirmed. Do not speak setup instructions over the announcement-listening phase. Expand **Announcements** to inspect transcripts; the history is collapsed to keep the main screen quiet.
+Typing first isolates the monitoring demonstration from speech-setup errors. After rehearsal, optionally tap **Speak** instead: short pauses are allowed. Setup combines finalized speech and waits for 3.5 seconds of transcript quiet before interpreting it; it must still be confirmed. Do not speak setup instructions over the announcement-listening phase. Expand **Announcements** to inspect transcripts; the history is collapsed to keep the main screen quiet.
 
 ### 1:15–2:15 — A non-match, then a match
 
@@ -161,7 +161,7 @@ Close with:
 | Session expired | Submit the request again. The app obtains a fresh bearer and requires a new confirmation; an old monitor is never silently replayed. |
 | Service busy | Wait before retrying. Anonymous demo admission permits three sessions per IP per ten minutes, plus global and concurrent limits; do not keep reinstalling or clearing storage. |
 | Provider authorization / quota error | Check server-side keys, speech-platform access, model entitlement and quota. `/health` configuration flags do not authenticate providers. |
-| Intent needs clarification | Include the token and an explicit alert preference; use the configured three-digit grammar. Edit and reconfirm rather than guessing. |
+| Intent needs clarification | Clearly identify the token in your own format. Edit and reconfirm rather than guessing; there is no three-digit grammar. |
 | No transcript | Verify actual listening, microphone permission/privacy, connectivity and audio range. Speak clearly and pause at the end. |
 | Transcript appears but no alert | Compare every digit/prefix, check uncertainty and counter evidence, and allow interpretation to finish. Inspect the real result; do not repeatedly change the target to match a wrong transcript. |
 | Visual alert but no vibration/sound | Check Android notification permission, the selected alert channel, hardware and Do Not Disturb. Visual feedback is the fallback. |
