@@ -110,7 +110,7 @@ Local copy:
 
 This is a **development-signed ARM64 preview**, not a production/store distribution. APKs are published as GitHub Release assets, not committed to source history. Earlier `QueueSaathi-preview.apk` and `QueueSaathi-ui-review.apk` are obsolete for the hosted workflow.
 
-**Server readiness:** at packaging time, the supplied server accepted automatic app sessions, but `/health` reported `speech_configured: false` and `intent_configured: false`. Set `GNANI_API_KEY`, `OPENAI_API_KEY` and `OPENAI_MODEL=gpt-6-luna` on that backend and restart it before demonstrating speech or intent extraction. Do not put keys in the APK. Reachability alone is not a successful listening test.
+**Server readiness:** the supplied server reports both providers configured. A staged hosted request, “Listen for pharmacy token 442 and vibrate,” returned an exact-token confirmation with visual/vibration preferences; its temporary session was deleted. The APK installs and opens on the connected physical phone. No microphone capture was started during installation, and hosted speech recognition/background alerts remain untested. Provider keys stay on the backend, never in the APK.
 
 Build your own APK using:
 https://github.com/mathew1046/QueueSaathi/blob/main/mobile/README.md
@@ -125,6 +125,7 @@ https://github.com/mathew1046/QueueSaathi/blob/main/mobile/README.md
 | Native unit tests | **6 passed**: PCM16 framing/waveform boundaries and permanent versus retryable WebSocket rejection. TypeScript and lint checks passed. |
 | Mobile workflow tests | **13 passed**: automatic session admission/reuse, expiry/revocation, consent withdrawal, configuration guards and removal of operator UI. |
 | App build and rendering | Earlier minimal-interface QA launched on an Android 16 emulator; light/dark and enlarged text inspected. The v1.0.1 ARM64 preview adds the hosted origin. Packaging a route does not verify live speech or alert delivery. |
+| Hosted preview installation | v1.0.1 installed and launched on the physical Android phone, not the emulator. The compiled backend origin, ARM64 architecture, signature, version and absence of configured server credentials were checked. Hosted typed intent returned the expected token/alert preferences; no phone microphone capture was started. |
 | Live text model | Staged English/Malayalam intent, call, negation, injection-abstention and correction checks passed using `gpt-6-luna`. HTTP lifecycle and leading-zero checks passed. |
 | Live speech connection | Gnani authentication and streaming negotiation succeeded at 16 kHz / 512 samples. Sent 48 paced synthetic tone/silence frames without a reported provider error. **This was not spoken-audio recognition testing.** |
 | Real PA recognition and user outcomes | **Not measured.** No speech-accuracy percentage, false-alert rate, missed-call rate or latency benchmark is claimed. |

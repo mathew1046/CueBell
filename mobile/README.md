@@ -19,7 +19,7 @@ https://github.com/mathew1046/QueueSaathi/releases/tag/v1.0.1-preview
 Local copy:
 /home/mathew/Arrakis/QueueSaathi/artifacts/QueueSaathi-1.0.1-arm64.apk
 
-This preview has the deployed service origin baked in; it is no longer the old unconfigured UI-only build. At packaging time, the backend accepted app admission but reported missing speech/text provider configuration. Set server-side credentials and restart the backend before live use; no APK rebuild is needed for provider-key changes. Source checks include 13 mobile workflow/session tests, including consent withdrawal during admission and recovery from backend-invalidated bearers. Prior light/dark + 1.3× font-size emulator review does not establish low-literacy usability, TalkBack or real-phone reliability.
+This preview has the deployed service origin baked in; it is no longer the old unconfigured UI-only build. Installation and launch on the connected physical phone succeeded. The backend reports both providers configured, and a temporary hosted typed-intent test returned the expected token and preferences before cleanup. No phone microphone capture was started. Provider-key changes remain server-only and do not require an APK rebuild. Source checks include 13 mobile workflow/session tests, including consent withdrawal during admission and recovery from backend-invalidated bearers. Prior light/dark + 1.3× font-size emulator review does not establish low-literacy usability, TalkBack or real-phone reliability.
 
 ```sh
 npm ci
