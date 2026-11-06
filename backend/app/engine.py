@@ -121,7 +121,17 @@ class Engine:
                     and o["state"] == "confirmed"
                     and o["type"] in {"CALL", "CORRECT", "REPEAT"}
                     and 0 <= now - o["at"] <= 30
-                    and (event.type != "CANCEL" or event.token_normalized == o["token_normalized"])
+                    and (
+                        event.type != "CANCEL"
+                        or (
+                            event.token_normalized == o["token_normalized"]
+                            and (
+                                event.counter is None
+                                or o["counter"] is None
+                                or event.counter == o["counter"]
+                            )
+                        )
+                    )
                 ),
                 None,
             )

@@ -4,10 +4,12 @@ from types import SimpleNamespace
 from unittest.mock import AsyncMock
 
 import pytest
+from pydantic import ValidationError
 
 from app import gnani
+from app.config import Settings
 from app.intelligence import OpenAIFallback
-from app.models import Extraction
+from app.models import Extraction, Intent
 from tests.conftest import make_segment
 
 
@@ -22,7 +24,42 @@ def test_provider_parser_preserves_final_and_malayalam():
     assert gnani.parse_message(json.dumps(message).encode()) == message
 
 
-async def test_gnani_connect_contract_is_mocked(settings, monkeypatch):
+@pytest.mark.parametrize("language", ["ml-IN", "en-IN", "ta-IN"])
+def test_provider_parser_preserves_detected_language_code(language):
+    message = {"type": "transcript", "text": "text", "detected_language_code": language}
+    assert gnani.parse_message(json.dumps(message))["detected_language_code"] == language
+
+
+@pytest.mark.parametrize("text", ["", "1234", "?!"])
+def test_provider_parser_does_not_invent_missing_detected_language(text):
+    message = {"type": "transcript", "text": text, "is_final": True}
+    assert "detected_language_code" not in gnani.parse_message(json.dumps(message))
+
+
+@pytest.mark.parametrize("language", ["indic-auto", "ml-IN,en-IN", "en-IN"])
+def test_gnani_language_configuration_accepts_documented_modes(language):
+    assert Settings(_env_file=None, gnani_language_code=language).gnani_language_code == language
+
+
+def test_gnani_language_configuration_defaults_to_auto(monkeypatch):
+    monkeypatch.delenv("GNANI_LANGUAGE_CODE", raising=False)
+    assert Settings(_env_file=None).gnani_language_code == "indic-auto"
+    assert (
+        Settings(_env_file=None, gnani_language_code=" ml-IN, en-IN ").gnani_language_code
+        == "ml-IN,en-IN"
+    )
+
+
+@pytest.mark.parametrize(
+    "language", ["auto", "", "as-IN", "indic-auto,en-IN", "ml-IN,", "hi-IN,en-IN,ml-IN,ta-IN,te-IN"]
+)
+def test_gnani_language_configuration_rejects_unsupported_modes(language):
+    with pytest.raises(ValidationError, match="1–4 supported Prisma v3"):
+        Settings(_env_file=None, gnani_language_code=language)
+
+
+@pytest.mark.parametrize("language", ["indic-auto", "ml-IN,en-IN"])
+async def test_gnani_connect_contract_is_mocked(settings, monkeypatch, language):
     calls = []
     sentinel = object()
 
@@ -36,18 +73,21 @@ async def test_gnani_connect_contract_is_mocked(settings, monkeypatch):
         async with gnani.prisma(settings):
             pass
     settings.gnani_api_key = "dummy-test-key"
+    settings.gnani_language_code = language
     async with gnani.prisma(settings) as provider:
         assert provider is sentinel
     assert calls[0][0] == "wss://api.vachana.ai/stt/v3/stream"
     assert calls[0][1]["additional_headers"] == {
         "x-api-key-id": "dummy-test-key",
         "model": "prisma-v3.0",
-        "language_code": "ml-IN,en-IN",
+        "language_code": language,
         "x-sample-rate": "16000",
         "format": "verbatim",
         "x-idle-timeout-sec": "900",
     }
     assert calls[0][1]["max_size"] == 65536
+    assert calls[0][1]["open_timeout"] == 12
+    assert calls[0][1]["close_timeout"] == 5
 
 
 def test_fallback_requires_exact_model_and_credentials(settings):
@@ -55,6 +95,21 @@ def test_fallback_requires_exact_model_and_credentials(settings):
         OpenAIFallback(settings)
     settings.openai_api_key = "dummy-test-key"
     assert not settings.model_ready
+
+
+async def test_intent_contract_requires_token_only_evidence():
+    # A live Luna response included "pharmacy token" in the evidence and safely
+    # triggered clarification. Make the minimal accepted span explicit in both
+    # instructions and the structured-output field without relaxing validation.
+    fallback = object.__new__(OpenAIFallback)
+    fallback._parse = AsyncMock()
+    await fallback.intent("Listen for pharmacy token 442 and vibrate.")
+    system, data, schema = fallback._parse.call_args.args
+    assert "Never include surrounding words" in system
+    assert "'pharmacy token 442' use '442'" in system
+    assert data == {"request": "Listen for pharmacy token 442 and vibrate."}
+    assert schema is Intent
+    assert "Exclude surrounding words" in Intent.model_fields["target_evidence"].description
 
 
 async def test_text_fallback_payload_and_target_independence(settings, monkeypatch):

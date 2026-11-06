@@ -10,6 +10,7 @@ from dataclasses import dataclass, field
 
 from anyio import move_on_after
 from fastapi import Depends, FastAPI, Header, HTTPException, WebSocket, WebSocketDisconnect
+from websockets.exceptions import InvalidStatus
 
 from .config import Settings
 from .engine import Engine
@@ -348,7 +349,11 @@ def create_app(settings: Settings | None = None, intelligence=None) -> FastAPI:
                         )
                         session.engine.gap()
                         raise TimeoutError("Interpretation exceeded the coverage window.")
-                    for proposal in extraction.events[:16]:
+                    # Never silently truncate: a later event may cancel an earlier call.
+                    # Reject the whole batch before mutating observations or pending alerts.
+                    if len(extraction.events) > 16:
+                        raise ValueError("Extraction event limit exceeded.")
+                    for proposal in extraction.events:
                         if segment.id not in proposal.source_segment_ids:
                             continue
                         # Grace, deduplication and alert age track the announcement,
@@ -387,6 +392,7 @@ def create_app(settings: Settings | None = None, intelligence=None) -> FastAPI:
                     )
 
         tasks = []
+        close_code = 1000
         try:
             await status("STARTING", "Connecting to Gnani Prisma…")
             async with prisma(settings) as provider:
@@ -416,12 +422,22 @@ def create_app(settings: Settings | None = None, intelligence=None) -> FastAPI:
                 )
             except Exception:
                 pass
-        except Exception:
+        except Exception as error:
+            provider_auth_failed = isinstance(
+                error, InvalidStatus
+            ) and error.response.status_code in {401, 403}
+            if provider_auth_failed:
+                close_code = 4403
             try:
                 await status(
                     "DEGRADED",
-                    "Speech or interpretation service unavailable. "
-                    "Check backend configuration and the official display.",
+                    (
+                        "Gnani authentication rejected. Ask the backend operator to check "
+                        "the provider credentials and access configuration before reconnecting."
+                        if provider_auth_failed
+                        else "Speech or interpretation service unavailable. "
+                        "Check backend configuration and the official display."
+                    ),
                 )
             except Exception:
                 pass
@@ -434,7 +450,7 @@ def create_app(settings: Settings | None = None, intelligence=None) -> FastAPI:
                 with move_on_after(2, shield=True):
                     await asyncio.gather(*tasks, return_exceptions=True)
                     with suppress(RuntimeError, WebSocketDisconnect, OSError):
-                        await socket.close()
+                        await socket.close(code=close_code)
             finally:
                 session.engine.gap()
                 window.clear()

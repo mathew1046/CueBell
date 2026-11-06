@@ -14,7 +14,12 @@ class Intent(StrictModel):
     alert_preferences: list[Literal["visual", "vibration", "sound"]]
     clarification: str | None
     # Exact substring of the user's request that names the target.
-    target_evidence: str | None
+    target_evidence: str | None = Field(
+        description="Only the exact token identifier or spoken number words from the request, "
+        "including its prefix if present. Exclude surrounding words such as token, pharmacy, "
+        "or ടോക്കൺ. Example: pharmacy token 442 -> 442; token four hundred forty two -> "
+        "four hundred forty two. Null if missing or ambiguous."
+    )
 
 
 class Segment(StrictModel):

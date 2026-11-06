@@ -2,8 +2,9 @@
 
 Python 3.12+ FastAPI relay for the separately installed native Android app. This
 directory is independently installable; it does not serve or build the APK.
-No deployment or live-provider verification has been performed. Tests use dummy
-credentials and mocked providers only.
+No backend has been deployed. Automated tests use dummy credentials and mocked
+providers; separate live Luna smoke checks passed. Gnani streaming handshakes
+were rejected with HTTP 401 before audio transmission; see verification below.
 
 ## Install and test
 
@@ -22,7 +23,8 @@ python3.12 -m venv .venv
 Python 3.12 environment, including test/lint tools. It contains no local/editable
 paths and is not a hash-verified supply-chain lock. For unpinned development,
 install `.[dev]` instead. The Dockerfile installs runtime ranges from
-`pyproject.toml`, not this full development snapshot.
+`pyproject.toml`, constrained by `requirements.lock`, without installing the full
+development snapshot.
 
 ## Configuration
 
@@ -33,9 +35,9 @@ provider keys or the operator pairing code in source control or the APK.
 | Variable | Default / requirement |
 | --- | --- |
 | `GNANI_API_KEY` | Required for speech; sent only to Gnani Prisma. |
-| `GNANI_LANGUAGE_CODE` | `ml-IN,en-IN`; Malayalam/English venue configuration. |
+| `GNANI_LANGUAGE_CODE` | `indic-auto`; automatic detection among Prisma's 10 supported languages. Optional 1–4 language codes such as `ml-IN,en-IN` prioritize languages, not restrict recognition. |
 | `OPENAI_API_KEY` | Required for text intent and announcement interpretation. |
-| `OPENAI_MODEL` | Required exact Responses API model ID enabled in your account, with structured output support. No nickname or automatic substitution. |
+| `OPENAI_MODEL` | Exact Responses API ID enabled in your account. The example uses account-verified `gpt-6-luna` with structured output support; no nickname or automatic substitution. |
 | `DEMO_ACCESS_CODE` | Operator-generated random pairing secret, at least 16 characters. No usable default. |
 | `ALLOW_INSECURE_LOCAL` | `false`; use `true` only for isolated local development, never public hosting. |
 | `MAX_SESSIONS` | `8`; allowed range 1–100. |
@@ -130,21 +132,27 @@ authentication, per-IP abuse prevention, or a substitute for edge rate limits.
 - **Gnani only for speech**: wss://api.vachana.ai/stt/v3/stream,
   `model: prisma-v3.0`. Negotiation must contain
   `config.sample_rate: 16000` and `config.chunk_size: 512` before audio starts.
-  Final transcripts use `text`, `segment_id`, `is_final: true`; interim results
+   Final transcripts use `text`, `segment_id`, `is_final: true`; interim results
   are ignored. Upstream connections are ended at 14 minutes, before the
-  documented 15-minute limit; the app must reconnect and show the coverage gap.
+   documented 15-minute limit; the app must reconnect and show the coverage gap.
+- Automatic speech-language detection is enabled by `indic-auto`, not the
+  unsupported value `auto`. Optional provider `detected_language_code` metadata
+  derives from transcript script and may be absent; it is not acoustic confidence.
+  Queue normalization still supports only the tested Malayalam/English forms.
+  Upstream HTTP 401/403 closes the app stream with 4403 and configuration guidance,
+  avoiding repeated attempts with rejected credentials; transient failures retry.
 - **OpenAI is the explicitly authorized text fallback**, not a speech provider.
   Text requests and PA transcript windows are sent using the configured model's
   Responses API, structured output, `store=false`, a 12-second timeout and no
   automatic SDK retries. This flag is not a promise about provider retention;
-  check current provider terms and obtain consent before any processing.
+   check current provider terms and obtain consent before any processing.
 - **Evon is unavailable**: no verified hosted API contract/endpoint is configured.
   There is no guessed endpoint, Evon integration, or silent model substitution.
 - The venue is hospital pharmacy, with exact string tokens `[AP]?[0-9]{3}` and
   counters 1–10. Prefixes and zeros are never padded or dropped. Supported
   Malayalam/English number forms are deliberately narrow; other native
   languages, malformed/ambiguous forms, and broader venues require clarification
-  or remain uncertain, even if the speech provider recognizes them.
+   or remain uncertain, even if the speech provider recognizes them.
 - Extraction does not receive the user's rule, target, alert preferences, or
   match state. Recent observed PA tokens are supplied only as bounded, filtered
   correction context; they are not the user's target. Evidence/source IDs,
@@ -172,3 +180,21 @@ OS background-microphone restrictions, notification permissions, and battery
 management can prevent an alert. The separate native app owns foreground-service
 capture and local vibration/sound/visual delivery; this backend does not send
 push alerts to a disconnected APK. Users must still check the official display.
+
+## Verification on 6 November 2026
+
+- 189 isolated backend tests and Ruff lint/format checks passed.
+- Live account model discovery confirmed `gpt-6-luna`; the ignored local environment
+  selects it and `GNANI_LANGUAGE_CODE=indic-auto`.
+- Live English/Malayalam text intent/call extraction, negative announcements,
+  instruction-injection abstention, HTTP confirmation/lifecycle, number-word and
+  leading-zero handling, and counter correction through the reducer passed.
+  These staged text probes do not test speech, PA acoustics or deployment accuracy.
+- Gnani streaming returned HTTP 401 on two bounded handshakes using configured
+  credentials. No successful speech connection or audio transmission occurred.
+  Check the key and account's streaming access with Gnani; do not replace speech
+  with another provider or disable authentication/TLS to bypass the failure.
+
+Official automatic-language contracts:
+https://docs.gnani.ai/api/STT/stt-websocket.md
+https://docs.gnani.ai/api/STT/models/prisma-v3.md

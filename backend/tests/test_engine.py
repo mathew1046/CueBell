@@ -225,6 +225,25 @@ def test_other_is_not_a_correction_target(engine):
     assert engine.flush(103) == []
 
 
+def test_cancellation_cannot_revoke_same_token_at_a_different_counter(engine):
+    call(engine)
+    old = engine.observations[-1]
+    engine.flush(102)
+    outputs = call(
+        engine,
+        now=103,
+        type="CANCEL",
+        counter="3",
+        evidence_text="Cancel P042 to counter 3",
+        replaces_event_id=old["id"],
+        source_segment_ids=["s2"],
+    )
+    assert old["state"] == "confirmed"
+    assert engine.alerts[-1]["state"] == "unacknowledged"
+    assert outputs[-1]["observation"]["type"] == "UNCERTAIN"
+    assert all(output["type"] != "alert.corrected" for output in outputs)
+
+
 def test_pause_resume_cannot_reuse_pre_pause_correction_context(engine):
     call(engine)
     old = engine.observations[-1]

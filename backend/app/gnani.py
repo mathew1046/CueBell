@@ -21,6 +21,7 @@ async def prisma(settings: Settings):
             "x-idle-timeout-sec": "900",
         },
         open_timeout=12,
+        close_timeout=5,
         max_size=65536,
         max_queue=8,
         write_limit=8192,
@@ -29,6 +30,12 @@ async def prisma(settings: Settings):
 
 
 def parse_message(raw: str | bytes) -> dict:
+    """Preserve provider metadata, including optional per-utterance language tags.
+
+    Prisma v3 derives detected_language_code from final transcript script. Do not
+    infer a missing tag from the configured language hint (empty/digits-only text
+    may have none), or turn it into a claim of acoustic language-ID confidence.
+    """
     message = json.loads(raw)
     if not isinstance(message, dict):
         raise ValueError("Invalid provider envelope.")

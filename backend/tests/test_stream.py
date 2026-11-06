@@ -8,6 +8,9 @@ import httpx
 import pytest
 from fastapi.testclient import TestClient
 from starlette.websockets import WebSocketDisconnect
+from websockets.datastructures import Headers
+from websockets.exceptions import InvalidStatus
+from websockets.http11 import Response
 
 from app.engine import Engine
 from app.main import create_app
@@ -266,6 +269,51 @@ def test_stream_configuration_and_tls_gates(settings, intelligence):
                 pass
 
 
+@pytest.mark.parametrize(
+    ("upstream_status", "close_code"), [(401, 4403), (403, 4403), (429, 1000), (503, 1000)]
+)
+def test_provider_upgrade_failure_close_code_and_session_cleanup(
+    relay, monkeypatch, upstream_status, close_code
+):
+    client, _, _ = relay
+    auth = pair(client)
+
+    @asynccontextmanager
+    async def rejected_provider(settings):
+        raise InvalidStatus(
+            Response(
+                upstream_status,
+                "private-provider-reason",
+                Headers({"X-Private": "private-provider-header"}),
+                body=b"private-provider-body",
+            )
+        )
+        yield  # pragma: no cover
+
+    with monkeypatch.context() as patch:
+        patch.setattr("app.main.prisma", rejected_provider)
+        with client.websocket_connect(
+            "/v1/stream?mode=request", headers={**auth, **CONSENT}
+        ) as socket:
+            assert socket.receive_json()["state"] == "STARTING"
+            status = socket.receive_json()
+            assert status["state"] == "DEGRADED"
+            assert "private-provider" not in json.dumps(status)
+            if close_code == 4403:
+                assert "Gnani" in status["message"]
+                assert "authentication" in status["message"].lower()
+            with pytest.raises(WebSocketDisconnect) as error:
+                socket.receive_json()
+            assert error.value.code == close_code
+
+    assert not client.get("/v1/state", headers=auth).json()["stream_connected"]
+    # Authentication failures must release the session, not leave it permanently busy.
+    with client.websocket_connect("/v1/stream?mode=request", headers={**auth, **CONSENT}) as socket:
+        ready(socket)
+        socket.send_json({"type": "stop"})
+        expect_closed(socket)
+
+
 def test_gap_cancels_inflight_extraction_and_reconnect_has_fresh_context(relay, intelligence):
     client, _, _ = relay
     auth = pair(client)
@@ -388,6 +436,35 @@ async def test_failed_accept_does_not_leave_session_busy(settings, intelligence)
             await app(scope, receive, send)
         response = await client.get("/v1/state", headers=auth)
         assert not response.json()["stream_connected"]
+
+
+def test_oversized_extraction_cannot_discard_a_correction_and_release_call(relay, intelligence):
+    client, _, _ = relay
+
+    async def oversized_extract(window, recent):
+        source = [window[-1].id]
+        return Extraction(
+            events=[make_event(source_segment_ids=source)]
+            + [make_event(type="OTHER", source_segment_ids=source) for _ in range(15)]
+            + [
+                make_event(
+                    type="UNCERTAIN",
+                    source_segment_ids=source,
+                    ambiguity_reason="Unclear correction",
+                )
+            ]
+        )
+
+    intelligence.extract = oversized_extract
+    auth = pair(client)
+    activate(client, auth)
+    with client.websocket_connect("/v1/stream?mode=monitor", headers={**auth, **CONSENT}) as socket:
+        ready(socket)
+        socket.send_bytes(b"\0" * 1024)
+        expect_closed(socket)
+    state = client.get("/v1/state", headers=auth).json()
+    assert state["alerts"] == []
+    assert not state["stream_connected"]
 
 
 def test_slow_extraction_does_not_relabel_old_observations_as_new(relay, intelligence, monkeypatch):
