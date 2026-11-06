@@ -190,10 +190,14 @@ push alerts to a disconnected APK. Users must still check the official display.
   instruction-injection abstention, HTTP confirmation/lifecycle, number-word and
   leading-zero handling, and counter correction through the reducer passed.
   These staged text probes do not test speech, PA acoustics or deployment accuracy.
-- Gnani streaming returned HTTP 401 on two bounded handshakes using configured
-  credentials. No successful speech connection or audio transmission occurred.
-  Check the key and account's streaming access with Gnani; do not replace speech
-  with another provider or disable authentication/TLS to bypass the failure.
+- After the user corrected authorization, live Gnani streaming connected at
+  `wss://api.vachana.ai/stt/v3/stream` with `model=prisma-v3.0` and
+  `language_code=indic-auto`. Negotiation confirmed 16 kHz and 512-sample frames.
+  A synthetic 440 Hz tone followed by silence (48 paced 1,024-byte PCM frames,
+  1.536 seconds) was sent without a reported provider error. No transcript was
+  returned during the bounded check. This verifies connection and client-side streaming,
+  not speech recognition or end-to-end alert accuracy. Earlier HTTP 401 failures
+  are resolved; no endpoint/model change or authentication bypass was necessary.
 
 Official automatic-language contracts:
 https://docs.gnani.ai/api/STT/stt-websocket.md

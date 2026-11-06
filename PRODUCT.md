@@ -26,7 +26,7 @@ Speech language is automatic (`indic-auto`), with no language chooser required. 
 High contrast, large token/counter text, labelled controls, screen-reader updates, large touch targets and visual alternatives to all sound/vibration. Typed setup must work without speech. No color-only health state.
 
 ## Evidence on Hand
-implementation.md is the original research architecture, not measured product reliability. Credentials were supplied locally and are excluded from source control. Live Luna staged text probes and HTTP/reducer flows passed; Gnani rejected two live handshakes with HTTP 401 before audio transmission. There are 189 passing backend tests, six native unit tests, and Android emulator setup/theme captures. No real-phone speech/haptic/background evaluation, pricing or provider retention verification is present.
+implementation.md is the original research architecture, not measured product reliability. Credentials were supplied locally and are excluded from source control. Live Luna staged text probes and HTTP/reducer flows passed. After the user corrected authorization, Gnani connected with Prisma v3.0 / indic-auto and negotiated 16 kHz / 512-sample frames. The client sent 48 paced synthetic tone/silence PCM frames without a reported error. Earlier HTTP 401 failures are resolved; no spoken audio was tested. There are 189 passing backend tests, six native unit tests, and Android emulator setup/theme captures. No real-phone speech/haptic/background evaluation, pricing or provider retention verification is present.
 
 ## Product Principles
 - Confirm before monitoring; ambiguous setup cannot start a monitor.
@@ -36,4 +36,4 @@ implementation.md is the original research architecture, not measured product re
 - Minimize collection and never persist raw audio by default.
 
 ## Open Decisions
-Gnani authorization must be corrected before live speech tests; account quotas/terms and recognition results remain unverified. Minimum supported physical-device behavior must be tested. User declined prebuilt-screen selection: build a standard accessible Material shell driven by inferred intents and events, not fixed token setup screens.
+Gnani connection authorization is verified; account quotas/terms and speech recognition results remain unverified. Minimum supported physical-device behavior must be tested. User declined prebuilt-screen selection: build a standard accessible Material shell driven by inferred intents and events, not fixed token setup screens.
