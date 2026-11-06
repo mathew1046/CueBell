@@ -93,12 +93,14 @@ test('unconfigured builds cannot silently pass distribution checks', () => {
   });
   assert.equal(valid.status, 0, valid.stderr);
 });
-test('main surface contains workflow controls, not operator setup', () => {
-  const source = readFileSync(new URL('../src/app/index.tsx', import.meta.url), 'utf8');
+test('app screens contain workflow controls, not operator setup', () => {
+  const screens = ['index', 'token', 'history', 'settings', 'help'];
+  const source = screens.map(name => readFileSync(new URL(`../src/app/${name}.tsx`, import.meta.url), 'utf8')).join('\n');
   for (const label of ['Backend HTTPS URL', 'Pairing code', 'Connect your backend', 'Backend connection settings', '<Modal']) {
     assert.ok(!source.includes(label), `Operator UI must not return: ${label}`);
   }
-  for (const label of ['>Speak</Button>', '>Continue</Button>', '>Start listening</Button>', '>Announcements</Button>', '>Stop</Button>']) {
-    assert.ok(source.includes(label));
+  for (const label of ["'Start Listening'", "'Stop Listening'", '>Speak</Text>', '>Continue</Button>',
+    'label="History"', '>Announcements</Text>', '>Stop</Button>', 'Allow audio & text processing']) {
+    assert.ok(source.includes(label) || readFileSync(new URL('../src/components/app.tsx', import.meta.url), 'utf8').includes(label), label);
   }
 });

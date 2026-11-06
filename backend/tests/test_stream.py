@@ -221,6 +221,9 @@ def test_monitor_stream_dedups_provider_segments_and_alerts(relay, intelligence)
                 pass
         assert error.value.code == 4403
         socket.send_bytes(b"\0" * 1024)
+        transcript = receive_type(socket, "transcript")
+        assert transcript["mode"] == "monitor"
+        assert transcript["segment"]["text"] == final["text"]
         alert = receive_type(socket, "alert")
         assert alert["alert"]["token"] == "P042"
         assert len(intelligence.extract_calls) == 1
@@ -231,6 +234,29 @@ def test_monitor_stream_dedups_provider_segments_and_alerts(relay, intelligence)
     state = client.get("/v1/state", headers=auth).json()
     assert len(state["alerts"]) == 1
     assert not state["stream_connected"]
+
+
+def test_monitor_forwards_final_malayalam_before_token_interpretation(relay, intelligence):
+    client, _, options = relay
+    options["transcripts"] = [
+        {"type": "transcript", "text": "ടോക്കൺ", "segment_id": "p1", "is_final": False},
+        {
+            "type": "transcript",
+            "text": "ടോക്കൺ നാൽപ്പത്തിരണ്ട്, കൗണ്ടർ മൂന്ന്",
+            "segment_id": "p1",
+            "is_final": True,
+        },
+    ]
+    auth = pair(client)
+    activate(client, auth)
+    with client.websocket_connect("/v1/stream?mode=monitor", headers={**auth, **CONSENT}) as socket:
+        ready(socket)
+        socket.send_bytes(b"\0" * 1024)
+        event = receive_type(socket, "transcript")
+        assert event["mode"] == "monitor"
+        assert event["segment"]["text"] == options["transcripts"][-1]["text"]
+        receive_type(socket, "observation")
+        assert len(intelligence.extract_calls) == 1
 
 
 @pytest.mark.parametrize(

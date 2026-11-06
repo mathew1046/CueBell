@@ -1,374 +1,201 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { AccessibilityInfo, AppState, Keyboard, KeyboardAvoidingView, Linking, PermissionsAndroid, Permission,
-  Platform, ScrollView, StyleSheet, View } from 'react-native';
-import { ActivityIndicator, Appbar, Button, Checkbox, Icon,
-  Surface, Text, TextInput, useTheme } from 'react-native-paper';
+import { useIsFocused, useRouter } from 'expo-router';
+import { useState } from 'react';
+import { AccessibilityInfo, ActivityIndicator, Image, Pressable, ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
+import { Icon, Text } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import Listener from '../../modules/queue-listener';
-import { api, ensureSession, loadConnection, saveConnection } from '../lib/api';
-import { Connection, Intent, NativeSnapshot, QueueAlert, QueueEvent, Rule } from '../lib/types';
-import { prepareConsentedSession, requireProcessingConsent } from '../lib/session';
-
-const preferenceLabel = (values: string[]) => values.map(v =>
-  ({ visual: 'Visual', vibration: 'Vibration', sound: 'Sound' })[v] ?? v).join(' + ');
+import { ConsentCard, ErrorBanner } from '../components/app';
+import { ListeningWaveform, LiveTranscription } from '../components/listening';
+import { AlertCard, NavTile, Notice, PrefChips, SoftCard, SoftIconButton } from '../components/ui';
+import { spell, useReduceMotion } from '../lib/a11y';
+import { useCueBell } from '../lib/cuebell';
+import { useAppTheme } from '../lib/theme';
 
 export default function Home() {
-  const theme = useTheme();
+  const theme = useAppTheme();
   const insets = useSafeAreaInsets();
-  const [connection, setConnection] = useState<Connection | null>(null);
-  const connectionRef = useRef<Connection | null>(null);
-  const [consent, setConsent] = useState(false);
-  const [request, setRequest] = useState('');
-  const [busy, setBusy] = useState(false);
-  const [error, setError] = useState('');
-  const [proposal, setProposal] = useState<{ id: string; intent: Intent } | null>(null);
-  const [clarification, setClarification] = useState('');
-  const [showDetails, setShowDetails] = useState(false);
-  const [showHistory, setShowHistory] = useState(false);
-  const [rule, setRule] = useState<Rule | null>(null);
-  const [events, setEvents] = useState<QueueEvent[]>([]);
-  const [alerts, setAlerts] = useState<QueueAlert[]>([]);
-  const [native, setNative] = useState<NativeSnapshot>(() => JSON.parse(Listener.snapshot()));
-  const [booting, setBooting] = useState(true);
-  const [permissionError, setPermissionError] = useState(false);
-  const analyzing = useRef(false);
-  const consentRef = useRef(false);
-  const lastSpoken = useRef('');
-  const processed = useRef(new Set<string>());
-  const revision = useRef(0);
-  const suppressMonitor = useRef(false);
-  const scroll = useRef<React.ComponentRef<typeof ScrollView>>(null);
-  const requestGroupY = useRef(0);
-  const confirmationOffset = useRef<number | null>(null);
-  const lastHealthAnnouncement = useRef('');
-
-  const addEvent = useCallback((event: QueueEvent) => {
-    if (suppressMonitor.current && (event.rule || event.alert || event.type === 'observation' ||
-      (event.type === 'transcript' && event.mode !== 'request'))) return;
-    const key = event.sequence !== undefined ? `sequence:${event.sequence}` :
-      event.segment ? `segment:${event.segment.id}` : undefined;
-    if (key) {
-      if (processed.current.has(key)) return;
-      processed.current.add(key);
-      if (processed.current.size > 1000) processed.current.delete(processed.current.values().next().value!);
-    }
-    if (event.rule || event.alert) revision.current++;
-    if (event.rule) setRule(event.rule);
-    if (event.type === 'monitor.created') setAlerts([]);
-    if (event.alert) {
-      const alert = event.alert;
-      setAlerts(old => [alert, ...old.filter(a => a.id !== alert.id)].slice(0, 20));
-      if (event.type === 'alert' || event.type === 'alert.corrected') {
-        AccessibilityInfo.announceForAccessibility(event.type === 'alert.corrected' ?
-          'Correction: the previous token call has changed. Check the official display.' :
-          `Token ${alert.token} called. ${alert.counter ? `Counter ${alert.counter}.` : 'Counter unknown.'}`);
-        scroll.current?.scrollTo({ y: 0, animated: false });
-      }
-    }
-    if (event.type === 'transcript' || event.type === 'observation') {
-      setEvents(old => {
-        const id = event.segment?.id ?? event.observation?.id;
-        if (old.some(e => (e.segment?.id ?? e.observation?.id) === id)) return old;
-        return [event, ...old].slice(0, 100);
-      });
-    }
-  }, []);
-
-  const prepareSession = useCallback(async () => {
-    const c = await prepareConsentedSession(ensureSession, () => consentRef.current);
-    if (connectionRef.current?.token !== c.token) {
-      revision.current++;
-      Listener.clear(); processed.current.clear(); setEvents([]); setAlerts([]); setRule(null); setProposal(null);
-      suppressMonitor.current = c.suppressMonitor ?? false;
-    }
-    connectionRef.current = c; setConnection(c);
-    return c;
-  }, []);
-
-  const analyze = useCallback(async (text: string) => {
-    if (!text.trim() || analyzing.current || !consentRef.current) return;
-    analyzing.current = true; confirmationOffset.current = null;
-    setBusy(true); setError(''); setProposal(null); setClarification('');
-    try {
-      const c = await prepareSession();
-      // Request mode closes its stream after the completed utterance. Let teardown finish.
-      let result: { status: string; proposal_id?: string; intent: Intent; messages?: string[] } | undefined;
-      for (let attempt = 0; attempt < 3; attempt++) {
-        try {
-          requireProcessingConsent(() => consentRef.current);
-          result = await api(c, '/v1/intent', { text, consent_to_text_processing: true });
-          break;
-        } catch (e) {
-          if (attempt < 2 && e instanceof Error && e.message.includes('microphone')) {
-            await new Promise(resolve => setTimeout(resolve, 600));
-          } else throw e;
-        }
-      }
-      if (result?.status === 'confirm' && result.proposal_id) {
-        Keyboard.dismiss();
-        setProposal({ id: result.proposal_id, intent: result.intent });
-        AccessibilityInfo.announceForAccessibility(`Request ready for review. Token ${result.intent.token}. Nothing has started. Check the details and confirm.`);
-      } else setClarification(result?.messages?.join('\n') || 'Please type the exact token and your preferred alert.');
-    } catch (e) { setError(e instanceof Error ? e.message : 'Could not interpret the request. Try typing it.'); }
-    finally { analyzing.current = false; setBusy(false); }
-  }, [prepareSession]);
-
-  const sync = useCallback(() => {
-    const snapshot: NativeSnapshot = JSON.parse(Listener.snapshot());
-    setNative(snapshot);
-    snapshot.events.forEach(addEvent);
-    return snapshot;
-  }, [addEvent]);
-
-  const refresh = useCallback(async () => {
-    sync();
-    const c = connectionRef.current;
-    if (!c) return;
-    const expectedRevision = revision.current;
-    try {
-      const state = await api<{ rule: Rule | null; history: QueueEvent[]; alerts: QueueAlert[] }>(c, '/v1/state');
-      if (revision.current !== expectedRevision || connectionRef.current?.token !== c.token ||
-        connectionRef.current?.url !== c.url || suppressMonitor.current) return;
-      state.history.forEach(addEvent); setRule(state.rule); setAlerts(state.alerts.slice().reverse());
-    } catch (e) {
-      if (revision.current === expectedRevision && connectionRef.current?.token === c.token)
-        setError(e instanceof Error ? e.message : 'Backend unavailable.');
-    }
-  }, [addEvent, sync]);
-
-  useEffect(() => {
-    const subscription = Listener.addListener('onEvent', ({ json }) => {
-      const event: QueueEvent = JSON.parse(json);
-      addEvent(event);
-      if (event.type === 'status') sync();
-      if (event.type === 'transcript' && event.mode === 'request' && event.segment &&
-        lastSpoken.current !== event.segment.id) {
-        lastSpoken.current = event.segment.id;
-        const text = event.segment.text;
-        setRequest(text);
-        void analyze(text);
-      }
-    });
-    const app = AppState.addEventListener('change', state => { if (state === 'active') void refresh(); });
-    void loadConnection().then(c => {
-      suppressMonitor.current = c?.suppressMonitor ?? false;
-      connectionRef.current = c; setConnection(c);
-      void refresh();
-    }).catch(() => setError('Could not restore your session. Please try again.'))
-      .finally(() => setBooting(false));
-    return () => { subscription.remove(); app.remove(); };
-  }, [addEvent, analyze, refresh, sync]);
-
-  const run = async (task: () => Promise<void>) => {
-    if (busy) return;
-    setBusy(true); setError('');
-    try { await task(); }
-    catch (e) { setError(e instanceof Error ? e.message : 'Something went wrong. Please try again.'); }
-    finally { setBusy(false); sync(); }
+  const reduceMotion = useReduceMotion();
+  const router = useRouter();
+  const focused = useIsFocused();
+  const { width, fontScale } = useWindowDimensions();
+  const [consentRequested, setConsentRequested] = useState(false);
+  const [spokenSetup, setSpokenSetup] = useState<{ previousTranscriptId?: string } | null>(null);
+  const app = useCueBell();
+  const { activeRule, proposal, native, listening, capturing, captureMode, consent, busy, phase } = app;
+  const token = (proposal?.intent ?? activeRule)?.token;
+  const latestRequest = app.events.find(event => event.type === 'transcript' && event.mode === 'request');
+  const setupTranscript = spokenSetup && latestRequest?.segment?.id !== spokenSetup.previousTranscriptId
+    ? latestRequest : undefined;
+  const captureInProgress = phase !== 'IDLE' && phase !== 'ERROR';
+  const showSetup = !!spokenSetup && (busy || !!setupTranscript);
+  const showRequest = showSetup || (captureInProgress && captureMode === 'request');
+  const showTranscript = captureInProgress || showSetup;
+  const stopping = phase === 'STOPPING';
+  const canStop = native.running && !stopping;
+  const status = listening && showRequest ? 'Say your token' : app.statusLabel;
+  const heroSize = Math.min(320, Math.round(width * 2 / 3));
+  const heroSpace = Math.min(52, Math.round(width * 0.12));
+  const headerTop = Math.max(8, Math.min(60, Math.round(width * 0.135)) - insets.top);
+  const largeTokenLayout = fontScale >= 1.5;
+  const background = theme.dark ? theme.colors.background : '#F8F5F4';
+  const shortcutStyle = [styles.shortcut, { backgroundColor: theme.dark ? theme.colors.surfaceVariant : '#EFEAE8' }];
+  const editToken = () => {
+    setSpokenSetup(null);
+    app.clearProposal();
+    router.push('/token');
   };
-
-  const start = useCallback(async (mode: 'request' | 'monitor') => {
-    if (!consentRef.current) throw new Error('Please agree to processing before continuing.');
-    const c = mode === 'request' ? await prepareSession() : connectionRef.current;
-    if (!c || c.expires * 1000 <= Date.now()) throw new Error('Your session has expired. Submit your request again to continue.');
-    if (AppState.currentState !== 'active') throw new Error('Open the app to start the microphone.');
-    const permissions: Permission[] = [PermissionsAndroid.PERMISSIONS.RECORD_AUDIO];
-    if (Number(Platform.Version) >= 33) permissions.push(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS);
-    const granted = await PermissionsAndroid.requestMultiple(permissions);
-    if (!permissions.every(p => granted[p] === PermissionsAndroid.RESULTS.GRANTED)) {
-      setPermissionError(true);
-      throw new Error('Microphone and notification permission are needed. You can still type your request.');
+  const label = canStop ? 'Stop Listening' :
+    stopping ? 'Stopping...' : phase === 'ERROR' ? 'Retry Listening' : 'Start Listening';
+  const press = () => {
+    if (canStop) {
+      setSpokenSetup(null);
+      return capturing ? app.cancelCapture() : app.pause();
     }
-    setPermissionError(false);
-    requireProcessingConsent(() => consentRef.current);
-    try { await Listener.start(c.url, c.token, mode); }
-    catch (e) { setPermissionError(true); throw e; }
-    // startForegroundService is asynchronous; status events supply the real readiness.
-  }, [prepareSession]);
-
-  const control = async (action: 'pause' | 'resume' | 'stop' | 'acknowledge', alertId?: string) => {
-    if (!connection) return;
-    revision.current++;
-    if (action === 'pause' || action === 'stop') await Listener.stop();
-    if (action === 'stop') {
-      // Local privacy cleanup must not depend on a reachable backend.
-      suppressMonitor.current = true;
-      setRule(null); setAlerts([]); setEvents([]); Listener.clear(); setProposal(null);
-      setRequest(''); setClarification(''); lastSpoken.current = '';
-      const next = { ...connection, suppressMonitor: true };
-      connectionRef.current = next; setConnection(next);
-      try { await saveConnection(next); }
-      finally {
-        try { await api(connection, '/v1/control', { action, alert_id: null }); }
-        catch { throw new Error('Stopped and cleared on this phone. Backend cleanup failed; its session will expire.'); }
-      }
+    if (!consent) {
+      setConsentRequested(true);
+      AccessibilityInfo.announceForAccessibility('Allow audio and text processing below before starting.');
       return;
     }
-    addEvent(await api<QueueEvent>(connection, '/v1/control', { action, alert_id: alertId ?? null }));
-    if (action === 'acknowledge' && alertId) Listener.dismissAlert(alertId);
-    if (action === 'resume') await start('monitor');
+    setConsentRequested(false);
+    if (!token) {
+      setSpokenSetup({ previousTranscriptId: latestRequest?.segment?.id });
+      return app.speak();
+    }
+    setSpokenSetup(null);
+    if (proposal) return app.confirm();
+    app.resume();
   };
 
-  const buttonStyle = { minHeight: 48, justifyContent: 'center' as const };
-  const activeRule = rule && !['STOPPED', 'EXPIRED'].includes(rule.status);
-  const listening = native.running && native.state === 'LISTENING';
-  const statusLabel = listening ? (native.mode === 'request' ? 'Speak · short pauses are OK' : 'Listening') :
-    native.running ? (native.state === 'STARTING' ? 'Starting...' : 'Listening interrupted') : activeRule ? 'Paused' : 'Not listening';
-  const statusDetail = native.message !== 'Microphone is off.' && (!listening || /gap|missed|interrupted/i.test(native.message)) ? native.message : '';
-  const latestUnclear = events.find(event => event.observation)?.observation?.type === 'UNCERTAIN';
-  const muted = { color: theme.colors.onSurfaceVariant };
-
-  useEffect(() => {
-    const key = `${native.mode}:${native.state}:${Boolean(activeRule)}`;
-    if (lastHealthAnnouncement.current === key) return;
-    const initial = lastHealthAnnouncement.current === '';
-    lastHealthAnnouncement.current = key;
-    if (!initial) AccessibilityInfo.announceForAccessibility(`${statusLabel}. ${native.message}`);
-    // Heartbeats and repeated reconnect countdowns do not interrupt TalkBack.
-  }, [native.mode, native.state, native.message, activeRule, statusLabel]);
-
-  const screen = <View style={[styles.root, { backgroundColor: theme.colors.background }]}>
-    <Appbar.Header style={{ backgroundColor: theme.colors.background }}>
-      <Appbar.Content title="CueBell" />
-    </Appbar.Header>
-    {!!error && <View style={[styles.errorRegion, { backgroundColor: theme.colors.errorContainer }]}>
-      <Text variant="bodyLarge" accessibilityRole="alert" accessibilityLiveRegion="assertive"
-        style={{ color: theme.colors.onErrorContainer }}>{error}</Text>
-      {permissionError && <Button contentStyle={buttonStyle} onPress={() => void Linking.openSettings()}>Open Android permissions</Button>}
-      <Button contentStyle={buttonStyle} onPress={() => setError('')} accessibilityLabel="Dismiss error">Dismiss</Button>
-    </View>}
-    <KeyboardAvoidingView style={styles.root} behavior="padding" keyboardVerticalOffset={0}>
-      <ScrollView ref={scroll} keyboardShouldPersistTaps="handled" contentContainerStyle={[
-        styles.content, { paddingBottom: Math.max(insets.bottom, 24) + 24 }]}>
-        {booting ? <ActivityIndicator accessibilityLabel="Restoring your session" /> : <>
-          {alerts.filter(a => a.state !== 'acknowledged' && !a.acknowledged).map(alert => <Surface key={alert.id} elevation={0}
-            style={[styles.alert, { backgroundColor: alert.state === 'corrected' ? theme.colors.errorContainer : theme.colors.secondaryContainer }]}>
-            <Text variant="headlineSmall" accessibilityRole="header">{alert.state === 'corrected' ? 'Call changed' : 'Your turn'}</Text>
-            <Text style={styles.token}>{alert.token}</Text>
-            <Text variant="titleLarge">{alert.state === 'corrected' ? 'Previous call corrected or cancelled.' :
-              alert.counter ? `Go to counter ${alert.counter}` : 'Counter unclear'}</Text>
-            <Text variant="bodyLarge">Check the venue display.</Text>
-            <Button mode="contained" contentStyle={buttonStyle} disabled={busy}
-              onPress={() => void run(() => control('acknowledge', alert.id))}>I’ve seen this</Button>
-          </Surface>)}
-
-          <View style={styles.status} accessible accessibilityLabel={`${statusLabel}. ${statusDetail}`}>
-            <Icon source={listening ? 'microphone' : native.running ? 'connection' : 'microphone-off'} size={24}
-              color={listening ? theme.colors.primary : theme.colors.onSurfaceVariant} />
-            <View style={styles.flex}>
-              <Text variant="titleMedium">{statusLabel}</Text>
-              {!!statusDetail && <Text variant="bodyMedium" style={muted}>{statusDetail}</Text>}
-            </View>
+  return <View style={[styles.root, { backgroundColor: background, paddingTop: insets.top }]}>
+    <ScrollView keyboardShouldPersistTaps="handled"
+      contentContainerStyle={[styles.content, { paddingTop: headerTop, paddingBottom: insets.bottom + 20 }]}>
+      <View style={[styles.header, fontScale >= 1.5 && width < 420 && styles.headerWrap]}>
+        <View style={styles.brand}>
+          <View importantForAccessibility="no-hide-descendants">
+            <Image source={require('../../assets/cuebell-mark.png')} resizeMode="contain"
+              style={[styles.brandMark, theme.dark && { tintColor: theme.colors.onSurface }]} />
           </View>
+          <View style={styles.brandCopy}>
+            <Text variant="headlineSmall" accessibilityRole="header" style={[styles.brandTitle, { color: theme.colors.onSurface }]}>CueBell</Text>
+            <Text style={[styles.tagline, { color: theme.colors.onSurfaceVariant }]}>Your Turn, Without Limits</Text>
+          </View>
+        </View>
+        <View style={styles.shortcuts}>
+          <SoftIconButton icon="translate" label="Announcement languages" style={shortcutStyle}
+            onPress={() => router.push({ pathname: '/help', params: { topic: 'languages' } })} />
+          <SoftIconButton icon="human" label="Accessibility settings" style={shortcutStyle}
+            onPress={() => router.push({ pathname: '/settings', params: { section: 'accessibility' } })} />
+        </View>
+      </View>
 
-          {!native.running && <View>
-            <Checkbox.Item label="Allow audio & text processing" status={consent ? 'checked' : 'unchecked'}
-              onPress={() => { setConsent(!consent); consentRef.current = !consent; }} position="leading"
-              style={styles.checkbox} labelStyle={styles.checkboxLabel} />
-            <Text variant="bodyMedium" style={muted}>Audio goes to Gnani. Text goes to OpenAI.</Text>
-          </View>}
-
-          {activeRule && <View style={styles.group}>
-            <Text variant="titleLarge">Your token</Text>
-            <Text style={[styles.token, { color: theme.colors.primary }]}>{rule.token}</Text>
-            <Text variant="bodyLarge">{preferenceLabel(rule.alert_preferences)}</Text>
-            <View style={styles.row}>
-              {native.running ? <Button mode="contained-tonal" icon="pause" contentStyle={buttonStyle} disabled={busy}
-                onPress={() => void run(() => control('pause'))}>Pause</Button> :
-                <Button mode="contained" icon="microphone" contentStyle={buttonStyle} disabled={busy || !consent}
-                  onPress={() => void run(() => control('resume'))}>Start listening</Button>}
-              <Button contentStyle={buttonStyle} disabled={busy} onPress={() => void run(() => control('stop'))}>Stop</Button>
+      {app.booting ? <ActivityIndicator size="large" style={styles.restoring}
+        accessibilityLabel="Restoring your session" /> : <>
+        <View style={[styles.heroGroup, { marginVertical: heroSpace }]}>
+          <Pressable testID="listening-control" accessibilityRole="button" accessibilityLabel={label}
+            accessibilityHint={canStop ? 'Turns off the microphone. Recent captions are in History.' :
+              token ? app.statusLabel : 'Starts spoken token setup here. Use the pencil to type your token.'}
+            accessibilityState={{ disabled: busy || stopping, busy }}
+            disabled={busy || stopping} onPress={press}
+            style={({ pressed }) => [styles.hero, {
+              width: heroSize, minHeight: heroSize, borderRadius: Math.round(heroSize * 0.29),
+              backgroundColor: theme.dark ? theme.colors.primary : '#323234', boxShadow: theme.shadow.hero,
+              transform: [{ scale: pressed && !reduceMotion ? 0.98 : 1 }],
+            }]}>
+            <View pointerEvents="none" importantForAccessibility="no-hide-descendants" style={styles.heroContent}>
+              {captureInProgress ? <ListeningWaveform
+                animate={focused && listening && !reduceMotion && !app.takeover}
+                color={theme.colors.onPrimary} height={Math.round(heroSize * 0.28)} /> :
+                <Icon source={capturing ? app.statusIcon : 'microphone'} size={Math.round(heroSize * 0.28)} color={theme.colors.onPrimary} />}
+              <Text style={[styles.heroTitle, { color: theme.colors.onPrimary }]}>{label}</Text>
+              {captureInProgress && status !== label &&
+                <Text style={[styles.heroStatus, { color: theme.colors.onPrimary }]}>{status}</Text>}
+              <View style={[styles.heroAction, { backgroundColor: theme.colors.onPrimary }]}>
+                {busy ? <ActivityIndicator color={theme.colors.primary} /> :
+                  <Icon source={canStop ? 'stop' : 'play'} size={29} color={theme.colors.primary} />}
+              </View>
             </View>
-            {!native.running && <Button contentStyle={buttonStyle} disabled={busy} onPress={() => {
-              setProposal(null); setClarification(''); scroll.current?.scrollToEnd({ animated: false });
-            }}>Change token</Button>}
-          </View>}
+          </Pressable>
+          {showTranscript && <LiveTranscription
+            events={showRequest && spokenSetup ? (setupTranscript ? [setupTranscript] : []) : app.events}
+            mode={showRequest ? 'request' : 'monitor'} listening={listening} />}
+          {!!app.statusDetail && <Text variant="bodyMedium" style={{ color: theme.colors.onSurfaceVariant }}>{app.statusDetail}</Text>}
+          {consentRequested && !consent && !native.running && <ConsentCard />}
+          <ErrorBanner />
+          {!captureInProgress && !!app.clarification &&
+            <Notice tone="warn" icon="help-circle" live="polite">{app.clarification}</Notice>}
+          {showTranscript && !showRequest && app.latestUnclear &&
+            <Notice tone="warn" icon="help-circle">Unclear announcement. Check the display.</Notice>}
+        </View>
 
-          {(!native.running || native.mode === 'request') && <View style={styles.group}
-            onLayout={e => {
-              requestGroupY.current = e.nativeEvent.layout.y;
-              if (proposal && confirmationOffset.current !== null) scroll.current?.scrollTo({
-                y: Math.max(0, requestGroupY.current + confirmationOffset.current - 16), animated: false });
-            }}>
-            <Text variant="headlineSmall" accessibilityRole="header">{activeRule ? 'Change token' : 'Your request'}</Text>
-            <TextInput mode="outlined" label="Token and alert" multiline value={request}
-              onChangeText={text => { setRequest(text); setProposal(null); setClarification(''); }}
-              placeholder="Token 10. Alert me."
-              style={styles.input} maxLength={1500} editable={!busy && !native.running} />
-            <View style={styles.row}>
-              {native.running ? <Button mode="outlined" icon="stop" contentStyle={buttonStyle}
-                onPress={() => void run(async () => { await Listener.stop(); })}>Cancel</Button> :
-                <Button mode={request.trim() ? 'outlined' : 'contained'} icon="microphone-outline" contentStyle={styles.speakButton}
-                  disabled={!consent || busy} onPress={() => void run(() => start('request'))}>Speak</Button>}
-              <Button mode={request.trim() ? 'contained' : 'outlined'} icon="arrow-right" contentStyle={buttonStyle} loading={busy}
-                disabled={!consent || busy || native.running || !request.trim()}
-                onPress={() => void analyze(request)}>Continue</Button>
+        <SoftCard style={styles.tokenCard}>
+          <View style={styles.tokenRow}>
+            <View style={[styles.tokenReadout, largeTokenLayout && styles.tokenReadoutLarge]} accessible accessibilityLabel={token ?
+              `${proposal ? 'Review token' : 'My token'}, ${spell(token)}` : 'My token, not set'}>
+              <View style={styles.tokenLabel}>
+                <Icon source="ticket-outline" size={38} color={theme.colors.onSurface} />
+                <Text variant="titleMedium" style={[styles.tokenTitle, { color: theme.colors.onSurface }]}>
+                  {proposal ? 'Review token' : 'My Token'}
+                </Text>
+              </View>
+              {!largeTokenLayout && <View style={[styles.divider, { backgroundColor: theme.colors.outlineVariant }]} />}
+              <Text style={[styles.tokenValue, !token && styles.noToken, largeTokenLayout && styles.tokenValueLarge,
+                { color: theme.colors.onSurface }]}>
+                {token ?? 'Not set'}
+              </Text>
             </View>
-            {clarification !== '' && <Text variant="bodyLarge" accessibilityLiveRegion="polite" style={{ color: theme.colors.error }}>{clarification}</Text>}
-            {proposal && <Surface elevation={0} style={[styles.confirmation, { backgroundColor: theme.colors.surfaceVariant }]}
-              onLayout={e => {
-                confirmationOffset.current = e.nativeEvent.layout.y;
-                scroll.current?.scrollTo({ y: Math.max(0, requestGroupY.current + e.nativeEvent.layout.y - 16), animated: false });
-              }}>
-              <Text variant="titleLarge">Is this right?</Text>
-              <Text style={styles.confirmToken}>{proposal.intent.token}</Text>
-              <Text variant="bodyLarge">{preferenceLabel(proposal.intent.alert_preferences)}</Text>
-              <Button mode="contained" contentStyle={buttonStyle} disabled={busy || !consent}
-                onPress={() => void run(async () => {
-                  if (!connection) return;
-                  revision.current++;
-                  const event = await api<QueueEvent>(connection, '/v1/confirm', { proposal_id: proposal.id });
-                  const next = { ...connection, suppressMonitor: false };
-                  await saveConnection(next); connectionRef.current = next; setConnection(next);
-                  suppressMonitor.current = false; addEvent(event);
-                  Listener.clear(); setProposal(null); await start('monitor');
-                })}>Start listening</Button>
-              <Button contentStyle={buttonStyle} onPress={() => setProposal(null)}>Change</Button>
-            </Surface>}
-          </View>}
+            <SoftIconButton icon="pencil-outline" label={token ? 'Change token' : 'Set your token'}
+              style={styles.shortcut} disabled={native.running || busy} onPress={editToken} />
+          </View>
+          {proposal && <PrefChips values={proposal.intent.alert_preferences} />}
+        </SoftCard>
 
-          {(events.length > 0 || activeRule) && <View style={styles.group}>
-            <Button icon={showHistory ? 'chevron-up' : 'chevron-down'} contentStyle={buttonStyle}
-              accessibilityState={{ expanded: showHistory }} onPress={() => setShowHistory(!showHistory)}>Announcements</Button>
-            {latestUnclear && !showHistory && <Text variant="bodyLarge" accessibilityLiveRegion="polite">Unclear announcement. Check the display.</Text>}
-            {showHistory && (events.length === 0 ? <Text variant="bodyLarge" style={muted}>No announcements yet.</Text> :
-              events.slice(0, 30).map((event, index) => <View key={event.segment?.id ?? event.observation?.id ?? index} style={styles.timelineItem}>
-                {event.segment ? <>
-                  <Text variant="labelLarge" style={muted}>{event.mode === 'request' ? 'Your spoken request' : 'Announcement transcript'}</Text>
-                  <Text variant="bodyLarge" selectable>{event.segment.text}</Text>
-                </> : event.observation && <>
-                  <Text variant="titleMedium">{event.observation.type === 'UNCERTAIN' ? 'Uncertain · check the display' :
-                    `${event.observation.type.toLowerCase()} · ${event.observation.token_normalized ?? 'no token'}`}</Text>
-                  <Text variant="bodyMedium" style={muted}>{event.observation.ambiguity_reason ??
-                    (event.observation.counter ? `Counter ${event.observation.counter}` : 'Counter not identified')}</Text>
-                </>}
-              </View>))}
-          </View>}
-          <Text variant="bodyMedium" style={muted}>Calls may be missed. Check the venue display.</Text>
-          <Button contentStyle={buttonStyle} icon={showDetails ? 'chevron-up' : 'information-outline'}
-            accessibilityState={{ expanded: showDetails }} onPress={() => setShowDetails(!showDetails)}>About & privacy</Button>
-          {showDetails && <View style={styles.group}>
-            <Text variant="bodyLarge">Speak or type your token as the venue uses it. Alerts include vibration and an alarm sound unless you ask for silent alerts.</Text>
-            <Text variant="bodyLarge">Gnani Prisma processes microphone audio. OpenAI processes requests and announcement text. The app and relay save no recordings or transcripts on disk. Provider terms apply.</Text>
-            <Text variant="bodyLarge">Android can interrupt listening in the background. Keep the microphone notification visible. This is an aid, not the official queue.</Text>
-          </View>}
-        </>}
-      </ScrollView>
-    </KeyboardAvoidingView>
+        {app.outstanding.length > 0 && <View style={styles.alerts}>
+          {app.outstanding.map(alert => <AlertCard key={alert.id} alert={alert} busy={busy}
+            onSeen={() => app.acknowledge(alert.id)} onOpen={() => app.showAlert(alert.id)} />)}
+        </View>}
+
+        <View style={styles.tiles}>
+          <NavTile icon="history" label="History" onPress={() => router.push('/history')} />
+          <NavTile icon="cog-outline" label="Settings" onPress={() => router.push('/settings')} />
+          <NavTile icon="help-circle-outline" label="Help" onPress={() => router.push('/help')} />
+        </View>
+        <Text variant="bodyMedium" style={[styles.reminder, { color: theme.colors.onSurfaceVariant }]}>
+          Calls may be missed. Check the venue display.
+        </Text>
+      </>}
+    </ScrollView>
   </View>;
-  return screen;
 }
 
 const styles = StyleSheet.create({
-  root: { flex: 1 }, content: { paddingHorizontal: 24, paddingTop: 16, gap: 24, maxWidth: 640, width: '100%', alignSelf: 'center' },
-  group: { gap: 16 }, row: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
-  status: { flexDirection: 'row', alignItems: 'flex-start', gap: 16 }, flex: { flex: 1, gap: 4 },
-  input: { minHeight: 120 }, checkbox: { paddingHorizontal: 0, paddingVertical: 4, minHeight: 48 },
-  speakButton: { minHeight: 64 },
-  checkboxLabel: { fontSize: 16, textAlign: 'left' },
-  confirmation: { padding: 24, borderRadius: 16, gap: 16 },
-  alert: { padding: 24, borderRadius: 16, gap: 16 },
-  token: { fontSize: 56, fontWeight: '700', fontVariant: ['tabular-nums'] },
-  confirmToken: { fontSize: 36, fontWeight: '700', fontVariant: ['tabular-nums'] },
-  timelineItem: { gap: 4, paddingVertical: 8 }, errorRegion: { paddingHorizontal: 24, paddingVertical: 12, gap: 8 },
+  root: { flex: 1 },
+  content: { width: '100%', maxWidth: 560, alignSelf: 'center', paddingHorizontal: 16 },
+  header: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingHorizontal: 8 },
+  headerWrap: { flexWrap: 'wrap', justifyContent: 'flex-end' },
+  brand: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: 12 },
+  brandMark: { width: 44, height: 48 },
+  brandCopy: { flex: 1, gap: 1 },
+  brandTitle: { fontWeight: '700' },
+  tagline: { fontSize: 13, lineHeight: 18 },
+  shortcuts: { flexDirection: 'row', gap: 10 },
+  shortcut: { width: 48, height: 48, borderRadius: 16 },
+  restoring: { marginTop: 48 },
+  heroGroup: { gap: 14 },
+  hero: { alignSelf: 'center', paddingHorizontal: 18, paddingVertical: 24, justifyContent: 'center' },
+  heroContent: { alignItems: 'center', gap: 11 },
+  heroTitle: { fontSize: 26, lineHeight: 33, fontWeight: '700', textAlign: 'center' },
+  heroStatus: { fontSize: 14, lineHeight: 20, textAlign: 'center' },
+  heroAction: { width: 50, height: 50, borderRadius: 25, alignItems: 'center', justifyContent: 'center', marginTop: 2 },
+  tokenCard: { paddingHorizontal: 20, paddingVertical: 14, borderRadius: 28, gap: 12 },
+  tokenRow: { flexDirection: 'row', alignItems: 'center', gap: 12 },
+  tokenReadout: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: 14 },
+  tokenReadoutLarge: { flexDirection: 'column', alignItems: 'flex-start', gap: 4 },
+  tokenLabel: { flexDirection: 'row', alignItems: 'center', flexShrink: 1, gap: 10 },
+  tokenTitle: { flexShrink: 1 },
+  divider: { width: 1, height: 40 },
+  tokenValue: { flex: 1, fontSize: 46, lineHeight: 56, fontWeight: '800', fontVariant: ['tabular-nums'], textAlign: 'center' },
+  tokenValueLarge: { flex: 0, alignSelf: 'stretch', textAlign: 'left' },
+  noToken: { fontSize: 18, lineHeight: 25, fontWeight: '600' },
+  alerts: { gap: 12, marginTop: 24 },
+  tiles: { flexDirection: 'row', gap: 14, marginTop: 34 },
+  reminder: { marginTop: 22, textAlign: 'center' },
 });

@@ -8,6 +8,8 @@ declare class QueueListenerModule extends NativeModule<{
   snapshot(): string;
   clear(): void;
   dismissAlert(id: string): void;
+  spokenAlertsEnabled(): boolean;
+  setSpokenAlertsEnabled(enabled: boolean): void;
 }
 
 export default requireNativeModule<QueueListenerModule>('QueueListener');

@@ -65,6 +65,31 @@ def test_no_fuzzy_prefix_or_zero_matching(engine, token):
     assert engine.flush(102) == []
 
 
+def test_exact_token_and_counter_are_distinct_and_repeat_alerts_are_suppressed():
+    engine = Engine()
+    engine.activate(make_intent(token="42", target_evidence="42"))
+    call(
+        engine,
+        token_raw="forty-three",
+        token_normalized="43",
+        counter="3",
+        evidence_text="Token forty-three, go to counter three.",
+    )
+    assert engine.flush(102) == []
+    matching_call = {
+        "token_raw": "forty-two",
+        "token_normalized": "42",
+        "counter": "3",
+        "evidence_text": "Token forty-two, go to counter three.",
+    }
+    call(engine, now=103, source_segment_ids=["s2"], **matching_call)
+    alert = engine.flush(105)[0]["alert"]
+    assert (alert["token"], alert["counter"]) == ("42", "3")
+    assert alert["alert_preferences"] == ["vibration", "visual"]
+    call(engine, now=106, source_segment_ids=["s3"], **matching_call)
+    assert engine.flush(108) == []
+
+
 @pytest.mark.parametrize("kind", ["REPEAT", "OTHER", "UNCERTAIN", "CANCEL", "CORRECT"])
 def test_non_calls_and_unresolved_corrections_do_not_alert(engine, kind):
     call(engine, type=kind)

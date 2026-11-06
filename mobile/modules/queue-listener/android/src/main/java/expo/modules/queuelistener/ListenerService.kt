@@ -25,6 +25,7 @@ class ListenerService : Service() {
   private val client = OkHttpClient.Builder().connectTimeout(12, TimeUnit.SECONDS)
     .readTimeout(0, TimeUnit.SECONDS).pingInterval(10, TimeUnit.SECONDS).build()
   private var socket: WebSocket? = null
+  private var started = false
   private var recorder: AudioRecord? = null
   private var capture: Thread? = null
   private val recording = AtomicBoolean(false)
@@ -33,12 +34,13 @@ class ListenerService : Service() {
   private var bearer = ""
   private var mode = "monitor"
   private var stopping = false
-  private var generation = 0
+  @Volatile private var generation = 0
   private var retries = 0
   private var lastMessage = 0L
   private var connectedAt = 0L
   private var gapSince = 0L
   private val notificationManager get() = getSystemService(NotificationManager::class.java)
+  private val spokenAlerts by lazy { SpokenAlerts(this) }
 
   override fun onBind(intent: Intent?) = null
 
@@ -53,25 +55,38 @@ class ListenerService : Service() {
 
   override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
     if (intent?.action == "PAUSE") {
+      stopping = true
+      status("STOPPING", "Turning off the microphone…")
       pauseOnServer()
       stopSelf()
       return START_NOT_STICKY
     }
-    if (ListenerMemory.running || intent == null) return START_NOT_STICKY
+    if (started || intent == null) return START_NOT_STICKY
+    started = true
     baseUrl = intent.getStringExtra("url") ?: ""
     bearer = intent.getStringExtra("token") ?: ""
     mode = intent.getStringExtra("mode") ?: "monitor"
     ListenerMemory.mode = mode
     ListenerMemory.running = true
     if (!NotificationGate.visible(this)) {
-      status("DISCONNECTED", "Enable Android notifications and the Listening status channel before starting.")
       stopping = true; stopSelf()
+      status("ERROR", "Enable Android notifications and the Listening status channel before starting.")
       return START_NOT_STICKY
     }
     val notification = foregroundNotification("Connecting… Microphone starts after speech is ready.")
-    if (Build.VERSION.SDK_INT >= 29) startForeground(1, notification,
-      ServiceInfo.FOREGROUND_SERVICE_TYPE_MICROPHONE)
-    else startForeground(1, notification)
+    try {
+      if (Build.VERSION.SDK_INT >= 29) startForeground(1, notification,
+        ServiceInfo.FOREGROUND_SERVICE_TYPE_MICROPHONE)
+      else startForeground(1, notification)
+    } catch (_: SecurityException) {
+      stopping = true; stopSelf()
+      status("ERROR", "Android blocked the microphone. Check permissions and try again.")
+      return START_NOT_STICKY
+    } catch (_: IllegalStateException) {
+      stopping = true; stopSelf()
+      status("ERROR", "Open CueBell before starting the microphone.")
+      return START_NOT_STICKY
+    }
     wake = (getSystemService(POWER_SERVICE) as PowerManager)
       .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "CueBell:Listening").apply {
         setReferenceCounted(false); acquire(4 * 60 * 60 * 1000L)
@@ -112,7 +127,7 @@ class ListenerService : Service() {
   private fun connect() {
     if (stopping) return
     val gen = ++generation
-    status(if (gapSince > 0) "DEGRADED" else "STARTING",
+    status(if (gapSince > 0) "RECONNECTING" else "STARTING",
       if (gapSince > 0) "Reconnecting. Calls may have been missed." else "Connecting to speech recognition…")
     connectedAt = SystemClock.elapsedRealtime()
     lastMessage = connectedAt
@@ -130,17 +145,24 @@ class ListenerService : Service() {
             when (event.optString("type")) {
               "status" -> when (event.optString("state")) {
                 "READY" -> {
-                  status("STARTING", "Starting microphone…")
+                  if (gapSince == 0L) status("STARTING", "Starting microphone…")
                   startCapture(gen, webSocket)
                 }
                 "LISTENING" -> {
+                  notificationManager.cancel(2)
                   val gap = if (gapSince > 0) (SystemClock.elapsedRealtime() - gapSince) / 1000 else 0
                   status("LISTENING", if (gap > 0) "Listening again after a ${gap}s gap. Check the display."
                     else if (mode == "request") "Speak your request. Short pauses are OK; wait for it to finish."
                     else "Listening · keep your phone near the announcement speaker.")
                   gapSince = 0
                 }
-                "DEGRADED", "DISCONNECTED" -> fail(gen, "Listening interrupted. Calls may be missed.")
+                "DEGRADED", "DISCONNECTED" -> {
+                  stopCapture()
+                  // The relay follows a terminal status with a close code that decides whether to retry.
+                  status("RECONNECTING", "Listening interrupted. Calls may have been missed.")
+                }
+                // Keep the reconnecting state until audio reaches the relay again.
+                "STARTING" -> Unit
                 else -> ListenerMemory.emit(event)
               }
               "alert", "alert.corrected" -> {
@@ -161,7 +183,9 @@ class ListenerService : Service() {
       }
       override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
         webSocket.close(code, null)
-        main.post { fail(gen, "Speech stream closed. Calls may have been missed.", RelayFailure.isPermanent(code)) }
+        val permanent = RelayFailure.isPermanent(code)
+        main.post { fail(gen, if (permanent) "The speech service rejected the connection."
+          else "Speech stream closed. Calls may have been missed.", permanent) }
       }
       override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
         val permanent = RelayFailure.isPermanent(response?.code ?: 0)
@@ -188,6 +212,8 @@ class ListenerService : Service() {
       recorder = audio
       audio.startRecording()
       check(audio.recordingState == AudioRecord.RECORDSTATE_RECORDING)
+      val level = AudioLevel()
+      ListenerMemory.audioLevel = level
       recording.set(true)
       capture = Thread({
         Process.setThreadPriority(Process.THREAD_PRIORITY_AUDIO)
@@ -207,6 +233,7 @@ class ListenerService : Service() {
             lastFrameAt = now
             Pcm16.encode(samples, frame)
             check(stream.send(frame.toByteString())) { "Audio connection closed" }
+            level.update(samples)
             filled = 0
           }
         } catch (_: Exception) {
@@ -217,6 +244,7 @@ class ListenerService : Service() {
   }
 
   private fun stopCapture() {
+    ListenerMemory.audioLevel = null
     recording.set(false)
     val audio = recorder
     recorder = null
@@ -233,7 +261,7 @@ class ListenerService : Service() {
     socket?.cancel(); socket = null
     if (gapSince == 0L) gapSince = SystemClock.elapsedRealtime()
     if (mode == "request" || permanent || retries >= 5) {
-      status("DISCONNECTED", "$reason Open the app to try again.")
+      status("ERROR", "$reason Try again from the app.")
       notificationManager.notify(2, NotificationCompat.Builder(this, "listening")
         .setSmallIcon(android.R.drawable.ic_dialog_alert).setContentTitle("CueBell stopped listening")
         .setContentText("A call may have been missed. Open the app and reconnect.")
@@ -241,7 +269,7 @@ class ListenerService : Service() {
       stopping = true; stopSelf()
     } else {
       val delay = (1000L shl retries++)
-      status("DEGRADED", "$reason Retrying in ${delay / 1000}s.")
+      status("RECONNECTING", "$reason Retrying in ${delay / 1000}s.")
       main.postDelayed({ connect() }, delay)
     }
   }
@@ -291,8 +319,9 @@ class ListenerService : Service() {
       .sortedBy { it.postTime }.dropLast(19).forEach { notificationManager.cancel(it.tag, it.id) }
     val counter = if (alert.isNull("counter")) "Counter unknown — check the display."
       else "Go to counter ${alert.getString("counter")}."
-    val title = if (corrected) "Correction · check the announcement" else "Token ${alert.getString("token")} called"
-    val text = if (corrected) "The previous call was changed or cancelled. Check the app and official display." else counter
+    val title = if (corrected) "Correction · check the announcement" else "It's your turn!"
+    val text = if (corrected) "The previous call was changed or cancelled. Check the app and official display."
+      else "Token ${alert.getString("token")}. $counter"
     notificationManager.notify(tag, 100, NotificationCompat.Builder(this, channel)
       .setSmallIcon(android.R.drawable.ic_dialog_info).setContentTitle(title).setContentText(text)
       .setStyle(NotificationCompat.BigTextStyle().bigText(text)).setContentIntent(openApp())
@@ -303,6 +332,10 @@ class ListenerService : Service() {
       .setPublicVersion(NotificationCompat.Builder(this, channel)
         .setSmallIcon(android.R.drawable.ic_dialog_info).setContentTitle("CueBell alert")
         .setContentText("Open the app to check your queue announcement.").build()).build())
+    if (sound && !corrected) {
+      val token = alert.getString("token").toList().joinToString(" ")
+      runCatching { spokenAlerts.speak(id, "It's your turn. Token $token. $counter") }
+    }
   }
 
   private fun pauseOnServer() {
@@ -319,12 +352,14 @@ class ListenerService : Service() {
     stopping = true; generation++
     main.removeCallbacksAndMessages(null)
     stopCapture()
-    socket?.close(1000, "Microphone stopped"); socket = null
+    spokenAlerts.close()
+    socket?.cancel(); socket = null
     if (wake?.isHeld == true) wake?.release()
     wake = null
     bearer = ""
     ListenerMemory.running = false
-    if (ListenerMemory.state != "DISCONNECTED") status("STOPPED", "Microphone is off.")
+    if (ListenerMemory.state == "ERROR") status("ERROR", ListenerMemory.message)
+    else status("STOPPED", "Microphone is off.")
     stopForeground(STOP_FOREGROUND_REMOVE)
     super.onDestroy()
   }
