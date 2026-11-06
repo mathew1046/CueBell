@@ -1,0 +1,56 @@
+from typing import Literal
+
+from pydantic import BaseModel, ConfigDict, Field
+
+
+class StrictModel(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True)
+
+
+class Intent(StrictModel):
+    intent: Literal["monitor_announcement", "unsupported", "unclear"]
+    context: str | None
+    token: str | None
+    alert_preferences: list[Literal["visual", "vibration", "sound"]]
+    clarification: str | None
+    # Exact substring of the user's request that names the target.
+    target_evidence: str | None
+
+
+class Segment(StrictModel):
+    id: str
+    text: str
+    received_at: float
+
+
+class ProposedEvent(StrictModel):
+    type: Literal["CALL", "CORRECT", "REPEAT", "CANCEL", "OTHER", "UNCERTAIN"]
+    token_raw: str | None
+    token_normalized: str | None
+    counter: str | None
+    replaces_event_id: str | None
+    evidence_text: str
+    source_segment_ids: list[str]
+    ambiguity_reason: str | None
+
+
+class Extraction(StrictModel):
+    events: list[ProposedEvent]
+
+
+class PairRequest(StrictModel):
+    access_code: str = Field(min_length=1, max_length=256)
+
+
+class IntentRequest(StrictModel):
+    text: str = Field(min_length=1, max_length=1500)
+    consent_to_text_processing: bool
+
+
+class ConfirmRequest(StrictModel):
+    proposal_id: str = Field(min_length=1, max_length=64)
+
+
+class ControlRequest(StrictModel):
+    action: Literal["pause", "resume", "stop", "acknowledge"]
+    alert_id: str | None = Field(default=None, max_length=128)

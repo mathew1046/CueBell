@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-06T00:00:00Z",
+  "title": "Design System: QueueSaathi Android",
+  "extensions": {
+    "colorMeta": {
+      "light-primary": {"role":"primary","displayName":"Deep teal","tonalRamp":["oklch(15% 0.0754 182.2)","oklch(26% 0.0754 182.2)","oklch(38% 0.0754 182.2)","oklch(49% 0.0754 182.2)","oklch(61% 0.0754 182.2)","oklch(72% 0.0754 182.2)","oklch(84% 0.0754 182.2)","oklch(95% 0.0754 182.2)"]},
+      "light-on-primary": {"role":"neutral","displayName":"White action ink","tonalRamp":["oklch(15% 0 0)","oklch(26% 0 0)","oklch(38% 0 0)","oklch(49% 0 0)","oklch(61% 0 0)","oklch(72% 0 0)","oklch(84% 0 0)","oklch(95% 0 0)"]},
+      "light-background": {"role":"neutral","displayName":"Pale mist","tonalRamp":["oklch(15% 0.0079 177.3)","oklch(26% 0.0079 177.3)","oklch(38% 0.0079 177.3)","oklch(49% 0.0079 177.3)","oklch(61% 0.0079 177.3)","oklch(72% 0.0079 177.3)","oklch(84% 0.0079 177.3)","oklch(95% 0.0079 177.3)"]},
+      "light-surface": {"role":"neutral","displayName":"White surface","tonalRamp":["oklch(15% 0 0)","oklch(26% 0 0)","oklch(38% 0 0)","oklch(49% 0 0)","oklch(61% 0 0)","oklch(72% 0 0)","oklch(84% 0 0)","oklch(95% 0 0)"]},
+      "light-surface-variant": {"role":"neutral","displayName":"Review mist","tonalRamp":["oklch(15% 0.0160 166.7)","oklch(26% 0.0160 166.7)","oklch(38% 0.0160 166.7)","oklch(49% 0.0160 166.7)","oklch(61% 0.0160 166.7)","oklch(72% 0.0160 166.7)","oklch(84% 0.0160 166.7)","oklch(95% 0.0160 166.7)"]},
+      "light-on-surface-variant": {"role":"neutral","displayName":"Muted green ink","tonalRamp":["oklch(15% 0.0165 166.4)","oklch(26% 0.0165 166.4)","oklch(38% 0.0165 166.4)","oklch(49% 0.0165 166.4)","oklch(61% 0.0165 166.4)","oklch(72% 0.0165 166.4)","oklch(84% 0.0165 166.4)","oklch(95% 0.0165 166.4)"]},
+      "light-secondary-container": {"role":"secondary","displayName":"Mint call surface","tonalRamp":["oklch(15% 0.0463 170.5)","oklch(26% 0.0463 170.5)","oklch(38% 0.0463 170.5)","oklch(49% 0.0463 170.5)","oklch(61% 0.0463 170.5)","oklch(72% 0.0463 170.5)","oklch(84% 0.0463 170.5)","oklch(95% 0.0463 170.5)"]},
+      "light-on-secondary-container": {"role":"secondary","displayName":"Deep tonal-action ink","tonalRamp":["oklch(15% 0.0493 175.0)","oklch(26% 0.0493 175.0)","oklch(38% 0.0493 175.0)","oklch(49% 0.0493 175.0)","oklch(61% 0.0493 175.0)","oklch(72% 0.0493 175.0)","oklch(84% 0.0493 175.0)","oklch(95% 0.0493 175.0)"]},
+      "light-on-surface": {"role":"neutral","displayName":"Dark green ink","tonalRamp":["oklch(15% 0.0385 178.8)","oklch(26% 0.0385 178.8)","oklch(38% 0.0385 178.8)","oklch(49% 0.0385 178.8)","oklch(61% 0.0385 178.8)","oklch(72% 0.0385 178.8)","oklch(84% 0.0385 178.8)","oklch(95% 0.0385 178.8)"]},
+      "light-error": {"role":"neutral","displayName":"Error red","tonalRamp":["oklch(15% 0.1927 27.7)","oklch(26% 0.1927 27.7)","oklch(38% 0.1927 27.7)","oklch(49% 0.1927 27.7)","oklch(61% 0.1927 27.7)","oklch(72% 0.1927 27.7)","oklch(84% 0.1927 27.7)","oklch(95% 0.1927 27.7)"]},
+      "light-outline": {"role":"neutral","displayName":"Green field outline","tonalRamp":["oklch(15% 0.0264 165.2)","oklch(26% 0.0264 165.2)","oklch(38% 0.0264 165.2)","oklch(49% 0.0264 165.2)","oklch(61% 0.0264 165.2)","oklch(72% 0.0264 165.2)","oklch(84% 0.0264 165.2)","oklch(95% 0.0264 165.2)"]},
+      "light-error-container": {"role":"neutral","displayName":"Paper error surface","tonalRamp":["oklch(15% 0.0301 22.8)","oklch(26% 0.0301 22.8)","oklch(38% 0.0301 22.8)","oklch(49% 0.0301 22.8)","oklch(61% 0.0301 22.8)","oklch(72% 0.0301 22.8)","oklch(84% 0.0301 22.8)","oklch(95% 0.0301 22.8)"]},
+      "light-on-error-container": {"role":"neutral","displayName":"Paper error ink","tonalRamp":["oklch(15% 0.0794 27.6)","oklch(26% 0.0794 27.6)","oklch(38% 0.0794 27.6)","oklch(49% 0.0794 27.6)","oklch(61% 0.0794 27.6)","oklch(72% 0.0794 27.6)","oklch(84% 0.0794 27.6)","oklch(95% 0.0794 27.6)"]},
+      "dark-primary": {"role":"primary","displayName":"Soft mint","tonalRamp":["oklch(15% 0.0858 173.8)","oklch(26% 0.0858 173.8)","oklch(38% 0.0858 173.8)","oklch(49% 0.0858 173.8)","oklch(61% 0.0858 173.8)","oklch(72% 0.0858 173.8)","oklch(84% 0.0858 173.8)","oklch(95% 0.0858 173.8)"]},
+      "dark-on-primary": {"role":"primary","displayName":"Deep mint-action ink","tonalRamp":["oklch(15% 0.0567 176.4)","oklch(26% 0.0567 176.4)","oklch(38% 0.0567 176.4)","oklch(49% 0.0567 176.4)","oklch(61% 0.0567 176.4)","oklch(72% 0.0567 176.4)","oklch(84% 0.0567 176.4)","oklch(95% 0.0567 176.4)"]},
+      "dark-background": {"role":"neutral","displayName":"Deep green canvas","tonalRamp":["oklch(15% 0.0211 174.4)","oklch(26% 0.0211 174.4)","oklch(38% 0.0211 174.4)","oklch(49% 0.0211 174.4)","oklch(61% 0.0211 174.4)","oklch(72% 0.0211 174.4)","oklch(84% 0.0211 174.4)","oklch(95% 0.0211 174.4)"]},
+      "dark-surface": {"role":"neutral","displayName":"Forest surface","tonalRamp":["oklch(15% 0.0293 169.8)","oklch(26% 0.0293 169.8)","oklch(38% 0.0293 169.8)","oklch(49% 0.0293 169.8)","oklch(61% 0.0293 169.8)","oklch(72% 0.0293 169.8)","oklch(84% 0.0293 169.8)","oklch(95% 0.0293 169.8)"]},
+      "dark-surface-variant": {"role":"neutral","displayName":"Forest review surface","tonalRamp":["oklch(15% 0.0301 165.1)","oklch(26% 0.0301 165.1)","oklch(38% 0.0301 165.1)","oklch(49% 0.0301 165.1)","oklch(61% 0.0301 165.1)","oklch(72% 0.0301 165.1)","oklch(84% 0.0301 165.1)","oklch(95% 0.0301 165.1)"]},
+      "dark-on-surface-variant": {"role":"neutral","displayName":"Muted mint ink","tonalRamp":["oklch(15% 0.0179 159.0)","oklch(26% 0.0179 159.0)","oklch(38% 0.0179 159.0)","oklch(49% 0.0179 159.0)","oklch(61% 0.0179 159.0)","oklch(72% 0.0179 159.0)","oklch(84% 0.0179 159.0)","oklch(95% 0.0179 159.0)"]},
+      "dark-secondary-container": {"role":"secondary","displayName":"Deep mint call surface","tonalRamp":["oklch(15% 0.0502 171.8)","oklch(26% 0.0502 171.8)","oklch(38% 0.0502 171.8)","oklch(49% 0.0502 171.8)","oklch(61% 0.0502 171.8)","oklch(72% 0.0502 171.8)","oklch(84% 0.0502 171.8)","oklch(95% 0.0502 171.8)"]},
+      "dark-on-secondary-container": {"role":"secondary","displayName":"Mint tonal-action ink","tonalRamp":["oklch(15% 0.0463 170.5)","oklch(26% 0.0463 170.5)","oklch(38% 0.0463 170.5)","oklch(49% 0.0463 170.5)","oklch(61% 0.0463 170.5)","oklch(72% 0.0463 170.5)","oklch(84% 0.0463 170.5)","oklch(95% 0.0463 170.5)"]},
+      "dark-on-surface": {"role":"neutral","displayName":"Pale mint ink","tonalRamp":["oklch(15% 0.0224 164.5)","oklch(26% 0.0224 164.5)","oklch(38% 0.0224 164.5)","oklch(49% 0.0224 164.5)","oklch(61% 0.0224 164.5)","oklch(72% 0.0224 164.5)","oklch(84% 0.0224 164.5)","oklch(95% 0.0224 164.5)"]},
+      "dark-error": {"role":"neutral","displayName":"Soft error red","tonalRamp":["oklch(15% 0.0891 26.8)","oklch(26% 0.0891 26.8)","oklch(38% 0.0891 26.8)","oklch(49% 0.0891 26.8)","oklch(61% 0.0891 26.8)","oklch(72% 0.0891 26.8)","oklch(84% 0.0891 26.8)","oklch(95% 0.0891 26.8)"]},
+      "dark-outline": {"role":"neutral","displayName":"Muted mint outline","tonalRamp":["oklch(15% 0.0257 162.8)","oklch(26% 0.0257 162.8)","oklch(38% 0.0257 162.8)","oklch(49% 0.0257 162.8)","oklch(61% 0.0257 162.8)","oklch(72% 0.0257 162.8)","oklch(84% 0.0257 162.8)","oklch(95% 0.0257 162.8)"]},
+      "dark-error-container": {"role":"neutral","displayName":"Paper dark error surface","tonalRamp":["oklch(15% 0.1473 28.1)","oklch(26% 0.1473 28.1)","oklch(38% 0.1473 28.1)","oklch(49% 0.1473 28.1)","oklch(61% 0.1473 28.1)","oklch(72% 0.1473 28.1)","oklch(84% 0.1473 28.1)","oklch(95% 0.1473 28.1)"]},
+      "dark-on-error-container": {"role":"neutral","displayName":"Paper dark error ink","tonalRamp":["oklch(15% 0.0677 22.0)","oklch(26% 0.0677 22.0)","oklch(38% 0.0677 22.0)","oklch(49% 0.0677 22.0)","oklch(61% 0.0677 22.0)","oklch(72% 0.0677 22.0)","oklch(84% 0.0677 22.0)","oklch(95% 0.0677 22.0)"]}
+    },
+    "typographyMeta": {
+      "headline-medium": { "displayName": "Introduction", "purpose": "Native system headline; not a custom display face." },
+      "token": { "displayName": "Queue token", "purpose": "Bold tabular numerals; preserve prefixes and leading zeros. No custom line height." },
+      "confirmation-token": { "displayName": "Review token", "purpose": "Checkable token before explicit confirmation." }
+    },
+    "shadows": [{ "name": "task-panels", "value": "0dp", "purpose": "Explicit native elevation zero on alert and confirmation Surfaces; not a CSS shadow token." }],
+    "motion": [],
+    "breakpoints": []
+  },
+  "components": [
+    {
+      "name": "Primary action",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Documentation-only light-theme approximation of native Paper contained action; not application web UI.",
+      "html": "<button class=\"ds-primary\">Confirm &amp; start listening</button>",
+      "css": ".ds-primary{background:#075E54;color:#FFFFFF;border:0;border-radius:20px;min-height:48px;padding:0 24px;font:500 14px/20px Roboto,Arial,sans-serif;letter-spacing:.1px}.ds-primary:hover{filter:brightness(.96)}.ds-primary:focus-visible{outline:2px solid #075E54;outline-offset:3px}.ds-primary:active{filter:brightness(.88)}.ds-primary:disabled{background:rgba(28,27,31,.12);color:rgba(28,27,31,.38)}"
+    },
+    {
+      "name": "Outlined action",
+      "kind": "button",
+      "refersTo": "button-outlined",
+      "description": "Native Paper secondary action represented for the documentation panel only.",
+      "html": "<button class=\"ds-outlined\">Speak request</button>",
+      "css": ".ds-outlined{background:transparent;color:#075E54;border:1px solid #64776E;border-radius:20px;min-height:48px;padding:0 24px;font:500 14px/20px Roboto,Arial,sans-serif;letter-spacing:.1px}.ds-outlined:hover{background:rgba(7,94,84,.08)}.ds-outlined:focus-visible{outline:2px solid #075E54;outline-offset:3px}.ds-outlined:active{background:rgba(7,94,84,.12)}.ds-outlined:disabled{color:rgba(28,27,31,.38);border-color:rgba(28,27,31,.12)}"
+    },
+    {
+      "name": "Tonal pause action",
+      "kind": "button",
+      "refersTo": "button-tonal",
+      "description": "Pause uses Paper contained-tonal mode. Preview is not a native renderer.",
+      "html": "<button class=\"ds-tonal\">Pause listening</button>",
+      "css": ".ds-tonal{background:#C4ECDD;color:#002C23;border:0;border-radius:20px;min-height:48px;padding:0 24px;font:500 14px/20px Roboto,Arial,sans-serif;letter-spacing:.1px}.ds-tonal:hover{filter:brightness(.96)}.ds-tonal:focus-visible{outline:2px solid #075E54;outline-offset:3px}.ds-tonal:active{filter:brightness(.88)}.ds-tonal:disabled{background:rgba(28,27,31,.12);color:rgba(28,27,31,.38)}"
+    },
+    {
+      "name": "Text action",
+      "kind": "button",
+      "refersTo": "button-text",
+      "description": "Secondary edit/stop/dismiss actions, retaining the minimum touch height.",
+      "html": "<button class=\"ds-text\">Not right · edit request</button>",
+      "css": ".ds-text{background:transparent;color:#075E54;border:0;border-radius:20px;min-height:48px;padding:0 12px;font:500 14px/20px Roboto,Arial,sans-serif;letter-spacing:.1px}.ds-text:hover{background:rgba(7,94,84,.08)}.ds-text:focus-visible{outline:2px solid #075E54;outline-offset:3px}.ds-text:active{background:rgba(7,94,84,.12)}.ds-text:disabled{color:rgba(28,27,31,.38)}"
+    },
+    {
+      "name": "Request field",
+      "kind": "input",
+      "refersTo": "request-field",
+      "description": "Labelled multiline native Paper input; CSS is an illustrative translation, not Paper floating-label implementation.",
+      "html": "<label class=\"ds-field-label\" for=\"ds-request\">Your request</label><textarea class=\"ds-field\" id=\"ds-request\" maxlength=\"1500\" placeholder=\"Listen for token 442 and vibrate.\"></textarea>",
+      "css": ".ds-field-label{display:block;color:#3E4944;font:400 14px/20px Roboto,Arial,sans-serif;margin-bottom:4px}.ds-field{display:block;background:#F1F8F6;color:#102F29;border:1px solid #64776E;border-radius:4px;min-height:120px;padding:16px;font:400 16px/24px Roboto,Arial,sans-serif;max-width:100%}.ds-field:hover{border-color:#102F29}.ds-field:focus-visible{outline:2px solid #075E54;outline-offset:-2px}.ds-field:disabled{opacity:.38}"
+    },
+    {
+      "name": "App bar",
+      "kind": "nav",
+      "refersTo": "appbar",
+      "description": "Native app bar with labelled settings action. Documentation SVG is only an icon approximation.",
+      "html": "<header class=\"ds-bar\"><span>QueueSaathi</span><button aria-label=\"Backend connection settings\" class=\"ds-settings\"><svg viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"4\"/><path d=\"M12 2v3m0 14v3M2 12h3m14 0h3M5 5l2 2m10 10 2 2M5 19l2-2M17 7l2-2\"/></svg></button></header>",
+      "css": ".ds-bar{display:flex;align-items:center;justify-content:space-between;background:#F1F8F6;color:#102F29;padding:8px 16px;font:400 22px/28px Roboto,Arial,sans-serif}.ds-settings{display:grid;place-items:center;min-width:48px;min-height:48px;background:transparent;color:#3E4944;border:0;border-radius:24px}.ds-settings:hover{background:rgba(16,47,41,.08)}.ds-settings:focus-visible{outline:2px solid #075E54}.ds-settings:active{background:rgba(16,47,41,.12)}"
+    },
+    {
+      "name": "Confirmation panel",
+      "kind": "card",
+      "refersTo": "confirmation-panel",
+      "description": "Native flat Surface; example token is documentation data, never seeded live activity.",
+      "html": "<section class=\"ds-confirm\"><h2>Is this right?</h2><strong>442</strong><p>Hospital pharmacy · Visual + Vibration</p><p>Nothing starts until you confirm. Check every digit and prefix.</p></section>",
+      "css": ".ds-confirm{display:grid;gap:16px;background:#DFECE6;color:#102F29;border-radius:16px;padding:24px;font:400 16px/24px Roboto,Arial,sans-serif}.ds-confirm h2{margin:0;font:400 22px/28px Roboto,Arial,sans-serif}.ds-confirm strong{font-size:36px;font-weight:700;font-variant-numeric:tabular-nums}.ds-confirm p{margin:0}"
+    },
+    {
+      "name": "Token call panel",
+      "kind": "card",
+      "refersTo": "alert-panel",
+      "description": "Illustrative native alert Surface. Final active-alert render and device behavior are not verified by this preview.",
+      "html": "<section class=\"ds-alert\"><h2>Your token was called</h2><strong>442</strong><p>Counter unknown · check the display</p><p>Confirm with the official display or staff.</p></section>",
+      "css": ".ds-alert{display:grid;gap:16px;background:#C4ECDD;color:#102F29;border-radius:16px;padding:24px;font:400 16px/24px Roboto,Arial,sans-serif}.ds-alert h2{margin:0;font:400 24px/32px Roboto,Arial,sans-serif}.ds-alert strong{font-size:56px;font-weight:700;font-variant-numeric:tabular-nums}.ds-alert p{margin:0}"
+    },
+    {
+      "name": "Persistent error region",
+      "kind": "custom",
+      "refersTo": "error-region",
+      "description": "Lives below the app bar outside the scroll body, with native Dismiss/recovery actions; preview shows the text region only.",
+      "html": "<div class=\"ds-error\" role=\"alert\">Microphone and notification permission are needed. You can still type your request.</div>",
+      "css": ".ds-error{background:rgba(249,222,220,1);color:rgba(65,14,11,1);padding:12px 24px;font:400 16px/24px Roboto,Arial,sans-serif;letter-spacing:.15px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Native Material task shell",
+    "overview": "This is the incumbent implementation, not a newly selected visual concept. The user declined visual screen selection and requested a minimal native Android Material 3 application using React Native Paper. No visual comp was approved. The interface is calm, task-led and explicit about whether the microphone is actually listening.\n\nValidated intent and event data drive a fixed accessible shell; model output must not generate or execute arbitrary UI or code. Prominent token information, typed setup and visible coverage gaps support people who are deaf or hard of hearing. This remains a supplemental aid, not an official queue display.",
+    "keyCharacteristics": ["Native Android controls and system typography, not a web interface.", "Muted green surfaces with a stronger teal action accent.", "One scrollable task shell and one confirmed monitor.", "Explicit consent, confirmation, listening health and correction states."],
+    "rules": [
+      { "name": "The Named State Rule", "body": "Listening, interruption, unknown counters and corrections must have words, not color alone.", "section": "colors" },
+      { "name": "The Digits First Rule", "body": "Keep the token prominent and checkable; never shorten it, convert away leading zeros or rely on a colored status badge to convey its meaning.", "section": "typography" }
+    ],
+    "dos": ["Do use native Paper controls, semantic theme roles and system font scaling.", "Do preserve 48dp minimum action targets, wrapping rows and scroll access to every action.", "Do keep consent, confirmation, listening failures and correction language visible.", "Do preserve token prefixes and leading zeros and provide visual alternatives to sound/vibration.", "Do verify final light/dark, large-text, keyboard, Back, permission and TalkBack states on Android."],
+    "donts": ["Don't replace this Android shell with a web dashboard or restart visual-direction selection.", "Don't render arbitrary model-generated UI/code or fabricate live timeline entries.", "Don't equate a confirmed monitor with an actively connected microphone.", "Don't use color alone for health, uncertainty, errors or correction states.", "Don't claim provider access, final active-alert testing or physical-device/background reliability from source or prior emulator screenshots."]
+  }
+}

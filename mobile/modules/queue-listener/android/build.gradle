@@ -1,0 +1,15 @@
+plugins {
+  id 'com.android.library'
+  id 'expo-module-gradle-plugin'
+}
+group = 'expo.modules.queuelistener'
+version = '0.1.0'
+android {
+  namespace 'expo.modules.queuelistener'
+  defaultConfig { versionCode 1; versionName '0.1.0' }
+}
+dependencies {
+  testImplementation 'junit:junit:4.13.2'
+  implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+  implementation 'androidx.core:core-ktx:1.17.0'
+}
