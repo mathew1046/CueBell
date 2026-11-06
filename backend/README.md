@@ -38,7 +38,8 @@ provider keys or the operator pairing code in source control or the APK.
 | `GNANI_LANGUAGE_CODE` | `indic-auto`; automatic detection among Prisma's 10 supported languages. Optional 1–4 language codes such as `ml-IN,en-IN` prioritize languages, not restrict recognition. |
 | `OPENAI_API_KEY` | Required for text intent and announcement interpretation. |
 | `OPENAI_MODEL` | Exact Responses API ID enabled in your account. The example uses account-verified `gpt-6-luna` with structured output support; no nickname or automatic substitution. |
-| `DEMO_ACCESS_CODE` | Operator-generated random pairing secret, at least 16 characters. No usable default. |
+| `DEMO_ACCESS_CODE` | Operator-generated random pairing secret, at least 16 characters; required for code-based pairing. No usable default. |
+| `ALLOW_APP_SESSIONS` | `false`; explicitly set `true` to accept anonymous no-login demo app sessions without a pairing code. |
 | `ALLOW_INSECURE_LOCAL` | `false`; use `true` only for isolated local development, never public hosting. |
 | `MAX_SESSIONS` | `8`; allowed range 1–100. |
 | `SESSION_TTL_SECONDS` | `14400`; allowed range 60–86400. |
@@ -48,6 +49,30 @@ Generate a pairing code, for example, with
 `.venv/bin/python -c 'import secrets; print(secrets.token_urlsafe(32))'`.
 Give the user the public HTTPS backend URL and pairing code out of band. The
 app receives a short-lived session Bearer token; provider keys stay on the host.
+
+### Opt-in no-login demo client
+
+For a client with a preconfigured backend URL and no pairing screen, the operator
+must explicitly set `ALLOW_APP_SESSIONS=true` on the backend. The client sends
+`POST /v1/sessions` with the JSON object `{}` (`{"access_code":null}` is equivalent).
+Without that setting, missing/null codes return HTTP 401; deployed code-based
+access does not silently become anonymous. A supplied code is always checked:
+wrong codes still fail, and code-based pairing still requires a configured
+`DEMO_ACCESS_CODE` of at least 16 characters. Empty strings and malformed payloads
+are rejected, not treated as anonymous requests.
+
+Only session admission changes. The response and subsequent Bearer-authenticated
+HTTP/WebSocket protocol, expiry (four hours by default), processing consent,
+per-session controls, TLS requirements, and provider privacy behavior are unchanged.
+No provider keys or pairing secret belong in the APK. No actual environment or
+deployment is changed by enabling support in this source tree.
+
+**Public anonymous access permits use of the operator's paid providers.** The
+in-process limits below provide no identity or anti-abuse guarantee. Before public
+production use, add a protective gateway with attestation and/or account
+authentication, edge abuse controls, and provider spending/budget restrictions.
+IP limits can be bypassed by distributed clients and can block legitimate users
+sharing a NAT; an anonymous endpoint is not production account authentication.
 
 `GET /health` is a configuration/liveness check only. Its flags indicate keys
 are present, **not** that credentials, billing, model availability, transcription
@@ -88,6 +113,10 @@ With a containerized proxy, its source address is not normally `127.0.0.1`:
 configure the exact proxy address/network and private networking accordingly.
 The app checks ASGI's effective `https`/`wss` scheme, not an untrusted raw
 `X-Forwarded-Proto` header. Keep the upstream WebSocket limit at 8192 bytes.
+Anonymous admission similarly uses only `request.client.host`, the ASGI server's
+effective client IP; it never reads raw `X-Forwarded-For` itself. Correct trusted
+proxy configuration is essential: without it, all clients may share the proxy IP;
+over-trusting proxies permits address spoofing.
 The application bounds actual HTTP bodies at 8192 bytes, including chunked
 bodies, but proxy/server timeouts are still needed against slow uploads.
 
@@ -96,9 +125,11 @@ secrets at runtime (`--env-file` or a secret manager), not at image build time.
 Use a private network to the TLS proxy, keep one worker, and configure trusted
 proxy addresses as above. Do not disable TLS checks to work around proxy setup.
 
-## Native protocol (unchanged)
+## Native protocol
 
 - `POST /v1/sessions`: `{"access_code":"…"}` → session `token`, expiry, disclosure.
+  The only payload change is optional `access_code`: `{}` or `{"access_code":null}`
+  creates the same session only when `ALLOW_APP_SESSIONS=true`.
 - Authenticated HTTP uses `Authorization: Bearer <session token>`.
 - `POST /v1/intent`: `{"text":"…","consent_to_text_processing":true}` →
   `clarify` or `confirm` with a one-use `proposal_id`. This does not activate a monitor.
@@ -123,9 +154,16 @@ proxy addresses as above. Do not disable TLS checks to work around proxy setup.
   the app must disclose that calls may have been missed. A connected socket
   alone does not mean microphone coverage is healthy.
 
-Pairing is limited globally to 20 attempts/minute; authenticated ordinary HTTP
-requests to 30/minute/session. These are demo safeguards, not production account
-authentication, per-IP abuse prevention, or a substitute for edge rate limits.
+Session admission (anonymous and code-based combined) is limited globally to
+20 attempts/minute. Anonymous sessions additionally allow three successful
+admissions per effective client IP per rolling ten minutes, even if a session is
+deleted. At most 1024 IP buckets are retained; expired buckets are reclaimed and
+new IPs are rejected with HTTP 429 when the table is full, rather than evicting
+active limits. Both modes share the configured session capacity and expiry.
+Code-based sessions do not consume the anonymous IP budget. Ordinary authenticated
+HTTP requests remain limited to 30/minute/session. These single-process, in-memory
+demo safeguards are not identity, account authentication, reliable abuse prevention,
+or a substitute for edge rate limits and spending controls.
 
 ## Providers, grounding, and safety limits
 
@@ -183,7 +221,9 @@ push alerts to a disconnected APK. Users must still check the official display.
 
 ## Verification on 6 November 2026
 
-- 189 isolated backend tests and Ruff lint/format checks passed.
+- 227 isolated backend tests and Ruff lint/format checks passed, including opt-in
+  anonymous admission, strict payload validation, IP/global/capacity limits, and
+  unchanged Bearer authentication, expiry, consent, and session controls.
 - Live account model discovery confirmed `gpt-6-luna`; the ignored local environment
   selects it and `GNANI_LANGUAGE_CODE=indic-auto`.
 - Live English/Malayalam text intent/call extraction, negative announcements,

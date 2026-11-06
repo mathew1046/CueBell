@@ -8,7 +8,7 @@ Tell it what to watch for, check the details, and confirm. A native Android micr
 
 > “Listen for pharmacy token 442 and vibrate.”
 >
-> Review **442 · Hospital pharmacy · Visual + vibration** → confirm → hear “Token 442 to counter two” → see **442 · Go to counter 2**.
+> Review **442 · Visual + vibration** → start → hear “Token 442 to counter two” → see **442 · Go to counter 2**.
 
 **Prototype, not an official queue system. Calls can be missed. Always check the venue display or staff.**
 
@@ -36,6 +36,7 @@ These are **intended benefits, not measured outcomes**. We have not demonstrated
 - **Handle changing announcements.** Calls, repeats, corrections, cancellations and uncertain interpretations are separate events. Unclear input is not coerced toward the user's token.
 - **Keep the session understandable.** Recent transcripts, listening status, coverage gaps, acknowledgment, pause and stop controls remain visible.
 - **Keep provider keys off the phone.** The APK connects to your separately hosted backend using an expiring session credential.
+- **Open directly into the workflow.** No server URL, pairing code or developer settings screen. The release operator sets the service address before building; the app obtains its session automatically when you submit a request.
 
 ### Current venue boundary
 
@@ -87,10 +88,10 @@ https://github.com/mathew1046/QueueSaathi/blob/main/DEMO.md
 
 The shortest reliable presentation path is:
 
-1. Run the separate backend with your provider credentials and a random pairing code.
-2. Give it a publicly trusted HTTPS URL with WebSocket support. A temporary tunnel is an option for a staged demo.
-3. Install the standalone APK on an Android phone, then enter the backend URL and pairing code. **Never enter provider keys in the app.**
-4. Accept processing, type “Listen for pharmacy token 442 and vibrate,” review the proposal, and tap **Confirm & start listening**.
+1. Run the separate backend with your provider credentials. For a controlled no-login demo, explicitly enable `ALLOW_APP_SESSIONS=true`; see the security warning below.
+2. Give it a publicly trusted HTTPS URL with WebSocket support. Set that origin as `EXPO_PUBLIC_API_URL` in the mobile build environment and build the APK. A stable host avoids rebuilding when a temporary tunnel changes.
+3. Install that APK on an Android phone and open it. **There is no connection setup in the app, and provider keys are never bundled.**
+4. Allow processing, type “Listen for pharmacy token 442 and vibrate,” tap **Continue**, review the token, then tap **Start listening**.
 5. Have a consenting speaker announce a non-target token, then **“Pharmacy token four four two, please go to counter two.”** Inspect the transcript and resulting alert.
 
 The guide includes exact commands, a three-minute script, correction and interruption checks, troubleshooting, and an honest fallback if the live pipeline fails. No backend has been deployed for you.
@@ -99,7 +100,13 @@ Local preview APK, when using the implementation workspace:
 
 /home/mathew/Arrakis/QueueSaathi/artifacts/QueueSaathi-preview.apk
 
-This artifact is **not checked into GitHub or published as a release asset**. It is development-signed for review, not a production/store distribution. Build your own APK using:
+**Updated minimal-interface review APK (UI only; no hosted service configured):**
+
+/home/mathew/Arrakis/QueueSaathi/artifacts/QueueSaathi-ui-review.apk
+
+Use the UI-review APK to inspect the simplified interface, not to demonstrate working listening. Its service actions report unavailable until a new build is made with the actual hosted origin. Light/dark and enlarged-text emulator captures passed a fresh native review; representative elderly/low-literacy users and physical phones have not yet been tested.
+
+The existing artifact predates the removal of operator setup; it is not the updated workflow build. No hosted origin has been supplied for a replacement connected APK. Artifacts are **not checked into GitHub or published as release assets**. Local previews are development-signed, not production/store distributions. Build your own APK using:
 https://github.com/mathew1046/QueueSaathi/blob/main/mobile/README.md
 
 **Expo Go does not support the custom native service.** The current preview includes ARM64 phones and x86_64 emulators; older 32-bit phones need a different build.
@@ -108,9 +115,10 @@ https://github.com/mathew1046/QueueSaathi/blob/main/mobile/README.md
 
 | Check | Result |
 | --- | --- |
-| Backend tests | **189 passed**: validation, confirmation, correction/repeat aliases, acknowledgment, stale results, gaps, cleanup, language configuration, cancellations and authorization failures. Ruff checks passed. |
+| Backend tests | **227 passed**: validation, confirmation, correction/repeat aliases, acknowledgment, stale results, gaps, cleanup, language configuration, cancellations, authorization and opt-in automatic session admission. Ruff checks passed. |
 | Native unit tests | **6 passed**: PCM16 framing/waveform boundaries and permanent versus retryable WebSocket rejection. TypeScript and lint checks passed. |
-| App build and rendering | Standalone APK builds and launches on an Android 16 emulator; light/dark, enlarged text, setup and error states inspected. |
+| Mobile workflow tests | **13 passed**: automatic session admission/reuse, expiry/revocation, consent withdrawal, configuration guards and removal of operator UI. |
+| App build and rendering | The minimal no-setup UI builds and launches on an Android 16 emulator; light/dark and enlarged text inspected. This UI-only QA build has no hosted origin and is not a connected release APK. |
 | Live text model | Staged English/Malayalam intent, call, negation, injection-abstention and correction checks passed using `gpt-6-luna`. HTTP lifecycle and leading-zero checks passed. |
 | Live speech connection | Gnani authentication and streaming negotiation succeeded at 16 kHz / 512 samples. Sent 48 paced synthetic tone/silence frames without a reported provider error. **This was not spoken-audio recognition testing.** |
 | Real PA recognition and user outcomes | **Not measured.** No speech-accuracy percentage, false-alert rate, missed-call rate or latency benchmark is claimed. |
@@ -136,6 +144,8 @@ npm run lint
 ```
 
 Backend environment variables include `GNANI_API_KEY`, `GNANI_LANGUAGE_CODE=indic-auto`, `OPENAI_API_KEY`, an account-enabled `OPENAI_MODEL`, and a random `DEMO_ACCESS_CODE` of at least 16 characters. Keep them in the ignored backend environment or your host's secret manager.
+
+`EXPO_PUBLIC_API_URL` is a public routing address, not a secret. Never put provider keys or `DEMO_ACCESS_CODE` in any `EXPO_PUBLIC_` variable. The no-login demo admission mode is **off by default**: enabling it permits unauthenticated people to obtain limited bearer sessions and consume paid provider usage. Its IP/global rate and capacity limits are not production authentication. Before a public launch, add appropriate gateway/device-attestation or account admission and provider budgets; an APK's address or embedded code is not a security boundary.
 
 ## Safety, privacy and limitations
 

@@ -32,7 +32,7 @@
       "dark-on-error-container": {"role":"neutral","displayName":"Paper dark error ink","tonalRamp":["oklch(15% 0.0677 22.0)","oklch(26% 0.0677 22.0)","oklch(38% 0.0677 22.0)","oklch(49% 0.0677 22.0)","oklch(61% 0.0677 22.0)","oklch(72% 0.0677 22.0)","oklch(84% 0.0677 22.0)","oklch(95% 0.0677 22.0)"]}
     },
     "typographyMeta": {
-      "headline-medium": { "displayName": "Introduction", "purpose": "Native system headline; not a custom display face." },
+      "headline-medium": { "displayName": "Inherited headline", "purpose": "Native system role retained in the token record; unused by the latest minimal shell, which has no greeting headline." },
       "token": { "displayName": "Queue token", "purpose": "Bold tabular numerals; preserve prefixes and leading zeros. No custom line height." },
       "confirmation-token": { "displayName": "Review token", "purpose": "Checkable token before explicit confirmation." }
     },
@@ -46,23 +46,23 @@
       "kind": "button",
       "refersTo": "button-primary",
       "description": "Documentation-only light-theme approximation of native Paper contained action; not application web UI.",
-      "html": "<button class=\"ds-primary\">Confirm &amp; start listening</button>",
+      "html": "<button class=\"ds-primary\">Start listening</button>",
       "css": ".ds-primary{background:#075E54;color:#FFFFFF;border:0;border-radius:20px;min-height:48px;padding:0 24px;font:500 14px/20px Roboto,Arial,sans-serif;letter-spacing:.1px}.ds-primary:hover{filter:brightness(.96)}.ds-primary:focus-visible{outline:2px solid #075E54;outline-offset:3px}.ds-primary:active{filter:brightness(.88)}.ds-primary:disabled{background:rgba(28,27,31,.12);color:rgba(28,27,31,.38)}"
     },
     {
-      "name": "Outlined action",
+      "name": "Speak action",
       "kind": "button",
       "refersTo": "button-outlined",
-      "description": "Native Paper secondary action represented for the documentation panel only.",
-      "html": "<button class=\"ds-outlined\">Speak request</button>",
-      "css": ".ds-outlined{background:transparent;color:#075E54;border:1px solid #64776E;border-radius:20px;min-height:48px;padding:0 24px;font:500 14px/20px Roboto,Arial,sans-serif;letter-spacing:.1px}.ds-outlined:hover{background:rgba(7,94,84,.08)}.ds-outlined:focus-visible{outline:2px solid #075E54;outline-offset:3px}.ds-outlined:active{background:rgba(7,94,84,.12)}.ds-outlined:disabled{color:rgba(28,27,31,.38);border-color:rgba(28,27,31,.12)}"
+      "description": "Documentation-only native approximation: 64dp Speak is outlined when request text exists and contained when empty; Continue takes the complementary emphasis. Inline SVG approximates the native microphone icon, not live web UI.",
+      "html": "<button class=\"ds-outlined\"><svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><rect x=\"9\" y=\"2\" width=\"6\" height=\"12\" rx=\"3\"/><path d=\"M5 10v2a7 7 0 0 0 14 0v-2M12 19v3m-4 0h8\"/></svg>Speak</button>",
+      "css": ".ds-outlined{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:transparent;color:#075E54;border:1px solid #64776E;border-radius:20px;min-height:64px;padding:0 24px;font:500 14px/20px Roboto,Arial,sans-serif;letter-spacing:.1px}.ds-outlined:hover{background:rgba(7,94,84,.08)}.ds-outlined:focus-visible{outline:2px solid #075E54;outline-offset:3px}.ds-outlined:active{background:rgba(7,94,84,.12)}.ds-outlined:disabled{color:rgba(28,27,31,.38);border-color:rgba(28,27,31,.12)}"
     },
     {
       "name": "Tonal pause action",
       "kind": "button",
       "refersTo": "button-tonal",
       "description": "Pause uses Paper contained-tonal mode. Preview is not a native renderer.",
-      "html": "<button class=\"ds-tonal\">Pause listening</button>",
+      "html": "<button class=\"ds-tonal\">Pause</button>",
       "css": ".ds-tonal{background:#C4ECDD;color:#002C23;border:0;border-radius:20px;min-height:48px;padding:0 24px;font:500 14px/20px Roboto,Arial,sans-serif;letter-spacing:.1px}.ds-tonal:hover{filter:brightness(.96)}.ds-tonal:focus-visible{outline:2px solid #075E54;outline-offset:3px}.ds-tonal:active{filter:brightness(.88)}.ds-tonal:disabled{background:rgba(28,27,31,.12);color:rgba(28,27,31,.38)}"
     },
     {
@@ -70,7 +70,7 @@
       "kind": "button",
       "refersTo": "button-text",
       "description": "Secondary edit/stop/dismiss actions, retaining the minimum touch height.",
-      "html": "<button class=\"ds-text\">Not right · edit request</button>",
+      "html": "<button class=\"ds-text\">Change</button>",
       "css": ".ds-text{background:transparent;color:#075E54;border:0;border-radius:20px;min-height:48px;padding:0 12px;font:500 14px/20px Roboto,Arial,sans-serif;letter-spacing:.1px}.ds-text:hover{background:rgba(7,94,84,.08)}.ds-text:focus-visible{outline:2px solid #075E54;outline-offset:3px}.ds-text:active{background:rgba(7,94,84,.12)}.ds-text:disabled{color:rgba(28,27,31,.38)}"
     },
     {
@@ -78,23 +78,23 @@
       "kind": "input",
       "refersTo": "request-field",
       "description": "Labelled multiline native Paper input; CSS is an illustrative translation, not Paper floating-label implementation.",
-      "html": "<label class=\"ds-field-label\" for=\"ds-request\">Your request</label><textarea class=\"ds-field\" id=\"ds-request\" maxlength=\"1500\" placeholder=\"Listen for token 442 and vibrate.\"></textarea>",
+      "html": "<label class=\"ds-field-label\" for=\"ds-request\">Token and alert</label><textarea class=\"ds-field\" id=\"ds-request\" maxlength=\"1500\" placeholder=\"Token 442. Vibrate.\"></textarea>",
       "css": ".ds-field-label{display:block;color:#3E4944;font:400 14px/20px Roboto,Arial,sans-serif;margin-bottom:4px}.ds-field{display:block;background:#F1F8F6;color:#102F29;border:1px solid #64776E;border-radius:4px;min-height:120px;padding:16px;font:400 16px/24px Roboto,Arial,sans-serif;max-width:100%}.ds-field:hover{border-color:#102F29}.ds-field:focus-visible{outline:2px solid #075E54;outline-offset:-2px}.ds-field:disabled{opacity:.38}"
     },
     {
       "name": "App bar",
       "kind": "nav",
       "refersTo": "appbar",
-      "description": "Native app bar with labelled settings action. Documentation SVG is only an icon approximation.",
-      "html": "<header class=\"ds-bar\"><span>QueueSaathi</span><button aria-label=\"Backend connection settings\" class=\"ds-settings\"><svg viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"4\"/><path d=\"M12 2v3m0 14v3M2 12h3m14 0h3M5 5l2 2m10 10 2 2M5 19l2-2M17 7l2-2\"/></svg></button></header>",
-      "css": ".ds-bar{display:flex;align-items:center;justify-content:space-between;background:#F1F8F6;color:#102F29;padding:8px 16px;font:400 22px/28px Roboto,Arial,sans-serif}.ds-settings{display:grid;place-items:center;min-width:48px;min-height:48px;background:transparent;color:#3E4944;border:0;border-radius:24px}.ds-settings:hover{background:rgba(16,47,41,.08)}.ds-settings:focus-visible{outline:2px solid #075E54}.ds-settings:active{background:rgba(16,47,41,.12)}"
+      "description": "Documentation-only approximation of the title-only native app bar. No settings icon, connection modal, URL field or pairing-code entry exists in the current shell.",
+      "html": "<header class=\"ds-bar\"><span>QueueSaathi</span></header>",
+      "css": ".ds-bar{display:flex;align-items:center;background:#F1F8F6;color:#102F29;padding:8px 16px;font:400 22px/28px Roboto,Arial,sans-serif}"
     },
     {
       "name": "Confirmation panel",
       "kind": "card",
       "refersTo": "confirmation-panel",
-      "description": "Native flat Surface; example token is documentation data, never seeded live activity.",
-      "html": "<section class=\"ds-confirm\"><h2>Is this right?</h2><strong>442</strong><p>Hospital pharmacy · Visual + Vibration</p><p>Nothing starts until you confirm. Check every digit and prefix.</p></section>",
+      "description": "Documentation-only approximation of the native flat review Surface; example token is not live data. Native Start listening and Change actions follow the token/preferences, without a venue or help paragraph. Latest minimal-copy native verification is pending.",
+      "html": "<section class=\"ds-confirm\"><h2>Is this right?</h2><strong>442</strong><p>Visual + Vibration</p></section>",
       "css": ".ds-confirm{display:grid;gap:16px;background:#DFECE6;color:#102F29;border-radius:16px;padding:24px;font:400 16px/24px Roboto,Arial,sans-serif}.ds-confirm h2{margin:0;font:400 22px/28px Roboto,Arial,sans-serif}.ds-confirm strong{font-size:36px;font-weight:700;font-variant-numeric:tabular-nums}.ds-confirm p{margin:0}"
     },
     {
@@ -102,7 +102,7 @@
       "kind": "card",
       "refersTo": "alert-panel",
       "description": "Illustrative native alert Surface. Final active-alert render and device behavior are not verified by this preview.",
-      "html": "<section class=\"ds-alert\"><h2>Your token was called</h2><strong>442</strong><p>Counter unknown · check the display</p><p>Confirm with the official display or staff.</p></section>",
+      "html": "<section class=\"ds-alert\"><h2>Your turn</h2><strong>442</strong><p>Counter unclear</p><p>Check the venue display.</p></section>",
       "css": ".ds-alert{display:grid;gap:16px;background:#C4ECDD;color:#102F29;border-radius:16px;padding:24px;font:400 16px/24px Roboto,Arial,sans-serif}.ds-alert h2{margin:0;font:400 24px/32px Roboto,Arial,sans-serif}.ds-alert strong{font-size:56px;font-weight:700;font-variant-numeric:tabular-nums}.ds-alert p{margin:0}"
     },
     {
@@ -112,17 +112,24 @@
       "description": "Lives below the app bar outside the scroll body, with native Dismiss/recovery actions; preview shows the text region only.",
       "html": "<div class=\"ds-error\" role=\"alert\">Microphone and notification permission are needed. You can still type your request.</div>",
       "css": ".ds-error{background:rgba(249,222,220,1);color:rgba(65,14,11,1);padding:12px 24px;font:400 16px/24px Roboto,Arial,sans-serif;letter-spacing:.15px}"
+    },
+    {
+      "name": "Processing consent",
+      "kind": "custom",
+      "description": "Documentation-only native approximation shown while the microphone is off. Explicit checkbox and named recipients remain visible; full venue, processing and background details live in collapsed About & privacy. This preview does not implement application consent or session creation.",
+      "html": "<div class=\"ds-consent\"><label><input type=\"checkbox\"/>Allow audio &amp; text processing</label><p>Audio goes to Gnani. Text goes to OpenAI.</p></div>",
+      "css": ".ds-consent{color:#102F29;font:400 16px/24px Roboto,Arial,sans-serif}.ds-consent label{display:flex;align-items:center;gap:8px;min-height:48px}.ds-consent input{accent-color:#075E54}.ds-consent input:focus-visible{outline:2px solid #075E54;outline-offset:3px}.ds-consent p{margin:0;color:#3E4944;font:400 14px/20px Roboto,Arial,sans-serif}"
     }
   ],
   "narrative": {
     "northStar": "Native Material task shell",
-    "overview": "This is the incumbent implementation, not a newly selected visual concept. The user declined visual screen selection and requested a minimal native Android Material 3 application using React Native Paper. No visual comp was approved. The interface is calm, task-led and explicit about whether the microphone is actually listening.\n\nValidated intent and event data drive a fixed accessible shell; model output must not generate or execute arbitrary UI or code. Prominent token information, typed setup and visible coverage gaps support people who are deaf or hard of hearing. This remains a supplemental aid, not an official queue display.",
-    "keyCharacteristics": ["Native Android controls and system typography, not a web interface.", "Muted green surfaces with a stronger teal action accent.", "One scrollable task shell and one confirmed monitor.", "Explicit consent, confirmation, listening health and correction states."],
+    "overview": "This is the incumbent implementation, not a newly selected visual concept. The user declined visual screen selection and requested a minimal native Android Material 3 application using React Native Paper. No visual comp was approved. The interface is calm, task-led and explicit about whether the microphone is actually listening.\n\nCurrent decision: keep the experience very simple, elegant and minimal for elderly people and people with limited literacy. Remove greeting/help paragraphs and connection administration from the task surface. Use short labelled actions, a prominent Speak button and progressive disclosure rather than asking users to read a manual before acting. Keep processing recipients, explicit consent, listening failures, uncertainty and brief safety guidance visible; do not mistake less copy for permission to hide risk.\n\nValidated intent and event data drive a fixed accessible shell; model output must not generate or execute arbitrary UI or code. Prominent token information, typed setup and visible coverage gaps support people who are deaf or hard of hearing. This remains a supplemental aid, not an official queue display.",
+    "keyCharacteristics": ["Native Android controls and system typography, not a web interface.", "Muted green surfaces with a stronger teal action accent.", "One scrollable task shell and one confirmed monitor.", "Short labelled actions, a 64dp Speak target and collapsed secondary detail.", "Explicit consent, confirmation, listening health and correction states."],
     "rules": [
       { "name": "The Named State Rule", "body": "Listening, interruption, unknown counters and corrections must have words, not color alone.", "section": "colors" },
       { "name": "The Digits First Rule", "body": "Keep the token prominent and checkable; never shorten it, convert away leading zeros or rely on a colored status badge to convey its meaning.", "section": "typography" }
     ],
-    "dos": ["Do use native Paper controls, semantic theme roles and system font scaling.", "Do preserve 48dp minimum action targets, wrapping rows and scroll access to every action.", "Do keep consent, confirmation, listening failures and correction language visible.", "Do preserve token prefixes and leading zeros and provide visual alternatives to sound/vibration.", "Do verify final light/dark, large-text, keyboard, Back, permission and TalkBack states on Android."],
-    "donts": ["Don't replace this Android shell with a web dashboard or restart visual-direction selection.", "Don't render arbitrary model-generated UI/code or fabricate live timeline entries.", "Don't equate a confirmed monitor with an actively connected microphone.", "Don't use color alone for health, uncertainty, errors or correction states.", "Don't claim provider access, final active-alert testing or physical-device/background reliability from source or prior emulator screenshots."]
+    "dos": ["Do use native Paper controls, semantic theme roles and system font scaling.", "Do preserve the 64dp Speak target, 48dp minimum other actions, wrapping rows and scroll access to every action.", "Do keep consent, confirmation, listening failures and correction language visible.", "Do keep recipients, brief safety guidance and the latest uncertainty warning outside collapsed detail.", "Do preserve token prefixes and leading zeros and provide visual alternatives to sound/vibration.", "Do verify final light/dark, large-text, keyboard, Back, permission and TalkBack states on Android."],
+    "donts": ["Don't replace this Android shell with a web dashboard or restart visual-direction selection.", "Don't render arbitrary model-generated UI/code or fabricate live timeline entries.", "Don't equate a confirmed monitor with an actively connected microphone.", "Don't reintroduce greeting/help paragraphs, connection settings or URL/pairing entry into the minimal task shell.", "Don't use color alone for health, uncertainty, errors or correction states.", "Don't claim provider access, final active-alert testing or physical-device/background reliability from source or prior emulator screenshots."]
   }
 }

@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { AccessibilityInfo, AppState, Keyboard, KeyboardAvoidingView, Linking, Modal, PermissionsAndroid, Permission,
+import { AccessibilityInfo, AppState, Keyboard, KeyboardAvoidingView, Linking, PermissionsAndroid, Permission,
   Platform, ScrollView, StyleSheet, View } from 'react-native';
-import { ActivityIndicator, Appbar, Button, Checkbox, Divider, Icon,
+import { ActivityIndicator, Appbar, Button, Checkbox, Icon,
   Surface, Text, TextInput, useTheme } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Listener from '../../modules/queue-listener';
-import { api, loadConnection, removeConnection, saveConnection, secureUrl } from '../lib/api';
+import { api, ensureSession, loadConnection, saveConnection } from '../lib/api';
 import { Connection, Intent, NativeSnapshot, QueueAlert, QueueEvent, Rule } from '../lib/types';
+import { prepareConsentedSession, requireProcessingConsent } from '../lib/session';
 
 const preferenceLabel = (values: string[]) => values.map(v =>
   ({ visual: 'Visual', vibration: 'Vibration', sound: 'Sound' })[v] ?? v).join(' + ');
@@ -16,15 +17,14 @@ export default function Home() {
   const insets = useSafeAreaInsets();
   const [connection, setConnection] = useState<Connection | null>(null);
   const connectionRef = useRef<Connection | null>(null);
-  const [settings, setSettings] = useState(false);
-  const [url, setUrl] = useState('');
-  const [code, setCode] = useState('');
   const [consent, setConsent] = useState(false);
   const [request, setRequest] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [proposal, setProposal] = useState<{ id: string; intent: Intent } | null>(null);
   const [clarification, setClarification] = useState('');
+  const [showDetails, setShowDetails] = useState(false);
+  const [showHistory, setShowHistory] = useState(false);
   const [rule, setRule] = useState<Rule | null>(null);
   const [events, setEvents] = useState<QueueEvent[]>([]);
   const [alerts, setAlerts] = useState<QueueAlert[]>([]);
@@ -74,16 +74,28 @@ export default function Home() {
     }
   }, []);
 
+  const prepareSession = useCallback(async () => {
+    const c = await prepareConsentedSession(ensureSession, () => consentRef.current);
+    if (connectionRef.current?.token !== c.token) {
+      revision.current++;
+      Listener.clear(); processed.current.clear(); setEvents([]); setAlerts([]); setRule(null); setProposal(null);
+      suppressMonitor.current = c.suppressMonitor ?? false;
+    }
+    connectionRef.current = c; setConnection(c);
+    return c;
+  }, []);
+
   const analyze = useCallback(async (text: string) => {
-    const c = connectionRef.current;
-    if (!c || !text.trim() || analyzing.current || !consentRef.current) return;
+    if (!text.trim() || analyzing.current || !consentRef.current) return;
     analyzing.current = true; confirmationOffset.current = null;
     setBusy(true); setError(''); setProposal(null); setClarification('');
     try {
+      const c = await prepareSession();
       // Request mode closes its stream after the completed utterance. Let teardown finish.
       let result: { status: string; proposal_id?: string; intent: Intent; messages?: string[] } | undefined;
       for (let attempt = 0; attempt < 3; attempt++) {
         try {
+          requireProcessingConsent(() => consentRef.current);
           result = await api(c, '/v1/intent', { text, consent_to_text_processing: true });
           break;
         } catch (e) {
@@ -99,7 +111,7 @@ export default function Home() {
       } else setClarification(result?.messages?.join('\n') || 'Please type the exact token and your preferred alert.');
     } catch (e) { setError(e instanceof Error ? e.message : 'Could not interpret the request. Try typing it.'); }
     finally { analyzing.current = false; setBusy(false); }
-  }, []);
+  }, [prepareSession]);
 
   const sync = useCallback(() => {
     const snapshot: NativeSnapshot = JSON.parse(Listener.snapshot());
@@ -140,9 +152,9 @@ export default function Home() {
     const app = AppState.addEventListener('change', state => { if (state === 'active') void refresh(); });
     void loadConnection().then(c => {
       suppressMonitor.current = c?.suppressMonitor ?? false;
-      connectionRef.current = c; setConnection(c); if (c) setUrl(c.url);
+      connectionRef.current = c; setConnection(c);
       void refresh();
-    }).catch(() => setError('Could not open secure connection settings. Pair again.'))
+    }).catch(() => setError('Could not restore your session. Please try again.'))
       .finally(() => setBooting(false));
     return () => { subscription.remove(); app.remove(); };
   }, [addEvent, analyze, refresh, sync]);
@@ -155,9 +167,10 @@ export default function Home() {
     finally { setBusy(false); sync(); }
   };
 
-  const start = async (mode: 'request' | 'monitor') => {
-    const c = connectionRef.current;
-    if (!c || !consentRef.current) throw new Error('Connect to your backend and accept processing first.');
+  const start = useCallback(async (mode: 'request' | 'monitor') => {
+    if (!consentRef.current) throw new Error('Please agree to processing before continuing.');
+    const c = mode === 'request' ? await prepareSession() : connectionRef.current;
+    if (!c || c.expires * 1000 <= Date.now()) throw new Error('Your session has expired. Submit your request again to continue.');
     if (AppState.currentState !== 'active') throw new Error('Open the app to start the microphone.');
     const permissions: Permission[] = [PermissionsAndroid.PERMISSIONS.RECORD_AUDIO];
     if (Number(Platform.Version) >= 33) permissions.push(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS);
@@ -167,10 +180,11 @@ export default function Home() {
       throw new Error('Microphone and notification permission are needed. You can still type your request.');
     }
     setPermissionError(false);
+    requireProcessingConsent(() => consentRef.current);
     try { await Listener.start(c.url, c.token, mode); }
     catch (e) { setPermissionError(true); throw e; }
     // startForegroundService is asynchronous; status events supply the real readiness.
-  };
+  }, [prepareSession]);
 
   const control = async (action: 'pause' | 'resume' | 'stop' | 'acknowledge', alertId?: string) => {
     if (!connection) return;
@@ -198,8 +212,10 @@ export default function Home() {
   const buttonStyle = { minHeight: 48, justifyContent: 'center' as const };
   const activeRule = rule && !['STOPPED', 'EXPIRED'].includes(rule.status);
   const listening = native.running && native.state === 'LISTENING';
-  const statusLabel = listening ? (native.mode === 'request' ? 'Hearing your request' : 'Listening for announcements') :
-    native.running ? 'Listening is interrupted or starting' : activeRule ? 'Monitor ready · microphone off' : 'Microphone off';
+  const statusLabel = listening ? (native.mode === 'request' ? 'Speak, then pause' : 'Listening') :
+    native.running ? (native.state === 'STARTING' ? 'Starting...' : 'Listening interrupted') : activeRule ? 'Paused' : 'Not listening';
+  const statusDetail = native.message !== 'Microphone is off.' && (!listening || /gap|missed|interrupted/i.test(native.message)) ? native.message : '';
+  const latestUnclear = events.find(event => event.observation)?.observation?.type === 'UNCERTAIN';
   const muted = { color: theme.colors.onSurfaceVariant };
 
   useEffect(() => {
@@ -213,9 +229,7 @@ export default function Home() {
 
   const screen = <View style={[styles.root, { backgroundColor: theme.colors.background }]}>
     <Appbar.Header style={{ backgroundColor: theme.colors.background }}>
-      {settings && <Appbar.BackAction onPress={() => setSettings(false)} accessibilityLabel="Back to monitoring" />}
-      <Appbar.Content title={settings ? 'Backend connection' : 'QueueSaathi'} />
-      {!settings && <Appbar.Action icon="cog-outline" onPress={() => setSettings(true)} accessibilityLabel="Backend connection settings" />}
+      <Appbar.Content title="QueueSaathi" />
     </Appbar.Header>
     {!!error && <View style={[styles.errorRegion, { backgroundColor: theme.colors.errorContainer }]}>
       <Text variant="bodyLarge" accessibilityRole="alert" accessibilityLiveRegion="assertive"
@@ -226,94 +240,48 @@ export default function Home() {
     <KeyboardAvoidingView style={styles.root} behavior="padding" keyboardVerticalOffset={0}>
       <ScrollView ref={scroll} keyboardShouldPersistTaps="handled" contentContainerStyle={[
         styles.content, { paddingBottom: Math.max(insets.bottom, 24) + 24 }]}>
-        {booting ? <ActivityIndicator accessibilityLabel="Opening secure session" /> : settings ? <>
-          <Text variant="headlineSmall">Your server, your session.</Text>
-          <Text variant="bodyLarge" style={muted}>Host the separate QueueSaathi relay, then pair this phone. Provider API keys stay on your server.</Text>
-          <TextInput mode="outlined" label="Backend HTTPS URL" placeholder="https://queue.example.org"
-            value={url} onChangeText={setUrl} autoCapitalize="none" keyboardType="url" autoCorrect={false}
-            editable={!busy && !native.running} />
-          <TextInput mode="outlined" label="Pairing code" value={code} onChangeText={setCode}
-            secureTextEntry autoCapitalize="none" autoCorrect={false} editable={!busy && !native.running} />
-          <Text variant="bodyMedium" style={muted}>Use the DEMO_ACCESS_CODE from your backend configuration, not a provider API key. Sessions expire after four hours by default.</Text>
-          <Button mode="contained" contentStyle={buttonStyle} loading={busy} disabled={busy || native.running || !url || !code}
-            onPress={() => void run(async () => {
-              revision.current++;
-              const origin = secureUrl(url);
-              const result = await api<{ token: string; expires_at: number }>(origin, '/v1/sessions', { access_code: code });
-              const next = { url: origin, token: result.token, expires: result.expires_at };
-              if (connection) { try { await api(connection, '/v1/session', undefined, 'DELETE'); } catch { /* Old session expires server-side. */ } }
-              await saveConnection(next); connectionRef.current = next; setConnection(next);
-              suppressMonitor.current = false;
-              Listener.clear(); processed.current.clear(); setEvents([]); setAlerts([]); setRule(null); setProposal(null);
-              setRequest(''); setClarification(''); lastSpoken.current = '';
-              setCode(''); setConsent(false); consentRef.current = false; setSettings(false);
-            })}>Connect backend</Button>
-          {connection && <>
-            <Text variant="bodyMedium">Connected to {connection.url}</Text>
-            <Button mode="outlined" contentStyle={buttonStyle} disabled={busy || native.running}
-              onPress={() => void run(async () => {
-                revision.current++; suppressMonitor.current = true;
-                connectionRef.current = null; setConnection(null);
-                setRule(null); setAlerts([]); setEvents([]); Listener.clear(); setProposal(null);
-                setRequest(''); setClarification(''); lastSpoken.current = '';
-                setConsent(false); consentRef.current = false; processed.current.clear();
-                try { await removeConnection(); }
-                finally {
-                  try { await api(connection, '/v1/session', undefined, 'DELETE'); }
-                  catch { throw new Error('Disconnected and cleared locally. The unreachable backend session will expire.'); }
-                }
-              })}>Disconnect and clear session</Button>
-          </>}
-          <Text variant="bodyMedium" style={muted}>Use a trusted HTTPS certificate. This APK does not connect to insecure HTTP servers.</Text>
-        </> : <>
+        {booting ? <ActivityIndicator accessibilityLabel="Restoring your session" /> : <>
           {alerts.filter(a => a.state !== 'acknowledged' && !a.acknowledged).map(alert => <Surface key={alert.id} elevation={0}
             style={[styles.alert, { backgroundColor: alert.state === 'corrected' ? theme.colors.errorContainer : theme.colors.secondaryContainer }]}>
-            <Text variant="headlineSmall" accessibilityRole="header">{alert.state === 'corrected' ? 'The announcement changed' : 'Your token was called'}</Text>
+            <Text variant="headlineSmall" accessibilityRole="header">{alert.state === 'corrected' ? 'Call changed' : 'Your turn'}</Text>
             <Text style={styles.token}>{alert.token}</Text>
             <Text variant="titleLarge">{alert.state === 'corrected' ? 'Previous call corrected or cancelled.' :
-              alert.counter ? `Go to counter ${alert.counter}` : 'Counter unknown · check the display'}</Text>
-            <Text variant="bodyLarge">{alert.state === 'corrected' ? 'Check the latest announcement and official display before moving.' : 'Confirm with the official display or staff.'}</Text>
+              alert.counter ? `Go to counter ${alert.counter}` : 'Counter unclear'}</Text>
+            <Text variant="bodyLarge">Check the venue display.</Text>
             <Button mode="contained" contentStyle={buttonStyle} disabled={busy}
               onPress={() => void run(() => control('acknowledge', alert.id))}>I’ve seen this</Button>
           </Surface>)}
 
-          <View style={styles.status} accessible accessibilityLabel={`${statusLabel}. ${native.message}`}>
+          <View style={styles.status} accessible accessibilityLabel={`${statusLabel}. ${statusDetail}`}>
             <Icon source={listening ? 'microphone' : native.running ? 'connection' : 'microphone-off'} size={24}
               color={listening ? theme.colors.primary : theme.colors.onSurfaceVariant} />
             <View style={styles.flex}>
               <Text variant="titleMedium">{statusLabel}</Text>
-              <Text variant="bodyMedium" style={muted}>{native.message}</Text>
+              {!!statusDetail && <Text variant="bodyMedium" style={muted}>{statusDetail}</Text>}
             </View>
           </View>
 
-          {!connection && <View style={styles.group}>
-            <Text variant="headlineMedium">A little help with your turn.</Text>
-            <Text variant="bodyLarge" style={muted}>Tell QueueSaathi what to listen for. Review the token, then start listening for Malayalam and English announcements.</Text>
-            <Button mode="contained" icon="server-network" contentStyle={buttonStyle} onPress={() => setSettings(true)}>Connect your backend</Button>
-          </View>}
-
-          {connection && !native.running && <View>
-            <Checkbox.Item label="I agree to the processing below" status={consent ? 'checked' : 'unchecked'}
+          {!native.running && <View>
+            <Checkbox.Item label="Allow audio & text processing" status={consent ? 'checked' : 'unchecked'}
               onPress={() => { setConsent(!consent); consentRef.current = !consent; }} position="leading"
               style={styles.checkbox} labelStyle={styles.checkboxLabel} />
-            <Text variant="bodyMedium" style={muted}>Microphone audio goes to Gnani Prisma. Requests and announcement text go to OpenAI as the Evon fallback. This relay stores no recordings or transcripts on disk. Provider terms apply.</Text>
+            <Text variant="bodyMedium" style={muted}>Audio goes to Gnani. Text goes to OpenAI.</Text>
           </View>}
 
           {activeRule && <View style={styles.group}>
-            <Text variant="titleLarge">Watching for token</Text>
+            <Text variant="titleLarge">Your token</Text>
             <Text style={[styles.token, { color: theme.colors.primary }]}>{rule.token}</Text>
-            <Text variant="bodyLarge">Hospital pharmacy · {preferenceLabel(rule.alert_preferences)}</Text>
-            <Text variant="bodyMedium" style={muted}>Rule {rule.status === 'ACTIVE' ? 'confirmed' : rule.status.toLowerCase()}. {listening ? 'Audio is flowing now.' : 'No listening coverage until the microphone is connected.'}</Text>
+            <Text variant="bodyLarge">{preferenceLabel(rule.alert_preferences)}</Text>
             <View style={styles.row}>
               {native.running ? <Button mode="contained-tonal" icon="pause" contentStyle={buttonStyle} disabled={busy}
-                onPress={() => void run(() => control('pause'))}>Pause listening</Button> :
+                onPress={() => void run(() => control('pause'))}>Pause</Button> :
                 <Button mode="contained" icon="microphone" contentStyle={buttonStyle} disabled={busy || !consent}
                   onPress={() => void run(() => control('resume'))}>Start listening</Button>}
-              <Button contentStyle={buttonStyle} disabled={busy} onPress={() => void run(() => control('stop'))}>Stop & clear</Button>
+              <Button contentStyle={buttonStyle} disabled={busy} onPress={() => void run(() => control('stop'))}>Stop</Button>
             </View>
             {!native.running && <Button contentStyle={buttonStyle} disabled={busy} onPress={() => {
               setProposal(null); setClarification(''); scroll.current?.scrollToEnd({ animated: false });
-            }}>Edit using a new request below</Button>}
+            }}>Change token</Button>}
           </View>}
 
           {(!native.running || native.mode === 'request') && <View style={styles.group}
@@ -322,21 +290,19 @@ export default function Home() {
               if (proposal && confirmationOffset.current !== null) scroll.current?.scrollTo({
                 y: Math.max(0, requestGroupY.current + confirmationOffset.current - 16), animated: false });
             }}>
-            <Text variant="headlineSmall" accessibilityRole="header">{activeRule ? 'Change your request' : 'What should I listen for?'}</Text>
-            <Text variant="bodyLarge" style={muted}>Speak Malayalam or English, or type. Include your token and how you want to be alerted.</Text>
-            <TextInput mode="outlined" label="Your request" multiline value={request}
+            <Text variant="headlineSmall" accessibilityRole="header">{activeRule ? 'Change token' : 'Your request'}</Text>
+            <TextInput mode="outlined" label="Token and alert" multiline value={request}
               onChangeText={text => { setRequest(text); setProposal(null); setClarification(''); }}
-              placeholder="Listen for token 442 and vibrate."
+              placeholder="Token 442. Vibrate."
               style={styles.input} maxLength={1500} editable={!busy && !native.running} />
-            <Text variant="bodyMedium" style={muted}>Current venue: hospital pharmacy. Three-digit tokens, with an optional A or P prefix.</Text>
             <View style={styles.row}>
               {native.running ? <Button mode="outlined" icon="stop" contentStyle={buttonStyle}
-                onPress={() => void run(async () => { await Listener.stop(); })}>Cancel recording</Button> :
-                <Button mode="outlined" icon="microphone-outline" contentStyle={buttonStyle}
-                  disabled={!connection || !consent || busy} onPress={() => void run(() => start('request'))}>Speak request</Button>}
-              <Button mode="contained" icon="arrow-right" contentStyle={buttonStyle} loading={busy}
-                disabled={!connection || !consent || busy || native.running || !request.trim()}
-                onPress={() => void analyze(request)}>Interpret request</Button>
+                onPress={() => void run(async () => { await Listener.stop(); })}>Cancel</Button> :
+                <Button mode={request.trim() ? 'outlined' : 'contained'} icon="microphone-outline" contentStyle={styles.speakButton}
+                  disabled={!consent || busy} onPress={() => void run(() => start('request'))}>Speak</Button>}
+              <Button mode={request.trim() ? 'contained' : 'outlined'} icon="arrow-right" contentStyle={buttonStyle} loading={busy}
+                disabled={!consent || busy || native.running || !request.trim()}
+                onPress={() => void analyze(request)}>Continue</Button>
             </View>
             {clarification !== '' && <Text variant="bodyLarge" accessibilityLiveRegion="polite" style={{ color: theme.colors.error }}>{clarification}</Text>}
             {proposal && <Surface elevation={0} style={[styles.confirmation, { backgroundColor: theme.colors.surfaceVariant }]}
@@ -346,8 +312,7 @@ export default function Home() {
               }}>
               <Text variant="titleLarge">Is this right?</Text>
               <Text style={styles.confirmToken}>{proposal.intent.token}</Text>
-              <Text variant="bodyLarge">Hospital pharmacy · {preferenceLabel(proposal.intent.alert_preferences)}</Text>
-              <Text variant="bodyMedium">Nothing starts until you confirm. Check every digit and prefix.</Text>
+              <Text variant="bodyLarge">{preferenceLabel(proposal.intent.alert_preferences)}</Text>
               <Button mode="contained" contentStyle={buttonStyle} disabled={busy || !consent}
                 onPress={() => void run(async () => {
                   if (!connection) return;
@@ -357,15 +322,16 @@ export default function Home() {
                   await saveConnection(next); connectionRef.current = next; setConnection(next);
                   suppressMonitor.current = false; addEvent(event);
                   Listener.clear(); setProposal(null); await start('monitor');
-                })}>Confirm & start listening</Button>
-              <Button contentStyle={buttonStyle} onPress={() => setProposal(null)}>Not right · edit request</Button>
+                })}>Start listening</Button>
+              <Button contentStyle={buttonStyle} onPress={() => setProposal(null)}>Change</Button>
             </Surface>}
           </View>}
 
-          <Divider />
-          <View style={styles.group}>
-            <Text variant="titleLarge" accessibilityRole="header">Recent announcements</Text>
-            {events.length === 0 ? <Text variant="bodyLarge" style={muted}>No announcements yet. Completed transcripts and uncertain interpretations will appear here.</Text> :
+          {(events.length > 0 || activeRule) && <View style={styles.group}>
+            <Button icon={showHistory ? 'chevron-up' : 'chevron-down'} contentStyle={buttonStyle}
+              accessibilityState={{ expanded: showHistory }} onPress={() => setShowHistory(!showHistory)}>Announcements</Button>
+            {latestUnclear && !showHistory && <Text variant="bodyLarge" accessibilityLiveRegion="polite">Unclear announcement. Check the display.</Text>}
+            {showHistory && (events.length === 0 ? <Text variant="bodyLarge" style={muted}>No announcements yet.</Text> :
               events.slice(0, 30).map((event, index) => <View key={event.segment?.id ?? event.observation?.id ?? index} style={styles.timelineItem}>
                 {event.segment ? <>
                   <Text variant="labelLarge" style={muted}>{event.mode === 'request' ? 'Your spoken request' : 'Announcement transcript'}</Text>
@@ -376,14 +342,21 @@ export default function Home() {
                   <Text variant="bodyMedium" style={muted}>{event.observation.ambiguity_reason ??
                     (event.observation.counter ? `Counter ${event.observation.counter}` : 'Counter not identified')}</Text>
                 </>}
-              </View>)}
-          </View>
-          <Text variant="bodyMedium" style={muted}>A supplemental aid, not the official queue. Calls can be missed. Android may interrupt background listening; keep the ongoing notification visible and check the official display.</Text>
+              </View>))}
+          </View>}
+          <Text variant="bodyMedium" style={muted}>Calls may be missed. Check the venue display.</Text>
+          <Button contentStyle={buttonStyle} icon={showDetails ? 'chevron-up' : 'information-outline'}
+            accessibilityState={{ expanded: showDetails }} onPress={() => setShowDetails(!showDetails)}>About & privacy</Button>
+          {showDetails && <View style={styles.group}>
+            <Text variant="bodyLarge">For hospital pharmacy tokens: three digits, optionally starting with A or P. Speak Malayalam or English, or type.</Text>
+            <Text variant="bodyLarge">Gnani Prisma processes microphone audio. OpenAI processes requests and announcement text. The app and relay save no recordings or transcripts on disk. Provider terms apply.</Text>
+            <Text variant="bodyLarge">Android can interrupt listening in the background. Keep the microphone notification visible. This is an aid, not the official queue.</Text>
+          </View>}
         </>}
       </ScrollView>
     </KeyboardAvoidingView>
   </View>;
-  return settings ? <Modal visible onRequestClose={() => setSettings(false)} animationType="slide">{screen}</Modal> : screen;
+  return screen;
 }
 
 const styles = StyleSheet.create({
@@ -391,6 +364,7 @@ const styles = StyleSheet.create({
   group: { gap: 16 }, row: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   status: { flexDirection: 'row', alignItems: 'flex-start', gap: 16 }, flex: { flex: 1, gap: 4 },
   input: { minHeight: 120 }, checkbox: { paddingHorizontal: 0, paddingVertical: 4, minHeight: 48 },
+  speakButton: { minHeight: 64 },
   checkboxLabel: { fontSize: 16, textAlign: 'left' },
   confirmation: { padding: 24, borderRadius: 16, gap: 16 },
   alert: { padding: 24, borderRadius: 16, gap: 16 },

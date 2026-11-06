@@ -9,7 +9,7 @@ from contextlib import asynccontextmanager, suppress
 from dataclasses import dataclass, field
 
 from anyio import move_on_after
-from fastapi import Depends, FastAPI, Header, HTTPException, WebSocket, WebSocketDisconnect
+from fastapi import Depends, FastAPI, Header, HTTPException, Request, WebSocket, WebSocketDisconnect
 from websockets.exceptions import InvalidStatus
 
 from .config import Settings
@@ -19,6 +19,10 @@ from .guard import RequestGuard
 from .intelligence import OpenAIFallback
 from .models import ConfirmRequest, ControlRequest, Intent, IntentRequest, PairRequest, Segment
 from .validation import intent_errors
+
+APP_SESSION_IP_LIMIT = 3
+APP_SESSION_IP_WINDOW_SECONDS = 600
+APP_SESSION_IP_BUCKETS = 1024
 
 
 @dataclass
@@ -37,6 +41,7 @@ def create_app(settings: Settings | None = None, intelligence=None) -> FastAPI:
     settings = settings or Settings()
     sessions: dict[str, Session] = {}
     pair_attempts: deque = deque(maxlen=100)
+    app_admissions: dict[str, deque] = {}
     fallback: OpenAIFallback | None = None
 
     async def close_stream(session: Session, code: int, reason: str):
@@ -52,7 +57,7 @@ def create_app(settings: Settings | None = None, intelligence=None) -> FastAPI:
                 for token, session in list(sessions.items()):
                     if session.expires <= time.time():
                         sessions.pop(token, None)
-                        await close_stream(session, 4401, "Session expired; pair again.")
+                        await close_stream(session, 4401, "Session expired; submit a new request.")
 
         task = asyncio.create_task(reap())
         try:
@@ -81,7 +86,7 @@ def create_app(settings: Settings | None = None, intelligence=None) -> FastAPI:
         token = authorization[7:] if authorization and authorization.startswith("Bearer ") else ""
         session = sessions.get(token)
         if not session or session.expires <= time.time():
-            raise HTTPException(401, "Session expired. Connect to the backend again.")
+            raise HTTPException(401, "Session expired. Submit your request again.")
         return session
 
     async def authenticate(authorization: str | None = Header(default=None)) -> Session:
@@ -103,15 +108,37 @@ def create_app(settings: Settings | None = None, intelligence=None) -> FastAPI:
         }
 
     @app.post("/v1/sessions")
-    async def pair(body: PairRequest):
+    async def pair(body: PairRequest, request: Request):
         now = time.monotonic()
         if sum(t > now - 60 for t in pair_attempts) >= 20:
             raise HTTPException(429, "Pairing rate limit. Wait a minute.")
         pair_attempts.append(now)
-        if not settings.demo_access_code or len(settings.demo_access_code) < 16:
-            raise HTTPException(503, "Set a DEMO_ACCESS_CODE of at least 16 characters.")
-        if not hmac.compare_digest(body.access_code.encode(), settings.demo_access_code.encode()):
-            raise HTTPException(401, "Incorrect pairing code.")
+        client_ip = None
+        if body.access_code is None:
+            if not settings.allow_app_sessions:
+                raise HTTPException(401, "A pairing code is required.")
+            # Only the ASGI server's effective client address is trusted. Configure
+            # exact trusted proxies there; never parse forwarding headers here.
+            if request.client is None:
+                raise HTTPException(400, "Client address unavailable.")
+            client_ip = request.client.host
+            for address, admissions in list(app_admissions.items()):
+                while admissions and admissions[0] <= now - APP_SESSION_IP_WINDOW_SECONDS:
+                    admissions.popleft()
+                if not admissions:
+                    app_admissions.pop(address)
+            admissions = app_admissions.get(client_ip)
+            if admissions is not None and len(admissions) >= APP_SESSION_IP_LIMIT:
+                raise HTTPException(429, "App session IP limit. Wait ten minutes.")
+            if admissions is None and len(app_admissions) >= APP_SESSION_IP_BUCKETS:
+                raise HTTPException(429, "App session admission capacity reached. Try later.")
+        else:
+            if not settings.demo_access_code or len(settings.demo_access_code) < 16:
+                raise HTTPException(503, "Set a DEMO_ACCESS_CODE of at least 16 characters.")
+            if not hmac.compare_digest(
+                body.access_code.encode(), settings.demo_access_code.encode()
+            ):
+                raise HTTPException(401, "Incorrect pairing code.")
         for token, session in list(sessions.items()):
             if session.expires < time.time() and not session.busy:
                 sessions.pop(token, None)
@@ -120,6 +147,8 @@ def create_app(settings: Settings | None = None, intelligence=None) -> FastAPI:
         token = secrets.token_urlsafe(32)
         expires = time.time() + settings.session_ttl_seconds
         sessions[token] = Session(expires, Engine(settings.correction_grace_seconds))
+        if client_ip is not None:
+            app_admissions.setdefault(client_ip, deque(maxlen=APP_SESSION_IP_LIMIT)).append(now)
         return {
             "token": token,
             "expires_at": expires,

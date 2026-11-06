@@ -10,6 +10,7 @@ class Settings(BaseSettings):
     openai_api_key: str = ""
     openai_model: str = ""
     demo_access_code: str = ""
+    allow_app_sessions: bool = False
     allow_insecure_local: bool = False
     max_sessions: int = Field(default=8, ge=1, le=100)
     session_ttl_seconds: int = Field(default=14400, ge=60, le=86400)

@@ -22,8 +22,12 @@ Latest user instructions override the older plan: Gnani Prisma v3.0 for speech; 
 
 Speech language is automatic (`indic-auto`), with no language chooser required. The user selected `gpt-6-luna`; its exact ID was verified against their account and set in the ignored environment. Automatic speech recognition does not expand the configured token grammar or the supported Malayalam/English number normalization.
 
+The app contains only the user workflow: speak/type → review → confirm → monitor/alert. Server URL, pairing code and developer connection settings are not user-facing. Operators supply `EXPO_PUBLIC_API_URL` before building. The app obtains and encrypts an expiring bearer on the first consented action. No provider or pairing secret is embedded. Controlled anonymous demo admission is an explicit backend opt-in (`ALLOW_APP_SESSIONS`), not production identity or proof of an authorized device; public deployment needs stronger admission and provider budget protection. A hosted origin has not been supplied; the old APK is not the updated connected build.
+
 ## Accessibility & Inclusion
 High contrast, large token/counter text, labelled controls, screen-reader updates, large touch targets and visual alternatives to all sound/vibration. Typed setup must work without speech. No color-only health state.
+
+The user prioritizes elderly and low-literacy users: no greeting, repeated instructions or technical paragraphs in the main workflow. Use short labels and a 64dp Speak action. Full privacy/venue details and announcement history are expandable; processing recipients, consent, listening failures, latest uncertainty and the missed-call warning remain visible. A simpler screen is not evidence of validated low-literacy usability; test with representative people before claiming that outcome.
 
 ## Evidence on Hand
 implementation.md is the original research architecture, not measured product reliability. Credentials were supplied locally and are excluded from source control. Live Luna staged text probes and HTTP/reducer flows passed. After the user corrected authorization, Gnani connected with Prisma v3.0 / indic-auto and negotiated 16 kHz / 512-sample frames. The client sent 48 paced synthetic tone/silence PCM frames without a reported error. Earlier HTTP 401 failures are resolved; no spoken audio was tested. There are 189 passing backend tests, six native unit tests, and Android emulator setup/theme captures. No real-phone speech/haptic/background evaluation, pricing or provider retention verification is present.

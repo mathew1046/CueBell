@@ -7,17 +7,17 @@ This is a rehearsal runbook, not a claim that the full phone-and-speaker scenari
 ## 1. Prepare before presenting
 
 - An ARM64 Android phone with microphone, internet and notification permission. Use the actual phone for haptics/background tests; an emulator is not a substitute.
-- The standalone preview APK. Expo Go cannot run the native microphone service.
+- A standalone APK built with your deployed service origin. Expo Go cannot run the native microphone service. The old local preview predates this workflow change; rebuild it before this demo.
 - A laptop or hosted machine running the separate backend, with working Gnani and OpenAI access and sufficient account quota. Usage may incur provider costs.
 - A publicly trusted HTTPS backend URL that supports WebSocket connections.
 - A second, consenting speaker, or your own consented human recording played from a second device. Start in a quiet room, within useful microphone range. Do not use unconsented hospital audio.
-- A screen-recording/mirroring arrangement if presenting to an audience. Hide pairing codes, credentials and private notifications; obtain consent before recording the demonstration.
+- A screen-recording/mirroring arrangement if presenting to an audience. Hide credentials and private notifications; obtain consent before recording the demonstration.
 
-The existing local preview is at:
+The previous local preview is at (not the updated workflow build):
 
 /home/mathew/Arrakis/QueueSaathi/artifacts/QueueSaathi-preview.apk
 
-It is development-signed and is not a GitHub release download. To install over USB with Android debugging enabled:
+After rebuilding for your service, install the resulting APK over USB with Android debugging enabled. The local preview is development-signed, not a GitHub release or store distribution:
 
 ```sh
 adb install -r /home/mathew/Arrakis/QueueSaathi/artifacts/QueueSaathi-preview.apk
@@ -44,15 +44,11 @@ GNANI_API_KEY=your-speech-api-key
 GNANI_LANGUAGE_CODE=indic-auto
 OPENAI_API_KEY=your-openai-api-key
 OPENAI_MODEL=gpt-6-luna
-DEMO_ACCESS_CODE=your-random-pairing-secret-at-least-16-characters
+ALLOW_APP_SESSIONS=true
 ALLOW_INSECURE_LOCAL=false
 ```
 
-`gpt-6-luna` was verified in the implementation account; your account must also have access to the exact configured model and structured outputs. Generate a pairing secret if needed:
-
-```sh
-.venv/bin/python -c 'import secrets; print(secrets.token_urlsafe(32))'
-```
+`gpt-6-luna` was verified in the implementation account; your account must also have access to the exact configured model and structured outputs. `ALLOW_APP_SESSIONS=true` explicitly opts into anonymous demo admission. Anyone reaching the endpoint can obtain a rate/capacity-limited bearer and incur provider usage: keep the demo short, apply gateway/provider budget limits, and turn this mode off afterward. It is not production authentication. Do not embed the optional legacy operator `DEMO_ACCESS_CODE` or any provider key in the APK.
 
 Run **one worker**, from the backend directory:
 
@@ -60,7 +56,7 @@ Run **one worker**, from the backend directory:
 .venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8000 --workers 1 --proxy-headers --forwarded-allow-ips 127.0.0.1 --ws-max-size 8192 --timeout-keep-alive 5 --no-access-log
 ```
 
-Keep that terminal running. Restarting the backend clears in-memory sessions; pair the phone again afterward.
+Keep that terminal running. Restarting the backend clears in-memory sessions; submit the request again if the app reports expiration.
 
 ### Fast temporary HTTPS option: Cloudflare Quick Tunnel
 
@@ -73,7 +69,7 @@ In a **second terminal on the same laptop**, run:
 cloudflared tunnel --url http://127.0.0.1:8000
 ```
 
-Copy the generated HTTPS origin, for example https://your-random-name.trycloudflare.com . Use the actual printed hostname, not this example. This temporarily exposes the relay to the internet; keep pairing authentication enabled and do not share the pairing code publicly. Stop the tunnel when finished. Do not enable request/header/body capture in extra proxy or monitoring tools.
+Copy the generated HTTPS origin, for example https://your-random-name.trycloudflare.com . Use the actual printed hostname, not this example. **Set it in the mobile build environment as `EXPO_PUBLIC_API_URL`, then build/install the APK. Nothing is entered on the phone.** A new random tunnel hostname requires a new build; a stable HTTPS hostname is better. This temporarily exposes anonymous demo admission to the internet; protect provider budgets and stop the tunnel when finished. Do not enable request/header/body capture in extra proxy or monitoring tools.
 
 This setup trusts forwarding headers only from the local tunnel connector at `127.0.0.1`. Keep Uvicorn bound to loopback. **Do not use `--forwarded-allow-ips '*'`, disable TLS checks or expose port 8000 publicly.** A different proxy/container topology needs its own exact trusted proxy address.
 
@@ -94,15 +90,17 @@ Expect `status: "ok"`, `speech_configured: true` and `intent_configured: true`. 
 For a permanent deployment, follow:
 https://github.com/mathew1046/QueueSaathi/blob/main/backend/README.md
 
-## 3. Pair and rehearse on the phone
+## 3. Build once, then rehearse the user workflow
 
-1. Open QueueSaathi → **Connect your backend** (or the backend settings icon).
-2. Enter the HTTPS origin only: no `/health`, `/v1`, credentials, query or fragment. Enter your `DEMO_ACCESS_CODE` as **Pairing code**, then tap **Connect backend**.
-3. Accept **I agree to the processing below**. Audio goes to Gnani; requests and announcement text go to the OpenAI fallback. Provider terms apply.
-4. For the first run, type **“Listen for pharmacy token 442 and vibrate.”** Tap **Interpret request**.
-5. Check the **Is this right?** proposal: exact token `442`, hospital pharmacy, visual/vibration preferences. If it is wrong, tap **Not right · edit request**. Never confirm a wrong token for the sake of the demo.
-6. Tap **Confirm & start listening**. Grant microphone and notification permissions, then wait until the app explicitly reports that audio is flowing/listening. A confirmed rule alone is not listening coverage.
-7. Check the ongoing microphone notification. Keep the app visible for the first rehearsal. Ensure microphone privacy is off, the notification channel is enabled, vibration is enabled, and Do Not Disturb is not suppressing delivery.
+Before handing over the phone, the operator builds using the real service origin and the instructions at:
+https://github.com/mathew1046/QueueSaathi/blob/main/mobile/README.md
+
+1. Open QueueSaathi. The request workflow appears immediately, with **no server fields, pairing or technical settings**.
+2. Check **Allow audio & text processing**. Audio goes to Gnani; requests and announcement text go to OpenAI. **About & privacy** contains the full explanation.
+3. For the first run, type **“Listen for pharmacy token 442 and vibrate.”** Tap **Continue**. Session setup happens automatically, not as a separate task.
+4. Check the **Is this right?** proposal: exact token `442` and visual/vibration preferences. If it is wrong, tap **Change**. Never confirm a wrong token for the sake of the demo. The configured venue remains hospital pharmacy, documented under **About & privacy**.
+5. Tap **Start listening**. Grant microphone and notification permissions, then wait until the app reports **Listening**. A confirmed rule alone is not listening coverage.
+6. Check the ongoing microphone notification. Keep the app visible for the first rehearsal. Ensure microphone privacy is off, the notification channel is enabled, vibration is enabled, and Do Not Disturb is not suppressing delivery.
 
 Speak one complete announcement at a time, then pause for the final transcript and interpretation. This is completed-utterance recognition, not instantaneous partial-word captioning. Alert latency also includes model processing and the configurable correction grace period (default 1.2 seconds); there is no measured end-to-end latency guarantee.
 
@@ -118,7 +116,7 @@ Show the typed request, the extracted proposal, and explicit confirmation. Say:
 
 > “The model interprets the request, but the user checks the exact token before any monitor starts. Announcements cannot change what this person is watching for.”
 
-Typing first isolates the monitoring demonstration from speech-setup errors. After rehearsal, optionally replace typing with **Speak request**: speak the full instruction in one utterance and pause. The app stops request capture and interprets the final transcript; it must still be confirmed. Do not speak setup instructions over the announcement-listening phase.
+Typing first isolates the monitoring demonstration from speech-setup errors. After rehearsal, optionally tap **Speak** instead: speak the full instruction in one utterance and pause. The app stops request capture and interprets the final transcript; it must still be confirmed. Do not speak setup instructions over the announcement-listening phase. Expand **Announcements** to inspect transcripts; the history is collapsed to keep the main screen quiet.
 
 ### 1:15–2:15 — A non-match, then a match
 
@@ -150,15 +148,16 @@ Close with:
 - **Repeat:** repeat the same call. Check that the 45-second repeat suppression does not create another token-call alert. This is a heuristic, not a queue-reset detector.
 - **Interruption:** while listening, turn the phone's network off. Check degraded/disconnected status and the coverage warning. Restore networking and wait for verified listening before the next announcement. Reconnect is bounded; you may need **Start listening**. The missing audio is not replayed.
 - **Background / lock screen:** start while visible, then background or lock the phone and repeat a known call. Check the ongoing service and actual delivery on this phone. Lock-screen content is private, so unlock to inspect the token. Only claim this device behavior if you observe it working; it has not been established by emulator tests.
-- **Stop:** tap **Stop & clear**, or the notification's **Stop microphone**. Confirm capture stops. The notification action pauses listening; **Stop & clear** also clears the active monitor and session events.
+- **Stop:** tap **Stop**, or the notification's **Stop microphone**. Confirm capture stops. The notification action pauses listening; the in-app **Stop** also clears the active monitor and session events.
 
 ## 6. If the live demo fails
 
 | Symptom | Check |
 | --- | --- |
-| Cannot connect to backend | Use the current HTTPS origin; confirm `/health` works from the phone and both backend/tunnel terminals are running. Do not use `localhost` on the phone or enter a URL path. |
+| Service temporarily unavailable | Operator: confirm the build-time origin is current, `/health` works, `ALLOW_APP_SESSIONS=true` is enabled for the controlled demo, and both backend/tunnel processes are running. Rebuild if the hostname changed. There is no phone URL setting. |
 | HTTP 403 / secure-transport error | Check the trusted local proxy and forwarded HTTPS scheme. Do not bypass by trusting every proxy or allowing insecure public traffic. |
-| Pairing rejected / session expired | Use the backend pairing code, not a provider key. Restarted backends lose sessions; disconnect/reconnect. |
+| Session expired | Submit the request again. The app obtains a fresh bearer and requires a new confirmation; an old monitor is never silently replayed. |
+| Service busy | Wait before retrying. Anonymous demo admission permits three sessions per IP per ten minutes, plus global and concurrent limits; do not keep reinstalling or clearing storage. |
 | Provider authorization / quota error | Check server-side keys, speech-platform access, model entitlement and quota. `/health` configuration flags do not authenticate providers. |
 | Intent needs clarification | Include the token and an explicit alert preference; use the configured three-digit grammar. Edit and reconfirm rather than guessing. |
 | No transcript | Verify actual listening, microphone permission/privacy, connectivity and audio range. Speak clearly and pause at the end. |
@@ -175,12 +174,12 @@ Explain explicitly that these are isolated automated tests, **not** live microph
 
 ## 7. End the session
 
-Tap **Stop & clear**; disconnect if the session is no longer needed. Stop `cloudflared` and the backend with Ctrl+C. Check the microphone notification has gone. Avoid publishing audio, participant information or a video containing pairing/provider credentials.
+Tap **Stop**. Stop `cloudflared` and the backend with Ctrl+C, and disable anonymous demo admission if no longer needed. Check the microphone notification has gone. Avoid publishing audio, participant information or a video containing provider credentials.
 
 ## What you can honestly claim today
 
 - A built Android prototype, with a native microphone foreground service and separate backend.
-- 189 backend tests and six native unit tests passed; emulator UI states and live text-model flows were checked.
+- 227 backend tests and six native unit tests passed; emulator UI states and live text-model flows were checked. The latest no-setup app changes add separate session/workflow checks; do not claim a connected replacement APK until it is built for the actual service.
 - Gnani streaming authorization/negotiation and a bounded synthetic PCM transmission check succeeded.
 - Any real speech, vibration or background behavior you actually reproduce in the rehearsal, clearly scoped to that device and staged scenario.
 

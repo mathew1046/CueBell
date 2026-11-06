@@ -154,7 +154,7 @@ class ListenerService : Service() {
               }
               else -> ListenerMemory.emit(event)
             }
-          } catch (_: Exception) { fail(gen, "Invalid relay response. Check the backend.") }
+          } catch (_: Exception) { fail(gen, "The listening service returned an invalid response. Please try again.") }
         }
       }
       override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
@@ -163,8 +163,8 @@ class ListenerService : Service() {
       }
       override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
         val permanent = RelayFailure.isPermanent(response?.code ?: 0)
-        main.post { fail(gen, if (permanent) "Relay rejected the session. Check pairing, consent, and backend configuration."
-          else "Cannot reach the relay. Check connection and server configuration.", permanent) }
+        main.post { fail(gen, if (permanent) "Your listening session is unavailable. Submit your request again."
+          else "Cannot reach the listening service. Check your internet connection.", permanent) }
       }
     })
   }
