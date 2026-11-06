@@ -69,7 +69,7 @@ def create_app(settings: Settings | None = None, intelligence=None) -> FastAPI:
             if fallback is not None:
                 await fallback.client.close()
 
-    app = FastAPI(title="QueueSaathi relay", lifespan=lifespan)
+    app = FastAPI(title="CueBell relay", lifespan=lifespan)
     app.add_middleware(RequestGuard, allow_insecure_local=settings.allow_insecure_local)
 
     def ai():

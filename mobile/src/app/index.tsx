@@ -229,7 +229,7 @@ export default function Home() {
 
   const screen = <View style={[styles.root, { backgroundColor: theme.colors.background }]}>
     <Appbar.Header style={{ backgroundColor: theme.colors.background }}>
-      <Appbar.Content title="QueueSaathi" />
+      <Appbar.Content title="CueBell" />
     </Appbar.Header>
     {!!error && <View style={[styles.errorRegion, { backgroundColor: theme.colors.errorContainer }]}>
       <Text variant="bodyLarge" accessibilityRole="alert" accessibilityLiveRegion="assertive"

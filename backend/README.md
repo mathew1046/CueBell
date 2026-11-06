@@ -1,4 +1,4 @@
-# QueueSaathi standalone backend
+# CueBell standalone backend
 
 Python 3.12+ FastAPI relay for the separately installed native Android app. This
 directory is independently installable; it does not serve or build the APK.
@@ -8,7 +8,7 @@ checks passed. Spoken-audio recognition remains unverified; see verification bel
 
 ## Install and test
 
-Run from `/home/mathew/Arrakis/QueueSaathi/backend` (or your standalone backend checkout):
+Run from `/home/mathew/Arrakis/CueBell/backend` (or your standalone backend checkout):
 
 ```sh
 python3.12 -m venv .venv

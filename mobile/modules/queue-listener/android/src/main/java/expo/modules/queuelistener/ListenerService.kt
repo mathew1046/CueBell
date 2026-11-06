@@ -71,7 +71,7 @@ class ListenerService : Service() {
       ServiceInfo.FOREGROUND_SERVICE_TYPE_MICROPHONE)
     else startForeground(1, notification)
     wake = (getSystemService(POWER_SERVICE) as PowerManager)
-      .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "QueueSaathi:Listening").apply {
+      .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "CueBell:Listening").apply {
         setReferenceCounted(false); acquire(4 * 60 * 60 * 1000L)
       }
     connect()
@@ -93,7 +93,7 @@ class ListenerService : Service() {
       PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
     return NotificationCompat.Builder(this, "listening")
       .setSmallIcon(android.R.drawable.ic_btn_speak_now)
-      .setContentTitle(if (mode == "request") "QueueSaathi · your request" else "QueueSaathi · monitoring")
+      .setContentTitle(if (mode == "request") "CueBell · your request" else "CueBell · monitoring")
       .setContentText(text).setStyle(NotificationCompat.BigTextStyle().bigText(text))
       .setContentIntent(openApp()).setOngoing(true).setOnlyAlertOnce(true)
       .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
@@ -210,7 +210,7 @@ class ListenerService : Service() {
         } catch (_: Exception) {
           main.post { fail(gen, "Microphone or audio transport interrupted. Check the display.") }
         } finally { samples.fill(0); frame.fill(0) }
-      }, "QueueSaathi-PCM").apply { start() }
+      }, "CueBell-PCM").apply { start() }
     } catch (_: Exception) { fail(gen, "Microphone unavailable. Close other recording apps and retry.", true) }
   }
 
@@ -233,7 +233,7 @@ class ListenerService : Service() {
     if (mode == "request" || permanent || retries >= 5) {
       status("DISCONNECTED", "$reason Open the app to try again.")
       notificationManager.notify(2, NotificationCompat.Builder(this, "listening")
-        .setSmallIcon(android.R.drawable.ic_dialog_alert).setContentTitle("QueueSaathi stopped listening")
+        .setSmallIcon(android.R.drawable.ic_dialog_alert).setContentTitle("CueBell stopped listening")
         .setContentText("A call may have been missed. Open the app and reconnect.")
         .setContentIntent(openApp()).setAutoCancel(true).build())
       stopping = true; stopSelf()
@@ -294,7 +294,7 @@ class ListenerService : Service() {
       .setVibrate(if (vibration) longArrayOf(0, 400, 200, 400, 200, 700) else longArrayOf(0))
       .setVisibility(NotificationCompat.VISIBILITY_PRIVATE).setAutoCancel(true)
       .setPublicVersion(NotificationCompat.Builder(this, channel)
-        .setSmallIcon(android.R.drawable.ic_dialog_info).setContentTitle("QueueSaathi alert")
+        .setSmallIcon(android.R.drawable.ic_dialog_info).setContentTitle("CueBell alert")
         .setContentText("Open the app to check your queue announcement.").build()).build())
   }
 

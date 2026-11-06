@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "generatedAt": "2026-11-06T00:00:00Z",
-  "title": "Design System: QueueSaathi Android",
+  "title": "Design System: CueBell Android",
   "extensions": {
     "colorMeta": {
       "light-primary": {"role":"primary","displayName":"Deep teal","tonalRamp":["oklch(15% 0.0754 182.2)","oklch(26% 0.0754 182.2)","oklch(38% 0.0754 182.2)","oklch(49% 0.0754 182.2)","oklch(61% 0.0754 182.2)","oklch(72% 0.0754 182.2)","oklch(84% 0.0754 182.2)","oklch(95% 0.0754 182.2)"]},
@@ -86,7 +86,7 @@
       "kind": "nav",
       "refersTo": "appbar",
       "description": "Documentation-only approximation of the title-only native app bar. No settings icon, connection modal, URL field or pairing-code entry exists in the current shell.",
-      "html": "<header class=\"ds-bar\"><span>QueueSaathi</span></header>",
+      "html": "<header class=\"ds-bar\"><span>CueBell</span></header>",
       "css": ".ds-bar{display:flex;align-items:center;background:#F1F8F6;color:#102F29;padding:8px 16px;font:400 22px/28px Roboto,Arial,sans-serif}"
     },
     {

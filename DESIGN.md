@@ -1,5 +1,5 @@
 ---
-name: QueueSaathi Android
+name: CueBell Android
 description: A minimal native Material 3 shell for confirmed queue monitoring.
 colors:
   light-primary: "#075E54"
@@ -133,7 +133,7 @@ components:
     typography: "{typography.title-large}"
 ---
 
-# Design System: QueueSaathi Android
+# Design System: CueBell Android
 
 ## Overview
 
@@ -152,9 +152,9 @@ Validated intent and event data drive a fixed accessible shell; model output mus
 - Short labelled actions, a 64dp Speak target and collapsed secondary detail.
 - Explicit consent, confirmation, listening health and correction states.
 
-Source authority: /home/mathew/Arrakis/QueueSaathi/mobile/src/lib/theme.ts, /home/mathew/Arrakis/QueueSaathi/mobile/src/app/index.tsx, /home/mathew/Arrakis/QueueSaathi/mobile/src/app/_layout.tsx, /home/mathew/Arrakis/QueueSaathi/mobile/src/lib/api.ts and the local Kotlin queue-listener module. Paper defaults were checked in the installed react-native-paper source. This records source behavior, not a device-reliability certification.
+Source authority: /home/mathew/Arrakis/CueBell/mobile/src/lib/theme.ts, /home/mathew/Arrakis/CueBell/mobile/src/app/index.tsx, /home/mathew/Arrakis/CueBell/mobile/src/app/_layout.tsx, /home/mathew/Arrakis/CueBell/mobile/src/lib/api.ts and the local Kotlin queue-listener module. Paper defaults were checked in the installed react-native-paper source. This records source behavior, not a device-reliability certification.
 
-Current minimal-interface review: Android 36 emulator light and dark/1.3× text captures were opened and independently reviewed with a **pass**, with no blocking issues in the initial task surface. Evidence: /home/mathew/Arrakis/QueueSaathi/.impeccable/review/minimal/main-light.png and /home/mathew/Arrakis/QueueSaathi/.impeccable/review/minimal/main-dark-large.png. The build is UI-only QA: no hosted origin has been supplied, so it is not a connected release. Tests: 227 backend, 13 mobile workflow and 6 native unit tests pass; TypeScript and lint pass. Active alerts, representative-user usability, physical phones, TalkBack and live end-to-end behavior remain unverified by this review. Legacy captures are historical only.
+Minimal-interface review: Android 36 emulator light and dark/1.3× text captures were opened and independently reviewed with a **pass**, with no blocking issues in the initial task surface. Historical evidence: /home/mathew/Arrakis/CueBell/.impeccable/review/minimal/main-light.png and /home/mathew/Arrakis/CueBell/.impeccable/review/minimal/main-dark-large.png. Those captures predate the CueBell rename and were UI-only QA. The current build uses the unchanged operator-supplied hosted origin. Current source checks: 227 backend, 16 mobile workflow/branding and 6 native unit tests pass; TypeScript and lint pass. Active alerts, representative-user usability, TalkBack and live end-to-end behavior remain unverified by that review.
 
 Historical review record: earlier Android 36 emulator screenshots and the then-reported 165 backend / 6 native test passes belonged to an older shell. Those captures predated error-region, confirmation-scroll, health-announcement and corrected-acknowledgement fixes as well as this simplification; they do not establish the current render or provider/device reliability.
 

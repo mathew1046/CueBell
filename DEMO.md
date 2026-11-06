@@ -1,4 +1,4 @@
-# Demo QueueSaathi
+# Demo CueBell
 
 **Goal:** show a real request → confirmation → announcement → alert flow on an Android phone, without presenting a prototype as a reliable deployed system.
 
@@ -7,26 +7,26 @@ This is a rehearsal runbook, not a claim that the full phone-and-speaker scenari
 ## 1. Prepare before presenting
 
 - An ARM64 Android phone with microphone, internet and notification permission. Use the actual phone for haptics/background tests; an emulator is not a substitute.
-- A standalone APK built with your deployed service origin. The v1.0.1 ARM64 preview uses https://queuesaathi.mathewjoseph.xyz . Expo Go cannot run the native microphone service.
+- A standalone APK built with your deployed service origin. The v1.1.0 ARM64 preview uses https://queuesaathi.mathewjoseph.xyz . Expo Go cannot run the native microphone service.
 - A laptop or hosted machine running the separate backend, with working Gnani and OpenAI access and sufficient account quota. Usage may incur provider costs.
 - A publicly trusted HTTPS backend URL that supports WebSocket connections.
 - A second, consenting speaker, or your own consented human recording played from a second device. Start in a quiet room, within useful microphone range. Do not use unconsented hospital audio.
 - A screen-recording/mirroring arrangement if presenting to an audience. Hide credentials and private notifications; obtain consent before recording the demonstration.
 
 Download the development-signed ARM64 preview from GitHub Releases:
-https://github.com/mathew1046/QueueSaathi/releases/tag/v1.0.1-preview
+https://github.com/mathew1046/CueBell/releases/tag/v1.1.0-preview
 
 Local APK:
-/home/mathew/Arrakis/QueueSaathi/artifacts/QueueSaathi-1.0.1-arm64.apk
+/home/mathew/Arrakis/CueBell/artifacts/CueBell-1.1.0-arm64.apk
 
 Install over USB with Android debugging enabled. Specify your physical phone's serial from `adb devices`; do not accidentally target an emulator. This preview is not production/store-signed:
 
 ```sh
-adb -s YOUR_PHONE_SERIAL install -r /home/mathew/Arrakis/QueueSaathi/artifacts/QueueSaathi-1.0.1-arm64.apk
+adb -s YOUR_PHONE_SERIAL install -r /home/mathew/Arrakis/CueBell/artifacts/CueBell-1.1.0-arm64.apk
 ```
 
 Otherwise transfer it to the phone and allow installation from that source. Only install APKs you trust. Build instructions:
-https://github.com/mathew1046/QueueSaathi/blob/main/mobile/README.md
+https://github.com/mathew1046/CueBell/blob/main/mobile/README.md
 
 ## 2. Start the separate backend
 
@@ -90,14 +90,14 @@ curl --fail https://your-random-name.trycloudflare.com/health
 Expect `status: "ok"`, `speech_configured: true` and `intent_configured: true`. These flags only check that configuration is present. They **do not** prove provider authorization, quota or successful recognition. A direct local HTTP request is deliberately rejected with insecure-local mode disabled; test through the HTTPS origin.
 
 For a permanent deployment, follow:
-https://github.com/mathew1046/QueueSaathi/blob/main/backend/README.md
+https://github.com/mathew1046/CueBell/blob/main/backend/README.md
 
 ## 3. Build once, then rehearse the user workflow
 
 Before handing over the phone, the operator builds using the real service origin and the instructions at:
-https://github.com/mathew1046/QueueSaathi/blob/main/mobile/README.md
+https://github.com/mathew1046/CueBell/blob/main/mobile/README.md
 
-1. Open QueueSaathi. The request workflow appears immediately, with **no server fields, pairing or technical settings**.
+1. Open CueBell. The request workflow appears immediately, with **no server fields, pairing or technical settings**.
 2. Check **Allow audio & text processing**. Audio goes to Gnani; requests and announcement text go to OpenAI. **About & privacy** contains the full explanation.
 3. For the first run, type **“Listen for pharmacy token 442 and vibrate.”** Tap **Continue**. Session setup happens automatically, not as a separate task.
 4. Check the **Is this right?** proposal: exact token `442` and visual/vibration preferences. If it is wrong, tap **Change**. Never confirm a wrong token for the sake of the demo. The configured venue remains hospital pharmacy, documented under **About & privacy**.
@@ -110,7 +110,7 @@ Speak one complete announcement at a time, then pause for the final transcript a
 
 ### 0:00–0:30 — The problem
 
-> “If you cannot hear a pharmacy loudspeaker, knowing when your token is called can mean watching a display continuously or relying on a companion. QueueSaathi aims to make that call visible and personal. It is a supplemental aid, not the official queue.”
+> “If you cannot hear a pharmacy loudspeaker, knowing when your token is called can mean watching a display continuously or relying on a companion. CueBell aims to make that call visible and personal. It is a supplemental aid, not the official queue.”
 
 ### 0:30–1:15 — User-controlled intent
 

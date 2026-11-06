@@ -7,7 +7,7 @@ import { createSessionManager, serviceOrigin } from './session';
 const SERVICE_URL = process.env.EXPO_PUBLIC_API_URL ?? '';
 export class SessionExpiredError extends Error {}
 
-const KEY = 'queuesaathi.connection.v1';
+const KEY = 'cuebell.connection.v1';
 export const saveConnection = (value: Connection) => SecureStore.setItemAsync(KEY, JSON.stringify(value));
 export const removeConnection = () => SecureStore.deleteItemAsync(KEY);
 export async function loadConnection(): Promise<Connection | null> {
@@ -35,20 +35,20 @@ export async function api<T>(connection: Connection | string, path: string, body
       ...(typeof connection === 'string' ? {} : { Authorization: `Bearer ${connection.token}` }) },
     body: body ? JSON.stringify(body) : undefined,
     signal: AbortSignal.timeout(20000),
-  }).catch(() => { throw new Error('Could not reach QueueSaathi. Check your internet connection and try again.'); });
+  }).catch(() => { throw new Error('Could not reach CueBell. Check your internet connection and try again.'); });
   const result = await response.json().catch(() => ({}));
   if (!response.ok) {
     const detail = typeof result.detail === 'string' ? result.detail : '';
     if (response.status === 401) {
-      if (typeof connection === 'string') throw new Error('QueueSaathi is temporarily unavailable. Please try again later.');
+      if (typeof connection === 'string') throw new Error('CueBell is temporarily unavailable. Please try again later.');
       if (typeof connection !== 'string' && (await loadConnection())?.token === connection.token) {
         await removeConnection();
       }
       throw new SessionExpiredError('Your session has expired. Submit your request again to continue.');
     }
-    if (response.status === 429) throw new Error('QueueSaathi is busy right now. Please try again shortly.');
+    if (response.status === 429) throw new Error('CueBell is busy right now. Please try again shortly.');
     if (response.status === 403 || response.status >= 500 || /backend|configure|API.key|access.code/i.test(detail)) {
-      throw new Error('QueueSaathi is temporarily unavailable. Please try again later.');
+      throw new Error('CueBell is temporarily unavailable. Please try again later.');
     }
     throw new Error(detail || 'Could not complete the request. Please try again.');
   }

@@ -4,7 +4,7 @@ import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import { createSessionManager, prepareConsentedSession, requireProcessingConsent, serviceOrigin } from '../src/lib/session.ts';
 
-const origin = 'https://service.queuesaathi.org'; // Test fixture only; no network requests.
+const origin = 'https://service.cuebell.org'; // Test fixture only; no network requests.
 const now = 100000;
 const stored = { url: origin, token: 'session', expires: 1000, suppressMonitor: true };
 function fixture(overrides = {}) {
@@ -22,7 +22,7 @@ test('service origin normalizes HTTPS without any user configuration', () => {
 });
 test('missing, insecure and credential-bearing origins fail without leaking configuration', () => {
   for (const url of ['', 'no-url', 'http://localhost', 'https://secret:pass@host.org', `${origin}/path`, `${origin}?key=secret`, `${origin}#frag`]) {
-    assert.throws(() => serviceOrigin(url), /^Error: QueueSaathi is temporarily unavailable\./);
+    assert.throws(() => serviceOrigin(url), /^Error: CueBell is temporarily unavailable\./);
   }
 });
 test('first action automatically creates and securely saves a bearer session', async () => {
@@ -82,7 +82,7 @@ test('failed admission can be retried, and invalid responses are never persisted
   assert.equal(calls.saved.length, 0);
 });
 test('unconfigured builds cannot silently pass distribution checks', () => {
-  for (const url of ['', 'http://localhost:8000', 'https://your-queuesaathi-service.example', `${origin}/api`]) {
+  for (const url of ['', 'http://localhost:8000', 'https://your-cuebell-service.example', `${origin}/api`]) {
     const result = spawnSync(process.execPath, ['scripts/check-service.mjs'], {
       env: { ...process.env, EXPO_PUBLIC_API_URL: url }, encoding: 'utf8',
     });

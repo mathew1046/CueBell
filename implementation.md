@@ -1,4 +1,4 @@
-# QueueSaathi: implementation architecture
+# CueBell: implementation architecture
 
 **Status:** Research-based implementation plan, 6 November 2026. Revised for intent-driven monitoring. No implementation or live API test is implied.
 

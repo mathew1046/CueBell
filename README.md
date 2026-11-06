@@ -1,8 +1,8 @@
-# QueueSaathi
+# CueBell
 
 **Hear the announcement. See your turn.**
 
-QueueSaathi is an Android assistive app that turns a matching queue announcement into a prominent visual alert, with optional vibration and sound. It is designed primarily for people who are deaf or hard of hearing, starting with Malayalam and English announcements at a hospital pharmacy.
+CueBell is an Android assistive app that turns a matching queue announcement into a prominent visual alert, with optional vibration and sound. It is designed primarily for people who are deaf or hard of hearing, starting with Malayalam and English announcements at a hospital pharmacy.
 
 Tell it what to watch for, check the details, and confirm. A native Android microphone service then listens for announcements while a separate, self-hosted backend interprets them.
 
@@ -16,7 +16,7 @@ Tell it what to watch for, check the details, and confirm. A native Android micr
 
 Imagine waiting for medicine in a crowded pharmacy. Your turn is announced over a loudspeaker, but you cannot reliably hear it. You may need to watch the display continuously or depend on someone else to notice the call.
 
-QueueSaathi aims to make that moment more accessible: the person specifies their own token and receives a personal, visible cue when a matching announcement is detected.
+CueBell aims to make that moment more accessible: the person specifies their own token and receives a personal, visible cue when a matching announcement is detected.
 
 | Real-life need | Intended benefit |
 | --- | --- |
@@ -84,7 +84,7 @@ Gnani Evon is **not integrated**: its usable API contract has not been supplied.
 ## Try it / present a demo
 
 **Start with the complete demo guide:**
-https://github.com/mathew1046/QueueSaathi/blob/main/DEMO.md
+https://github.com/mathew1046/CueBell/blob/main/DEMO.md
 
 The shortest reliable presentation path is:
 
@@ -98,22 +98,22 @@ The guide includes exact commands, a three-minute script, correction and interru
 
 ### Android preview download
 
-The v1.0.1 preview routes to the operator-supplied backend:
+The v1.1.0 preview routes to the operator-supplied backend:
 https://queuesaathi.mathewjoseph.xyz
 
 Release and APK download:
-https://github.com/mathew1046/QueueSaathi/releases/tag/v1.0.1-preview
-https://github.com/mathew1046/QueueSaathi/releases/download/v1.0.1-preview/QueueSaathi-1.0.1-arm64.apk
+https://github.com/mathew1046/CueBell/releases/tag/v1.1.0-preview
+https://github.com/mathew1046/CueBell/releases/download/v1.1.0-preview/CueBell-1.1.0-arm64.apk
 
 Local copy:
-/home/mathew/Arrakis/QueueSaathi/artifacts/QueueSaathi-1.0.1-arm64.apk
+/home/mathew/Arrakis/CueBell/artifacts/CueBell-1.1.0-arm64.apk
 
-This is a **development-signed ARM64 preview**, not a production/store distribution. APKs are published as GitHub Release assets, not committed to source history. Earlier `QueueSaathi-preview.apk` and `QueueSaathi-ui-review.apk` are obsolete for the hosted workflow.
+This is a **development-signed ARM64 preview**, not a production/store distribution. APKs are published as GitHub Release assets, not committed to source history. Historical preview binaries are superseded, not renamed and misrepresented as new builds. CueBell uses Android package `app.cuebell.mobile` and is a separate install; the previous app and its data are not removed.
 
 **Server readiness:** the supplied server reports both providers configured. A staged hosted request, “Listen for pharmacy token 442 and vibrate,” returned an exact-token confirmation with visual/vibration preferences; its temporary session was deleted. The APK installs and opens on the connected physical phone. No microphone capture was started during installation, and hosted speech recognition/background alerts remain untested. Provider keys stay on the backend, never in the APK.
 
 Build your own APK using:
-https://github.com/mathew1046/QueueSaathi/blob/main/mobile/README.md
+https://github.com/mathew1046/CueBell/blob/main/mobile/README.md
 
 **Expo Go does not support the custom native service.** This download targets ARM64 phones only; emulators and older 32-bit phones need a different build.
 
@@ -123,9 +123,9 @@ https://github.com/mathew1046/QueueSaathi/blob/main/mobile/README.md
 | --- | --- |
 | Backend tests | **227 passed**: validation, confirmation, correction/repeat aliases, acknowledgment, stale results, gaps, cleanup, language configuration, cancellations, authorization and opt-in automatic session admission. Ruff checks passed. |
 | Native unit tests | **6 passed**: PCM16 framing/waveform boundaries and permanent versus retryable WebSocket rejection. TypeScript and lint checks passed. |
-| Mobile workflow tests | **13 passed**: automatic session admission/reuse, expiry/revocation, consent withdrawal, configuration guards and removal of operator UI. |
-| App build and rendering | Earlier minimal-interface QA launched on an Android 16 emulator; light/dark and enlarged text inspected. The v1.0.1 ARM64 preview adds the hosted origin. Packaging a route does not verify live speech or alert delivery. |
-| Hosted preview installation | v1.0.1 installed and launched on the physical Android phone, not the emulator. The compiled backend origin, ARM64 architecture, signature, version and absence of configured server credentials were checked. Hosted typed intent returned the expected token/alert preferences; no phone microphone capture was started. |
+| Mobile workflow tests | **16 passed**: automatic session admission/reuse, expiry/revocation, consent withdrawal, configuration guards, removal of operator UI and CueBell identity/unchanged-backend regression checks. |
+| App build and rendering | Earlier minimal-interface QA launched on an Android 16 emulator; light/dark and enlarged text inspected. The CueBell v1.1.0 build retains the same hosted origin. Packaging a route does not verify live speech or alert delivery. |
+| Hosted preview installation | The previous hosted preview installed and launched on the physical Android phone, not the emulator. The compiled backend origin, ARM64 architecture, signature, version and absence of configured server credentials were checked. Hosted typed intent returned the expected token/alert preferences; no phone microphone capture was started. CueBell rebrand verification is recorded with its release. |
 | Live text model | Staged English/Malayalam intent, call, negation, injection-abstention and correction checks passed using `gpt-6-luna`. HTTP lifecycle and leading-zero checks passed. |
 | Live speech connection | Gnani authentication and streaming negotiation succeeded at 16 kHz / 512 samples. Sent 48 paced synthetic tone/silence frames without a reported provider error. **This was not spoken-audio recognition testing.** |
 | Real PA recognition and user outcomes | **Not measured.** No speech-accuracy percentage, false-alert rate, missed-call rate or latency benchmark is claimed. |
@@ -136,10 +136,10 @@ Automated tests and emulator captures do not establish real-world reliability. A
 ## Development and hosting
 
 Backend installation, configuration, tests, TLS and single-worker hosting:
-https://github.com/mathew1046/QueueSaathi/blob/main/backend/README.md
+https://github.com/mathew1046/CueBell/blob/main/backend/README.md
 
 Android setup, APK build, native tests and device checklist:
-https://github.com/mathew1046/QueueSaathi/blob/main/mobile/README.md
+https://github.com/mathew1046/CueBell/blob/main/mobile/README.md
 
 From the repository root, frontend checks are:
 
@@ -165,8 +165,8 @@ Backend environment variables include `GNANI_API_KEY`, `GNANI_LANGUAGE_CODE=indi
 
 ## Project documents
 
-- Original research architecture: https://github.com/mathew1046/QueueSaathi/blob/main/implementation.md
-- Current product scope and subsequent decisions: https://github.com/mathew1046/QueueSaathi/blob/main/PRODUCT.md
-- Interface principles and review record: https://github.com/mathew1046/QueueSaathi/blob/main/DESIGN.md
+- Original research architecture: https://github.com/mathew1046/CueBell/blob/main/implementation.md
+- Current product scope and subsequent decisions: https://github.com/mathew1046/CueBell/blob/main/PRODUCT.md
+- Interface principles and review record: https://github.com/mathew1046/CueBell/blob/main/DESIGN.md
 
 The later Android/background and OpenAI-fallback decisions override the original plan's foreground-web / Gnani-only scope. The basic queue-alert concept has prior art; this prototype does not claim to have invented it. Its intended contribution is an accessible Malayalam/English workflow with explicit confirmation, correction-aware handling and honest coverage status—not a proven performance advantage.

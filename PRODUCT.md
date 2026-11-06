@@ -1,4 +1,4 @@
-# QueueSaathi
+# CueBell
 
 <!-- impeccable:product-schema 1 -->
 
@@ -22,7 +22,9 @@ Latest user instructions override the older plan: Gnani Prisma v3.0 for speech; 
 
 Speech language is automatic (`indic-auto`), with no language chooser required. The user selected `gpt-6-luna`; its exact ID was verified against their account and set in the ignored environment. Automatic speech recognition does not expand the configured token grammar or the supported Malayalam/English number normalization.
 
-The app contains only the user workflow: speak/type → review → confirm → monitor/alert. Server URL, pairing code and developer connection settings are not user-facing. Operators supply `EXPO_PUBLIC_API_URL` before building. The app obtains and encrypts an expiring bearer on the first consented action. No provider or pairing secret is embedded. Controlled anonymous demo admission is an explicit backend opt-in (`ALLOW_APP_SESSIONS`), not production identity or proof of an authorized device; public deployment needs stronger admission and provider budget protection. A hosted origin has not been supplied; the old APK is not the updated connected build.
+The app contains only the user workflow: speak/type → review → confirm → monitor/alert. Server URL, pairing code and developer connection settings are not user-facing. Operators supply `EXPO_PUBLIC_API_URL` before building. The app obtains and encrypts an expiring bearer on the first consented action. No provider or pairing secret is embedded. Controlled anonymous demo admission is an explicit backend opt-in (`ALLOW_APP_SESSIONS`), not production identity or proof of an authorized device; public deployment needs stronger admission and provider budget protection. The operator-supplied hosted origin is https://queuesaathi.mathewjoseph.xyz and must remain unchanged by the rebrand.
+
+CueBell v1.1.0 uses application ID `app.cuebell.mobile`, scheme/slug `cuebell`, npm package `cuebell-mobile`, Python distribution `cuebell` and encrypted session key `cuebell.connection.v1`. Renaming the Android package creates a separate install, not an in-place migration; the previous app and its private data are left untouched. The API paths, consent requirements, provider configuration and monitoring protocol do not change. Historical commits/releases remain historical rather than being rewritten.
 
 ## Accessibility & Inclusion
 High contrast, large token/counter text, labelled controls, screen-reader updates, large touch targets and visual alternatives to all sound/vibration. Typed setup must work without speech. No color-only health state.
@@ -30,7 +32,7 @@ High contrast, large token/counter text, labelled controls, screen-reader update
 The user prioritizes elderly and low-literacy users: no greeting, repeated instructions or technical paragraphs in the main workflow. Use short labels and a 64dp Speak action. Full privacy/venue details and announcement history are expandable; processing recipients, consent, listening failures, latest uncertainty and the missed-call warning remain visible. A simpler screen is not evidence of validated low-literacy usability; test with representative people before claiming that outcome.
 
 ## Evidence on Hand
-implementation.md is the original research architecture, not measured product reliability. Credentials were supplied locally and are excluded from source control. Live Luna staged text probes and HTTP/reducer flows passed. After the user corrected authorization, Gnani connected with Prisma v3.0 / indic-auto and negotiated 16 kHz / 512-sample frames. The client sent 48 paced synthetic tone/silence PCM frames without a reported error. Earlier HTTP 401 failures are resolved; no spoken audio was tested. There are 189 passing backend tests, six native unit tests, and Android emulator setup/theme captures. No real-phone speech/haptic/background evaluation, pricing or provider retention verification is present.
+implementation.md is the original research architecture, not measured product reliability. Credentials were supplied locally and are excluded from source control. Live Luna staged text probes and HTTP/reducer flows passed. After the user corrected authorization, Gnani connected with Prisma v3.0 / indic-auto and negotiated 16 kHz / 512-sample frames. The client sent 48 paced synthetic tone/silence PCM frames without a reported error. Earlier HTTP 401 failures are resolved; no spoken audio was tested. There are 227 passing backend tests, 16 mobile tests, six native unit tests, and historical Android emulator setup/theme captures. The previous hosted preview installed and launched on the physical phone; a temporary hosted typed-intent session passed and was deleted. No real-phone speech/haptic/background evaluation, pricing or provider retention verification is present.
 
 ## Product Principles
 - Confirm before monitoring; ambiguous setup cannot start a monitor.

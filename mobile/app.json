@@ -1,16 +1,16 @@
 {
   "expo": {
-    "name": "QueueSaathi",
-    "slug": "queuesaathi",
-    "scheme": "queuesaathi",
-    "version": "1.0.1",
+    "name": "CueBell",
+    "slug": "cuebell",
+    "scheme": "cuebell",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
     "platforms": ["android"],
     "android": {
-      "package": "app.queuesaathi.mobile",
-      "versionCode": 2,
+      "package": "app.cuebell.mobile",
+      "versionCode": 3,
       "permissions": [
         "RECORD_AUDIO",
         "POST_NOTIFICATIONS",

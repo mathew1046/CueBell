@@ -7,7 +7,7 @@ export function serviceOrigin(raw: string): string {
       (url.pathname !== '/' && url.pathname !== '')) throw new Error();
     return url.origin;
   } catch {
-    throw new Error('QueueSaathi is temporarily unavailable. Please try again later.');
+    throw new Error('CueBell is temporarily unavailable. Please try again later.');
   }
 }
 
