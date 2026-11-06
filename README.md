@@ -94,22 +94,28 @@ The shortest reliable presentation path is:
 4. Allow processing, type “Listen for pharmacy token 442 and vibrate,” tap **Continue**, review the token, then tap **Start listening**.
 5. Have a consenting speaker announce a non-target token, then **“Pharmacy token four four two, please go to counter two.”** Inspect the transcript and resulting alert.
 
-The guide includes exact commands, a three-minute script, correction and interruption checks, troubleshooting, and an honest fallback if the live pipeline fails. No backend has been deployed for you.
+The guide includes exact commands, a three-minute script, correction and interruption checks, troubleshooting, and an honest fallback if the live pipeline fails.
 
-Local preview APK, when using the implementation workspace:
+### Android preview download
 
-/home/mathew/Arrakis/QueueSaathi/artifacts/QueueSaathi-preview.apk
+The v1.0.1 preview routes to the operator-supplied backend:
+https://queuesaathi.mathewjoseph.xyz
 
-**Updated minimal-interface review APK (UI only; no hosted service configured):**
+Release and APK download:
+https://github.com/mathew1046/QueueSaathi/releases/tag/v1.0.1-preview
+https://github.com/mathew1046/QueueSaathi/releases/download/v1.0.1-preview/QueueSaathi-1.0.1-arm64.apk
 
-/home/mathew/Arrakis/QueueSaathi/artifacts/QueueSaathi-ui-review.apk
+Local copy:
+/home/mathew/Arrakis/QueueSaathi/artifacts/QueueSaathi-1.0.1-arm64.apk
 
-Use the UI-review APK to inspect the simplified interface, not to demonstrate working listening. Its service actions report unavailable until a new build is made with the actual hosted origin. Light/dark and enlarged-text emulator captures passed a fresh native review; representative elderly/low-literacy users and physical phones have not yet been tested.
+This is a **development-signed ARM64 preview**, not a production/store distribution. APKs are published as GitHub Release assets, not committed to source history. Earlier `QueueSaathi-preview.apk` and `QueueSaathi-ui-review.apk` are obsolete for the hosted workflow.
 
-The existing artifact predates the removal of operator setup; it is not the updated workflow build. No hosted origin has been supplied for a replacement connected APK. Artifacts are **not checked into GitHub or published as release assets**. Local previews are development-signed, not production/store distributions. Build your own APK using:
+**Server readiness:** at packaging time, the supplied server accepted automatic app sessions, but `/health` reported `speech_configured: false` and `intent_configured: false`. Set `GNANI_API_KEY`, `OPENAI_API_KEY` and `OPENAI_MODEL=gpt-6-luna` on that backend and restart it before demonstrating speech or intent extraction. Do not put keys in the APK. Reachability alone is not a successful listening test.
+
+Build your own APK using:
 https://github.com/mathew1046/QueueSaathi/blob/main/mobile/README.md
 
-**Expo Go does not support the custom native service.** The current preview includes ARM64 phones and x86_64 emulators; older 32-bit phones need a different build.
+**Expo Go does not support the custom native service.** This download targets ARM64 phones only; emulators and older 32-bit phones need a different build.
 
 ## Verification — what is and is not established
 
@@ -118,7 +124,7 @@ https://github.com/mathew1046/QueueSaathi/blob/main/mobile/README.md
 | Backend tests | **227 passed**: validation, confirmation, correction/repeat aliases, acknowledgment, stale results, gaps, cleanup, language configuration, cancellations, authorization and opt-in automatic session admission. Ruff checks passed. |
 | Native unit tests | **6 passed**: PCM16 framing/waveform boundaries and permanent versus retryable WebSocket rejection. TypeScript and lint checks passed. |
 | Mobile workflow tests | **13 passed**: automatic session admission/reuse, expiry/revocation, consent withdrawal, configuration guards and removal of operator UI. |
-| App build and rendering | The minimal no-setup UI builds and launches on an Android 16 emulator; light/dark and enlarged text inspected. This UI-only QA build has no hosted origin and is not a connected release APK. |
+| App build and rendering | Earlier minimal-interface QA launched on an Android 16 emulator; light/dark and enlarged text inspected. The v1.0.1 ARM64 preview adds the hosted origin. Packaging a route does not verify live speech or alert delivery. |
 | Live text model | Staged English/Malayalam intent, call, negation, injection-abstention and correction checks passed using `gpt-6-luna`. HTTP lifecycle and leading-zero checks passed. |
 | Live speech connection | Gnani authentication and streaming negotiation succeeded at 16 kHz / 512 samples. Sent 48 paced synthetic tone/silence frames without a reported provider error. **This was not spoken-audio recognition testing.** |
 | Real PA recognition and user outcomes | **Not measured.** No speech-accuracy percentage, false-alert rate, missed-call rate or latency benchmark is claimed. |

@@ -7,20 +7,22 @@ This is a rehearsal runbook, not a claim that the full phone-and-speaker scenari
 ## 1. Prepare before presenting
 
 - An ARM64 Android phone with microphone, internet and notification permission. Use the actual phone for haptics/background tests; an emulator is not a substitute.
-- A standalone APK built with your deployed service origin. Expo Go cannot run the native microphone service. The old local preview predates this workflow change; rebuild it before this demo.
+- A standalone APK built with your deployed service origin. The v1.0.1 ARM64 preview uses https://queuesaathi.mathewjoseph.xyz . Expo Go cannot run the native microphone service.
 - A laptop or hosted machine running the separate backend, with working Gnani and OpenAI access and sufficient account quota. Usage may incur provider costs.
 - A publicly trusted HTTPS backend URL that supports WebSocket connections.
 - A second, consenting speaker, or your own consented human recording played from a second device. Start in a quiet room, within useful microphone range. Do not use unconsented hospital audio.
 - A screen-recording/mirroring arrangement if presenting to an audience. Hide credentials and private notifications; obtain consent before recording the demonstration.
 
-The previous local preview is at (not the updated workflow build):
+Download the development-signed ARM64 preview from GitHub Releases:
+https://github.com/mathew1046/QueueSaathi/releases/tag/v1.0.1-preview
 
-/home/mathew/Arrakis/QueueSaathi/artifacts/QueueSaathi-preview.apk
+Local APK:
+/home/mathew/Arrakis/QueueSaathi/artifacts/QueueSaathi-1.0.1-arm64.apk
 
-After rebuilding for your service, install the resulting APK over USB with Android debugging enabled. The local preview is development-signed, not a GitHub release or store distribution:
+Install over USB with Android debugging enabled. Specify your physical phone's serial from `adb devices`; do not accidentally target an emulator. This preview is not production/store-signed:
 
 ```sh
-adb install -r /home/mathew/Arrakis/QueueSaathi/artifacts/QueueSaathi-preview.apk
+adb -s YOUR_PHONE_SERIAL install -r /home/mathew/Arrakis/QueueSaathi/artifacts/QueueSaathi-1.0.1-arm64.apk
 ```
 
 Otherwise transfer it to the phone and allow installation from that source. Only install APKs you trust. Build instructions:

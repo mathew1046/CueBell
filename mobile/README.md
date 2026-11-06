@@ -8,13 +8,18 @@ Copy `.env.example` to `.env` only if there is no existing configured file. Set 
 
 Only the service address is public. **Never embed `DEMO_ACCESS_CODE`, Gnani/OpenAI keys, or any long-lived credential in an APK or `EXPO_PUBLIC_` variable.** Anonymous demo admission is off by default and permits paid-provider usage; do not treat rate limits or an APK as production authentication. See the backend hosting/security guide before public distribution.
 
-No hosted origin has been supplied yet. The previous APK still has the old setup flow; a connected replacement must be built after the operator supplies the real origin. Do not substitute a made-up domain or ship an unconfigured build. The EAS post-install hook rejects missing/placeholder routing configuration.
+The preview and production EAS profiles now set the public origin to:
+https://queuesaathi.mathewjoseph.xyz
 
-An explicitly UI-only, development-signed review build is available at:
+For local builds, set the same `EXPO_PUBLIC_API_URL` in `.env` or the shell. No provider secrets belong in this file. The EAS post-install hook rejects missing/placeholder routing configuration.
 
-/home/mathew/Arrakis/QueueSaathi/artifacts/QueueSaathi-ui-review.apk
+The v1.0.1 ARM64 preview APK and checksum are published at:
+https://github.com/mathew1046/QueueSaathi/releases/tag/v1.0.1-preview
 
-It shows the latest minimal interface but **cannot connect or listen** because no hosted origin was supplied. This is not a connected release. Source checks include 13 mobile workflow/session tests, including consent withdrawal during admission and recovery from backend-invalidated bearers. Fresh light/dark + 1.3× font-size emulator review passed; this does not establish low-literacy usability, TalkBack or real-phone behavior.
+Local copy:
+/home/mathew/Arrakis/QueueSaathi/artifacts/QueueSaathi-1.0.1-arm64.apk
+
+This preview has the deployed service origin baked in; it is no longer the old unconfigured UI-only build. At packaging time, the backend accepted app admission but reported missing speech/text provider configuration. Set server-side credentials and restart the backend before live use; no APK rebuild is needed for provider-key changes. Source checks include 13 mobile workflow/session tests, including consent withdrawal during admission and recovery from backend-invalidated bearers. Prior light/dark + 1.3× font-size emulator review does not establish low-literacy usability, TalkBack or real-phone reliability.
 
 ```sh
 npm ci
@@ -32,7 +37,7 @@ Then, from the generated `android` directory:
 ./gradlew :queue-listener:testDebugUnitTest
 ```
 
-The standalone APK is generated at `android/app/build/outputs/apk/release/app-release.apk`. ARM64 is for modern phones; x86_64 is included for emulator checks. To support older 32-bit phones, include `armeabi-v7a` explicitly when building.
+The standalone APK is generated at `android/app/build/outputs/apk/release/app-release.apk`. The command above includes emulators; for the phone-only release use `-PreactNativeArchitectures=arm64-v8a`. The downloadable v1.0.1 APK is ARM64 only. To support older 32-bit phones, include `armeabi-v7a` explicitly when building.
 
 **Local preview signing:** Expo's generated local release configuration uses its development/debug signing key. The preview is installable for review, not a production/store-signed distribution. Set up your own production keystore through a config plugin or use your own EAS project and signing credentials before publishing. Do not edit generated Android source; keep native service code under `modules/queue-listener` and configuration in `app.json` / config plugins.
 
