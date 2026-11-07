@@ -1,12 +1,12 @@
 import { useIsFocused, useRouter } from 'expo-router';
 import { useState } from 'react';
 import { AccessibilityInfo, ActivityIndicator, Image, Pressable, ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
-import { Icon, Text } from 'react-native-paper';
+import { Button, Icon, Text } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ConsentCard, ErrorBanner } from '../components/app';
 import { ListeningWaveform, LiveTranscription } from '../components/listening';
 import { LanguageMenu } from '../components/language-menu';
-import { AlertCard, NavTile, Notice, PrefChips, SoftCard, SoftIconButton } from '../components/ui';
+import { AlertCard, NavTile, Notice, SoftCard, SoftIconButton } from '../components/ui';
 import { spell, useReduceMotion } from '../lib/a11y';
 import { useCueBell } from '../lib/cuebell';
 import { useLanguage } from '../lib/i18n';
@@ -21,21 +21,17 @@ export default function Home() {
   const focused = useIsFocused();
   const { width, fontScale } = useWindowDimensions();
   const [consentRequested, setConsentRequested] = useState(false);
-  const [spokenSetup, setSpokenSetup] = useState<{ previousTranscriptId?: string } | null>(null);
+  const [captionsOpen, setCaptionsOpen] = useState(false);
   const app = useCueBell();
   const { activeRule, proposal, native, listening, capturing, captureMode, consent, busy, phase } = app;
   const token = (proposal?.intent ?? activeRule)?.token;
   const task = (proposal?.intent ?? activeRule)?.task;
   const hasTask = !!(task || token);
-  const latestRequest = app.events.find(event => event.type === 'transcript' && event.mode === 'request');
-  const setupTranscript = spokenSetup && latestRequest?.segment?.id !== spokenSetup.previousTranscriptId
-    ? latestRequest : undefined;
   const captureInProgress = phase !== 'IDLE' && phase !== 'ERROR';
-  const showSetup = !!spokenSetup && (busy || !!setupTranscript);
-  const showRequest = showSetup || (captureInProgress && captureMode === 'request');
-  const showTranscript = captureInProgress || showSetup;
+  const showRequest = captureInProgress && captureMode === 'request';
+  const showTranscript = showRequest || (captureInProgress && captionsOpen);
   const stopping = phase === 'STOPPING';
-  const canStop = native.running && !stopping;
+  const canStop = (native.running || busy) && !stopping;
   const status = listening && showRequest ? t('Describe what to listen for') : app.statusLabel;
   const heroSize = Math.min(320, Math.round(width * 2 / 3));
   const heroSpace = Math.min(52, Math.round(width * 0.12));
@@ -44,7 +40,6 @@ export default function Home() {
   const background = theme.dark ? theme.colors.background : '#F8F5F4';
   const shortcutStyle = [styles.shortcut, { backgroundColor: theme.dark ? theme.colors.surfaceVariant : '#EFEAE8' }];
   const editToken = () => {
-    setSpokenSetup(null);
     app.clearProposal();
     router.push('/token');
   };
@@ -52,8 +47,7 @@ export default function Home() {
     stopping ? t('Stopping...') : phase === 'ERROR' ? t('Retry Listening') : t('Start Listening');
   const press = () => {
     if (canStop) {
-      setSpokenSetup(null);
-      return capturing ? app.cancelCapture() : app.pause();
+      return captureMode === 'request' || busy ? app.cancelCapture() : app.pause();
     }
     if (!consent) {
       setConsentRequested(true);
@@ -62,10 +56,8 @@ export default function Home() {
     }
     setConsentRequested(false);
     if (!hasTask) {
-      setSpokenSetup({ previousTranscriptId: latestRequest?.segment?.id });
       return app.speak();
     }
-    setSpokenSetup(null);
     if (proposal) return app.confirm();
     app.resume();
   };
@@ -81,7 +73,6 @@ export default function Home() {
           </View>
           <View style={styles.brandCopy}>
             <Text variant="headlineSmall" accessibilityRole="header" style={[styles.brandTitle, { color: theme.colors.onSurface }]}>CueBell</Text>
-            <Text style={[styles.tagline, { color: theme.colors.onSurfaceVariant }]}>{t('Helping ears, your way')}</Text>
           </View>
         </View>
         <View style={styles.shortcuts}>
@@ -97,8 +88,8 @@ export default function Home() {
           <Pressable testID="listening-control" accessibilityRole="button" accessibilityLabel={label}
             accessibilityHint={canStop ? t('Turns off the microphone. Recent captions are in History.') :
               hasTask ? app.statusLabel : t('Describe what to listen for. Use the pencil to type your request.')}
-            accessibilityState={{ disabled: busy || stopping, busy }}
-            disabled={busy || stopping} onPress={press}
+            accessibilityState={{ disabled: stopping, busy: busy && !canStop }}
+            disabled={stopping} onPress={press}
             style={({ pressed }) => [styles.hero, {
               width: heroSize, minHeight: heroSize, borderRadius: Math.round(heroSize * 0.29),
               backgroundColor: theme.dark ? theme.colors.primary : '#323234', boxShadow: theme.shadow.hero,
@@ -113,13 +104,16 @@ export default function Home() {
               {captureInProgress && status !== label &&
                 <Text style={[styles.heroStatus, { color: theme.colors.onPrimary }]}>{status}</Text>}
               <View style={[styles.heroAction, { backgroundColor: theme.colors.onPrimary }]}>
-                {busy ? <ActivityIndicator color={theme.colors.primary} /> :
+                {busy && !canStop ? <ActivityIndicator color={theme.colors.primary} /> :
                   <Icon source={canStop ? 'stop' : 'play'} size={29} color={theme.colors.primary} />}
               </View>
             </View>
           </Pressable>
-          {showTranscript && <LiveTranscription
-            events={showRequest && spokenSetup ? (setupTranscript ? [setupTranscript] : []) : app.events}
+          {captureInProgress && !showRequest && <Button mode="text"
+            icon={captionsOpen ? 'chevron-up' : 'chevron-down'}
+            accessibilityState={{ expanded: captionsOpen }} contentStyle={{ minHeight: 48 }}
+            onPress={() => setCaptionsOpen(!captionsOpen)}>{t('Live captions')}</Button>}
+          {showTranscript && <LiveTranscription events={app.events}
             mode={showRequest ? 'request' : 'monitor'} listening={listening} />}
           {!!app.statusDetail && <Text variant="bodyMedium" style={{ color: theme.colors.onSurfaceVariant }}>{app.statusDetail}</Text>}
           {consentRequested && !consent && !native.running && <ConsentCard />}
@@ -133,24 +127,19 @@ export default function Home() {
         <SoftCard style={styles.tokenCard}>
           <View style={styles.tokenRow}>
             <View style={[styles.tokenReadout, largeTokenLayout && styles.tokenReadoutLarge]} accessible accessibilityLabel={hasTask ?
-              t('{label}, {task}', { label: proposal ? t('Review task') : t('Listening task'), task: task?.summary ?? spell(token ?? '') }) : t('Listening task, not set')}>
+              t('{label}, {task}', { label: t('Listening task'), task: task?.summary ?? spell(token ?? '') }) : t('Listening task, not set')}>
               <View style={styles.tokenLabel}>
                 <Icon source="ear-hearing" size={38} color={theme.colors.onSurface} />
-                <Text variant="titleMedium" style={[styles.tokenTitle, { color: theme.colors.onSurface }]}>
-                  {proposal ? t('Review task') : t('Listening task')}
-                </Text>
               </View>
               {!largeTokenLayout && <View style={[styles.divider, { backgroundColor: theme.colors.outlineVariant }]} />}
               <Text style={[styles.tokenValue, (!token || !!task) && styles.noToken, largeTokenLayout && styles.tokenValueLarge,
                 { color: theme.colors.onSurface }]}>
-                {task?.summary ?? token ?? t('Not set')}
+                {task?.summary ?? token ?? t('What should I listen for?')}
               </Text>
             </View>
             <SoftIconButton icon="pencil-outline" label={hasTask ? t('Change listening task') : t('Set a listening task')}
               style={styles.shortcut} disabled={native.running || busy} onPress={editToken} />
           </View>
-          {proposal && <Text variant="bodyMedium" style={{ color: theme.colors.onSurfaceVariant }}>{t('Check the subject and event. Tap Start Listening to confirm. Nothing has started yet.')}</Text>}
-          {proposal && <PrefChips values={proposal.intent.alert_preferences} />}
         </SoftCard>
 
         {app.outstanding.length > 0 && <View style={styles.alerts}>
@@ -163,9 +152,6 @@ export default function Home() {
           <NavTile icon="cog-outline" label={t('Settings')} onPress={() => router.push('/settings')} />
           <NavTile icon="help-circle-outline" label={t('Help')} onPress={() => router.push('/help')} />
         </View>
-        <Text variant="bodyMedium" style={[styles.reminder, { color: theme.colors.onSurfaceVariant }]}>
-          {t('Events may be missed. Check the official source. Not an emergency alert system.')}
-        </Text>
       </>}
     </ScrollView>
   </View>;
@@ -180,7 +166,6 @@ const styles = StyleSheet.create({
   brandMark: { width: 44, height: 48 },
   brandCopy: { flex: 1, gap: 1 },
   brandTitle: { fontWeight: '700' },
-  tagline: { fontSize: 13, lineHeight: 18 },
   shortcuts: { flexDirection: 'row', gap: 10 },
   shortcut: { width: 48, height: 48, borderRadius: 16 },
   restoring: { marginTop: 48 },
@@ -193,14 +178,12 @@ const styles = StyleSheet.create({
   tokenCard: { paddingHorizontal: 20, paddingVertical: 14, borderRadius: 28, gap: 12 },
   tokenRow: { flexDirection: 'row', alignItems: 'center', gap: 12 },
   tokenReadout: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: 14 },
-  tokenReadoutLarge: { flexDirection: 'column', alignItems: 'flex-start', gap: 4 },
+  tokenReadoutLarge: { flexDirection: 'row', alignItems: 'center', gap: 12 },
   tokenLabel: { flexDirection: 'row', alignItems: 'center', alignSelf: 'stretch', flexShrink: 1, gap: 10 },
-  tokenTitle: { flexShrink: 1 },
   divider: { width: 1, height: 40 },
   tokenValue: { flex: 1, fontSize: 46, lineHeight: 56, fontWeight: '800', fontVariant: ['tabular-nums'], textAlign: 'center' },
-  tokenValueLarge: { flex: 0, alignSelf: 'stretch', textAlign: 'left' },
+  tokenValueLarge: { flex: 1, textAlign: 'left' },
   noToken: { fontSize: 18, lineHeight: 25, fontWeight: '600' },
   alerts: { gap: 12, marginTop: 24 },
   tiles: { flexDirection: 'row', gap: 14, marginTop: 34 },
-  reminder: { marginTop: 22, textAlign: 'center' },
 });

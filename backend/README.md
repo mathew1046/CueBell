@@ -143,7 +143,10 @@ other speech-established events use the same path. Queue calls remain supported.
 The complete rewritten setup/event instructions live in `app/prompts.py`.
 The event prompt receives the confirmed task and bounded recent evidence. Exact
 source validation, identifier checks, correction grace, duplicate suppression,
-voice-stop priority and explicit confirmation remain enforced outside the prompt.
+voice-stop priority and validated task activation remain enforced outside the prompt.
+The client automatically calls the one-use confirmation endpoint after a valid
+submitted request; this is not a second user confirmation screen. Consent and
+Android permission checks remain required.
 Alerts carry `summary`, `location`, `evidence_text` and `task_summary`; `token` and
 `counter` are null for general tasks. The old queue extractor remains only for
 legacy confirmed queue rules. No external tracking, messaging integration or

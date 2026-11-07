@@ -80,9 +80,12 @@ class QueueListenerModule : Module() {
     }
     AsyncFunction("start") { baseUrl: String, token: String, mode: String ->
       val context = appContext.reactContext ?: error("App unavailable.")
-      val activity = appContext.activityProvider?.currentActivity
-        ?: error("Open the app before starting the microphone.")
-      check(activity.hasWindowFocus()) { "Keep the app visible while starting the microphone." }
+      val handoff = ListenerHandoff.allowed(ListenerMemory.running, ListenerMemory.mode, ListenerMemory.state, mode)
+      if (!handoff) {
+        val activity = appContext.activityProvider?.currentActivity
+          ?: error("Open the app before starting the microphone.")
+        check(activity.hasWindowFocus()) { "Keep the app visible while starting the microphone." }
+      }
       check(baseUrl.startsWith("https://") && mode in listOf("request", "monitor")) {
         "A secure HTTPS backend URL is required."
       }
@@ -92,11 +95,12 @@ class QueueListenerModule : Module() {
         check(ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) ==
           PackageManager.PERMISSION_GRANTED) { "Allow notifications before background listening." }
       }
-      check(!ListenerMemory.running) { "Stop the current microphone session first." }
+      check(!ListenerMemory.running || handoff) { "Stop the current microphone session first." }
       check(NotificationGate.visible(context)) { "Enable Android notifications and the Listening status channel before starting." }
       val intent = Intent(context, ListenerService::class.java)
         .putExtra("url", baseUrl).putExtra("token", token).putExtra("mode", mode)
-      ContextCompat.startForegroundService(context, intent)
+      if (handoff) context.startService(intent)
+      else ContextCompat.startForegroundService(context, intent)
       ListenerMemory.mode = mode
       ListenerMemory.running = true
       ListenerMemory.emit(JSONObject().put("type", "status").put("state", "STARTING")

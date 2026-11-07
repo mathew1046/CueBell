@@ -7,6 +7,7 @@ import { api, ensureSession, loadConnection, removeConnection, saveConnection } 
 import { CaptureOperation, listeningPhase } from './listening';
 import { prepareConsentedSession, requireProcessingConsent } from './session';
 import { stopListening } from './stop-listening';
+import { startListeningIfCurrent } from './start-listening';
 import { Connection, Intent, NativeSnapshot, QueueAlert, QueueEvent, Rule } from './types';
 import { useLanguage } from './i18n';
 import { translateServiceMessage } from './i18n/translate';
@@ -41,6 +42,7 @@ function useCueBellState() {
   const suppressMonitor = useRef(false);
   const lastHealthAnnouncement = useRef('');
   const lastListening = useRef<boolean | null>(null);
+  const setupAttempt = useRef(0);
 
   const addEvent = useCallback((event: QueueEvent) => {
     if (suppressMonitor.current && (event.rule || event.alert || event.type === 'observation' ||
@@ -85,17 +87,87 @@ function useCueBellState() {
     return c;
   }, []);
 
+  const start = useCallback(async (
+    mode: 'request' | 'monitor',
+    activate?: (connection: Connection) => Promise<void>,
+    current: () => boolean = () => true,
+  ) => {
+    const attempt = setupAttempt.current;
+    const allowed = () => current() && setupAttempt.current === attempt;
+    setCaptureError(false);
+    setPermissionError(false);
+    try {
+      requireProcessingConsent(() => consentRef.current);
+      const snapshot: NativeSnapshot = JSON.parse(Listener.snapshot());
+      const handoff = mode === 'monitor' && snapshot.running && snapshot.mode === 'request' && snapshot.state === 'PROCESSING';
+      if (!handoff && AppState.currentState !== 'active') throw new Error('Open the app to start the microphone.');
+      const permissions: Permission[] = [PermissionsAndroid.PERMISSIONS.RECORD_AUDIO];
+      if (Number(Platform.Version) >= 33) permissions.push(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS);
+      const checks = await Promise.all(permissions.map(permission => PermissionsAndroid.check(permission)));
+      const missing = permissions.filter((_, index) => !checks[index]);
+      if (missing.length) {
+        setOperation({ mode, phase: 'REQUESTING_PERMISSION' });
+        const granted = await PermissionsAndroid.requestMultiple(missing);
+        if (missing.some(permission => granted[permission] !== PermissionsAndroid.RESULTS.GRANTED)) {
+          setPermissionError(true);
+          throw new Error('Allow microphone and notification access to start listening.');
+        }
+      }
+      requireProcessingConsent(() => consentRef.current);
+      if (!allowed()) return;
+      setOperation({ mode, phase: 'CONNECTING' });
+      const c = mode === 'request' ? await prepareSession() : connectionRef.current;
+      if (!c || c.expires * 1000 <= Date.now()) {
+        throw new Error('Your session has expired. Submit your request again to continue.');
+      }
+      try {
+        await startListeningIfCurrent(() => {
+          requireProcessingConsent(() => consentRef.current);
+          return allowed();
+        }, async () => { await activate?.(c); }, async () => { await Listener.start(c.url, c.token, mode); });
+      } catch (error) {
+        if (error instanceof Error && /permission|notification/i.test(error.message)) setPermissionError(true);
+        throw error;
+      }
+    } catch (error) {
+      setCaptureError(true);
+      throw error;
+    }
+  }, [prepareSession]);
+
+  const activateProposal = useCallback(async (id: string, current: () => boolean = () => true) => {
+    await start('monitor', async c => {
+      revision.current++;
+      const event = await api<QueueEvent>(c, '/v1/confirm', { proposal_id: id });
+      if (!current()) return;
+      const next = { ...c, suppressMonitor: false };
+      await saveConnection(next);
+      if (!current()) return;
+      connectionRef.current = next; setConnection(next);
+      suppressMonitor.current = false;
+      Listener.clear();
+      setEvents(old => old.filter(item => item.mode === 'request'));
+      addEvent(event);
+      setProposal(null);
+    }, current);
+  }, [addEvent, start]);
+
   const analyze = useCallback(async (text: string) => {
     if (!text.trim() || analyzing.current || !consentRef.current) return;
     analyzing.current = true;
+    const attempt = ++setupAttempt.current;
+    const current = () => setupAttempt.current === attempt && consentRef.current;
     setBusy(true); setError(''); setProposal(null); setClarification('');
+    setOperation({ mode: 'request', phase: 'PROCESSING' });
     try {
       const c = await prepareSession();
+      if (!current()) return;
       // Request mode closes its stream after the completed utterance. Let teardown finish.
       let result: { status: string; proposal_id?: string; intent: Intent; messages?: string[] } | undefined;
       for (let attempt = 0; attempt < 3; attempt++) {
         try {
           requireProcessingConsent(() => consentRef.current);
+          if (!current()) return;
           result = await api(c, '/v1/intent', { text, consent_to_text_processing: true });
           break;
         } catch (e) {
@@ -104,14 +176,24 @@ function useCueBellState() {
           } else throw e;
         }
       }
+      if (!current()) return;
       if (result?.status === 'confirm' && result.proposal_id) {
         Keyboard.dismiss();
         setProposal({ id: result.proposal_id, intent: result.intent });
-        AccessibilityInfo.announceForAccessibility(translator.current('Is this right? {task}. Nothing has started yet.', { task: result.intent.task?.summary ?? result.intent.token ?? '' }));
+        await activateProposal(result.proposal_id, current);
       } else setClarification(result?.messages?.join('\n') || 'Describe what to listen for and when to alert you.');
-    } catch (e) { setError(e instanceof Error ? e.message : 'Could not interpret the request. Try typing it.'); }
-    finally { analyzing.current = false; setBusy(false); }
-  }, [prepareSession]);
+    } catch (e) { if (current()) setError(e instanceof Error ? e.message : 'Could not interpret the request. Try typing it.'); }
+    finally {
+      // Unsupported/unclear requests must not leave the foreground microphone service waiting.
+      const snapshot: NativeSnapshot = JSON.parse(Listener.snapshot());
+      if (snapshot.mode === 'request' && snapshot.state === 'PROCESSING') {
+        try { await Listener.stop(); }
+        catch { setError('Could not turn off the microphone. Use Stop microphone in the notification.'); }
+      }
+      analyzing.current = false;
+      setOperation(null); setBusy(false);
+    }
+  }, [activateProposal, prepareSession]);
 
   const sync = useCallback(() => {
     const snapshot: NativeSnapshot = JSON.parse(Listener.snapshot());
@@ -140,7 +222,10 @@ function useCueBellState() {
     const subscription = Listener.addListener('onEvent', ({ json }) => {
       const event: QueueEvent = JSON.parse(json);
       addEvent(event);
-      if (event.type === 'status') sync();
+      if (event.type === 'status') {
+        if (['STOPPING', 'STOPPED', 'ERROR'].includes(event.state ?? '')) setupAttempt.current++;
+        sync();
+      }
       if (event.type === 'transcript' && event.mode === 'request' && event.segment &&
         lastSpoken.current !== event.segment.id) {
         lastSpoken.current = event.segment.id;
@@ -173,47 +258,6 @@ function useCueBellState() {
     }
   };
 
-  const start = useCallback(async (
-    mode: 'request' | 'monitor',
-    activate?: (connection: Connection) => Promise<void>,
-  ) => {
-    setCaptureError(false);
-    setPermissionError(false);
-    try {
-      requireProcessingConsent(() => consentRef.current);
-      if (AppState.currentState !== 'active') throw new Error('Open the app to start the microphone.');
-      const permissions: Permission[] = [PermissionsAndroid.PERMISSIONS.RECORD_AUDIO];
-      if (Number(Platform.Version) >= 33) permissions.push(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS);
-      const checks = await Promise.all(permissions.map(permission => PermissionsAndroid.check(permission)));
-      const missing = permissions.filter((_, index) => !checks[index]);
-      if (missing.length) {
-        setOperation({ mode, phase: 'REQUESTING_PERMISSION' });
-        const granted = await PermissionsAndroid.requestMultiple(missing);
-        if (missing.some(permission => granted[permission] !== PermissionsAndroid.RESULTS.GRANTED)) {
-          setPermissionError(true);
-          throw new Error('Allow microphone and notification access to start listening.');
-        }
-      }
-      requireProcessingConsent(() => consentRef.current);
-      setOperation({ mode, phase: 'CONNECTING' });
-      const c = mode === 'request' ? await prepareSession() : connectionRef.current;
-      if (!c || c.expires * 1000 <= Date.now()) {
-        throw new Error('Your session has expired. Submit your request again to continue.');
-      }
-      await activate?.(c);
-      requireProcessingConsent(() => consentRef.current);
-      try {
-        await Listener.start(c.url, c.token, mode);
-      } catch (error) {
-        if (error instanceof Error && /permission|notification/i.test(error.message)) setPermissionError(true);
-        throw error;
-      }
-    } catch (error) {
-      setCaptureError(true);
-      throw error;
-    }
-  }, [prepareSession]);
-
   const control = async (action: 'pause' | 'resume' | 'stop' | 'acknowledge', alertId?: string) => {
     revision.current++;
     if (action === 'pause' || action === 'stop') {
@@ -244,29 +288,20 @@ function useCueBellState() {
 
   const confirm = () => run(async () => {
     if (!proposal) return;
-    await start('monitor', async c => {
-      revision.current++;
-      const event = await api<QueueEvent>(c, '/v1/confirm', { proposal_id: proposal.id });
-      const next = { ...c, suppressMonitor: false };
-      await saveConnection(next); connectionRef.current = next; setConnection(next);
-      suppressMonitor.current = false;
-      Listener.clear();
-      setEvents(old => old.filter(item => item.mode === 'request'));
-      addEvent(event);
-      setProposal(null);
-    });
+    await activateProposal(proposal.id);
   });
 
   const activeRule = rule && !['STOPPED', 'EXPIRED'].includes(rule.status) ? rule : null;
   const phase = listeningPhase(native, operation, captureError);
   const captureMode = operation?.mode ?? native.mode;
   const listening = phase === 'LISTENING';
-  const capturing = native.running && native.mode === 'request';
+  const capturing = native.running && native.mode === 'request' && native.state !== 'PROCESSING';
   const statusLabel = t({
     IDLE: 'Not listening',
     REQUESTING_PERMISSION: 'Waiting for permission',
     CONNECTING: 'Connecting...',
-    LISTENING: captureMode === 'request' ? 'Speak now' : 'Listening for announcements',
+    LISTENING: captureMode === 'request' ? 'Speak now' : 'Listening',
+    PROCESSING: 'Creating event...',
     RECONNECTING: 'Reconnecting...',
     STOPPING: 'Stopping...',
     ERROR: 'Listening unavailable',
@@ -277,7 +312,7 @@ function useCueBellState() {
   const statusIcon = {
     IDLE: 'microphone-off', REQUESTING_PERMISSION: 'shield-lock-outline', CONNECTING: 'progress-clock',
     LISTENING: captureMode === 'request' ? 'account-voice' : 'microphone',
-    RECONNECTING: 'access-point-network-off', STOPPING: 'progress-clock', ERROR: 'alert-circle-outline',
+    PROCESSING: 'progress-clock', RECONNECTING: 'access-point-network-off', STOPPING: 'progress-clock', ERROR: 'alert-circle-outline',
   }[phase];
   const latestUnclear = events.find(event => event.observation)?.observation?.type === 'UNCERTAIN';
   const outstanding = alerts.filter(a => a.state !== 'acknowledged' && !a.acknowledged);
@@ -308,10 +343,13 @@ function useCueBellState() {
     native, phase, captureMode, listening, capturing, statusLabel, statusDetail, statusIcon, tone,
     analyze: (text: string) => void analyze(text),
     speak: () => void run(async () => { haptic.tap(); await start('request'); }),
-    cancelCapture: () => void run(async () => {
+    cancelCapture: () => void (async () => {
+      setupAttempt.current++;
       setOperation({ mode: 'request', phase: 'STOPPING' });
-      await Listener.stop();
-    }),
+      try { await Listener.stop(); }
+      catch (e) { setError(e instanceof Error ? e.message : 'Something went wrong. Please try again.'); }
+      finally { sync(); setOperation(null); }
+    })(),
     confirm: () => void confirm(),
     pause: () => void run(() => control('pause')),
     resume: () => void run(() => control('resume')),

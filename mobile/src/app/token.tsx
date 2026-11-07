@@ -21,10 +21,10 @@ export default function TokenScreen() {
   const pulse = usePulse(app.capturing && !reduceMotion, 800);
 
   useEffect(() => {
-    if (!app.proposal || !focused) return;
+    if (!app.listening || app.captureMode !== 'monitor' || app.busy || !focused) return;
     if (router.canGoBack()) router.back();
     else router.replace('/');
-  }, [app.proposal, focused, router]);
+  }, [app.listening, app.captureMode, app.busy, focused, router]);
 
   return <KeyboardAvoidingView style={[styles.root, { backgroundColor: theme.colors.background }]} behavior="padding">
     <View style={{ paddingTop: insets.top }}>
@@ -43,7 +43,6 @@ export default function TokenScreen() {
           </View>
         </View>
         <Text variant="headlineSmall" style={[styles.center, { color: theme.colors.onSurface }]}>{t('Describe what to listen for')}</Text>
-        <Text variant="bodyLarge" style={[styles.center, { color: theme.colors.onSurfaceVariant }]}>{t('Short pauses are OK.')}</Text>
       </View> :
         <Pressable onPress={app.consent ? app.speak : () => {
           haptic.stopped(); AccessibilityInfo.announceForAccessibility(t('First tick Allow audio and text processing, above.'));
@@ -56,7 +55,7 @@ export default function TokenScreen() {
           <Icon source="microphone" size={40} color={theme.colors.onPrimary} />
           <Text style={[styles.speakLabel, { color: theme.colors.onPrimary }]}>{t('Speak')}</Text>
         </Pressable>}
-      {app.capturing && <Button mode="outlined" icon="stop" contentStyle={actionStyles.big} textColor={theme.colors.onSurface}
+      {(app.capturing || app.busy) && <Button mode="outlined" icon="stop" contentStyle={actionStyles.big} textColor={theme.colors.onSurface}
         style={{ borderColor: theme.colors.onSurface, borderWidth: 2 }} onPress={app.cancelCapture}>{t('Cancel')}</Button>}
 
       <View style={styles.dividerRow} importantForAccessibility="no-hide-descendants">
@@ -65,14 +64,13 @@ export default function TokenScreen() {
         <View style={[styles.rule, { backgroundColor: theme.colors.outlineVariant }]} />
       </View>
 
-      <Text variant="bodyLarge" style={{ color: theme.colors.onSurfaceVariant }}>{t('Tell CueBell who or what to listen for, and what event should trigger an alert.')}</Text>
       <TextInput mode="outlined" label={t('What should I listen for?')} multiline value={app.request} onChangeText={app.editRequest}
         placeholder={t('Alert me when train 14922 arrives.')} outlineStyle={styles.outline} outlineColor={theme.colors.outline}
         activeOutlineColor={theme.colors.onSurface} style={[styles.input, { backgroundColor: theme.colors.surface }]}
         maxLength={1500} editable={!app.busy && !app.native.running} />
       <Button mode="contained" icon="arrow-right" contentStyle={[actionStyles.big, styles.reverse]} style={styles.radius}
         disabled={!app.consent || app.busy || app.native.running || !app.request.trim()}
-        onPress={() => app.analyze(app.request)}>{t('Continue')}</Button>
+        onPress={() => app.analyze(app.request)}>{t('Start Listening')}</Button>
       {app.busy && !app.capturing && <ActivityIndicator color={theme.colors.onSurface} accessibilityLabel={t('Understanding your request')} />}
       {app.clarification !== '' && <Notice tone="warn" icon="help-circle" live="polite">{app.clarification}</Notice>}
     </ScrollView>

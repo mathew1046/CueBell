@@ -14,6 +14,8 @@ test('only ready audio is listening and a lost stream stays reconnecting until a
   const running = state => ({ running: true, state });
   assert.equal(listeningPhase(running('STARTING'), null, false), 'CONNECTING');
   assert.equal(listeningPhase(running('READY'), null, false), 'CONNECTING');
+  assert.equal(listeningPhase(running('PROCESSING'), null, false), 'PROCESSING');
+  assert.equal(listeningPhase(running('LISTENING'), { mode: 'request', phase: 'PROCESSING' }, false), 'PROCESSING');
   assert.equal(listeningPhase(running('LISTENING'), null, false), 'LISTENING');
   assert.equal(listeningPhase(running('RECONNECTING'), null, false), 'RECONNECTING');
   assert.equal(listeningPhase(running('LISTENING'), { mode: 'monitor', phase: 'STOPPING' }, false), 'STOPPING');

@@ -2,11 +2,11 @@ import type { NativeSnapshot } from './types';
 
 export type ListeningPhase =
   | 'IDLE' | 'REQUESTING_PERMISSION' | 'CONNECTING' | 'LISTENING'
-  | 'RECONNECTING' | 'STOPPING' | 'ERROR';
+  | 'PROCESSING' | 'RECONNECTING' | 'STOPPING' | 'ERROR';
 
 export type CaptureOperation = {
   mode: 'request' | 'monitor';
-  phase: 'REQUESTING_PERMISSION' | 'CONNECTING' | 'STOPPING';
+  phase: 'REQUESTING_PERMISSION' | 'CONNECTING' | 'PROCESSING' | 'STOPPING';
 };
 
 export function listeningPhase(
@@ -18,6 +18,7 @@ export function listeningPhase(
   if (native.state === 'ERROR' || native.state === 'DISCONNECTED') return 'ERROR';
   if (!native.running) return failed ? 'ERROR' : 'IDLE';
   switch (native.state) {
+    case 'PROCESSING': return 'PROCESSING';
     case 'LISTENING': return 'LISTENING';
     case 'DEGRADED':
     case 'RECONNECTING': return 'RECONNECTING';

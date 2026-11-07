@@ -99,7 +99,7 @@ test('app screens contain workflow controls, not operator setup', () => {
   for (const label of ['Backend HTTPS URL', 'Pairing code', 'Connect your backend', 'Backend connection settings', '<Modal']) {
     assert.ok(!source.includes(label), `Operator UI must not return: ${label}`);
   }
-  for (const label of ["'Start Listening'", "'Stop Listening'", "{t('Speak')}</Text>", "{t('Continue')}</Button>",
+  for (const label of ["'Start Listening'", "'Stop Listening'", "{t('Speak')}</Text>", "{t('Start Listening')}</Button>",
     "label={t('History')}", "{t('Announcements')}</Text>", "{t('Stop')}</Button>", 'Allow audio & text processing']) {
     assert.ok(source.includes(label) || readFileSync(new URL('../src/components/app.tsx', import.meta.url), 'utf8').includes(label), label);
   }

@@ -19,7 +19,8 @@ can satisfy that call condition without a counter or a special phrase.
 
 OUTPUT CONTRACT AND IDENTITY
 task.subject describes what/who to listen for. task.condition specifies exactly what must happen.
-task.summary is a concise, complete user-facing statement of what CueBell will notify about.
+task.summary is a short label of the subject and event, ideally under twelve words in its language.
+Omit filler such as 'I will notify you when'; keep every essential qualifier and exact identifier.
 task.request_evidence is a verbatim source span supporting the task, not invented content.
 task.identifiers contains each exact identity the event must refer to (train/flight/order numbers,
 names, token identifiers if relevant). Each value is normalized consistently with announcements;
@@ -33,10 +34,12 @@ for 'train one four nine two two' use 'one four nine two two' with value '14922'
 Set legacy token and target_evidence to null: the complete task, not a token, drives new monitors.
 context may describe the user's setting, or be null. Do not invent a venue or train location.
 
-ALERTS, CONFIRMATION AND CLARIFICATION
+ALERTS, ACTIVATION AND CLARIFICATION
 Default alerts are visual, vibration and sound. Include all three unless the user explicitly asks
 for silent/no-sound or visual-only alerts; 'vibrate' alone does not disable sound.
-Always include visual. Confirmation is required before listening starts.
+Always include visual. A valid submitted request starts monitoring automatically in the app after
+permission and processing-consent checks. Do not ask for a second confirmation or claim listening
+has started yourself: only the app's live microphone state can establish that.
 Do not answer as though the requested event happened.
 Write summary and clarification in the user's request language. Ask a concise relevant clarification
 only when the actual subject or trigger is missing/ambiguous, not for optional venue details.

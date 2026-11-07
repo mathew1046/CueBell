@@ -9,8 +9,35 @@ test('home accepts a confirmed general task without a queue token', () => {
   assert.ok(home.includes('const hasTask = !!(task || token)'));
   assert.ok(home.includes('task?.summary ?? token'));
   assert.equal(home.includes('if (!token)'), false);
-  assert.ok(home.includes("t('Review task')"));
+  assert.equal(home.includes("t('Review task')"), false);
   assert.ok(home.includes("t('Listening task')"));
+});
+
+test('valid setup activates immediately and cancelled setup cannot start the microphone later', () => {
+  const state = read('../src/lib/cuebell.tsx');
+  assert.match(state, /await activateProposal\(result\.proposal_id, current\)/);
+  assert.match(state, /const current = \(\) => setupAttempt\.current === attempt && consentRef\.current/);
+  assert.match(state, /await startListeningIfCurrent/);
+  assert.match(state, /return allowed\(\)/);
+  assert.match(state, /\['STOPPING', 'STOPPED', 'ERROR'\].includes/);
+  assert.equal(state.includes('Nothing has started yet'), false);
+  const home = read('../src/app/index.tsx');
+  assert.match(home, /const showTranscript = showRequest \|\| \(captureInProgress && captionsOpen\)/);
+  assert.equal(home.includes('spokenSetup'), false);
+  assert.match(home, /disabled=\{stopping\}/);
+});
+
+test('request handoff keeps the foreground service but releases audio and closes the old stream', () => {
+  const service = read('../modules/queue-listener/android/src/main/java/expo/modules/queuelistener/ListenerService.kt');
+  const request = service.slice(service.indexOf('"transcript" ->'), service.indexOf('"monitor.pause", "monitor.stop" ->'));
+  assert.match(request, /generation\+\+/);
+  assert.match(request, /stopCapture\(\)/);
+  assert.match(request, /socket\?\.close\(1000, null\)/);
+  assert.match(request, /status\("PROCESSING"/);
+  assert.equal(request.includes('stopSelf()'), false);
+  assert.match(request, /postDelayed\(processingTimeout, 45000\)/);
+  assert.match(service, /waitingForTask &&/);
+  assert.match(service, /if \(!stopping && waitingForTask\)/);
 });
 
 test('setup asks for the listening goal and condition, not a required token', () => {

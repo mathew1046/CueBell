@@ -36,9 +36,6 @@ export default function Settings() {
         <Switch value={spokenAlerts} accessibilityLabel={t('Spoken alerts')} hitSlop={12}
           onValueChange={enabled => { Listener.setSpokenAlertsEnabled(enabled); setSpokenAlerts(enabled); }} />
       </View>
-      <Text variant="bodyMedium" style={{ color: theme.colors.onSurfaceVariant }}>
-        {t('Uses an installed offline Android voice when your alert includes sound. TalkBack reads alerts when enabled.')}
-      </Text>
     </SoftCard>
   </>;
 
@@ -79,7 +76,6 @@ export default function Settings() {
           <Button mode="outlined" icon="stop" textColor={theme.colors.error} style={{ borderColor: theme.colors.error, borderWidth: 2 }}
             contentStyle={actionStyles.action} disabled={app.busy} onPress={app.stop}
             accessibilityHint={t('Stops the microphone and clears your listening task and history from this phone')}>{t('Stop')}</Button>
-          <Text variant="bodyMedium" style={{ color: theme.colors.onSurfaceVariant }}>{t('Stop also clears your listening task and history.')}</Text>
         </> : <Text variant="bodyLarge" style={{ color: theme.colors.onSurfaceVariant }}>{t('No listening task is active.')}</Text>}
       </SoftCard>
 

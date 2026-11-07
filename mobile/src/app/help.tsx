@@ -7,12 +7,13 @@ import { useLanguage } from '../lib/i18n';
 
 const steps = [
   { icon: 'microphone', title: 'Describe your listening task', body: 'Say or type what to listen for and when to alert you: a train arriving, boarding starting, your name being called, or another spoken event.' },
-  { icon: 'ear-hearing', title: 'Check it', body: 'Check the subject, identifiers and event on screen. Nothing starts until you confirm.' },
-  { icon: 'play-circle-outline', title: 'Tap Start Listening', body: 'Keep the phone near the speakers and the app notification visible.' },
+  { icon: 'ear-hearing', title: 'Listening starts automatically', body: 'Once your request is understood, CueBell starts listening. No second tap is needed.' },
+  { icon: 'cellphone', title: 'Use your phone normally', body: 'Listening continues with the app in the background or the screen locked. Keep the microphone notification visible. Tap Stop Listening or Stop microphone to end it.' },
 ];
 
 const about = [
-  { icon: 'cellphone-message', text: 'When speech matches your confirmed task, CueBell shows what was heard, vibrates and sounds an alarm, unless you ask for silent alerts.' },
+  { icon: 'cellphone-message', text: 'When speech matches your task, CueBell shows what was heard, vibrates and sounds an alarm, unless you ask for silent alerts.' },
+  { icon: 'account-voice', text: 'Spoken alerts use an installed offline Android voice when sound is enabled. Stop in Settings also clears your task and history.' },
   { icon: 'ear-hearing', text: 'CueBell listens to speech. It does not track live transport data, detect non-speech sounds, send messages or replace emergency warning systems.' },
   { icon: 'shield-lock-outline', text: 'Gnani Prisma processes microphone audio. OpenAI processes requests and announcement text. The app and relay save no recordings or transcripts on disk. Provider terms apply.' },
   { icon: 'cellphone-information', text: 'Android can interrupt listening in the background. Keep the microphone notification visible. This is an aid, not an official source.' },

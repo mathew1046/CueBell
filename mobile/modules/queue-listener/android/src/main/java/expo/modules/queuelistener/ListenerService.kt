@@ -34,6 +34,7 @@ class ListenerService : Service() {
   private var bearer = ""
   private var mode = "monitor"
   private var stopping = false
+  private var waitingForTask = false
   @Volatile private var generation = 0
   private var retries = 0
   private var lastMessage = 0L
@@ -76,7 +77,21 @@ class ListenerService : Service() {
       stopSelf()
       return START_NOT_STICKY
     }
-    if (started || intent == null) return START_NOT_STICKY
+    if (intent == null) return START_NOT_STICKY
+    if (started) {
+      if (!stopping && mode == "request" && waitingForTask &&
+          intent.getStringExtra("mode") == "monitor") {
+        waitingForTask = false
+        main.removeCallbacks(processingTimeout)
+        baseUrl = intent.getStringExtra("url") ?: baseUrl
+        bearer = intent.getStringExtra("token") ?: bearer
+        mode = "monitor"
+        ListenerMemory.mode = mode
+        retries = 0
+        connect()
+      }
+      return START_NOT_STICKY
+    }
     started = true
     baseUrl = intent.getStringExtra("url") ?: ""
     bearer = intent.getStringExtra("token") ?: ""
@@ -185,11 +200,17 @@ class ListenerService : Service() {
                 showAlert(event)
               }
               "transcript" -> {
-                ListenerMemory.emit(event)
                 if (mode == "request") {
-                  stopping = true
-                  stopSelf()
+                  // Keep the user-started foreground service alive during interpretation.
+                  // Capture is OFF, but it can resume for the new task even if Home is backgrounded.
+                  generation++
+                  waitingForTask = true
+                  stopCapture()
+                  socket?.close(1000, null); socket = null
+                  status("PROCESSING", "Creating your listening task…")
+                  main.postDelayed(processingTimeout, 45000)
                 }
+                ListenerMemory.emit(event)
               }
               "monitor.pause", "monitor.stop" -> {
                 if (mode == "monitor") {
@@ -318,6 +339,11 @@ class ListenerService : Service() {
       if (recording.get() && now - connectedAt > 30000) retries = 0
       main.postDelayed(this, 2000)
     }
+  }
+
+  private val processingTimeout = Runnable {
+    if (!stopping && waitingForTask)
+      fail(generation, "Could not create a listening task. Open the app and try again.", true)
   }
 
   private fun showAlert(event: JSONObject, silent: Boolean = false) {
