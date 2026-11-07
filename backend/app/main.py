@@ -18,7 +18,7 @@ from .gnani import parse_message, prisma
 from .guard import RequestGuard
 from .intelligence import OpenAIFallback
 from .models import ConfirmRequest, ControlRequest, Intent, IntentRequest, PairRequest, Segment
-from .validation import intent_errors
+from .validation import grounded_stop_request, intent_errors
 
 APP_SESSION_IP_LIMIT = 3
 APP_SESSION_IP_WINDOW_SECONDS = 600
@@ -389,6 +389,16 @@ def create_app(settings: Settings | None = None, intelligence=None) -> FastAPI:
                         )
                         session.engine.gap()
                         raise TimeoutError("Interpretation exceeded the coverage window.")
+                    if extraction.stop_request is not None:
+                        if not grounded_stop_request(extraction.stop_request, list(window)):
+                            raise ValueError("Stop request has no current source evidence.")
+                        # Pause preserves the token/history like Home's Stop Listening. Changing
+                        # generation clears pending calls before the native microphone is stopped.
+                        event = session.engine.control("pause")
+                        event["reason"] = "voice"
+                        event["message"] = "Stopped listening at your request. Microphone is off."
+                        await send(event)
+                        return
                     # Never silently truncate: a later event may cancel an earlier call.
                     # Reject the whole batch before mutating observations or pending alerts.
                     if len(extraction.events) > 16:

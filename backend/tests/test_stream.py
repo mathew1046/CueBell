@@ -14,7 +14,7 @@ from websockets.http11 import Response
 
 from app.engine import Engine
 from app.main import create_app
-from app.models import Extraction
+from app.models import Extraction, StopListeningRequest
 from tests.conftest import ACCESS_CODE, activate, make_event, pair
 
 CONSENT = {"x-processing-consent": "audio-gnani;text-openai"}
@@ -319,6 +319,170 @@ def test_http_pause_closes_socket_and_clears_pending(relay):
         with pytest.raises(WebSocketDisconnect):
             socket.receive_json()
     assert client.get("/v1/state", headers=auth).json()["rule"]["status"] == "PAUSED"
+
+
+@pytest.mark.parametrize(
+    "text",
+    [
+        "stop",
+        "I am done here; you do not need to keep listening for me",
+        "ഇനി എനിക്ക് വേണ്ടി കേൾക്കേണ്ട",
+        "अब सुनना बंद कर दो",
+        "Ya no necesito que sigas escuchando",
+        "もう聞かなくていいです",
+    ],
+)
+def test_semantic_voice_stop_pauses_monitor_closes_stream_and_requires_explicit_resume(
+    relay, intelligence, text
+):
+    client, _, options = relay
+    options["transcripts"] = [
+        {"type": "transcript", "text": text, "segment_id": "stop1", "is_final": True}
+    ]
+
+    async def semantic_stop(window, recent):
+        # Model decision is mocked; no language-specific matcher is used by the relay.
+        return Extraction(
+            stop_request=StopListeningRequest(
+                evidence_text=window[-1].text, source_segment_ids=[window[-1].id]
+            ),
+            events=[make_event(source_segment_ids=[window[-1].id])],
+        )
+
+    intelligence.extract = semantic_stop
+    auth = pair(client)
+    activate(client, auth)
+    with client.websocket_connect("/v1/stream?mode=monitor", headers={**auth, **CONSENT}) as socket:
+        ready(socket)
+        socket.send_bytes(b"\0" * 1024)
+        transcript = receive_type(socket, "transcript")
+        assert transcript["segment"]["text"] == text
+        event = receive_type(socket, "monitor.pause")
+        assert event["reason"] == "voice"
+        assert event["rule"]["status"] == "PAUSED"
+        expect_closed(socket)
+    state = client.get("/v1/state", headers=auth).json()
+    assert not state["stream_connected"]
+    assert state["rule"]["token"] == "P042"
+    assert state["rule"]["status"] == "PAUSED"
+    assert not state["alerts"]
+    assert not any(event["type"] == "observation" for event in state["history"])
+    with pytest.raises(WebSocketDisconnect):
+        with client.websocket_connect("/v1/stream?mode=monitor", headers={**auth, **CONSENT}):
+            pass
+    assert client.post("/v1/control", headers=auth, json={"action": "resume"}).status_code == 200
+
+
+def test_voice_stop_discards_pending_token_alerts(relay, intelligence, settings):
+    client, _, options = relay
+    settings.correction_grace_seconds = 10
+    options["transcripts"] = [
+        {"type": "transcript", "text": "P042 to counter 2", "segment_id": "p1", "is_final": True},
+        {"type": "transcript", "text": "I'm done listening", "segment_id": "p2", "is_final": True},
+    ]
+    original = intelligence.extract
+
+    async def extract(window, recent):
+        if len(window) == 1:
+            return await original(window, recent)
+        return Extraction(
+            events=[],
+            stop_request=StopListeningRequest(
+                evidence_text=window[-1].text, source_segment_ids=[window[-1].id]
+            ),
+        )
+
+    intelligence.extract = extract
+    auth = pair(client)
+    activate(client, auth)
+    with client.websocket_connect("/v1/stream?mode=monitor", headers={**auth, **CONSENT}) as socket:
+        ready(socket)
+        socket.send_bytes(b"\0" * 1024)
+        receive_type(socket, "observation")
+        receive_type(socket, "monitor.pause")
+        expect_closed(socket)
+    assert not client.get("/v1/state", headers=auth).json()["alerts"]
+
+
+@pytest.mark.parametrize("is_final", [False, True])
+def test_voice_stop_needs_final_speech_and_grounded_model_decision(relay, intelligence, is_final):
+    client, _, options = relay
+    options["transcripts"] = [
+        {"type": "transcript", "text": "stop", "segment_id": "s1", "is_final": is_final}
+    ]
+
+    async def ungrounded_stop(window, recent):
+        return Extraction(
+            events=[],
+            stop_request=StopListeningRequest(
+                evidence_text="fabricated request", source_segment_ids=[window[-1].id]
+            ),
+        )
+
+    intelligence.extract = ungrounded_stop
+    auth = pair(client)
+    activate(client, auth)
+    with client.websocket_connect("/v1/stream?mode=monitor", headers={**auth, **CONSENT}) as socket:
+        ready(socket)
+        socket.send_bytes(b"\0" * 1024)
+        if not is_final:
+            socket.send_json({"type": "ping"})
+            receive_type(socket, "pong")
+            socket.send_json({"type": "stop"})
+        expect_closed(socket)
+    assert client.get("/v1/state", headers=auth).json()["rule"]["status"] == "ACTIVE"
+
+
+@pytest.mark.parametrize(
+    "text",
+    [
+        "Don't stop listening",
+        'Someone said "stop listening" yesterday',
+        "Passengers should stop at the next counter",
+        "Cancel the call for P042",
+    ],
+)
+def test_non_control_model_decisions_do_not_stop_even_when_text_mentions_stopping(
+    relay, intelligence, text
+):
+    client, _, options = relay
+    options["transcripts"] = [
+        {"type": "transcript", "text": text, "segment_id": "s1", "is_final": True}
+    ]
+    extracted = threading.Event()
+
+    async def no_stop(window, recent):
+        extracted.set()
+        return Extraction(events=[], stop_request=None)
+
+    intelligence.extract = no_stop
+    auth = pair(client)
+    activate(client, auth)
+    with client.websocket_connect("/v1/stream?mode=monitor", headers={**auth, **CONSENT}) as socket:
+        ready(socket)
+        socket.send_bytes(b"\0" * 1024)
+        receive_type(socket, "transcript")
+        assert extracted.wait(2)
+        socket.send_json({"type": "ping"})
+        receive_type(socket, "pong")
+        assert client.get("/v1/state", headers=auth).json()["rule"]["status"] == "ACTIVE"
+        socket.send_json({"type": "stop"})
+        expect_closed(socket)
+
+
+def test_request_setup_does_not_apply_monitor_voice_controls(relay, intelligence):
+    client, _, options = relay
+    options["transcripts"] = [
+        {"type": "transcript", "text": "stop", "segment_id": "s1", "is_final": True}
+    ]
+    auth = pair(client)
+    with client.websocket_connect("/v1/stream?mode=request", headers={**auth, **CONSENT}) as socket:
+        ready(socket)
+        socket.send_bytes(b"\0" * 1024)
+        assert receive_type(socket, "transcript")["segment"]["text"] == "stop"
+        expect_closed(socket)
+    assert not intelligence.extract_calls
+    assert client.get("/v1/state", headers=auth).json()["rule"] is None
 
 
 def test_stream_configuration_and_tls_gates(settings, intelligence):

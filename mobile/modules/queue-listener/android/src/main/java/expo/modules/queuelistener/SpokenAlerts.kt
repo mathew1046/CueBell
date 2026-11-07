@@ -11,7 +11,7 @@ internal class SpokenAlerts(private val context: Context) {
   private val main = Handler(Looper.getMainLooper())
   private var engine: TextToSpeech? = null
   private var ready = false
-  private var pending: Pair<String, String>? = null
+  private val pending = PendingSpeech()
 
   fun speak(id: String, text: String) {
     if (!allowed()) return
@@ -20,7 +20,7 @@ internal class SpokenAlerts(private val context: Context) {
       tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, id)
       return
     }
-    pending = id to text
+    pending.add(id, text)
     if (tts != null) return
     engine = TextToSpeech(context) { status ->
       main.post {
@@ -36,9 +36,12 @@ internal class SpokenAlerts(private val context: Context) {
           .setUsage(AudioAttributes.USAGE_ASSISTANCE_ACCESSIBILITY)
           .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH).build()
         ready = runCatching { initialized.setAudioAttributes(attributes) == TextToSpeech.SUCCESS }.getOrDefault(false)
-        val alert = pending
-        pending = null
-        if (ready && alert != null) runCatching { speak(alert.first, alert.second) }
+        val alerts = pending.drain()
+        if (ready) for ((id, text) in alerts) {
+          if (!allowed()) break
+          // QUEUE_FLUSH here would discard every earlier initialization-time alert.
+          runCatching { initialized.speak(text, TextToSpeech.QUEUE_ADD, null, id) }
+        }
       }
     }
   }
@@ -47,7 +50,7 @@ internal class SpokenAlerts(private val context: Context) {
     !context.getSystemService(AccessibilityManager::class.java).isTouchExplorationEnabled
 
   fun close() {
-    pending = null
+    pending.clear()
     ready = false
     engine?.shutdown()
     engine = null

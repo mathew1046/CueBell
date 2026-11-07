@@ -176,6 +176,20 @@ class ListenerService : Service() {
                   stopSelf()
                 }
               }
+              "monitor.pause", "monitor.stop" -> {
+                if (mode == "monitor") {
+                  // A semantic voice-stop decision must work with JS suspended. Invalidate
+                  // callbacks before releasing capture so stream closure cannot reconnect it.
+                  stopping = true
+                  generation++
+                  stopCapture()
+                  spokenAlerts.close()
+                  socket?.close(1000, null); socket = null
+                  ListenerMemory.emit(event)
+                  status("STOPPING", "Turning off the microphone at your request…")
+                  stopSelf()
+                } else ListenerMemory.emit(event)
+              }
               else -> ListenerMemory.emit(event)
             }
           } catch (_: Exception) { fail(gen, "The listening service returned an invalid response. Please try again.") }

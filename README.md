@@ -35,6 +35,7 @@ These are **intended benefits, not measured outcomes**. We have not demonstrated
 - **Check before alerting.** Structured model output passes schema and source-evidence checks before matching the confirmed target; no custom token grammar is imposed.
 - **Handle changing announcements.** Calls, repeats, corrections, cancellations and uncertain interpretations are separate events. Unclear input is not coerced toward the user's token.
 - **Keep the session understandable.** Recent transcripts, listening status, coverage gaps, acknowledgment, pause and stop controls remain visible.
+- **Stop by voice.** While monitoring, express that you want CueBell to stop listening, directly or indirectly. The text model interprets intent across languages, without a fixed command list; a source-grounded decision pauses the monitor and stops the native microphone, even with the app in the background. The token and history remain available, as with Home's Stop Listening.
 - **Keep provider keys off the phone.** The APK connects to your separately hosted backend using an expiring session credential.
 - **Open directly into the workflow.** No server URL, pairing code or developer settings screen. The release operator sets the service address before building; the app obtains its session automatically when you submit a request.
 
@@ -69,6 +70,8 @@ Exact token match → visual alert + optional vibration / sound
 ```
 
 The user's target is **not** supplied as a speech-recognition hint or to announcement extraction. Announcements cannot create monitors or change alert preferences.
+
+Voice stopping depends on connectivity, speech recognition and model interpretation; it is not an instant or offline microphone kill switch. Speech-language coverage remains limited by the speech provider. There is no speaker identification, so a nearby person's request may also pause listening. Check that the microphone notification disappears; use the app or notification stop control if speech is missed. Voice-stop tests use mocked model decisions and do not establish live multilingual accuracy.
 
 | Layer | Stack |
 | --- | --- |
@@ -121,9 +124,9 @@ https://github.com/mathew1046/CueBell/blob/main/mobile/README.md
 
 | Check | Result |
 | --- | --- |
-| Backend tests | **227 passed**: validation, confirmation, correction/repeat aliases, acknowledgment, stale results, gaps, cleanup, language configuration, cancellations, authorization and opt-in automatic session admission. Ruff checks passed. |
-| Native unit tests | **6 passed**: PCM16 framing/waveform boundaries and permanent versus retryable WebSocket rejection. TypeScript and lint checks passed. |
-| Mobile workflow tests | **16 passed**: automatic session admission/reuse, expiry/revocation, consent withdrawal, configuration guards, removal of operator UI and CueBell identity/unchanged-backend regression checks. |
+| Backend tests | **253 passed**: validation, confirmation, correction/repeat aliases, acknowledgment, stale results, gaps, cleanup, language configuration, cancellations, authorization, opt-in automatic session admission and source-grounded voice-stop routing with mocked multilingual model decisions. Ruff checks passed. |
+| Native unit tests | **12 passed**: PCM16 framing/waveform boundaries, permanent versus retryable WebSocket rejection and initialization-time spoken-alert queue order/deduplication/bounds. TypeScript and lint checks passed. |
+| Mobile workflow tests | **28 passed**: automatic session admission/reuse, expiry/revocation, consent withdrawal, configuration guards, CueBell identity, unchanged backend and local microphone-stop/storage/remote-cleanup failure recovery. |
 | App build and rendering | Earlier minimal-interface QA launched on an Android 16 emulator; light/dark and enlarged text inspected. The CueBell v1.1.0 build retains the same hosted origin. Packaging a route does not verify live speech or alert delivery. |
 | Hosted preview installation | CueBell v1.1.0 installed on the physical phone only; Android's cold-launch request returned `Status: ok`. The phone was asleep, so a fresh visible-screen check was not completed and no unlock was attempted. Compiled branding/package/version, unchanged origin, ARM64 architecture, signature and absence of configured server credentials were checked. Prior hosted typed intent returned the expected token/preferences. No phone microphone capture was started. |
 | Live text model | Staged English/Malayalam intent, call, negation, injection-abstention and correction checks passed using `gpt-6-luna`. HTTP lifecycle and leading-zero checks passed. |

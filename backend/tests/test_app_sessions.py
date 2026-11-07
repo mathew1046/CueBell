@@ -105,7 +105,8 @@ def test_app_ip_limit_survives_deletion_and_ignores_forwarding_headers(settings,
 
 async def test_ip_buckets_are_separate_bounded_and_expire(settings, intelligence, monkeypatch):
     settings.allow_app_sessions = True
-    clock = [time.monotonic()]
+    # An exact fake timestamp avoids rounding around (now + 600) - 600 at expiry.
+    clock = [1000.0]
     monkeypatch.setattr("app.main.APP_SESSION_IP_BUCKETS", 2)
     monkeypatch.setattr(
         "app.main.time", SimpleNamespace(time=time.time, monotonic=lambda: clock[0])

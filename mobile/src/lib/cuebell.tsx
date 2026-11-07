@@ -3,9 +3,10 @@ import { AccessibilityInfo, AppState, Keyboard, PermissionsAndroid, Permission, 
 import Listener from '../../modules/queue-listener';
 import type { Tone } from '../components/ui';
 import { haptic, spell } from './a11y';
-import { api, ensureSession, loadConnection, saveConnection } from './api';
+import { api, ensureSession, loadConnection, removeConnection, saveConnection } from './api';
 import { CaptureOperation, listeningPhase } from './listening';
 import { prepareConsentedSession, requireProcessingConsent } from './session';
+import { stopListening } from './stop-listening';
 import { Connection, Intent, NativeSnapshot, QueueAlert, QueueEvent, Rule } from './types';
 
 function useCueBellState() {
@@ -208,27 +209,25 @@ function useCueBellState() {
   }, [prepareSession]);
 
   const control = async (action: 'pause' | 'resume' | 'stop' | 'acknowledge', alertId?: string) => {
-    if (!connection) return;
     revision.current++;
     if (action === 'pause' || action === 'stop') {
       setOperation({ mode: 'monitor', phase: 'STOPPING' });
-      await Listener.stop();
-      setCaptureError(false);
-    }
-    if (action === 'stop') {
-      // Local privacy cleanup must not depend on a reachable backend.
-      suppressMonitor.current = true;
-      setRule(null); setAlerts([]); setEvents([]); Listener.clear(); setProposal(null);
-      setRequest(''); setClarification(''); lastSpoken.current = '';
-      const next = { ...connection, suppressMonitor: true };
-      connectionRef.current = next; setConnection(next);
-      try { await saveConnection(next); }
-      finally {
-        try { await api(connection, '/v1/control', { action, alert_id: null }); }
-        catch { throw new Error('Stopped and cleared on this phone. Backend cleanup failed; its session will expire.'); }
-      }
+      await stopListening(action, connection, {
+        stopCapture: async () => { await Listener.stop(); setCaptureError(false); },
+        clearLocal: () => {
+          // Local privacy cleanup must not depend on a restored or reachable backend.
+          suppressMonitor.current = true;
+          setRule(null); setAlerts([]); setEvents([]); Listener.clear(); setProposal(null);
+          setRequest(''); setClarification(''); lastSpoken.current = '';
+        },
+        setConnection: next => { connectionRef.current = next; setConnection(next); },
+        save: saveConnection, remove: removeConnection,
+        remote: (c, command) => api<QueueEvent>(c, '/v1/control', { action: command, alert_id: null })
+          .then(event => { if (command === 'pause') addEvent(event); }),
+      });
       return;
     }
+    if (!connection) return;
     if (action === 'resume') {
       await start('monitor', async c => addEvent(await api<QueueEvent>(c, '/v1/control', { action })));
       return;
