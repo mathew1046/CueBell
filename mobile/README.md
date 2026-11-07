@@ -9,17 +9,17 @@ Copy `.env.example` to `.env` only if there is no existing configured file. Set 
 Only the service address is public. **Never embed `DEMO_ACCESS_CODE`, Gnani/OpenAI keys, or any long-lived credential in an APK or `EXPO_PUBLIC_` variable.** Anonymous demo admission is off by default and permits paid-provider usage; do not treat rate limits or an APK as production authentication. See the backend hosting/security guide before public distribution.
 
 The preview and production EAS profiles now set the public origin to:
-https://queuesaathi.mathewjoseph.xyz
+https://cuebell.mathewjoseph.xyz
 
 For local builds, set the same `EXPO_PUBLIC_API_URL` in `.env` or the shell. No provider secrets belong in this file. The EAS post-install hook rejects missing/placeholder routing configuration.
 
-The v1.1.0 ARM64 preview APK and checksum are published at:
-https://github.com/mathew1046/CueBell/releases/tag/v1.1.0-preview
+The v1.2.0 ARM64 preview APK and checksum are published at:
+https://github.com/mathew1046/CueBell/releases/tag/v1.2.0-preview
 
 Local copy:
-/home/mathew/Arrakis/CueBell/artifacts/CueBell-1.1.0-arm64.apk
+/home/mathew/Arrakis/CueBell/artifacts/CueBell-1.2.0-arm64.apk
 
-This preview has the unchanged deployed service origin baked in; it is not an unconfigured UI-only build. Release notes record CueBell's actual packaging and physical-phone verification. The backend previously reported both providers configured, and a temporary hosted typed-intent test returned the expected token and preferences before cleanup. No phone microphone capture was started. Provider-key changes remain server-only and do not require an APK rebuild. Source checks include 16 mobile workflow/session/branding tests, including consent withdrawal during admission, recovery from backend-invalidated bearers and preservation of the hosted origin. Prior light/dark + 1.3× font-size emulator review does not establish low-literacy usability, TalkBack or real-phone reliability.
+This preview has the new deployed service origin baked in; it is not an unconfigured UI-only build. Version 1.2.0 / Android version code 4 includes inline request/listening controls, captions, the waveform, spoken-alert queuing and semantic voice-stop handling. Its signing certificate matches the CueBell 1.1.0 preview for in-place updates. Saved sessions for the previous origin are not reused; submit your request again after updating. The new backend's health endpoint reports both providers configured; automatic admission, authenticated state and temporary-session deletion returned HTTP 200 without microphone or paid-model usage. Earlier hosted typed-intent and physical-phone checks are not verification of this release. Provider-key changes remain server-only and do not require an APK rebuild. Source checks include 28 mobile workflow/session/branding tests. Prior light/dark + 1.3× font-size emulator review does not establish low-literacy usability, TalkBack or real-phone reliability.
 
 ```sh
 npm ci
@@ -37,7 +37,7 @@ Then, from the generated `android` directory:
 ./gradlew :queue-listener:testDebugUnitTest
 ```
 
-The standalone APK is generated at `android/app/build/outputs/apk/release/app-release.apk`. The command above includes emulators; for the phone-only release use `-PreactNativeArchitectures=arm64-v8a`. The downloadable v1.1.0 APK is ARM64 only. Its application ID is `app.cuebell.mobile`, scheme `cuebell` and encrypted session key `cuebell.connection.v1`. It does not read another app's private storage or remove the previous app. To support older 32-bit phones, include `armeabi-v7a` explicitly when building.
+The standalone APK is generated at `android/app/build/outputs/apk/release/app-release.apk`. The command above includes emulators; for the phone-only release use `-PreactNativeArchitectures=arm64-v8a`. The downloadable v1.2.0 APK is ARM64 only. Its application ID is `app.cuebell.mobile`, scheme `cuebell` and encrypted session key `cuebell.connection.v1`. It does not read another app's private storage. To support older 32-bit phones, include `armeabi-v7a` explicitly when building.
 
 **Local preview signing:** Expo's generated local release configuration uses its development/debug signing key. The preview is installable for review, not a production/store-signed distribution. Set up your own production keystore through a config plugin or use your own EAS project and signing credentials before publishing. Do not edit generated Android source; keep native service code under `modules/queue-listener` and configuration in `app.json` / config plugins.
 

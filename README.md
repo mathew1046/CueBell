@@ -101,19 +101,19 @@ The guide includes exact commands, a three-minute script, correction and interru
 
 ### Android preview download
 
-The v1.1.0 preview routes to the operator-supplied backend:
-https://queuesaathi.mathewjoseph.xyz
+The v1.2.0 preview routes to the operator-supplied backend:
+https://cuebell.mathewjoseph.xyz
 
 Release and APK download:
-https://github.com/mathew1046/CueBell/releases/tag/v1.1.0-preview
-https://github.com/mathew1046/CueBell/releases/download/v1.1.0-preview/CueBell-1.1.0-arm64.apk
+https://github.com/mathew1046/CueBell/releases/tag/v1.2.0-preview
+https://github.com/mathew1046/CueBell/releases/download/v1.2.0-preview/CueBell-1.2.0-arm64.apk
 
 Local copy:
-/home/mathew/Arrakis/CueBell/artifacts/CueBell-1.1.0-arm64.apk
+/home/mathew/Arrakis/CueBell/artifacts/CueBell-1.2.0-arm64.apk
 
-This is a **development-signed ARM64 preview**, not a production/store distribution. APKs are published as GitHub Release assets, not committed to source history. Historical preview binaries are superseded, not renamed and misrepresented as new builds. CueBell uses Android package `app.cuebell.mobile` and is a separate install; the previous app and its data are not removed.
+This is a **development-signed ARM64 preview**, not a production/store distribution. APKs are published as GitHub Release assets, not committed to source history. Historical preview binaries are superseded, not renamed and misrepresented as new builds. Version 1.2.0 uses Android package `app.cuebell.mobile`, version code `4`, and the same signing certificate as the CueBell 1.1.0 preview, so it can update that app. Sessions saved for a different backend are not reused; submit your request again after updating.
 
-**Server readiness:** the supplied server reports both providers configured. A staged hosted request, “Listen for pharmacy token 442 and vibrate,” returned an exact-token confirmation with visual/vibration preferences; its temporary session was deleted. The APK installs and opens on the connected physical phone. No microphone capture was started during installation, and hosted speech recognition/background alerts remain untested. Provider keys stay on the backend, never in the APK.
+**Server readiness:** the new backend's HTTPS health endpoint reports both providers configured. Automatic session admission, authenticated state and deletion of the temporary session returned HTTP 200, without microphone capture or a paid model request. This does not verify live speech, voice-stop recognition or background alerts. Earlier typed-intent and phone-installation checks used the previous preview/backend and are historical evidence only. Provider keys stay on the backend, never in the APK.
 
 Build your own APK using:
 https://github.com/mathew1046/CueBell/blob/main/mobile/README.md
@@ -126,8 +126,8 @@ https://github.com/mathew1046/CueBell/blob/main/mobile/README.md
 | --- | --- |
 | Backend tests | **253 passed**: validation, confirmation, correction/repeat aliases, acknowledgment, stale results, gaps, cleanup, language configuration, cancellations, authorization, opt-in automatic session admission and source-grounded voice-stop routing with mocked multilingual model decisions. Ruff checks passed. |
 | Native unit tests | **12 passed**: PCM16 framing/waveform boundaries, permanent versus retryable WebSocket rejection and initialization-time spoken-alert queue order/deduplication/bounds. TypeScript and lint checks passed. |
-| Mobile workflow tests | **28 passed**: automatic session admission/reuse, expiry/revocation, consent withdrawal, configuration guards, CueBell identity, unchanged backend and local microphone-stop/storage/remote-cleanup failure recovery. |
-| App build and rendering | Earlier minimal-interface QA launched on an Android 16 emulator; light/dark and enlarged text inspected. The CueBell v1.1.0 build retains the same hosted origin. Packaging a route does not verify live speech or alert delivery. |
+| Mobile workflow tests | **28 passed**: automatic session admission/reuse, expiry/revocation, consent withdrawal, configuration guards, CueBell identity, current backend and local microphone-stop/storage/remote-cleanup failure recovery. |
+| App build and rendering | Earlier minimal-interface QA launched on an Android 16 emulator; light/dark and enlarged text inspected. Version 1.2.0 packages the new backend origin. Packaging a route does not verify live speech or alert delivery. |
 | Hosted preview installation | CueBell v1.1.0 installed on the physical phone only; Android's cold-launch request returned `Status: ok`. The phone was asleep, so a fresh visible-screen check was not completed and no unlock was attempted. Compiled branding/package/version, unchanged origin, ARM64 architecture, signature and absence of configured server credentials were checked. Prior hosted typed intent returned the expected token/preferences. No phone microphone capture was started. |
 | Live text model | Staged English/Malayalam intent, call, negation, injection-abstention and correction checks passed using `gpt-6-luna`. HTTP lifecycle and leading-zero checks passed. |
 | Live speech connection | Gnani authentication and streaming negotiation succeeded at 16 kHz / 512 samples. Sent 48 paced synthetic tone/silence frames without a reported provider error. **This was not spoken-audio recognition testing.** |

@@ -4,12 +4,12 @@
       "distribution": "internal",
       "android": { "buildType": "apk" },
       "env": {
-        "EXPO_PUBLIC_API_URL": "https://queuesaathi.mathewjoseph.xyz"
+        "EXPO_PUBLIC_API_URL": "https://cuebell.mathewjoseph.xyz"
       }
     },
     "production": {
       "env": {
-        "EXPO_PUBLIC_API_URL": "https://queuesaathi.mathewjoseph.xyz"
+        "EXPO_PUBLIC_API_URL": "https://cuebell.mathewjoseph.xyz"
       }
     }
   }
