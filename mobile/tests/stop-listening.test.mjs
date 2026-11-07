@@ -9,16 +9,18 @@ function harness(overrides = {}) {
   const calls = [];
   let saved = connection;
   let current = connection;
+  let storageCleanupPending = false;
   const dependencies = {
     stopCapture: async () => { calls.push('capture'); },
     clearLocal: () => { calls.push('clear'); },
     setConnection: value => { current = value; },
+    setStorageCleanupPending: value => { storageCleanupPending = value; },
     save: async value => { calls.push('save'); saved = value; },
     remove: async () => { calls.push('remove'); saved = null; },
     remote: async (value, action) => { calls.push(`remote:${action}`); assert.equal(value, connection); },
     ...overrides,
   };
-  return { calls, dependencies, saved: () => saved, current: () => current };
+  return { calls, dependencies, saved: () => saved, current: () => current, storageCleanupPending: () => storageCleanupPending };
 }
 
 test('pause still turns off capture without a restored connection', async () => {
@@ -56,6 +58,7 @@ test('storage write failure falls back to deleting stale credentials and still c
   assert.deepEqual(h.calls, ['capture', 'clear', 'remove', 'remote:stop']);
   assert.equal(h.saved(), null);
   assert.equal(h.current(), null);
+  assert.equal(h.storageCleanupPending(), false);
 });
 
 test('simultaneous storage and backend failures are both reported', async () => {
@@ -72,12 +75,13 @@ test('simultaneous storage and backend failures are both reported', async () => 
 test('failed fallback deletion gives actionable recovery and does not skip remote cleanup', async () => {
   const h = harness({ save: failure, remove: failure });
   await assert.rejects(stopListening('stop', connection, h.dependencies), error => {
-    assert.match(error.message, /Retry Stop before closing the app/);
+    assert.match(error.message, /Retry Stop in Settings before closing the app/);
     assert.match(error.message, /clear CueBell storage in Android settings/);
     return true;
   });
   assert.deepEqual(h.calls, ['capture', 'clear', 'remote:stop']);
   assert.equal(h.current().suppressMonitor, true);
+  assert.equal(h.storageCleanupPending(), true);
 });
 
 test('all cleanup failures remain visible rather than masking one another', async () => {

@@ -100,7 +100,7 @@ test('app screens contain workflow controls, not operator setup', () => {
     assert.ok(!source.includes(label), `Operator UI must not return: ${label}`);
   }
   for (const label of ["'Start Listening'", "'Stop Listening'", '>Speak</Text>', '>Continue</Button>',
-    'label="History"', '>Announcements</Text>', '>Stop</Button>', 'Allow audio & text processing']) {
+    'label="History"', '>Announcements</Text>', 'Allow audio & text processing']) {
     assert.ok(source.includes(label) || readFileSync(new URL('../src/components/app.tsx', import.meta.url), 'utf8').includes(label), label);
   }
 });

@@ -74,11 +74,19 @@ export default function Settings() {
             onPress={app.pause}>Pause</Button> :
             <Button mode="contained" icon="microphone" contentStyle={actionStyles.big} disabled={app.busy || !app.consent}
               onPress={app.resume}>Start Listening</Button>}
+        </> : <Text variant="bodyLarge" style={{ color: theme.colors.onSurfaceVariant }}>No token is being watched.</Text>}
+        {(app.activeRule || app.storageCleanupPending) && <>
           <Button mode="outlined" icon="stop" textColor={theme.colors.error} style={{ borderColor: theme.colors.error, borderWidth: 2 }}
             contentStyle={actionStyles.action} disabled={app.busy} onPress={app.stop}
-            accessibilityHint="Stops the microphone and clears your token and history from this phone">Stop</Button>
-          <Text variant="bodyMedium" style={{ color: theme.colors.onSurfaceVariant }}>Stop also clears your token and history.</Text>
-        </> : <Text variant="bodyLarge" style={{ color: theme.colors.onSurfaceVariant }}>No token is being watched.</Text>}
+            accessibilityHint={app.storageCleanupPending
+              ? 'Retries clearing saved session data from this phone'
+              : 'Stops the microphone and clears your token and history from this phone'}>
+            {app.storageCleanupPending ? 'Retry Stop' : 'Stop'}
+          </Button>
+          <Text variant="bodyMedium" style={{ color: theme.colors.onSurfaceVariant }}>
+            {app.storageCleanupPending ? 'The saved session still needs to be cleared.' : 'Stop also clears your token and history.'}
+          </Text>
+        </>}
       </SoftCard>
 
       {heading('Phone')}

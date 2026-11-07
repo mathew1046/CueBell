@@ -3,13 +3,14 @@ import type { Connection } from './types';
 type StopDependencies = {
   stopCapture: () => Promise<unknown>;
   clearLocal: () => void;
+  setStorageCleanupPending: (pending: boolean) => void;
   setConnection: (connection: Connection | null) => void;
   save: (connection: Connection) => Promise<void>;
   remove: () => Promise<void>;
   remote: (connection: Connection, action: 'pause' | 'stop') => Promise<unknown>;
 };
 
-/** Turn capture off first; report storage and remote cleanup failures independently. */
+/** Stop capture first and keep storage recovery available until local suppression or removal succeeds. */
 export async function stopListening(
   action: 'pause' | 'stop', connection: Connection | null, dependencies: StopDependencies,
 ): Promise<void> {
@@ -19,6 +20,7 @@ export async function stopListening(
     dependencies.clearLocal();
     const next = connection ? { ...connection, suppressMonitor: true } : null;
     dependencies.setConnection(next);
+    let storageCleanupPending = false;
     try {
       if (next) await dependencies.save(next);
       else await dependencies.remove();
@@ -29,10 +31,12 @@ export async function stopListening(
         dependencies.setConnection(null);
         problems.push('Could not save the cleared state; the saved session was removed instead.');
       } catch {
-        problems.push('Could not update or remove the saved session. Retry Stop before closing the app, ' +
+        storageCleanupPending = true;
+        problems.push('Could not update or remove the saved session. Choose Retry Stop in Settings before closing the app, ' +
           'or clear CueBell storage in Android settings to prevent old session data returning.');
       }
     }
+    dependencies.setStorageCleanupPending(storageCleanupPending);
   }
   if (connection) {
     try { await dependencies.remote(connection, action); }

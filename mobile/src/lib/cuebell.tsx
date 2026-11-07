@@ -16,6 +16,7 @@ function useCueBellState() {
   const [request, setRequest] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
+  const [storageCleanupPending, setStorageCleanupPending] = useState(false);
   const [proposal, setProposal] = useState<{ id: string; intent: Intent } | null>(null);
   const [clarification, setClarification] = useState('');
   const [rule, setRule] = useState<Rule | null>(null);
@@ -212,7 +213,7 @@ function useCueBellState() {
     revision.current++;
     if (action === 'pause' || action === 'stop') {
       setOperation({ mode: 'monitor', phase: 'STOPPING' });
-      await stopListening(action, connection, {
+      await stopListening(action, connectionRef.current, {
         stopCapture: async () => { await Listener.stop(); setCaptureError(false); },
         clearLocal: () => {
           // Local privacy cleanup must not depend on a restored or reachable backend.
@@ -220,6 +221,7 @@ function useCueBellState() {
           setRule(null); setAlerts([]); setEvents([]); Listener.clear(); setProposal(null);
           setRequest(''); setClarification(''); lastSpoken.current = '';
         },
+        setStorageCleanupPending,
         setConnection: next => { connectionRef.current = next; setConnection(next); },
         save: saveConnection, remove: removeConnection,
         remote: (c, command) => api<QueueEvent>(c, '/v1/control', { action: command, alert_id: null })
@@ -243,6 +245,7 @@ function useCueBellState() {
       const event = await api<QueueEvent>(c, '/v1/confirm', { proposal_id: proposal.id });
       const next = { ...c, suppressMonitor: false };
       await saveConnection(next); connectionRef.current = next; setConnection(next);
+      setStorageCleanupPending(false);
       suppressMonitor.current = false;
       Listener.clear();
       setEvents(old => old.filter(item => item.mode === 'request'));
@@ -296,7 +299,7 @@ function useCueBellState() {
     request, editRequest: (text: string) => { setRequest(text); setProposal(null); setClarification(''); },
     busy, error, clearError: () => setError(''), permissionError, booting,
     proposal, clearProposal: () => setProposal(null), clarification,
-    activeRule, events, outstanding, takeover, latestUnclear,
+    activeRule, storageCleanupPending, events, outstanding, takeover, latestUnclear,
     native, phase, captureMode, listening, capturing, statusLabel, statusDetail, statusIcon, tone,
     analyze: (text: string) => void analyze(text),
     speak: () => void run(async () => { haptic.tap(); await start('request'); }),
