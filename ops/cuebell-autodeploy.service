@@ -1,0 +1,14 @@
+[Unit]
+Description=Validate and deploy new CueBell main commits
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu/queuesaathi
+ExecStart=/usr/local/libexec/cuebell-watch
+TimeoutStartSec=900
+UMask=0077
+Environment=GIT_TERMINAL_PROMPT=0
