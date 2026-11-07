@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import test from 'node:test';
 
@@ -32,7 +32,7 @@ test('rebranding preserves the operator-supplied backend and native alert identi
   for (const profile of ['preview', 'production']) {
     assert.equal(profiles[profile].env.EXPO_PUBLIC_API_URL, origin);
   }
-  assert.match(read('mobile/src/app/index.tsx'), /title="CueBell"/);
+  assert.match(read('mobile/src/app/index.tsx'), />CueBell<\/Text>/);
   assert.match(read('mobile/src/lib/api.ts'), /'cuebell\.connection\.v1'/);
   const native = read('mobile/modules/queue-listener/android/src/main/java/expo/modules/queuelistener/ListenerService.kt');
   assert.match(native, /"CueBell · monitoring"/);
@@ -44,6 +44,7 @@ test('tracked source contains no legacy product name except the unchanged backen
   const files = execFileSync('git', ['ls-files', '-z'], { cwd: root, encoding: 'utf8' }).split('\0').filter(Boolean);
   const legacy = new RegExp('queue' + 'saathi', 'i');
   for (const name of files) {
+    if (!existsSync(new URL(`../../${name}`, import.meta.url))) continue;
     const bytes = readFileSync(new URL(`../../${name}`, import.meta.url));
     if (bytes.includes(0)) continue;
     const text = bytes.toString('utf8').replaceAll(origin, '');

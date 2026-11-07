@@ -6,6 +6,11 @@
   <uses-permission android:name="android.permission.VIBRATE" />
   <uses-permission android:name="android.permission.WAKE_LOCK" />
   <uses-permission android:name="android.permission.INTERNET" />
+  <queries>
+    <intent>
+      <action android:name="android.intent.action.TTS_SERVICE" />
+    </intent>
+  </queries>
   <application>
     <service android:name="expo.modules.queuelistener.ListenerService"
       android:exported="false" android:foregroundServiceType="microphone"

@@ -155,6 +155,13 @@ proxy addresses as above. Do not disable TLS checks to work around proxy setup.
   `{"type":"gap"}`. A gap means audio coverage was lost and forces reconnect;
   the app must disclose that calls may have been missed. A connected socket
   alone does not mean microphone coverage is healthy.
+- During monitoring, extraction can return a semantic `stop_request` with verbatim
+  evidence and chronological source IDs including the newest segment. Validated
+  requests take priority over announcement events, clear pending calls and pause
+  the rule. The relay sends `monitor.pause` with `reason: voice`, then closes the
+  stream. The native client must stop capture and suppress reconnect on that event;
+  resume requires an explicit user action. Token/history are retained. Spoken setup
+  remains a request/confirmation flow and does not execute listening controls.
 
 Session admission (anonymous and code-based combined) is limited globally to
 20 attempts/minute. Anonymous sessions additionally allow three successful
@@ -201,6 +208,14 @@ or a substitute for edge rate limits and spending controls.
   chronology and exact source spans are checked before matching the confirmed
   model-normalized target. Language/number semantics and counter interpretation
   are model judgments, not independently verified by handwritten rules.
+- Voice-stop intent uses the same structured extraction call, not a phrase list
+  or an extra model request. The prompt covers multilingual/indirect requests and
+  excludes negations, quotations, hypotheticals and PA/cancellation instructions.
+  Deterministic checks validate only source provenance, not semantic correctness.
+  Recognition still depends on Gnani's supported languages and network/model
+  availability; no offline or instantaneous stop guarantee is made. There is no
+  speaker authentication, so nearby speech can pause monitoring. Keep manual and
+  Android notification stop controls available.
 - Corrections/cancellations need a resolvable recent observation (30 seconds).
   Uncertain or unresolved corrections clear pending alerts instead of guessing.
   An already-issued alert can be marked corrected, not physically undone. Split
@@ -243,6 +258,12 @@ push alerts to a disconnected APK. Users must still check the official display.
   returned during the bounded check. This verifies connection and client-side streaming,
   not speech recognition or end-to-end alert accuracy. Earlier HTTP 401 failures
   are resolved; no endpoint/model change or authentication bypass was necessary.
+
+7 November regression run: 253 backend tests and Ruff lint/format checks passed.
+Voice-stop tests inject structured model decisions in multiple languages, verify
+source evidence, pause/stream closure, retained token, explicit resume, pending
+alert cancellation and unchanged spoken setup. They do not verify live model
+intent accuracy, spoken-language recognition or physical-phone background stopping.
 
 Official automatic-language contracts:
 https://docs.gnani.ai/api/STT/stt-websocket.md

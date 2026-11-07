@@ -39,8 +39,21 @@ class ProposedEvent(StrictModel):
     ambiguity_reason: str | None
 
 
+class StopListeningRequest(StrictModel):
+    evidence_text: str = Field(
+        description="Verbatim source span expressing a request to stop CueBell."
+    )
+    source_segment_ids: list[str]
+
+
 class Extraction(StrictModel):
     events: list[ProposedEvent]
+    stop_request: StopListeningRequest | None = Field(
+        default=None,
+        description="A clear user intent to stop or pause CueBell's current listening, in any "
+        "language or phrasing, including indirect requests. Null for negation, quotations, "
+        "hypotheticals, queue cancellations, unrelated conversation, or ambiguous intent.",
+    )
 
 
 class PairRequest(StrictModel):

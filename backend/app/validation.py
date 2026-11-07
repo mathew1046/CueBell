@@ -6,7 +6,7 @@ There are no handwritten token grammars, number dictionaries, or counter ranges.
 
 import re
 
-from .models import Intent, ProposedEvent, Segment
+from .models import Intent, ProposedEvent, Segment, StopListeningRequest
 
 
 def exact_span(phrase: str, text: str) -> bool:
@@ -52,3 +52,17 @@ def validate_event(event: ProposedEvent, window: list[Segment]) -> ProposedEvent
     if reason:
         return event.model_copy(update={"type": "UNCERTAIN", "ambiguity_reason": reason})
     return event.model_copy()
+
+
+def grounded_stop_request(request: StopListeningRequest, window: list[Segment]) -> bool:
+    """Validate provenance only; the model, not a phrase matcher, interprets the intent."""
+    if not window or window[-1].id not in request.source_segment_ids:
+        return False
+    sources = [segment for segment in window if segment.id in request.source_segment_ids]
+    return (
+        [segment.id for segment in sources] == request.source_segment_ids
+        and bool(request.evidence_text.strip())
+        and request.evidence_text in " ".join(segment.text for segment in sources)
+        # Don't accept old evidence with a newly appended but unrelated source ID.
+        and request.evidence_text not in " ".join(segment.text for segment in sources[:-1])
+    )

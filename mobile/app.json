@@ -23,10 +23,10 @@
         "android.permission.SYSTEM_ALERT_WINDOW"
       ],
       "adaptiveIcon": {
-        "backgroundColor": "#075E54",
+        "backgroundColor": "#F6F4F1",
         "foregroundImage": "./assets/queue-foreground.png"
       },
-      "predictiveBackGestureEnabled": true
+      "predictiveBackGestureEnabled": false
     },
     "plugins": [
       "expo-router",
@@ -35,7 +35,8 @@
         "expo-build-properties",
         {
           "android": {
-            "usesCleartextTraffic": false
+            "usesCleartextTraffic": false,
+            "useLegacyPackaging": true
           }
         }
       ],

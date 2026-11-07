@@ -5,11 +5,13 @@ import android.content.Intent
 import android.content.Context
 import android.app.NotificationManager
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.os.Build
 import androidx.core.content.ContextCompat
 import androidx.core.app.NotificationManagerCompat
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
+import expo.modules.kotlin.functions.Queues
 import org.json.JSONObject
 import java.util.concurrent.CopyOnWriteArraySet
 
@@ -27,6 +29,7 @@ object ListenerMemory {
   @Volatile var state = "STOPPED"
   @Volatile var message = "Microphone is off."
   @Volatile var mode = "monitor"
+  @Volatile internal var audioLevel: AudioLevel? = null
   @Synchronized fun emit(event: JSONObject) {
     if (event.optString("type") == "status") {
       state = event.optString("state")
@@ -50,10 +53,20 @@ class QueueListenerModule : Module() {
   override fun definition() = ModuleDefinition {
     Name("QueueListener")
     Events("onEvent")
+    View(WaveformView::class) {
+      Prop("animate") { view: WaveformView, animate: Boolean -> view.animate = animate }
+      Prop("barColor") { view: WaveformView, color: String -> view.setBarColor(Color.parseColor(color)) }
+    }
     OnStartObserving("onEvent") { ListenerMemory.observers.add(observer) }
     OnStopObserving("onEvent") { ListenerMemory.observers.remove(observer) }
     OnDestroy { ListenerMemory.observers.remove(observer) }
     Function("snapshot") { ListenerMemory.snapshot() }
+    Function("spokenAlertsEnabled") {
+      appContext.reactContext?.let(SpokenAlerts::enabled) ?: false
+    }
+    Function("setSpokenAlertsEnabled") { enabled: Boolean ->
+      appContext.reactContext?.let { SpokenAlerts.setEnabled(it, enabled) }
+    }
     Function("clear") {
       ListenerMemory.clear()
       val manager = appContext.reactContext?.getSystemService(android.app.NotificationManager::class.java)
@@ -81,10 +94,17 @@ class QueueListenerModule : Module() {
       val intent = Intent(context, ListenerService::class.java)
         .putExtra("url", baseUrl).putExtra("token", token).putExtra("mode", mode)
       ContextCompat.startForegroundService(context, intent)
-    }
+      ListenerMemory.mode = mode
+      ListenerMemory.running = true
+      ListenerMemory.emit(JSONObject().put("type", "status").put("state", "STARTING")
+        .put("message", "Connecting to speech recognition…"))
+    }.runOnQueue(Queues.MAIN)
     AsyncFunction("stop") {
       val context = appContext.reactContext ?: return@AsyncFunction false
-      context.stopService(Intent(context, ListenerService::class.java))
-    }
+      val stopped = context.stopService(Intent(context, ListenerService::class.java))
+      if (stopped) ListenerMemory.emit(JSONObject().put("type", "status").put("state", "STOPPING")
+        .put("message", "Turning off the microphone…"))
+      stopped
+    }.runOnQueue(Queues.MAIN)
   }
 }
