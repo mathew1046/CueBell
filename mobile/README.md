@@ -16,9 +16,6 @@ For local builds, set the same `EXPO_PUBLIC_API_URL` in `.env` or the shell. No 
 The v1.2.0 ARM64 preview APK and checksum are published at:
 https://github.com/mathew1046/CueBell/releases/tag/v1.2.0-preview
 
-Local copy:
-/home/mathew/Arrakis/CueBell/artifacts/CueBell-1.2.0-arm64.apk
-
 This preview has the new deployed service origin baked in; it is not an unconfigured UI-only build. Version 1.2.0 / Android version code 4 includes inline request/listening controls, captions, the waveform, spoken-alert queuing and semantic voice-stop handling. Its signing certificate matches the CueBell 1.1.0 preview for in-place updates. Saved sessions for the previous origin are not reused; submit your request again after updating. The new backend's health endpoint reports both providers configured; automatic admission, authenticated state and temporary-session deletion returned HTTP 200 without microphone or paid-model usage. Earlier hosted typed-intent and physical-phone checks are not verification of this release. Provider-key changes remain server-only and do not require an APK rebuild. Source checks include 28 mobile workflow/session/branding tests. Prior light/dark + 1.3× font-size emulator review does not establish low-literacy usability, TalkBack or real-phone reliability.
 
 ```sh

@@ -2,7 +2,15 @@
 
 **Hear the announcement. See your turn.**
 
-CueBell is an Android assistive app that turns a matching queue announcement into a prominent visual alert, vibration and an alarm sound by default. Users can explicitly request silent alerts. It is designed primarily for people who are deaf or hard of hearing.
+CueBell is an Android accessibility companion for people who are deaf or hard of hearing. It turns matching queue announcements into prominent visual, vibration and sound alerts, so users can follow their turn without relying on a loudspeaker alone. Silent alerts are available by request.
+
+**Status:** active prototype · Android only · development-signed preview
+
+**Download the Android preview:**
+https://github.com/mathew1046/CueBell/releases/tag/v1.2.0-preview
+
+**Report a bug or suggest an improvement:**
+https://github.com/mathew1046/CueBell/issues
 
 Tell it what to watch for, check the details, and confirm. A native Android microphone service then listens for announcements while a separate, self-hosted backend interprets them.
 
@@ -12,21 +20,13 @@ Tell it what to watch for, check the details, and confirm. A native Android micr
 
 **Prototype, not an official queue system. Calls can be missed. Always check the venue display or staff.**
 
-## Why this matters
+## Why CueBell?
 
 Imagine waiting for medicine in a crowded pharmacy. Your turn is announced over a loudspeaker, but you cannot reliably hear it. You may need to watch the display continuously or depend on someone else to notice the call.
 
 CueBell aims to make that moment more accessible: the person specifies their own token and receives a personal, visible cue when a matching announcement is detected.
 
-| Real-life need | Intended benefit |
-| --- | --- |
-| A deaf or hard-of-hearing patient cannot access an audio-only call. | Present the token and destination visually, with an optional vibration cue. |
-| A patient wants to manage their own turn rather than rely on a companion. | Let them set, review, pause and stop their own monitor. |
-| Announcements switch languages or number forms. | Detect speech language automatically and let the text model interpret equivalent identifiers. |
-| Staff correct a counter after calling a token. | Preserve the announcement history and visibly mark a resolved correction. |
-| Connectivity or microphone capture is interrupted. | Show a coverage gap instead of pretending the app is still listening. |
-
-These are **intended benefits, not measured outcomes**. We have not demonstrated fewer missed turns, reduced waiting time or real-world recognition accuracy. Banks, government offices and transport terminals are possible future settings, not currently supported deployments.
+These are **intended benefits, not measured outcomes**. Fewer missed turns, real-world speech accuracy and reliable locked-screen delivery have not been established. The current workflow focuses on pharmacy queues; other venues are future possibilities, not supported deployments.
 
 ## What it does today
 
@@ -84,7 +84,24 @@ Voice stopping depends on connectivity, speech recognition and model interpretat
 
 Gnani Evon is **not integrated**: its usable API contract has not been supplied. There is no invented endpoint or silent speech-provider substitution. Provider retention policies are separate from the app's no-recording policy.
 
-## Try it / present a demo
+## Try the Android preview
+
+APK download:
+https://github.com/mathew1046/CueBell/releases/download/v1.2.0-preview/CueBell-1.2.0-arm64.apk
+
+Checksum:
+https://github.com/mathew1046/CueBell/releases/download/v1.2.0-preview/CueBell-1.2.0-SHA256SUMS
+
+- Android 7+ on an ARM64 phone; iOS is not implemented.
+- Version **1.2.0**, Android version code **4**, package `app.cuebell.mobile`.
+- Development-signed preview, **not a production/store distribution**. Its signing certificate matches the 1.1.0 preview for in-place updates.
+- The preview is preconfigured; there is no backend URL or provider-key setup on the phone. Sessions for an older deployment are not reused: submit your request again after updating.
+- **Expo Go cannot run the custom native microphone service.** Use the APK or a native development build.
+
+What's changed:
+https://github.com/mathew1046/CueBell/blob/main/CHANGELOG.md
+
+## Run a controlled demo
 
 **Start with the complete demo guide:**
 https://github.com/mathew1046/CueBell/blob/main/DEMO.md
@@ -99,42 +116,12 @@ The shortest reliable presentation path is:
 
 The guide includes exact commands, a three-minute script, correction and interruption checks, troubleshooting, and an honest fallback if the live pipeline fails.
 
-### Android preview download
+## Verification
 
-The v1.2.0 preview routes to the operator-supplied backend:
-https://cuebell.mathewjoseph.xyz
+The 1.2.0 preview passed **253 backend tests, 28 mobile tests and 12 native unit tests**, plus TypeScript, lint and APK packaging/signature checks. The verification record separates mocked tests, historical smoke checks and unverified real-world behavior:
+https://github.com/mathew1046/CueBell/blob/main/docs/VERIFICATION.md
 
-Release and APK download:
-https://github.com/mathew1046/CueBell/releases/tag/v1.2.0-preview
-https://github.com/mathew1046/CueBell/releases/download/v1.2.0-preview/CueBell-1.2.0-arm64.apk
-
-Local copy:
-/home/mathew/Arrakis/CueBell/artifacts/CueBell-1.2.0-arm64.apk
-
-This is a **development-signed ARM64 preview**, not a production/store distribution. APKs are published as GitHub Release assets, not committed to source history. Historical preview binaries are superseded, not renamed and misrepresented as new builds. Version 1.2.0 uses Android package `app.cuebell.mobile`, version code `4`, and the same signing certificate as the CueBell 1.1.0 preview, so it can update that app. Sessions saved for a different backend are not reused; submit your request again after updating.
-
-**Server readiness:** the new backend's HTTPS health endpoint reports both providers configured. Automatic session admission, authenticated state and deletion of the temporary session returned HTTP 200, without microphone capture or a paid model request. This does not verify live speech, voice-stop recognition or background alerts. Earlier typed-intent and phone-installation checks used the previous preview/backend and are historical evidence only. Provider keys stay on the backend, never in the APK.
-
-Build your own APK using:
-https://github.com/mathew1046/CueBell/blob/main/mobile/README.md
-
-**Expo Go does not support the custom native service.** This download targets ARM64 phones only; emulators and older 32-bit phones need a different build.
-
-## Verification — what is and is not established
-
-| Check | Result |
-| --- | --- |
-| Backend tests | **253 passed**: validation, confirmation, correction/repeat aliases, acknowledgment, stale results, gaps, cleanup, language configuration, cancellations, authorization, opt-in automatic session admission and source-grounded voice-stop routing with mocked multilingual model decisions. Ruff checks passed. |
-| Native unit tests | **12 passed**: PCM16 framing/waveform boundaries, permanent versus retryable WebSocket rejection and initialization-time spoken-alert queue order/deduplication/bounds. TypeScript and lint checks passed. |
-| Mobile workflow tests | **28 passed**: automatic session admission/reuse, expiry/revocation, consent withdrawal, configuration guards, CueBell identity, current backend and local microphone-stop/storage/remote-cleanup failure recovery. |
-| App build and rendering | Earlier minimal-interface QA launched on an Android 16 emulator; light/dark and enlarged text inspected. Version 1.2.0 packages the new backend origin. Packaging a route does not verify live speech or alert delivery. |
-| Hosted preview installation | CueBell v1.1.0 installed on the physical phone only; Android's cold-launch request returned `Status: ok`. The phone was asleep, so a fresh visible-screen check was not completed and no unlock was attempted. Compiled branding/package/version, unchanged origin, ARM64 architecture, signature and absence of configured server credentials were checked. Prior hosted typed intent returned the expected token/preferences. No phone microphone capture was started. |
-| Live text model | Staged English/Malayalam intent, call, negation, injection-abstention and correction checks passed using `gpt-6-luna`. HTTP lifecycle and leading-zero checks passed. |
-| Live speech connection | Gnani authentication and streaming negotiation succeeded at 16 kHz / 512 samples. Sent 48 paced synthetic tone/silence frames without a reported provider error. **This was not spoken-audio recognition testing.** |
-| Real PA recognition and user outcomes | **Not measured.** No speech-accuracy percentage, false-alert rate, missed-call rate or latency benchmark is claimed. |
-| Physical-phone accessibility and endurance | **Not yet verified:** TalkBack, vibration/sound, background/locked-screen delivery and OEM battery behavior. |
-
-Automated tests and emulator captures do not establish real-world reliability. A successful socket connection is not proof that a spoken token will be recognized correctly.
+GitHub Actions runs backend tests/lint and mobile tests/typecheck/lint without provider credentials. It does not build the APK, call paid providers or establish physical-phone reliability.
 
 ## Development and hosting
 
@@ -149,6 +136,7 @@ From the repository root, frontend checks are:
 ```sh
 cd mobile
 npm ci
+npm test
 npm run typecheck
 npm run lint
 ```
@@ -168,8 +156,24 @@ Backend environment variables include `GNANI_API_KEY`, `GNANI_LANGUAGE_CODE=indi
 
 ## Project documents
 
+- Contributor setup and review checklist: https://github.com/mathew1046/CueBell/blob/main/CONTRIBUTING.md
+- Release history: https://github.com/mathew1046/CueBell/blob/main/CHANGELOG.md
+- Privacy and data flow: https://github.com/mathew1046/CueBell/blob/main/docs/PRIVACY.md
+- Security reporting: https://github.com/mathew1046/CueBell/blob/main/SECURITY.md
+- Community guidelines: https://github.com/mathew1046/CueBell/blob/main/CODE_OF_CONDUCT.md
 - Original research architecture: https://github.com/mathew1046/CueBell/blob/main/implementation.md
 - Current product scope and subsequent decisions: https://github.com/mathew1046/CueBell/blob/main/PRODUCT.md
 - Interface principles and review record: https://github.com/mathew1046/CueBell/blob/main/DESIGN.md
 
 The later Android/background and OpenAI-fallback decisions override the original plan's foreground-web / Gnani-only scope. The basic queue-alert concept has prior art; this prototype does not claim to have invented it. Its intended contribution is an accessible Malayalam/English workflow with explicit confirmation, correction-aware handling and honest coverage status—not a proven performance advantage.
+
+## Contributing and support
+
+Bug reports, accessibility feedback and small, focused improvements are welcome. Use the issue templates and include your app/Android version and reproducible steps using synthetic tokens. Do not post credentials, private patient information or unconsented venue recordings.
+
+For security vulnerabilities, use private reporting instead of a public issue:
+https://github.com/mathew1046/CueBell/security/advisories/new
+
+## License
+
+No project license has been selected yet. Public source availability alone does not grant an open-source license; clarify reuse or redistribution with the maintainer before proceeding.

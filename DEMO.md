@@ -16,13 +16,11 @@ This is a rehearsal runbook, not a claim that the full phone-and-speaker scenari
 Download the development-signed ARM64 preview from GitHub Releases:
 https://github.com/mathew1046/CueBell/releases/tag/v1.2.0-preview
 
-Local APK:
-/home/mathew/Arrakis/CueBell/artifacts/CueBell-1.2.0-arm64.apk
-
+Download `CueBell-1.2.0-arm64.apk` and open a terminal in its download directory.
 Install over USB with Android debugging enabled. Specify your physical phone's serial from `adb devices`; do not accidentally target an emulator. This preview is not production/store-signed:
 
 ```sh
-adb -s YOUR_PHONE_SERIAL install -r /home/mathew/Arrakis/CueBell/artifacts/CueBell-1.2.0-arm64.apk
+adb -s YOUR_PHONE_SERIAL install -r CueBell-1.2.0-arm64.apk
 ```
 
 Otherwise transfer it to the phone and allow installation from that source. Only install APKs you trust. Build instructions:

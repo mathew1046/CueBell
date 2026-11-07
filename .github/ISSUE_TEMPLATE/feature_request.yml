@@ -1,0 +1,29 @@
+name: Feature or accessibility feedback
+description: Suggest an improvement or describe an accessibility barrier.
+title: "[Feedback]: "
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please describe the task or barrier, not private medical information.
+        You do not need to disclose a disability to give accessibility feedback.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What are you trying to do?
+      description: Describe the problem, affected workflow and relevant device/settings.
+    validations:
+      required: true
+  - type: textarea
+    id: improvement
+    attributes:
+      label: Suggested improvement
+      description: What would help? Include alternatives or workarounds if useful.
+    validations:
+      required: true
+  - type: textarea
+    id: verification
+    attributes:
+      label: How could we check that it helps?
+      description: Optional reproducible example, staged scenario or accessibility check.

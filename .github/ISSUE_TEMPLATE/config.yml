@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Report a security vulnerability privately
+    url: https://github.com/mathew1046/CueBell/security/advisories/new
+    about: Do not disclose vulnerabilities, credentials or personal information in public issues.
+  - name: Setup and contributor guidance
+    url: https://github.com/mathew1046/CueBell/blob/main/CONTRIBUTING.md
+    about: Development commands, tests, privacy expectations and review checklist.

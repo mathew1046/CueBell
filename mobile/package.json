@@ -1,6 +1,8 @@
 {
   "name": "cuebell-mobile",
   "version": "1.2.0",
+  "description": "Android accessibility companion for visual, vibration and sound alerts from queue announcements.",
+  "repository": "github:mathew1046/CueBell",
   "main": "expo-router/entry",
   "dependencies": {
     "@expo/vector-icons": "^15.0.2",

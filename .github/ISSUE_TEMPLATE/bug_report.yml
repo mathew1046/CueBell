@@ -1,0 +1,45 @@
+name: Bug report
+description: Report a reproducible problem with CueBell.
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use synthetic tokens and redacted logs. Do not share credentials, patient
+        information or unconsented recordings. Report security vulnerabilities privately:
+        https://github.com/mathew1046/CueBell/security/advisories/new
+  - type: input
+    id: version
+    attributes:
+      label: App version or commit
+      placeholder: "For example: 1.2.0-preview or a commit SHA"
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Device and environment
+      description: Android version, phone model, installation source; Python/Node version for development issues.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Include consent/permissions and whether the app was foregrounded or locked. Use a made-up token.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: Include any error message and relevant redacted screenshots or logs.
+    validations:
+      required: true

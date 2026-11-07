@@ -2,13 +2,15 @@
 
 Python 3.12+ FastAPI relay for the separately installed native Android app. This
 directory is independently installable; it does not serve or build the APK.
-No backend has been deployed. Automated tests use dummy credentials and mocked
-providers; separate live Luna smoke checks and Gnani streaming connection/PCM
-checks passed. Spoken-audio recognition remains unverified; see verification below.
+The Android preview uses a separately hosted deployment. Automated tests use dummy
+credentials and mocked providers; separate historical text-model smoke checks and
+Gnani streaming connection/PCM checks passed. Spoken-audio recognition remains
+unverified; see the evidence record:
+https://github.com/mathew1046/CueBell/blob/main/docs/VERIFICATION.md
 
 ## Install and test
 
-Run from `/home/mathew/Arrakis/CueBell/backend` (or your standalone backend checkout):
+Run from the `backend/` directory of your checkout:
 
 ```sh
 python3.12 -m venv .venv
