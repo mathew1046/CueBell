@@ -1,64 +1,55 @@
-import { useLocalSearchParams } from 'expo-router';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { Icon, Text } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ScreenHeader, SoftCard } from '../components/ui';
 import { useAppTheme } from '../lib/theme';
+import { useLanguage } from '../lib/i18n';
 
 const steps = [
-  { icon: 'microphone', title: 'Say or type your token', body: 'Tap Start Listening on Home and say your token. Use the pencil to type it.' },
-  { icon: 'ticket-confirmation-outline', title: 'Check it', body: 'Make sure the number on screen matches your slip.' },
+  { icon: 'microphone', title: 'Describe your listening task', body: 'Say or type what to listen for and when to alert you: a train arriving, boarding starting, your name being called, or another spoken event.' },
+  { icon: 'ear-hearing', title: 'Check it', body: 'Check the subject, identifiers and event on screen. Nothing starts until you confirm.' },
   { icon: 'play-circle-outline', title: 'Tap Start Listening', body: 'Keep the phone near the speakers and the app notification visible.' },
 ];
 
 const about = [
-  { icon: 'cellphone-message', text: 'When your token is called the screen turns yellow, the phone vibrates and an alarm sounds, unless you ask for silent alerts.' },
-  { icon: 'ticket-outline', text: 'Speak or type your token as the venue uses it.' },
+  { icon: 'cellphone-message', text: 'When speech matches your confirmed task, CueBell shows what was heard, vibrates and sounds an alarm, unless you ask for silent alerts.' },
+  { icon: 'ear-hearing', text: 'CueBell listens to speech. It does not track live transport data, detect non-speech sounds, send messages or replace emergency warning systems.' },
   { icon: 'shield-lock-outline', text: 'Gnani Prisma processes microphone audio. OpenAI processes requests and announcement text. The app and relay save no recordings or transcripts on disk. Provider terms apply.' },
-  { icon: 'cellphone-information', text: 'Android can interrupt listening in the background. Keep the microphone notification visible. This is an aid, not the official queue.' },
+  { icon: 'cellphone-information', text: 'Android can interrupt listening in the background. Keep the microphone notification visible. This is an aid, not an official source.' },
 ];
 
 export default function Help() {
-  const { topic } = useLocalSearchParams<{ topic?: string }>();
+  const { t } = useLanguage();
   const theme = useAppTheme();
   const insets = useSafeAreaInsets();
   const ink = { color: theme.colors.onSurface };
   const muted = { color: theme.colors.onSurfaceVariant };
   return <View style={[styles.root, { backgroundColor: theme.colors.background, paddingTop: insets.top }]}>
-    <ScreenHeader title={topic === 'languages' ? 'Announcement languages' : 'Help'} />
+    <ScreenHeader title={t('Help')} />
     <ScrollView contentContainerStyle={[styles.content, { paddingBottom: Math.max(insets.bottom, 24) + 24 }]}>
-      {topic === 'languages' && <SoftCard style={styles.step}>
-        <Icon source="translate" size={28} color={theme.colors.onSurface} />
-        <View style={styles.flex}>
-          <Text variant="titleMedium" accessibilityRole="header" style={ink}>Language detection</Text>
-          <Text variant="bodyMedium" style={muted}>
-            CueBell captions announcements using the languages configured for its speech service.
-          </Text>
-        </View>
-      </SoftCard>}
-      <Text variant="titleMedium" accessibilityRole="header" style={muted}>How it works</Text>
+      <Text variant="titleMedium" accessibilityRole="header" style={muted}>{t('How it works')}</Text>
       {steps.map((step, index) => <SoftCard key={step.title} style={styles.step}>
         <View style={[styles.number, { backgroundColor: theme.colors.primary }]}>
           <Text style={[styles.numberText, { color: theme.colors.onPrimary }]}>{index + 1}</Text>
         </View>
         <View style={styles.flex}>
-          <Text variant="titleMedium" style={ink}>{step.title}</Text>
-          <Text variant="bodyMedium" style={muted}>{step.body}</Text>
+          <Text variant="titleMedium" style={ink}>{t(step.title)}</Text>
+          <Text variant="bodyMedium" style={muted}>{t(step.body)}</Text>
         </View>
         <Icon source={step.icon} size={28} color={theme.colors.onSurface} />
       </SoftCard>)}
 
-      <Text variant="titleMedium" accessibilityRole="header" style={[muted, styles.gap]}>About & privacy</Text>
+      <Text variant="titleMedium" accessibilityRole="header" style={[muted, styles.gap]}>{t('About & privacy')}</Text>
       <SoftCard style={styles.about}>
         {about.map(item => <View key={item.icon} style={styles.row}>
           <Icon source={item.icon} size={24} color={theme.colors.onSurface} />
-          <Text variant="bodyLarge" style={[styles.flex, ink]}>{item.text}</Text>
+          <Text variant="bodyLarge" style={[styles.flex, ink]}>{t(item.text)}</Text>
         </View>)}
       </SoftCard>
 
       <View style={styles.row}>
         <Icon source="monitor-eye" size={22} color={theme.colors.onSurfaceVariant} />
-        <Text variant="bodyMedium" style={[styles.flex, muted]}>Calls may be missed. Check the venue display.</Text>
+        <Text variant="bodyMedium" style={[styles.flex, muted]}>{t('Events may be missed. Check the official source. Not an emergency alert system.')}</Text>
       </View>
     </ScrollView>
   </View>;

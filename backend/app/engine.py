@@ -2,8 +2,20 @@ import time
 import uuid
 from collections import deque
 
-from .models import Intent, ProposedEvent, Segment
-from .validation import validate_event
+from .models import EventObservation, Intent, MonitoringTask, ProposedEvent, Segment
+from .validation import validate_event, validate_match
+
+
+def identity(item: dict) -> tuple:
+    if item.get("monitor_id"):
+        return ("event", item["monitor_id"], item.get("location"))
+    return ("queue", item.get("token_normalized", item.get("token")), item.get("counter"))
+
+
+def positive(item: dict) -> bool:
+    return item["type"] in {"CALL", "CORRECT", "REPEAT", "MATCH"} and (
+        not item.get("monitor_id") or item.get("condition_met") is True
+    )
 
 
 class Engine:
@@ -47,6 +59,8 @@ class Engine:
             "status": "ACTIVE",
             "created_at": time.time(),
         }
+        if intent.task:
+            self.rule["task"] = intent.task.model_dump()
         return self.emit("monitor.created", rule=self.rule.copy())
 
     def control(self, action: str, alert_id: str | None = None) -> dict:
@@ -80,55 +94,79 @@ class Engine:
 
     def recent_observations(self, now: float) -> list[dict]:
         """Correction context only: no rule, preferences, alert/match state, or stale coverage."""
-        keys = ("id", "type", "token_normalized", "counter", "evidence_text", "source_segment_ids")
+        keys = (
+            "id",
+            "type",
+            "token_normalized",
+            "counter",
+            "evidence_text",
+            "source_segment_ids",
+            "summary",
+            "location",
+            "identifiers",
+            "condition_met",
+        )
         return [
-            {key: observation[key] for key in keys}
+            {key: observation[key] for key in keys if key in observation}
             for observation in list(self.observations)[-8:]
             if observation["state"] == "confirmed"
-            and observation["type"] in {"CALL", "CORRECT", "REPEAT"}
+            and observation["type"] in {"CALL", "CORRECT", "REPEAT", "MATCH"}
             and 0 <= now - observation["at"] <= 30
         ]
 
     def ingest(self, proposed: ProposedEvent, window: list[Segment], now: float) -> list[dict]:
-        event = validate_event(proposed, window)
+        return self._ingest(validate_event(proposed, window).model_dump(), now)
+
+    def ingest_match(
+        self, proposed: EventObservation, window: list[Segment], now: float
+    ) -> list[dict]:
+        if not self.rule or not self.rule.get("task") or self.rule["status"] != "ACTIVE":
+            return []
+        event = validate_match(proposed, window, MonitoringTask.model_validate(self.rule["task"]))
+        return self._ingest({**event.model_dump(), "monitor_id": self.rule["id"]}, now)
+
+    def _ingest(self, event: dict, now: float) -> list[dict]:
         key = (
-            event.type,
-            event.token_normalized,
-            event.counter,
-            tuple(event.source_segment_ids),
-            event.replaces_event_id,
+            event["type"],
+            identity(event),
+            event.get("condition_met"),
+            tuple(event["source_segment_ids"]),
+            event["replaces_event_id"],
         )
         if key in self.seen:
             return []
         self.seen.append(key)
         observation = {
-            **event.model_dump(),
+            **event,
             "id": uuid.uuid4().hex,
             "at": now,
-            "state": "uncertain" if event.type == "UNCERTAIN" else "confirmed",
+            "state": "uncertain" if event["type"] == "UNCERTAIN" else "confirmed",
         }
         outputs = []
-        if event.type == "UNCERTAIN":
+        if event["type"] == "UNCERTAIN":
             # An unresolved correction must not release an earlier, now-doubtful call.
             # Conservatively withhold all pending calls rather than guess its target.
             self.pending.clear()
-        if event.type in {"CORRECT", "CANCEL"}:
+        if event["type"] in {"CORRECT", "CANCEL"}:
             old = next(
                 (
                     o
                     for o in self.observations
-                    if o["id"] == event.replaces_event_id
+                    if o["id"] == event["replaces_event_id"]
                     and o["state"] == "confirmed"
-                    and o["type"] in {"CALL", "CORRECT", "REPEAT"}
+                    and o["type"] in {"CALL", "CORRECT", "REPEAT", "MATCH"}
                     and 0 <= now - o["at"] <= 30
                     and (
-                        event.type != "CANCEL"
+                        event["type"] != "CANCEL"
+                        or (event.get("monitor_id") and event["monitor_id"] == o.get("monitor_id"))
                         or (
-                            event.token_normalized == o["token_normalized"]
+                            event.get("token_normalized") == o.get("token_normalized")
+                            and not event.get("monitor_id")
+                            and not o.get("monitor_id")
                             and (
-                                event.counter is None
-                                or o["counter"] is None
-                                or event.counter == o["counter"]
+                                event.get("counter") is None
+                                or o.get("counter") is None
+                                or event.get("counter") == o.get("counter")
                             )
                         )
                     )
@@ -149,7 +187,7 @@ class Engine:
                 }
                 for prior in self.observations:
                     if prior["id"] in affected:
-                        prior["state"] = "cancelled" if event.type == "CANCEL" else "superseded"
+                        prior["state"] = "cancelled" if event["type"] == "CANCEL" else "superseded"
                 self.pending = [(due, o) for due, o in self.pending if o["id"] not in affected]
                 for alert in self.alerts:
                     if alert["observation_id"] in affected and alert["state"] != "corrected":
@@ -161,34 +199,26 @@ class Engine:
                             )
                         )
         occurrence = observation["id"]
-        if observation["state"] == "confirmed" and observation["type"] in {
-            "CALL",
-            "CORRECT",
-            "REPEAT",
-        }:
+        if observation["state"] == "confirmed" and positive(observation):
             # Reuse only an original within the same 45-second alert-dedup window;
             # a chain of repeats must not merge a genuinely later call forever.
             candidates = (
                 [
-                    (a["observation_id"], a["token"], a["counter"], a["observed_at"])
+                    (a["observation_id"], identity(a), a["observed_at"])
                     for a in self.alerts
                     if a["state"] != "corrected"
                 ]
-                + [(o["id"], o["token_normalized"], o["counter"], o["at"]) for _, o in self.pending]
+                + [(o["id"], identity(o), o["at"]) for _, o in self.pending]
                 + [
-                    (o["id"], o["token_normalized"], o["counter"], o["at"])
+                    (o["id"], identity(o), o["at"])
                     for o in self.observations
                     if o["state"] == "confirmed"
-                    and o["type"] in {"CALL", "CORRECT", "REPEAT"}
+                    and positive(o)
                     and self._occurrences.get(o["id"], o["id"]) == o["id"]
                 ]
             )
-            for oid, token, counter, at in candidates:
-                if (
-                    token == observation["token_normalized"]
-                    and counter == observation["counter"]
-                    and 0 <= now - at < 45
-                ):
+            for oid, event_identity, at in candidates:
+                if event_identity == identity(observation) and 0 <= now - at < 45:
                     occurrence = oid
                     break
         self.observations.append(observation)
@@ -201,21 +231,21 @@ class Engine:
         if (
             self.rule
             and self.rule["status"] == "ACTIVE"
-            and observation["type"] in {"CALL", "CORRECT"}
-            and observation["token_normalized"] == self.rule["token"]
+            and observation["type"] in {"CALL", "CORRECT", "MATCH"}
+            and positive(observation)
+            and (
+                observation.get("monitor_id") == self.rule["id"]
+                if self.rule.get("task")
+                else observation.get("token_normalized") == self.rule["token"]
+            )
         ):
             duplicate = any(
-                a["token"] == observation["token_normalized"]
-                and a["counter"] == observation["counter"]
+                identity(a) == identity(observation)
                 and a["state"] != "corrected"
                 and now - a["observed_at"] < 45
                 for a in self.alerts
             )
-            pending_duplicate = any(
-                o["token_normalized"] == observation["token_normalized"]
-                and o["counter"] == observation["counter"]
-                for _, o in self.pending
-            )
+            pending_duplicate = any(identity(o) == identity(observation) for _, o in self.pending)
             if not duplicate and not pending_duplicate:
                 self.pending.append((now + self.grace, observation))
         return outputs
@@ -234,13 +264,21 @@ class Engine:
             alert = {
                 "id": uuid.uuid4().hex,
                 "observation_id": observation["id"],
-                "token": observation["token_normalized"],
-                "counter": observation["counter"],
+                "token": observation.get("token_normalized"),
+                "counter": observation.get("counter"),
                 "observed_at": observation["at"],
                 "state": "unacknowledged",
                 "acknowledged": False,
                 "alert_preferences": self.rule["alert_preferences"],
             }
+            if observation.get("monitor_id"):
+                alert.update(
+                    monitor_id=observation["monitor_id"],
+                    summary=observation["summary"],
+                    location=observation["location"],
+                    evidence_text=observation["evidence_text"],
+                    task_summary=self.rule["task"]["summary"],
+                )
             self.alerts.append(alert)
             results.append(self.emit("alert", alert=alert.copy()))
         return results

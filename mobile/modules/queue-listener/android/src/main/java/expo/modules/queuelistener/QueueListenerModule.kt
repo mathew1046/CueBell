@@ -61,6 +61,9 @@ class QueueListenerModule : Module() {
     OnStopObserving("onEvent") { ListenerMemory.observers.remove(observer) }
     OnDestroy { ListenerMemory.observers.remove(observer) }
     Function("snapshot") { ListenerMemory.snapshot() }
+    Function("setLanguage") { language: String, catalog: String ->
+      appContext.reactContext?.let { AppLanguage.set(it, language, catalog) }
+    }
     Function("spokenAlertsEnabled") {
       appContext.reactContext?.let(SpokenAlerts::enabled) ?: false
     }

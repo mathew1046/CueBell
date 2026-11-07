@@ -5,12 +5,15 @@ import { Icon, Text } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ConsentCard, ErrorBanner } from '../components/app';
 import { ListeningWaveform, LiveTranscription } from '../components/listening';
+import { LanguageMenu } from '../components/language-menu';
 import { AlertCard, NavTile, Notice, PrefChips, SoftCard, SoftIconButton } from '../components/ui';
 import { spell, useReduceMotion } from '../lib/a11y';
 import { useCueBell } from '../lib/cuebell';
+import { useLanguage } from '../lib/i18n';
 import { useAppTheme } from '../lib/theme';
 
 export default function Home() {
+  const { t, language } = useLanguage();
   const theme = useAppTheme();
   const insets = useSafeAreaInsets();
   const reduceMotion = useReduceMotion();
@@ -22,6 +25,8 @@ export default function Home() {
   const app = useCueBell();
   const { activeRule, proposal, native, listening, capturing, captureMode, consent, busy, phase } = app;
   const token = (proposal?.intent ?? activeRule)?.token;
+  const task = (proposal?.intent ?? activeRule)?.task;
+  const hasTask = !!(task || token);
   const latestRequest = app.events.find(event => event.type === 'transcript' && event.mode === 'request');
   const setupTranscript = spokenSetup && latestRequest?.segment?.id !== spokenSetup.previousTranscriptId
     ? latestRequest : undefined;
@@ -31,11 +36,11 @@ export default function Home() {
   const showTranscript = captureInProgress || showSetup;
   const stopping = phase === 'STOPPING';
   const canStop = native.running && !stopping;
-  const status = listening && showRequest ? 'Say your token' : app.statusLabel;
+  const status = listening && showRequest ? t('Describe what to listen for') : app.statusLabel;
   const heroSize = Math.min(320, Math.round(width * 2 / 3));
   const heroSpace = Math.min(52, Math.round(width * 0.12));
   const headerTop = Math.max(8, Math.min(60, Math.round(width * 0.135)) - insets.top);
-  const largeTokenLayout = fontScale >= 1.5;
+  const largeTokenLayout = !!task || fontScale >= 1.5 || language !== 'en';
   const background = theme.dark ? theme.colors.background : '#F8F5F4';
   const shortcutStyle = [styles.shortcut, { backgroundColor: theme.dark ? theme.colors.surfaceVariant : '#EFEAE8' }];
   const editToken = () => {
@@ -43,8 +48,8 @@ export default function Home() {
     app.clearProposal();
     router.push('/token');
   };
-  const label = canStop ? 'Stop Listening' :
-    stopping ? 'Stopping...' : phase === 'ERROR' ? 'Retry Listening' : 'Start Listening';
+  const label = canStop ? t('Stop Listening') :
+    stopping ? t('Stopping...') : phase === 'ERROR' ? t('Retry Listening') : t('Start Listening');
   const press = () => {
     if (canStop) {
       setSpokenSetup(null);
@@ -52,11 +57,11 @@ export default function Home() {
     }
     if (!consent) {
       setConsentRequested(true);
-      AccessibilityInfo.announceForAccessibility('Allow audio and text processing below before starting.');
+      AccessibilityInfo.announceForAccessibility(t('Allow audio and text processing below before starting.'));
       return;
     }
     setConsentRequested(false);
-    if (!token) {
+    if (!hasTask) {
       setSpokenSetup({ previousTranscriptId: latestRequest?.segment?.id });
       return app.speak();
     }
@@ -76,23 +81,22 @@ export default function Home() {
           </View>
           <View style={styles.brandCopy}>
             <Text variant="headlineSmall" accessibilityRole="header" style={[styles.brandTitle, { color: theme.colors.onSurface }]}>CueBell</Text>
-            <Text style={[styles.tagline, { color: theme.colors.onSurfaceVariant }]}>Your Turn, Without Limits</Text>
+            <Text style={[styles.tagline, { color: theme.colors.onSurfaceVariant }]}>{t('Helping ears, your way')}</Text>
           </View>
         </View>
         <View style={styles.shortcuts}>
-          <SoftIconButton icon="translate" label="Announcement languages" style={shortcutStyle}
-            onPress={() => router.push({ pathname: '/help', params: { topic: 'languages' } })} />
-          <SoftIconButton icon="human" label="Accessibility settings" style={shortcutStyle}
+          <LanguageMenu style={shortcutStyle} />
+          <SoftIconButton icon="human" label={t('Accessibility settings')} style={shortcutStyle}
             onPress={() => router.push({ pathname: '/settings', params: { section: 'accessibility' } })} />
         </View>
       </View>
 
       {app.booting ? <ActivityIndicator size="large" style={styles.restoring}
-        accessibilityLabel="Restoring your session" /> : <>
+        accessibilityLabel={t('Restoring your session')} /> : <>
         <View style={[styles.heroGroup, { marginVertical: heroSpace }]}>
           <Pressable testID="listening-control" accessibilityRole="button" accessibilityLabel={label}
-            accessibilityHint={canStop ? 'Turns off the microphone. Recent captions are in History.' :
-              token ? app.statusLabel : 'Starts spoken token setup here. Use the pencil to type your token.'}
+            accessibilityHint={canStop ? t('Turns off the microphone. Recent captions are in History.') :
+              hasTask ? app.statusLabel : t('Describe what to listen for. Use the pencil to type your request.')}
             accessibilityState={{ disabled: busy || stopping, busy }}
             disabled={busy || stopping} onPress={press}
             style={({ pressed }) => [styles.hero, {
@@ -123,28 +127,29 @@ export default function Home() {
           {!captureInProgress && !!app.clarification &&
             <Notice tone="warn" icon="help-circle" live="polite">{app.clarification}</Notice>}
           {showTranscript && !showRequest && app.latestUnclear &&
-            <Notice tone="warn" icon="help-circle">Unclear announcement. Check the display.</Notice>}
+            <Notice tone="warn" icon="help-circle">{t('Unclear announcement. Check the display.')}</Notice>}
         </View>
 
         <SoftCard style={styles.tokenCard}>
           <View style={styles.tokenRow}>
-            <View style={[styles.tokenReadout, largeTokenLayout && styles.tokenReadoutLarge]} accessible accessibilityLabel={token ?
-              `${proposal ? 'Review token' : 'My token'}, ${spell(token)}` : 'My token, not set'}>
+            <View style={[styles.tokenReadout, largeTokenLayout && styles.tokenReadoutLarge]} accessible accessibilityLabel={hasTask ?
+              t('{label}, {task}', { label: proposal ? t('Review task') : t('Listening task'), task: task?.summary ?? spell(token ?? '') }) : t('Listening task, not set')}>
               <View style={styles.tokenLabel}>
-                <Icon source="ticket-outline" size={38} color={theme.colors.onSurface} />
+                <Icon source="ear-hearing" size={38} color={theme.colors.onSurface} />
                 <Text variant="titleMedium" style={[styles.tokenTitle, { color: theme.colors.onSurface }]}>
-                  {proposal ? 'Review token' : 'My Token'}
+                  {proposal ? t('Review task') : t('Listening task')}
                 </Text>
               </View>
               {!largeTokenLayout && <View style={[styles.divider, { backgroundColor: theme.colors.outlineVariant }]} />}
-              <Text style={[styles.tokenValue, !token && styles.noToken, largeTokenLayout && styles.tokenValueLarge,
+              <Text style={[styles.tokenValue, (!token || !!task) && styles.noToken, largeTokenLayout && styles.tokenValueLarge,
                 { color: theme.colors.onSurface }]}>
-                {token ?? 'Not set'}
+                {task?.summary ?? token ?? t('Not set')}
               </Text>
             </View>
-            <SoftIconButton icon="pencil-outline" label={token ? 'Change token' : 'Set your token'}
+            <SoftIconButton icon="pencil-outline" label={hasTask ? t('Change listening task') : t('Set a listening task')}
               style={styles.shortcut} disabled={native.running || busy} onPress={editToken} />
           </View>
+          {proposal && <Text variant="bodyMedium" style={{ color: theme.colors.onSurfaceVariant }}>{t('Check the subject and event. Tap Start Listening to confirm. Nothing has started yet.')}</Text>}
           {proposal && <PrefChips values={proposal.intent.alert_preferences} />}
         </SoftCard>
 
@@ -154,12 +159,12 @@ export default function Home() {
         </View>}
 
         <View style={styles.tiles}>
-          <NavTile icon="history" label="History" onPress={() => router.push('/history')} />
-          <NavTile icon="cog-outline" label="Settings" onPress={() => router.push('/settings')} />
-          <NavTile icon="help-circle-outline" label="Help" onPress={() => router.push('/help')} />
+          <NavTile icon="history" label={t('History')} onPress={() => router.push('/history')} />
+          <NavTile icon="cog-outline" label={t('Settings')} onPress={() => router.push('/settings')} />
+          <NavTile icon="help-circle-outline" label={t('Help')} onPress={() => router.push('/help')} />
         </View>
         <Text variant="bodyMedium" style={[styles.reminder, { color: theme.colors.onSurfaceVariant }]}>
-          Calls may be missed. Check the venue display.
+          {t('Events may be missed. Check the official source. Not an emergency alert system.')}
         </Text>
       </>}
     </ScrollView>
@@ -182,14 +187,14 @@ const styles = StyleSheet.create({
   heroGroup: { gap: 14 },
   hero: { alignSelf: 'center', paddingHorizontal: 18, paddingVertical: 24, justifyContent: 'center' },
   heroContent: { alignItems: 'center', gap: 11 },
-  heroTitle: { fontSize: 26, lineHeight: 33, fontWeight: '700', textAlign: 'center' },
-  heroStatus: { fontSize: 14, lineHeight: 20, textAlign: 'center' },
+  heroTitle: { width: '100%', fontSize: 26, lineHeight: 36, fontWeight: '700', textAlign: 'center' },
+  heroStatus: { width: '100%', fontSize: 14, lineHeight: 22, textAlign: 'center' },
   heroAction: { width: 50, height: 50, borderRadius: 25, alignItems: 'center', justifyContent: 'center', marginTop: 2 },
   tokenCard: { paddingHorizontal: 20, paddingVertical: 14, borderRadius: 28, gap: 12 },
   tokenRow: { flexDirection: 'row', alignItems: 'center', gap: 12 },
   tokenReadout: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: 14 },
   tokenReadoutLarge: { flexDirection: 'column', alignItems: 'flex-start', gap: 4 },
-  tokenLabel: { flexDirection: 'row', alignItems: 'center', flexShrink: 1, gap: 10 },
+  tokenLabel: { flexDirection: 'row', alignItems: 'center', alignSelf: 'stretch', flexShrink: 1, gap: 10 },
   tokenTitle: { flexShrink: 1 },
   divider: { width: 1, height: 40 },
   tokenValue: { flex: 1, fontSize: 46, lineHeight: 56, fontWeight: '800', fontVariant: ['tabular-nums'], textAlign: 'center' },

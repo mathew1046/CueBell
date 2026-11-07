@@ -8,8 +8,13 @@ import { CaptureOperation, listeningPhase } from './listening';
 import { prepareConsentedSession, requireProcessingConsent } from './session';
 import { stopListening } from './stop-listening';
 import { Connection, Intent, NativeSnapshot, QueueAlert, QueueEvent, Rule } from './types';
+import { useLanguage } from './i18n';
+import { translateServiceMessage } from './i18n/translate';
 
 function useCueBellState() {
+  const { t, language } = useLanguage();
+  const translator = useRef(t);
+  useEffect(() => { translator.current = t; }, [t]);
   const [connection, setConnection] = useState<Connection | null>(null);
   const connectionRef = useRef<Connection | null>(null);
   const [consent, setConsent] = useState(false);
@@ -55,8 +60,9 @@ function useCueBellState() {
       setAlerts(old => [alert, ...old.filter(a => a.id !== alert.id)].slice(0, 20));
       if (event.type === 'alert' || event.type === 'alert.corrected') {
         AccessibilityInfo.announceForAccessibility(event.type === 'alert.corrected' ?
-          'Correction: the previous token call has changed. Check the official display.' :
-          `Your turn. Token ${spell(alert.token)} called. ${alert.counter ? `Counter ${alert.counter}.` : 'Counter unknown.'}`);
+          translator.current('The previous alert was corrected or cancelled. Check the official source.') :
+          alert.summary ? translator.current('Event detected. {summary}', { summary: alert.summary }) :
+          translator.current('Your turn. Token {token} called. {counter}', { token: spell(alert.token ?? ''), counter: alert.counter ? translator.current('Counter {counter}.', { counter: alert.counter }) : translator.current('Counter unknown.') }));
       }
     }
     if (event.type === 'transcript' || event.type === 'observation') {
@@ -101,8 +107,8 @@ function useCueBellState() {
       if (result?.status === 'confirm' && result.proposal_id) {
         Keyboard.dismiss();
         setProposal({ id: result.proposal_id, intent: result.intent });
-        AccessibilityInfo.announceForAccessibility(`Is this right? Token ${spell(result.intent.token)}. Nothing has started yet.`);
-      } else setClarification(result?.messages?.join('\n') || 'Please type the exact token and your preferred alert.');
+        AccessibilityInfo.announceForAccessibility(translator.current('Is this right? {task}. Nothing has started yet.', { task: result.intent.task?.summary ?? result.intent.token ?? '' }));
+      } else setClarification(result?.messages?.join('\n') || 'Describe what to listen for and when to alert you.');
     } catch (e) { setError(e instanceof Error ? e.message : 'Could not interpret the request. Try typing it.'); }
     finally { analyzing.current = false; setBusy(false); }
   }, [prepareSession]);
@@ -256,7 +262,7 @@ function useCueBellState() {
   const captureMode = operation?.mode ?? native.mode;
   const listening = phase === 'LISTENING';
   const capturing = native.running && native.mode === 'request';
-  const statusLabel = {
+  const statusLabel = t({
     IDLE: 'Not listening',
     REQUESTING_PERMISSION: 'Waiting for permission',
     CONNECTING: 'Connecting...',
@@ -264,9 +270,9 @@ function useCueBellState() {
     RECONNECTING: 'Reconnecting...',
     STOPPING: 'Stopping...',
     ERROR: 'Listening unavailable',
-  }[phase];
+  }[phase]);
   const statusDetail = (phase === 'RECONNECTING' || (phase === 'ERROR' && native.state === 'ERROR') ||
-    (listening && /gap|missed|interrupted/i.test(native.message))) ? native.message : '';
+    (listening && /gap|missed|interrupted/i.test(native.message))) ? translateServiceMessage(language, native.message, 'Listening interrupted. Check the display and try again.') : '';
   const tone: Tone = listening ? 'live' : phase === 'RECONNECTING' || phase === 'ERROR' ? 'warn' : 'idle';
   const statusIcon = {
     IDLE: 'microphone-off', REQUESTING_PERMISSION: 'shield-lock-outline', CONNECTING: 'progress-clock',
@@ -294,8 +300,10 @@ function useCueBellState() {
   return {
     consent, toggleConsent: () => { consentRef.current = !consent; setConsent(!consent); haptic.tap(); },
     request, editRequest: (text: string) => { setRequest(text); setProposal(null); setClarification(''); },
-    busy, error, clearError: () => setError(''), permissionError, booting,
-    proposal, clearProposal: () => setProposal(null), clarification,
+    busy, error: translateServiceMessage(language, error, 'Something went wrong. Please try again.'), clearError: () => setError(''), permissionError, booting,
+    // Model clarifications are user-facing content in the request's language. Do not
+    // hide an unsupported-capability explanation behind a generic setup prompt.
+    proposal, clearProposal: () => setProposal(null), clarification: translateServiceMessage(language, clarification, clarification),
     activeRule, events, outstanding, takeover, latestUnclear,
     native, phase, captureMode, listening, capturing, statusLabel, statusDetail, statusIcon, tone,
     analyze: (text: string) => void analyze(text),

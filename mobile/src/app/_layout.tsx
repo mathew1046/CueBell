@@ -5,6 +5,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { AlertTakeover } from '../components/ui';
 import { useReduceMotion } from '../lib/a11y';
 import { CueBellProvider, useCueBell } from '../lib/cuebell';
+import { LanguageProvider } from '../lib/i18n';
 import { darkTheme, lightTheme } from '../lib/theme';
 import { ThemeModeProvider, useThemeMode } from '../lib/themeMode';
 
@@ -21,10 +22,10 @@ function Themed() {
   const theme = dark ? darkTheme : lightTheme;
   return <PaperProvider theme={theme}>
     <StatusBar style={dark ? 'light' : 'dark'} />
-    <CueBellProvider>
+    <LanguageProvider><CueBellProvider>
       <Stack screenOptions={{ headerShown: false, animation: 'none', contentStyle: { backgroundColor: theme.colors.background } }} />
       <GlobalAlerts />
-    </CueBellProvider>
+    </CueBellProvider></LanguageProvider>
   </PaperProvider>;
 }
 

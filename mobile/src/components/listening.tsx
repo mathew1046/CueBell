@@ -4,6 +4,7 @@ import { NativeScrollEvent, NativeSyntheticEvent, ScrollView, StyleSheet, View, 
 import { Button, Text } from 'react-native-paper';
 import type { QueueEvent } from '../lib/types';
 import { useAppTheme } from '../lib/theme';
+import { useLanguage } from '../lib/i18n';
 
 const NativeWaveform = requireNativeView<ViewProps & { animate: boolean; barColor: string }>('QueueListener');
 
@@ -17,12 +18,13 @@ export function LiveTranscription({ events, listening, mode }: {
   events: QueueEvent[]; listening: boolean; mode: 'request' | 'monitor';
 }) {
   const theme = useAppTheme();
+  const { t } = useLanguage();
   const viewport = useRef<ComponentRef<typeof ScrollView>>(null);
   const follow = useRef(true);
   const [awayFromLatest, setAwayFromLatest] = useState(false);
   const transcripts = events.filter(event => event.type === 'transcript' && event.mode === mode && event.segment).reverse();
-  const placeholder = mode === 'request' ? 'Your spoken token request will appear here.' :
-    listening ? 'Waiting for announcements...' : 'Announcements will appear here.';
+  const placeholder = mode === 'request' ? t('Your spoken listening request will appear here.') :
+    listening ? t('Waiting for announcements...') : t('Announcements will appear here.');
 
   const onScroll = ({ nativeEvent }: NativeSyntheticEvent<NativeScrollEvent>) => {
     const nearEnd = nativeEvent.contentSize.height - nativeEvent.layoutMeasurement.height - nativeEvent.contentOffset.y < 32;
@@ -31,7 +33,7 @@ export function LiveTranscription({ events, listening, mode }: {
   };
 
   return <View style={styles.section}>
-    <Text variant="titleLarge" accessibilityRole="header" style={{ color: theme.colors.onSurface }}>Live Transcription</Text>
+    <Text variant="titleLarge" accessibilityRole="header" style={{ color: theme.colors.onSurface }}>{t('Live Transcription')}</Text>
     <View style={[styles.panel, { backgroundColor: theme.colors.surface, borderColor: theme.colors.outlineVariant }]}>
       {transcripts.length ? <ScrollView ref={viewport} nestedScrollEnabled style={styles.viewport}
         contentContainerStyle={styles.lines} onScroll={onScroll} scrollEventThrottle={32}
@@ -47,7 +49,7 @@ export function LiveTranscription({ events, listening, mode }: {
         follow.current = true;
         setAwayFromLatest(false);
         viewport.current?.scrollToEnd({ animated: false });
-      }}>Jump to latest</Button>}
+      }}>{t('Jump to latest')}</Button>}
   </View>;
 }
 

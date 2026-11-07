@@ -14,7 +14,7 @@ from websockets.http11 import Response
 
 from app.engine import Engine
 from app.main import create_app
-from app.models import Extraction, StopListeningRequest
+from app.models import EventExtraction, Extraction, StopListeningRequest
 from tests.conftest import ACCESS_CODE, activate, make_event, pair
 
 CONSENT = {"x-processing-consent": "audio-gnani;text-openai"}
@@ -103,6 +103,49 @@ def expect_closed(socket):
             return
         assert event.get("type") != "alert"
     pytest.fail("Stream did not close")
+
+
+def test_general_task_flows_from_confirmed_request_through_speech_to_alert(
+    relay, intelligence, monkeypatch
+):
+    from tests.test_event_monitor import ANNOUNCEMENT, REQUEST, observation, task_intent
+
+    client, created, options = relay
+    intelligence.intent_result = task_intent()
+    observed = []
+
+    async def observe(window, recent, task):
+        observed.append(task)
+        return EventExtraction(events=[observation(source_segment_ids=[window[-1].id])])
+
+    monkeypatch.setattr(intelligence, "observe", observe, raising=False)
+    options["transcripts"] = [
+        {"type": "transcript", "text": ANNOUNCEMENT, "segment_id": "p1", "is_final": True}
+    ]
+    auth = pair(client)
+    proposal = client.post(
+        "/v1/intent", headers=auth, json={"text": REQUEST, "consent_to_text_processing": True}
+    ).json()
+    assert proposal["status"] == "confirm"
+    assert (
+        client.post(
+            "/v1/confirm", headers=auth, json={"proposal_id": proposal["proposal_id"]}
+        ).status_code
+        == 200
+    )
+    with client.websocket_connect("/v1/stream?mode=monitor", headers={**auth, **CONSENT}) as socket:
+        ready(socket)
+        socket.send_bytes(b"\0" * 1024)
+        alert = receive_type(socket, "alert")["alert"]
+        assert alert["summary"] == ANNOUNCEMENT
+        assert alert["location"] == "platform 3"
+        assert alert["token"] is None
+        assert alert["evidence_text"] == ANNOUNCEMENT
+        socket.send_json({"type": "control", "action": "pause"})
+    assert len(observed) == 1
+    assert observed[0].condition == "has arrived at this station"
+    assert intelligence.extract_calls == []  # The old queue extractor is not used.
+    assert created[0].audio == [b"\0" * 1024]
 
 
 @pytest.mark.parametrize(

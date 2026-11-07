@@ -17,7 +17,15 @@ from .engine import Engine
 from .gnani import parse_message, prisma
 from .guard import RequestGuard
 from .intelligence import OpenAIFallback
-from .models import ConfirmRequest, ControlRequest, Intent, IntentRequest, PairRequest, Segment
+from .models import (
+    ConfirmRequest,
+    ControlRequest,
+    Intent,
+    IntentRequest,
+    MonitoringTask,
+    PairRequest,
+    Segment,
+)
 from .validation import grounded_stop_request, intent_errors
 
 APP_SESSION_IP_LIMIT = 3
@@ -152,7 +160,8 @@ def create_app(settings: Settings | None = None, intelligence=None) -> FastAPI:
         return {
             "token": token,
             "expires_at": expires,
-            "venue": "hospital_pharmacy",
+            "venue": "nearby_speech",
+            "monitoring_schema": "speech-event-v1",
             "disclosure": "Audio: Gnani Prisma. Requests and transcripts: OpenAI text fallback. "
             "No recordings or transcript persistence by this relay; provider terms apply.",
         }
@@ -376,9 +385,14 @@ def create_app(settings: Settings | None = None, intelligence=None) -> FastAPI:
                 while window and segment.received_at - window[0].received_at > 15:
                     window.popleft()
                 generation = session.engine.generation
-                extraction = await model.extract(
-                    list(window), session.engine.recent_observations(time.time())
-                )
+                task = (session.engine.rule or {}).get("task")
+                recent = session.engine.recent_observations(time.time())
+                if task:
+                    extraction = await model.observe(
+                        list(window), recent, MonitoringTask.model_validate(task)
+                    )
+                else:
+                    extraction = await model.extract(list(window), recent)
                 async with session.lock:
                     interpreting = False
                     if generation != session.engine.generation:
@@ -408,9 +422,8 @@ def create_app(settings: Settings | None = None, intelligence=None) -> FastAPI:
                             continue
                         # Grace, deduplication and alert age track the announcement,
                         # not when a potentially slow text model finished interpreting it.
-                        for event in session.engine.ingest(
-                            proposal, list(window), segment.received_at
-                        ):
+                        ingest = session.engine.ingest_match if task else session.engine.ingest
+                        for event in ingest(proposal, list(window), segment.received_at):
                             await send(event)
 
         async def health_loop():

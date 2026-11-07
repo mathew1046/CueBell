@@ -7,19 +7,34 @@ class StrictModel(BaseModel):
     model_config = ConfigDict(extra="forbid", strict=True)
 
 
+class TargetIdentifier(StrictModel):
+    value: str = Field(min_length=1, max_length=160)
+    evidence_text: str = Field(min_length=1, max_length=300)
+
+
+class MonitoringTask(StrictModel):
+    subject: str = Field(min_length=1, max_length=300)
+    condition: str = Field(min_length=1, max_length=600)
+    summary: str = Field(min_length=1, max_length=600)
+    request_evidence: str = Field(min_length=1, max_length=1500)
+    identifiers: list[TargetIdentifier] = Field(max_length=12)
+
+
 class Intent(StrictModel):
-    intent: Literal["monitor_announcement", "unsupported", "unclear"]
+    intent: Literal["monitor_event", "monitor_announcement", "unsupported", "unclear"]
     context: str | None
-    token: str | None
+    token: str | None = Field(description="Legacy queue field. Null for monitor_event tasks.")
     alert_preferences: list[Literal["visual", "vibration", "sound"]]
     clarification: str | None
     # Exact substring of the user's request that names the target.
     target_evidence: str | None = Field(
-        description="Only the exact token identifier or spoken number words from the request, "
+        description="Legacy queue field; null for monitor_event. "
+        "Only the exact token identifier or spoken number words from the request, "
         "including its prefix if present. Exclude surrounding words such as token, pharmacy, "
         "or ടോക്കൺ. Example: pharmacy token 442 -> 442; token four hundred forty two -> "
         "four hundred forty two. Null if missing or ambiguous."
     )
+    task: MonitoringTask | None = None
 
 
 class Segment(StrictModel):
@@ -54,6 +69,25 @@ class Extraction(StrictModel):
         "language or phrasing, including indirect requests. Null for negation, quotations, "
         "hypotheticals, queue cancellations, unrelated conversation, or ambiguous intent.",
     )
+
+
+class EventObservation(StrictModel):
+    type: Literal["MATCH", "CORRECT", "CANCEL", "OTHER", "UNCERTAIN"]
+    condition_met: bool
+    summary: str = Field(max_length=600)
+    subject_evidence: str | None
+    condition_evidence: str | None
+    identifiers: list[TargetIdentifier] = Field(max_length=12)
+    location: str | None = Field(max_length=300)
+    replaces_event_id: str | None
+    evidence_text: str = Field(max_length=4000)
+    source_segment_ids: list[str]
+    ambiguity_reason: str | None
+
+
+class EventExtraction(StrictModel):
+    events: list[EventObservation]
+    stop_request: StopListeningRequest | None = None
 
 
 class PairRequest(StrictModel):

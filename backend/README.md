@@ -131,6 +131,32 @@ proxy addresses as above. Do not disable TLS checks to work around proxy setup.
 
 ## Native protocol
 
+### General speech-event monitoring (`speech-event-v1`)
+
+New requests are no longer queue-token forms. The setup prompt builds a grounded
+`monitor_event` task with a subject, required condition, readable summary and any
+explicit identifiers. For example, “Notify me when train 14922 is here” requests
+an arrival announcement; it does not require a separate token or match every
+mention of that number. Names being called, boarding, spoken instructions and
+other speech-established events use the same path. Queue calls remain supported.
+
+The complete rewritten setup/event instructions live in `app/prompts.py`.
+The event prompt receives the confirmed task and bounded recent evidence. Exact
+source validation, identifier checks, correction grace, duplicate suppression,
+voice-stop priority and explicit confirmation remain enforced outside the prompt.
+Alerts carry `summary`, `location`, `evidence_text` and `task_summary`; `token` and
+`counter` are null for general tasks. The old queue extractor remains only for
+legacy confirmed queue rules. No external tracking, messaging integration or
+non-speech sound recognition is implied. This is a supplementary aid, not an
+emergency-alert guarantee.
+
+Deploy this backend together with the updated Android client. A prompt or APK
+change in the checkout does not update a separately hosted service. Deployment
+restarts discard in-memory sessions; users must submit and confirm a fresh task.
+Session creation advertises `monitoring_schema: "speech-event-v1"`.
+
+### Endpoints
+
 - `POST /v1/sessions`: `{"access_code":"…"}` → session `token`, expiry, disclosure.
   The only payload change is optional `access_code`: `{}` or `{"access_code":null}`
   creates the same session only when `ALLOW_APP_SESSIONS=true`.

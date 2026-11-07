@@ -7,7 +7,7 @@ import android.media.AudioFormat
 import android.media.AudioAttributes
 import android.media.AudioRecord
 import android.media.MediaRecorder
-import android.media.RingtoneManager
+import android.net.Uri
 import android.os.*
 import androidx.core.app.NotificationCompat
 import okhttp3.*
@@ -41,14 +41,29 @@ class ListenerService : Service() {
   private var gapSince = 0L
   private val notificationManager get() = getSystemService(NotificationManager::class.java)
   private val spokenAlerts by lazy { SpokenAlerts(this) }
+  private fun t(source: String, vararg values: Pair<String, String>) = AppLanguage.text(this, source, *values)
 
   override fun onBind(intent: Intent?) = null
 
   override fun onCreate() {
     super.onCreate()
+    AppLanguage.onChange = {
+      spokenAlerts.close()
+      updateListeningChannel()
+      if (started && !stopping) notificationManager.notify(1, foregroundNotification(ListenerMemory.message))
+      // Re-render existing alerts silently without replaying vibration, sound or speech.
+      notificationManager.activeNotifications.filter { it.tag?.startsWith("queue-alert:") == true }.forEach { active ->
+        val alert = active.notification.extras.getString("cuebell.alert")
+        if (alert != null) showAlert(JSONObject(alert), true)
+      }
+    }
+    updateListeningChannel()
+  }
+
+  private fun updateListeningChannel() {
     if (Build.VERSION.SDK_INT >= 26) notificationManager.createNotificationChannel(NotificationChannel(
-      "listening", "Listening status", NotificationManager.IMPORTANCE_LOW).apply {
-      description = "Microphone activity and coverage gaps"; setSound(null, null)
+      "listening", t("Listening status"), NotificationManager.IMPORTANCE_LOW).apply {
+      description = t("Microphone activity and coverage gaps"); setSound(null, null)
       lockscreenVisibility = Notification.VISIBILITY_PRIVATE
     })
   }
@@ -110,11 +125,11 @@ class ListenerService : Service() {
       PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
     return NotificationCompat.Builder(this, "listening")
       .setSmallIcon(android.R.drawable.ic_btn_speak_now)
-      .setContentTitle(if (mode == "request") "CueBell · your request" else "CueBell · monitoring")
-      .setContentText(text).setStyle(NotificationCompat.BigTextStyle().bigText(text))
+      .setContentTitle(t(if (mode == "request") "CueBell · your request" else "CueBell · monitoring"))
+      .setContentText(AppLanguage.status(this, text)).setStyle(NotificationCompat.BigTextStyle().bigText(AppLanguage.status(this, text)))
       .setContentIntent(openApp()).setOngoing(true).setOnlyAlertOnce(true)
       .setVisibility(NotificationCompat.VISIBILITY_PRIVATE)
-      .addAction(android.R.drawable.ic_media_pause, "Stop microphone", pause).build()
+      .addAction(android.R.drawable.ic_media_pause, t("Stop microphone"), pause).build()
   }
 
   private fun status(state: String, message: String) {
@@ -277,8 +292,8 @@ class ListenerService : Service() {
     if (mode == "request" || permanent || retries >= 5) {
       status("ERROR", "$reason Try again from the app.")
       notificationManager.notify(2, NotificationCompat.Builder(this, "listening")
-        .setSmallIcon(android.R.drawable.ic_dialog_alert).setContentTitle("CueBell stopped listening")
-        .setContentText("A call may have been missed. Open the app and reconnect.")
+        .setSmallIcon(android.R.drawable.ic_dialog_alert).setContentTitle(t("CueBell stopped listening"))
+        .setContentText(t("A call may have been missed. Open the app and reconnect."))
         .setContentIntent(openApp()).setAutoCancel(true).build())
       stopping = true; stopSelf()
     } else {
@@ -305,7 +320,7 @@ class ListenerService : Service() {
     }
   }
 
-  private fun showAlert(event: JSONObject) {
+  private fun showAlert(event: JSONObject, silent: Boolean = false) {
     val alert = event.getJSONObject("alert")
     val corrected = event.optString("type") == "alert.corrected"
     val preferences = alert.optJSONArray("alert_preferences")?.let { list ->
@@ -314,11 +329,10 @@ class ListenerService : Service() {
     val vibration = "vibration" in preferences
     val sound = "sound" in preferences
     // Version the channel: Android will not update an existing channel's sound.
-    val channel = "calls-v2-${if (vibration) 1 else 0}-${if (sound) 1 else 0}"
-    val alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
-      ?: RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+    val channel = "calls-v3-${if (vibration) 1 else 0}-${if (sound) 1 else 0}"
+    val alarmSound = Uri.parse("android.resource://$packageName/raw/cuebell_alarm")
     if (Build.VERSION.SDK_INT >= 26) notificationManager.createNotificationChannel(NotificationChannel(channel,
-      "Token calls${if (vibration) " · vibration" else ""}${if (sound) " · sound" else ""}",
+      "${t("Listening alerts")}${if (vibration) " · ${t("Vibrate")}" else ""}${if (sound) " · ${t("Alarm sound")}" else ""}",
       NotificationManager.IMPORTANCE_HIGH).apply {
       enableVibration(vibration)
       if (vibration) vibrationPattern = longArrayOf(0, 400, 200, 400, 200, 700)
@@ -331,24 +345,31 @@ class ListenerService : Service() {
     val tag = "queue-alert:$id"
     notificationManager.activeNotifications.filter { it.tag?.startsWith("queue-alert:") == true && it.tag != tag }
       .sortedBy { it.postTime }.dropLast(19).forEach { notificationManager.cancel(it.tag, it.id) }
-    val counter = if (alert.isNull("counter")) "Counter unknown — check the display."
-      else "Go to counter ${alert.getString("counter")}."
-    val title = if (corrected) "Correction · check the announcement" else "It's your turn!"
-    val text = if (corrected) "The previous call was changed or cancelled. Check the app and official display."
-      else "Token ${alert.getString("token")}. $counter"
+    val counter = if (alert.isNull("counter")) t("Counter unknown — check the display.")
+      else t("Go to counter {counter}.", "counter" to alert.getString("counter"))
+    val summary = if (alert.isNull("summary")) "" else alert.optString("summary")
+    val title = if (corrected) t("Correction · check the announcement") else if (summary.isNotBlank()) t("Event detected") else t("It's your turn!")
+    val text = if (corrected) t("The previous alert was corrected or cancelled. Check the official source.")
+      else if (summary.isNotBlank()) summary
+      else t("Token {token}. {counter}", "token" to alert.optString("token", ""), "counter" to counter)
     notificationManager.notify(tag, 100, NotificationCompat.Builder(this, channel)
       .setSmallIcon(android.R.drawable.ic_dialog_info).setContentTitle(title).setContentText(text)
+      .addExtras(Bundle().apply { putString("cuebell.alert", JSONObject().put("type", event.optString("type"))
+        .put("alert", JSONObject().put("id", id).put("token", alert.opt("token"))
+          .put("summary", alert.opt("summary"))
+          .put("counter", alert.opt("counter")).put("alert_preferences", alert.optJSONArray("alert_preferences"))).toString()) })
+      .setOnlyAlertOnce(silent).setSilent(silent)
       .setStyle(NotificationCompat.BigTextStyle().bigText(text)).setContentIntent(openApp())
       .setPriority(NotificationCompat.PRIORITY_HIGH).setCategory(NotificationCompat.CATEGORY_ALARM)
       .setSound(if (sound) alarmSound else null, android.media.AudioManager.STREAM_ALARM)
       .setVibrate(if (vibration) longArrayOf(0, 400, 200, 400, 200, 700) else longArrayOf(0))
       .setVisibility(NotificationCompat.VISIBILITY_PRIVATE).setAutoCancel(true)
       .setPublicVersion(NotificationCompat.Builder(this, channel)
-        .setSmallIcon(android.R.drawable.ic_dialog_info).setContentTitle("CueBell alert")
-        .setContentText("Open the app to check your queue announcement.").build()).build())
-    if (sound && !corrected) {
-      val token = alert.getString("token").toList().joinToString(" ")
-      runCatching { spokenAlerts.speak(id, "It's your turn. Token $token. $counter") }
+        .setSmallIcon(android.R.drawable.ic_dialog_info).setContentTitle(t("CueBell alert"))
+        .setContentText(t("Open the app to check your listening alert.")).build()).build())
+    if (sound && !corrected && !silent) {
+      val token = alert.optString("token", "").toList().joinToString(" ")
+      runCatching { spokenAlerts.speak(id, if (summary.isNotBlank()) summary else t("It's your turn. Token {token}. {counter}", "token" to token, "counter" to counter)) }
     }
   }
 
@@ -363,6 +384,7 @@ class ListenerService : Service() {
   }
 
   override fun onDestroy() {
+    AppLanguage.onChange = null
     stopping = true; generation++
     main.removeCallbacksAndMessages(null)
     stopCapture()

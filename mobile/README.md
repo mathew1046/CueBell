@@ -42,6 +42,33 @@ An alternative internal build profile is provided in `eas.json`; EAS account set
 
 ## Device check before use
 
+### General listening tasks (requires updated backend and APK)
+
+CueBell now asks who/what to listen for and which spoken event should trigger an
+alert, rather than requiring a queue token. The home card confirms the complete
+task; an alert displays the interpreted event, explicit location when heard, and
+verbatim source speech. Existing queue-call sessions remain readable. Static UI
+copy is translated offline; task summaries and clarifications use the request's
+language, and original evidence is never sent to the UI translation generator.
+
+Deploy the backend's `speech-event-v1` changes before testing this client against
+the configured hosted origin. Rebuilding/installing an APK alone cannot replace
+the remote system prompt. Submit a fresh request after deployment. Test train
+14922 arrival, a name being called, and flight boarding; verify that a delay,
+future arrival, wrong train, negation and unrelated conversation do not alert.
+Test corrections and voice stop, including locked-screen notifications. These
+are speech-transcript monitors, not live train tracking or general sound detectors.
+
+### App language and alarm (source changes; rebuild the APK)
+
+The home language button now opens a scrollable dropdown rather than an announcement-language help page. English and 20 Indian languages have bundled, offline UI catalogs. Selecting a language immediately updates screens, help, accessibility labels, service status and native notifications, and saves the selection for the next launch. Announcement recognition remains automatic; original transcripts, token prefixes and leading zeros are not translated. Urdu and Sindhi interpolated identifiers are direction-isolated. Spoken alerts require a matching installed offline Android voice; unavailable voices do not fall back to a different language or a network voice.
+
+Catalogs are stored in `src/lib/i18n/catalogs.json` (212 messages per language). They are machine-generated and need native-speaker review before production. Bodo and Kashmiri are not offered because the configured generation source did not support them; no English-only catalog is presented as a translated language. To update public copy, run `node scripts/extract-translations.mjs`, then explicitly run `python3 scripts/generate-translations.py`. The latter contacts a translation service at development time only and preserves reviewed translations. Never submit user requests, announcements or private data to that script.
+
+Normal token calls already default to visual, vibration and sound. Sound-enabled calls now use a bundled original 2.4-second, three-pulse alarm alongside vibration; explicit silent/vibration-only and visual-only preferences remain respected. Versioned notification channels apply the new sound without overwriting an existing Android channel. Android volume, notification permissions, channel settings and Do Not Disturb can still silence it. Changing language redraws existing notifications silently; it does not replay an alarm. Regenerate the local audio with `python3 scripts/generate-alarm.py` if needed.
+
+Check dropdown dismissal, scrolling to the last language, switching back to English, persistence after force-stop, enlarged text, and a right-to-left language. Test alarms on a physical phone with vibration+sound, sound-only, vibration-only and visual-only preferences, including the locked screen and DND. Emulator/source checks cannot establish real-device audibility.
+
 1. Open the app and verify it immediately shows the request workflow, without any server/pairing setup. Agree to processing and submit a request; the APK uses its build-time service automatically. HTTP and untrusted certificates remain rejected.
 2. Test typed and spoken Malayalam / English requests, clarification, correction, exact zeroes and a non-target token.
 3. Confirm no microphone permission request occurs until tapping Speak or Confirm/Start. Deny a permission and verify recovery via Android settings.
@@ -58,6 +85,6 @@ An alternative internal build profile is provided in `eas.json`; EAS account set
 
 The Kotlin foreground service owns microphone capture, framing, networking, heartbeat, reconnection, notification alerts and bounded in-memory event history. It starts from a visible Activity only, is non-sticky, has no boot receiver, and releases capture, sockets and its timed wake lock when stopped. PCM frames are exactly 1024 bytes; native capture must actually negotiate 16 kHz or it fails rather than relabelling samples. Buffers are bounded and not replayed after stalls. No audio files are created.
 
-Only session metadata (build-time origin, bearer credential, expiry and a local monitor-suppression flag) is encrypted in SecureStore. Transcripts and audio are not written to app storage. No admission request is sent until a user acts after consenting. Android/OS diagnostics and the configured cloud providers have separate policies. The ongoing notification and alert channels can be controlled by the user in Android settings.
+Session metadata (build-time origin, bearer credential, expiry and a local monitor-suppression flag) and the app language choice are encrypted in SecureStore. The native service also stores the language choice and its public UI catalog in private preferences so background notifications retain their language. Transcripts and captured audio are not written to app storage. The bundled alarm is public, generated audio, not a recording. No admission request is sent until a user acts after consenting. Android/OS diagnostics and the configured cloud providers have separate policies. The ongoing notification and alert channels can be controlled by the user in Android settings.
 
 Current dependency audit: 12 moderate reports propagated from Expo/lint tooling's `glob` / `minimatch` dependency ranges; no high/critical reports at implementation time. Audit suggests incompatible SDK downgrades, which were not forced. Recheck and update within a compatible SDK before production.

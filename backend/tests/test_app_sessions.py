@@ -32,7 +32,14 @@ def test_app_session_needs_no_operator_secret(settings, intelligence, body):
     with TestClient(create_app(settings, intelligence)) as client:
         response = client.post("/v1/sessions", json=body)
         assert response.status_code == 200
-        assert set(response.json()) == {"token", "expires_at", "venue", "disclosure"}
+        assert set(response.json()) == {
+            "token",
+            "expires_at",
+            "venue",
+            "disclosure",
+            "monitoring_schema",
+        }
+        assert response.json()["monitoring_schema"] == "speech-event-v1"
         assert response.json()["expires_at"] > time.time()
         assert "Gnani" in response.json()["disclosure"]
         assert "OpenAI" in response.json()["disclosure"]

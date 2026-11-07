@@ -6,6 +6,7 @@ import android.os.Handler
 import android.os.Looper
 import android.speech.tts.TextToSpeech
 import android.view.accessibility.AccessibilityManager
+import java.util.Locale
 
 internal class SpokenAlerts(private val context: Context) {
   private val main = Handler(Looper.getMainLooper())
@@ -25,7 +26,13 @@ internal class SpokenAlerts(private val context: Context) {
     engine = TextToSpeech(context) { status ->
       main.post {
         val initialized = engine ?: return@post
-        val voice = if (status == TextToSpeech.SUCCESS) runCatching { initialized.voice }.getOrNull() else null
+        val locale = Locale.forLanguageTag(AppLanguage.language(context))
+        val voice = if (status == TextToSpeech.SUCCESS) runCatching {
+          initialized.voices?.firstOrNull {
+            it.locale.language == locale.language && !it.isNetworkConnectionRequired &&
+              it.features?.contains(TextToSpeech.Engine.KEY_FEATURE_NOT_INSTALLED) != true
+          }
+        }.getOrNull() else null
         // Only use an installed offline voice for private token details.
         if (voice == null || voice.isNetworkConnectionRequired ||
           voice.features?.contains(TextToSpeech.Engine.KEY_FEATURE_NOT_INSTALLED) == true) {
@@ -35,7 +42,8 @@ internal class SpokenAlerts(private val context: Context) {
         val attributes = AudioAttributes.Builder()
           .setUsage(AudioAttributes.USAGE_ASSISTANCE_ACCESSIBILITY)
           .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH).build()
-        ready = runCatching { initialized.setAudioAttributes(attributes) == TextToSpeech.SUCCESS }.getOrDefault(false)
+        ready = runCatching { initialized.setVoice(voice) == TextToSpeech.SUCCESS &&
+          initialized.setAudioAttributes(attributes) == TextToSpeech.SUCCESS }.getOrDefault(false)
         val alerts = pending.drain()
         if (ready) for ((id, text) in alerts) {
           if (!allowed()) break
