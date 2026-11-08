@@ -13,10 +13,12 @@ https://cuebell.mathewjoseph.xyz
 
 For local builds, set the same `EXPO_PUBLIC_API_URL` in `.env` or the shell. No provider secrets belong in this file. The EAS post-install hook rejects missing/placeholder routing configuration.
 
-The v1.2.0 ARM64 preview APK and checksum are published at:
-https://github.com/mathew1046/CueBell/releases/tag/v1.2.0-preview
+The v1.3.0 ARM64 preview APK and checksum are published at:
+https://github.com/mathew1046/CueBell/releases/tag/v1.3.0-preview
 
-This preview has the new deployed service origin baked in; it is not an unconfigured UI-only build. Version 1.2.0 / Android version code 4 includes inline request/listening controls, captions, the waveform, spoken-alert queuing and semantic voice-stop handling. Its signing certificate matches the CueBell 1.1.0 preview for in-place updates. Saved sessions for the previous origin are not reused; submit your request again after updating. The new backend's health endpoint reports both providers configured; automatic admission, authenticated state and temporary-session deletion returned HTTP 200 without microphone or paid-model usage. Earlier hosted typed-intent and physical-phone checks are not verification of this release. Provider-key changes remain server-only and do not require an APK rebuild. Source checks include 28 mobile workflow/session/branding tests. Prior light/dark + 1.3× font-size emulator review does not establish low-literacy usability, TalkBack or real-phone reliability.
+Version 1.3.0 / Android version code 5 includes general listening tasks, automatic activation, spoken-request service handoff, 21 app-language catalogs and a bundled alarm. It retains captions, the waveform, spoken alerts and semantic voice stop. Submit a fresh request after updating. The hosted backend supports `speech-event-v1`; health, automatic admission, authenticated state and temporary-session deletion passed without microphone or paid-model usage. Provider-key changes remain server-only and do not require an APK rebuild. Source checks include 43 mobile workflow/session/branding tests. Earlier emulator and physical-phone checks do not establish this release's real-phone reliability.
+
+The signing certificate matches the 1.2.0 preview for in-place updates. The release APK passed signature, package/version, bundled-origin/alarm and 16 KB ZIP alignment checks.
 
 ```sh
 npm ci
@@ -34,7 +36,7 @@ Then, from the generated `android` directory:
 ./gradlew :queue-listener:testDebugUnitTest
 ```
 
-The standalone APK is generated at `android/app/build/outputs/apk/release/app-release.apk`. The command above includes emulators; for the phone-only release use `-PreactNativeArchitectures=arm64-v8a`. The downloadable v1.2.0 APK is ARM64 only. Its application ID is `app.cuebell.mobile`, scheme `cuebell` and encrypted session key `cuebell.connection.v1`. It does not read another app's private storage. To support older 32-bit phones, include `armeabi-v7a` explicitly when building.
+The standalone APK is generated at `android/app/build/outputs/apk/release/app-release.apk`. The command above includes emulators; for the phone-only release use `-PreactNativeArchitectures=arm64-v8a`. The downloadable v1.3.0 APK is ARM64 only. Its application ID is `app.cuebell.mobile`, scheme `cuebell` and encrypted session key `cuebell.connection.v1`. It does not read another app's private storage. To support older 32-bit phones, include `armeabi-v7a` explicitly when building.
 
 **Local preview signing:** Expo's generated local release configuration uses its development/debug signing key. The preview is installable for review, not a production/store-signed distribution. Set up your own production keystore through a config plugin or use your own EAS project and signing credentials before publishing. Do not edit generated Android source; keep native service code under `modules/queue-listener` and configuration in `app.json` / config plugins.
 
@@ -42,7 +44,7 @@ An alternative internal build profile is provided in `eas.json`; EAS account set
 
 ## Device check before use
 
-### General listening tasks (requires updated backend and APK)
+### General listening tasks (v1.3.0)
 
 CueBell now asks who/what to listen for and which spoken event should trigger an
 alert, rather than requiring a queue token. A valid submitted request automatically
@@ -61,7 +63,7 @@ future arrival, wrong train, negation and unrelated conversation do not alert.
 Test corrections and voice stop, including locked-screen notifications. These
 are speech-transcript monitors, not live train tracking or general sound detectors.
 
-### App language and alarm (source changes; rebuild the APK)
+### App language and alarm (v1.3.0)
 
 The home language button now opens a scrollable dropdown rather than an announcement-language help page. English and 20 Indian languages have bundled, offline UI catalogs. Selecting a language immediately updates screens, help, accessibility labels, service status and native notifications, and saves the selection for the next launch. Announcement recognition remains automatic; original transcripts, token prefixes and leading zeros are not translated. Urdu and Sindhi interpolated identifiers are direction-isolated. Spoken alerts require a matching installed offline Android voice; unavailable voices do not fall back to a different language or a network voice.
 
@@ -81,7 +83,7 @@ Check dropdown dismissal, scrolling to the last language, switching back to Engl
 8. Check TalkBack focus and announcements, enlarged system text and reduced motion. The waveform represents local microphone activity and becomes static with reduced motion. **Settings → Spoken token alerts** uses an installed offline Android voice when the monitor allows sound.
 9. While monitoring, express that you want listening to stop, including an indirect request in a speech-provider-supported language. Repeat with the screen locked. A recognized intent should remove the microphone notification without reopening capture, retain the token/history and require explicit restart. Negated, quoted and PA/call-cancellation speech should not pause it. Intent is model-interpreted, not matched to a fixed phrase list; connectivity, speech/model mistakes and nearby speakers can affect it. If missed, use the app or notification stop control.
 
-7 November source verification: 28 mobile workflow tests, 12 native unit tests, TypeScript and lint passed. New tests cover missing-connection stop, independent storage/backend failures and bounded initialization-time spoken-alert queuing. Live voice-stop recognition and physical-phone locked-screen behavior remain unverified. If saving stop suppression fails, the app tries removing the saved session; if both fail, retry Stop or clear CueBell storage in Android settings before closing the app.
+8 November release verification: 43 mobile workflow tests, 14 native unit tests, TypeScript, lint and all 20 Expo Doctor checks passed. Tests cover general tasks, automatic activation, cancellation, foreground-service handoff, localization, session cleanup and spoken-alert queuing. Live voice-stop recognition and physical-phone locked-screen behavior remain unverified. If saving stop suppression fails, the app tries removing the saved session; if both fail, retry Stop or clear CueBell storage in Android settings before closing the app.
 
 ## Privacy / lifecycle
 

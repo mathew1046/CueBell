@@ -16,8 +16,8 @@ test('CueBell identity is consistent across app and package metadata', () => {
   assert.equal(app.slug, 'cuebell');
   assert.equal(app.scheme, 'cuebell');
   assert.equal(app.android.package, 'app.cuebell.mobile');
-  assert.equal(app.version, '1.2.0');
-  assert.equal(app.android.versionCode, 4);
+  assert.equal(app.version, '1.3.0');
+  assert.equal(app.android.versionCode, 5);
   assert.equal(pkg.name, 'cuebell-mobile');
   assert.equal(pkg.version, app.version);
   assert.equal(lock.name, pkg.name);
@@ -42,10 +42,12 @@ test('release profiles use the current backend and preserve native alert identit
   assert.match(native, /"CueBell:Listening"/);
 });
 
-test('tracked source contains no legacy product name or backend origin', () => {
+test('tracked application source contains no legacy product name or backend origin', () => {
   const files = execFileSync('git', ['ls-files', '-z'], { cwd: root, encoding: 'utf8' }).split('\0').filter(Boolean);
   const legacy = new RegExp('queue' + 'saathi', 'i');
   for (const name of files) {
+    // Operations retain the installed server's service name and environment path.
+    if (name.startsWith('ops/')) continue;
     if (!existsSync(new URL(`../../${name}`, import.meta.url))) continue;
     const bytes = readFileSync(new URL(`../../${name}`, import.meta.url));
     if (bytes.includes(0)) continue;

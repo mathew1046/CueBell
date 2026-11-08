@@ -162,7 +162,8 @@ async def test_anonymous_admission_rejects_missing_client_address(settings, inte
 async def test_anonymous_sessions_share_global_attempt_limit(settings, intelligence, monkeypatch):
     settings.allow_app_sessions = True
     settings.max_sessions = 100
-    clock = [time.monotonic()]
+    # Keep the exact 60-second boundary independent of host-clock float rounding.
+    clock = [1000.0]
     monkeypatch.setattr(
         "app.main.time", SimpleNamespace(time=time.time, monotonic=lambda: clock[0])
     )

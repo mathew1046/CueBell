@@ -1,26 +1,26 @@
 # Demo CueBell
 
-**Goal:** show a real request → confirmation → announcement → alert flow on an Android phone, without presenting a prototype as a reliable deployed system.
+**Goal:** show a real request → automatic activation → announcement → alert flow on an Android phone, without presenting a prototype as a reliable deployed system.
 
 This is a rehearsal runbook, not a claim that the full phone-and-speaker scenario has already passed. No public tunnel has been started on your behalf.
 
 ## 1. Prepare before presenting
 
 - An ARM64 Android phone with microphone, internet and notification permission. Use the actual phone for haptics/background tests; an emulator is not a substitute.
-- A standalone APK built with your deployed service origin. The v1.2.0 ARM64 preview uses https://cuebell.mathewjoseph.xyz . Expo Go cannot run the native microphone service.
+- A standalone APK built with your deployed service origin. The v1.3.0 ARM64 preview uses https://cuebell.mathewjoseph.xyz . Expo Go cannot run the native microphone service.
 - A laptop or hosted machine running the separate backend, with working Gnani and OpenAI access and sufficient account quota. Usage may incur provider costs.
 - A publicly trusted HTTPS backend URL that supports WebSocket connections.
 - A second, consenting speaker, or your own consented human recording played from a second device. Start in a quiet room, within useful microphone range. Do not use unconsented hospital audio.
 - A screen-recording/mirroring arrangement if presenting to an audience. Hide credentials and private notifications; obtain consent before recording the demonstration.
 
 Download the development-signed ARM64 preview from GitHub Releases:
-https://github.com/mathew1046/CueBell/releases/tag/v1.2.0-preview
+https://github.com/mathew1046/CueBell/releases/tag/v1.3.0-preview
 
-Download `CueBell-1.2.0-arm64.apk` and open a terminal in its download directory.
+Download `CueBell-1.3.0-arm64.apk` and open a terminal in its download directory.
 Install over USB with Android debugging enabled. Specify your physical phone's serial from `adb devices`; do not accidentally target an emulator. This preview is not production/store-signed:
 
 ```sh
-adb -s YOUR_PHONE_SERIAL install -r CueBell-1.2.0-arm64.apk
+adb -s YOUR_PHONE_SERIAL install -r CueBell-1.3.0-arm64.apk
 ```
 
 Otherwise transfer it to the phone and allow installation from that source. Only install APKs you trust. Build instructions:
@@ -96,10 +96,10 @@ Before handing over the phone, the operator builds using the real service origin
 https://github.com/mathew1046/CueBell/blob/main/mobile/README.md
 
 1. Open CueBell. The request workflow appears immediately, with **no server fields, pairing or technical settings**.
-2. Check **Allow audio & text processing**. Audio goes to Gnani; requests and announcement text go to OpenAI. **About & privacy** contains the full explanation.
-3. For the first run, type **“Listen for pharmacy token 442 and vibrate.”** Tap **Continue**. Session setup happens automatically, not as a separate task.
-4. Check the **Is this right?** proposal: token `442` and visual/vibration/sound preferences. If it is wrong, tap **Change**. Never confirm a wrong token for the sake of the demo. No venue token format is assumed.
-5. Tap **Start listening**. Grant microphone and notification permissions, then wait until the app reports **Listening**. A confirmed rule alone is not listening coverage.
+2. Tap the pencil to enter a request and check **Allow audio & text processing**. Audio goes to Gnani; requests and announcement text go to OpenAI. **About & privacy** contains the full explanation.
+3. For the first run, type **“Listen for pharmacy token 442 and vibrate.”** Tap **Start Listening**. Session setup and activation happen automatically; there is no second confirmation tap.
+4. Grant microphone and notification permissions, then wait until the app reports **Listening**. An active rule alone is not listening coverage.
+5. Check the active task on Home. If its subject, condition or preferences are wrong, stop listening and use the pencil to edit the request. No venue token format is assumed.
 6. Check the ongoing microphone notification. Keep the app visible for the first rehearsal. Ensure microphone privacy is off, the notification channel is enabled, vibration is enabled, and Do Not Disturb is not suppressing delivery.
 
 Speak one complete announcement at a time, then pause for the final transcript and interpretation. This is completed-utterance recognition, not instantaneous partial-word captioning. Alert latency also includes model processing and the configurable correction grace period (default 1.2 seconds); there is no measured end-to-end latency guarantee.
@@ -112,11 +112,11 @@ Speak one complete announcement at a time, then pause for the final transcript a
 
 ### 0:30–1:15 — User-controlled intent
 
-Show the typed request, the extracted proposal, and explicit confirmation. Say:
+Show the typed request and the automatically activated task. Say:
 
-> “The model interprets the request, but the user checks the exact token before any monitor starts. Announcements cannot change what this person is watching for.”
+> “The user describes what to listen for. Once processing and microphone access are allowed, a clear request starts monitoring automatically. The active task stays visible, and the user can stop it. Announcements cannot change that task.”
 
-Typing first isolates the monitoring demonstration from speech-setup errors. After rehearsal, optionally tap **Speak** instead: short pauses are allowed. Setup combines finalized speech and waits for 3.5 seconds of transcript quiet before interpreting it; it must still be confirmed. Do not speak setup instructions over the announcement-listening phase. Expand **Announcements** to inspect transcripts; the history is collapsed to keep the main screen quiet.
+Typing first isolates the monitoring demonstration from speech-setup errors. After rehearsal, optionally use spoken setup instead: short pauses are allowed. Setup combines finalized speech and waits for 3.5 seconds of transcript quiet before interpreting it, then automatically activates a valid task. Do not speak setup instructions over the announcement-listening phase. Expand **Live captions** to inspect transcripts; the history is collapsed to keep the main screen quiet.
 
 ### 1:15–2:15 — A non-match, then a match
 
@@ -125,7 +125,7 @@ Have the consenting speaker say these separately:
 | Announcement | Expected check |
 | --- | --- |
 | “Pharmacy token four four one, please go to counter one.” | Transcript/event may appear, but **no target alert** for `442`. |
-| “Pharmacy token four four two, please go to counter two.” | A prominent **442 / Go to counter 2** alert, plus vibration if the phone permits it. |
+| “Pharmacy token four four two, please go to counter two.” | A prominent alert for token `442`, counter 2 and the matching source speech, plus vibration if the phone permits it. |
 
 Show the actual transcript and alert; do not describe a vibration as proven if nobody can verify it. Use **I’ve seen this** to acknowledge. If the transcript is wrong or no alert arrives, show that fact and check the official display rather than claiming success.
 
@@ -143,7 +143,7 @@ Close with:
 
 ## 5. Extra checks — rehearse, do not improvise
 
-- **Malayalam:** try a clear, complete Malayalam request and announcement with a consenting speaker. For example, request **“ഫാർമസി ടോക്കൺ നാല് നാല് രണ്ട് വിളിക്കുമ്പോൾ വൈബ്രേറ്റ് ചെയ്യണം.”** and announcement **“ഫാർമസി ടോക്കൺ നാല് നാല് രണ്ട്, കൗണ്ടർ രണ്ടിലേക്ക് വരുക.”** Verify the actual transcript and proposal. These are rehearsal phrases, not validated PA-recognition examples; automatic language detection is not proof of reliable code-switching.
+- **Malayalam:** try a clear, complete Malayalam request and announcement with a consenting speaker. For example, request **“ഫാർമസി ടോക്കൺ നാല് നാല് രണ്ട് വിളിക്കുമ്പോൾ വൈബ്രേറ്റ് ചെയ്യണം.”** and announcement **“ഫാർമസി ടോക്കൺ നാല് നാല് രണ്ട്, കൗണ്ടർ രണ്ടിലേക്ക് വരുക.”** Verify the actual transcript and active task. These are rehearsal phrases, not validated PA-recognition examples; automatic language detection is not proof of reliable code-switching.
 - **Leading zeroes:** a separate monitor for “Listen for pharmacy token P042 and vibrate.” Review `P042`, then say “Pharmacy token P zero four two to counter two.” Never substitute `P42` or drop the prefix to make a match.
 - **Repeat:** repeat the same call. Check that the 45-second repeat suppression does not create another token-call alert. This is a heuristic, not a queue-reset detector.
 - **Interruption:** while listening, turn the phone's network off. Check degraded/disconnected status and the coverage warning. Restore networking and wait for verified listening before the next announcement. Reconnect is bounded; you may need **Start listening**. The missing audio is not replayed.
@@ -156,15 +156,15 @@ Close with:
 | --- | --- |
 | Service temporarily unavailable | Operator: confirm the build-time origin is current, `/health` works, `ALLOW_APP_SESSIONS=true` is enabled for the controlled demo, and both backend/tunnel processes are running. Rebuild if the hostname changed. There is no phone URL setting. |
 | HTTP 403 / secure-transport error | Check the trusted local proxy and forwarded HTTPS scheme. Do not bypass by trusting every proxy or allowing insecure public traffic. |
-| Session expired | Submit the request again. The app obtains a fresh bearer and requires a new confirmation; an old monitor is never silently replayed. |
+| Session expired | Submit the request again. The app obtains a fresh bearer and activates the new valid request; an old monitor is never silently replayed. |
 | Service busy | Wait before retrying. Anonymous demo admission permits three sessions per IP per ten minutes, plus global and concurrent limits; do not keep reinstalling or clearing storage. |
 | Provider authorization / quota error | Check server-side keys, speech-platform access, model entitlement and quota. `/health` configuration flags do not authenticate providers. |
-| Intent needs clarification | Clearly identify the token in your own format. Edit and reconfirm rather than guessing; there is no three-digit grammar. |
+| Intent needs clarification | Clearly identify what to listen for and the event that should alert. Edit and resubmit rather than guessing; a token is not required for general tasks. |
 | No transcript | Verify actual listening, microphone permission/privacy, connectivity and audio range. Speak clearly and pause at the end. |
 | Transcript appears but no alert | Compare every digit/prefix, check uncertainty and counter evidence, and allow interpretation to finish. Inspect the real result; do not repeatedly change the target to match a wrong transcript. |
 | Visual alert but no vibration/sound | Check Android notification permission, the selected alert channel, hardware and Do Not Disturb. Visual feedback is the fallback. |
 
-**Fallback plan:** present the actual typed-request/proposal flow if it works, then run the automated reducer tests from the backend directory:
+**Fallback plan:** present the actual typed-request flow if it works, then run the automated reducer tests from the backend directory:
 
 ```sh
 .venv/bin/pytest -q tests/test_engine.py
@@ -179,7 +179,7 @@ Tap **Stop**. Stop `cloudflared` and the backend with Ctrl+C, and disable anonym
 ## What you can honestly claim today
 
 - A built Android prototype, with a native microphone foreground service and separate backend.
-- 227 backend tests and six native unit tests passed; emulator UI states and live text-model flows were checked. The latest no-setup app changes add separate session/workflow checks; do not claim a connected replacement APK until it is built for the actual service.
+- Automated test and release-packaging results are recorded in https://github.com/mathew1046/CueBell/blob/main/docs/VERIFICATION.md . Historical emulator and text-model checks are separate from this release's device behavior.
 - Gnani streaming authorization/negotiation and a bounded synthetic PCM transmission check succeeded.
 - Any real speech, vibration or background behavior you actually reproduce in the rehearsal, clearly scoped to that device and staged scenario.
 

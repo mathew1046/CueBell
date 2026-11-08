@@ -2,21 +2,33 @@
 
 **Hear the announcement. See your turn.**
 
-CueBell is an Android accessibility companion for people who are deaf or hard of hearing. It turns matching queue announcements into prominent visual, vibration and sound alerts, so users can follow their turn without relying on a loudspeaker alone. Silent alerts are available by request.
+## Short solution pitch
+
+**The problem:** People who are deaf or hard of hearing can miss important spoken announcements. In a busy pharmacy, missing a token call may mean waiting longer or needing someone else to help.
+
+**Our solution:** CueBell is an Android app that acts as helping ears. It turns announcements that matter to the user into clear on-screen alerts, with vibration and sound options.
+
+**How it works:** The user types or says what to listen for, such as “Tell me when pharmacy token 442 is called.” CueBell listens through the phone's microphone and uses speech recognition and AI to understand the announcement. When it detects a match, it shows the call and any counter details. The user can stop listening from the app or by voice.
+
+**Why it matters:** CueBell aims to help people wait more independently, without constantly watching a display or relying on another person. It gives each user a personal alert for the information they asked for.
+
+**Current stage:** An Android prototype that needs an internet connection. The next step is testing with users in busy, real-world settings.
+
+## Project overview
 
 **Status:** active prototype · Android only · development-signed preview
 
 **Download the Android preview:**
-https://github.com/mathew1046/CueBell/releases/tag/v1.2.0-preview
+https://github.com/mathew1046/CueBell/releases/tag/v1.3.0-preview
 
 **Report a bug or suggest an improvement:**
 https://github.com/mathew1046/CueBell/issues
 
-Tell it what to watch for, check the details, and confirm. A native Android microphone service then listens for announcements while a separate, self-hosted backend interprets them.
+Tell it who or what to listen for and when to alert you. A valid request starts monitoring automatically after consent and permission checks. A native Android microphone service listens while a separate, self-hosted backend interprets the speech.
 
 > “Listen for pharmacy token 442 and vibrate.”
 >
-> Review **442 · Visual + vibration + sound** → start → hear “Token 442 to counter two” → see **442 · Go to counter 2**.
+> Submit the request → monitoring starts → hear “Token 442 to counter two” → see an alert with the matching speech and counter details.
 
 **Prototype, not an official queue system. Calls can be missed. Always check the venue display or staff.**
 
@@ -26,22 +38,23 @@ Imagine waiting for medicine in a crowded pharmacy. Your turn is announced over 
 
 CueBell aims to make that moment more accessible: the person specifies their own token and receives a personal, visible cue when a matching announcement is detected.
 
-These are **intended benefits, not measured outcomes**. Fewer missed turns, real-world speech accuracy and reliable locked-screen delivery have not been established. The current workflow focuses on pharmacy queues; other venues are future possibilities, not supported deployments.
+These are **intended benefits, not measured outcomes**. Fewer missed turns, real-world speech accuracy and reliable locked-screen delivery have not been established. The workflow also accepts tasks such as a train arrival, a name being called or flight boarding; these are speech-based monitors, not established venue deployments or live tracking.
 
 ## What it does today
 
-- **Speak or type a request.** A model proposes the monitoring intent; it does not start listening until you review and confirm the exact token and alert preferences.
+- **Speak or type a request.** Describe the subject and trigger condition. Valid requests activate automatically after consent and Android permission checks; unclear requests ask for clarification. No second confirmation tap is needed.
 - **Listen through a native Android service.** Kotlin owns microphone capture, PCM framing, networking and notifications, rather than relying on background JavaScript timers.
-- **Check before alerting.** Structured model output passes schema and source-evidence checks before matching the confirmed target; no custom token grammar is imposed.
+- **Check before alerting.** Structured model output must match the task and pass schema and source-evidence checks. Alerts include the event summary, location when heard and verbatim source speech; queue tokens are not required for general tasks.
 - **Handle changing announcements.** Calls, repeats, corrections, cancellations and uncertain interpretations are separate events. Unclear input is not coerced toward the user's token.
 - **Keep the session understandable.** Recent transcripts, listening status, coverage gaps, acknowledgment, pause and stop controls remain visible.
+- **Choose the app language.** English and 20 Indian languages have bundled UI translations, including native notifications. Sound-enabled alerts use a bundled three-pulse alarm; silent preferences remain respected.
 - **Stop by voice.** While monitoring, express that you want CueBell to stop listening, directly or indirectly. The text model interprets intent across languages, without a fixed command list; a source-grounded decision pauses the monitor and stops the native microphone, even with the app in the background. The token and history remain available, as with Home's Stop Listening.
 - **Keep provider keys off the phone.** The APK connects to your separately hosted backend using an expiring session credential.
 - **Open directly into the workflow.** No server URL, pairing code or developer settings screen. The release operator sets the service address before building; the app obtains its session automatically when you submit a request.
 
-### Token interpretation
+### Task and identifier interpretation
 
-One confirmed monitor per session, without assumed venue formats, digit counts, prefixes or counter ranges. The text model interprets spoken/written identifiers consistently across setup and announcements, without handwritten number parsers. Review its interpretation before confirming.
+One active monitor per session, without assumed venue formats, digit counts, prefixes or counter ranges. The text model interprets spoken/written identifiers consistently across setup and announcements, without handwritten number parsers. The home card shows the active task; stop and edit it if the interpretation is wrong.
 
 Spoken setup waits for 3.5 seconds of transcript quiet after finalized speech instead of stopping on the first provider sentence; unfinished interim speech keeps capture open, up to 90 seconds overall. Recognition is limited by the speech provider's languages; model interpretation is not a guarantee of accuracy in every language or venue.
 
@@ -51,7 +64,7 @@ Spoken setup waits for 3.5 seconds of transcript quiet after finalized speech in
 Spoken request ── Gnani Prisma ──┐
 Typed request ──────────────────┴─> Text intent extraction
                                       │
-                              Review and confirmation
+                          Consent + valid task activation
                                       │
                          Active monitoring rule
 
@@ -66,10 +79,10 @@ Completed transcript → structured event extraction
     ▼
 Deterministic validation → ordered correction-aware reducer
     ▼
-Exact token match → visual alert + optional vibration / sound
+Grounded task match → visual alert + optional vibration / sound
 ```
 
-The user's target is **not** supplied as a speech-recognition hint or to announcement extraction. Announcements cannot create monitors or change alert preferences.
+The user's target is **not** supplied as a speech-recognition hint. The text model evaluates the active subject and condition against the transcript; source evidence must pass validation. Announcements cannot create monitors or change alert preferences.
 
 Voice stopping depends on connectivity, speech recognition and model interpretation; it is not an instant or offline microphone kill switch. Speech-language coverage remains limited by the speech provider. There is no speaker identification, so a nearby person's request may also pause listening. Check that the microphone notification disappears; use the app or notification stop control if speech is missed. Voice-stop tests use mocked model decisions and do not establish live multilingual accuracy.
 
@@ -87,14 +100,14 @@ Gnani Evon is **not integrated**: its usable API contract has not been supplied.
 ## Try the Android preview
 
 APK download:
-https://github.com/mathew1046/CueBell/releases/download/v1.2.0-preview/CueBell-1.2.0-arm64.apk
+https://github.com/mathew1046/CueBell/releases/download/v1.3.0-preview/CueBell-1.3.0-arm64.apk
 
 Checksum:
-https://github.com/mathew1046/CueBell/releases/download/v1.2.0-preview/CueBell-1.2.0-SHA256SUMS
+https://github.com/mathew1046/CueBell/releases/download/v1.3.0-preview/CueBell-1.3.0-SHA256SUMS
 
 - Android 7+ on an ARM64 phone; iOS is not implemented.
-- Version **1.2.0**, Android version code **4**, package `app.cuebell.mobile`.
-- Development-signed preview, **not a production/store distribution**. Its signing certificate matches the 1.1.0 preview for in-place updates.
+- Version **1.3.0**, Android version code **5**, package `app.cuebell.mobile`.
+- Development-signed preview, **not a production/store distribution**. Its signing certificate matches the 1.2.0 preview for in-place updates.
 - The preview is preconfigured; there is no backend URL or provider-key setup on the phone. Sessions for an older deployment are not reused: submit your request again after updating.
 - **Expo Go cannot run the custom native microphone service.** Use the APK or a native development build.
 
@@ -111,14 +124,14 @@ The shortest reliable presentation path is:
 1. Run the separate backend with your provider credentials. For a controlled no-login demo, explicitly enable `ALLOW_APP_SESSIONS=true`; see the security warning below.
 2. Give it a publicly trusted HTTPS URL with WebSocket support. Set that origin as `EXPO_PUBLIC_API_URL` in the mobile build environment and build the APK. A stable host avoids rebuilding when a temporary tunnel changes.
 3. Install that APK on an Android phone and open it. **There is no connection setup in the app, and provider keys are never bundled.**
-4. Allow processing, type “Listen for pharmacy token 442 and vibrate,” tap **Continue**, review the token, then tap **Start listening**.
+4. Use the pencil to enter a request, allow processing, type “Listen for pharmacy token 442 and vibrate,” then tap **Start Listening**. Grant permissions and check the active task and listening status; there is no second confirmation tap.
 5. Have a consenting speaker announce a non-target token, then **“Pharmacy token four four two, please go to counter two.”** Inspect the transcript and resulting alert.
 
 The guide includes exact commands, a three-minute script, correction and interruption checks, troubleshooting, and an honest fallback if the live pipeline fails.
 
 ## Verification
 
-The 1.2.0 preview passed **253 backend tests, 28 mobile tests and 12 native unit tests**, plus TypeScript, lint and APK packaging/signature checks. The verification record separates mocked tests, historical smoke checks and unverified real-world behavior:
+The 1.3.0 preview passed **280 backend tests, 43 mobile tests and 14 native unit tests**, plus TypeScript, lint, all 20 Expo Doctor checks and APK packaging/signature checks. The verification record separates mocked tests, historical smoke checks and unverified real-world behavior:
 https://github.com/mathew1046/CueBell/blob/main/docs/VERIFICATION.md
 
 GitHub Actions runs backend tests/lint and mobile tests/typecheck/lint without provider credentials. It does not build the APK, call paid providers or establish physical-phone reliability.
@@ -165,7 +178,7 @@ Backend environment variables include `GNANI_API_KEY`, `GNANI_LANGUAGE_CODE=indi
 - Current product scope and subsequent decisions: https://github.com/mathew1046/CueBell/blob/main/PRODUCT.md
 - Interface principles and review record: https://github.com/mathew1046/CueBell/blob/main/DESIGN.md
 
-The later Android/background and OpenAI-fallback decisions override the original plan's foreground-web / Gnani-only scope. The basic queue-alert concept has prior art; this prototype does not claim to have invented it. Its intended contribution is an accessible Malayalam/English workflow with explicit confirmation, correction-aware handling and honest coverage status—not a proven performance advantage.
+The later Android/background, general-task, automatic-activation and OpenAI-fallback decisions override the original plan's foreground-web / queue-only / manual-confirmation / Gnani-only scope. The basic queue-alert concept has prior art; this prototype does not claim to have invented it. Its intended contribution is an accessible multilingual workflow with personal listening tasks, correction-aware handling and honest coverage status—not a proven performance advantage.
 
 ## Contributing and support
 
