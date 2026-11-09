@@ -180,6 +180,10 @@ Backend environment variables include `GNANI_API_KEY`, `GNANI_LANGUAGE_CODE=indi
 
 The later Android/background, general-task, automatic-activation and OpenAI-fallback decisions override the original plan's foreground-web / queue-only / manual-confirmation / Gnani-only scope. The basic queue-alert concept has prior art; this prototype does not claim to have invented it. Its intended contribution is an accessible multilingual workflow with personal listening tasks, correction-aware handling and honest coverage status—not a proven performance advantage.
 
+## Team contributions
+
+**Mathew Joseph** led the backend, speech/AI integration and Android background-service work, along with multilingual support, testing, deployment and releases. **Devadathan M R** led the mobile interface and navigation improvements, including live captions, waveform feedback, spoken alerts, accessibility controls and branding. Together, we developed CueBell, an Android prototype that turns relevant spoken announcements into clear visual alerts with optional vibration and sound.
+
 ## Contributing and support
 
 Bug reports, accessibility feedback and small, focused improvements are welcome. Use the issue templates and include your app/Android version and reproducible steps using synthetic tokens. Do not post credentials, private patient information or unconsented venue recordings.
