@@ -97,22 +97,16 @@ def test_fallback_requires_exact_model_and_credentials(settings):
     assert not settings.model_ready
 
 
-async def test_intent_contract_preserves_identifiers_without_requiring_a_queue_token():
+async def test_intent_receives_original_request_and_full_task_schema():
+    from app.prompts import SETUP_PROMPT
+
     fallback = object.__new__(OpenAIFallback)
     fallback._parse = AsyncMock()
     await fallback.intent("Listen for pharmacy token 442 and vibrate.")
     system, data, schema = fallback._parse.call_args.args
-    assert "Never include surrounding words" in system
-    assert "'pharmacy token 442' use '442'" in system
+    assert system == SETUP_PROMPT
     assert data == {"request": "Listen for pharmacy token 442 and vibrate."}
     assert schema is Intent
-    assert "Exclude surrounding words" in Intent.model_fields["target_evidence"].description
-    assert "Do not reduce every request to a queue token" in system
-    assert "subject and the condition" in system
-    assert "No extra token question is needed" in system
-    assert "Set legacy token and target_evidence to null" in system
-    assert "in any language" in system
-    assert "Default alerts are visual, vibration and sound" in system
 
 
 async def test_extraction_interprets_readouts_without_a_token_format():

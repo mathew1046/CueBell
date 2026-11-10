@@ -8,33 +8,64 @@ class StrictModel(BaseModel):
 
 
 class TargetIdentifier(StrictModel):
-    value: str = Field(min_length=1, max_length=160)
-    evidence_text: str = Field(min_length=1, max_length=300)
+    value: str = Field(
+        min_length=1,
+        max_length=160,
+        description="Exact identity: convert number words/native digits to ASCII digits "
+        "and letters to uppercase. Preserve prefixes and leading zeros; never append digits.",
+    )
+    evidence_text: str = Field(
+        min_length=1,
+        max_length=300,
+        description="Copy only the original identifier words/digits from the source, without "
+        "labels. Preserve native script. Never substitute the normalized value or a translation.",
+    )
 
 
 class MonitoringTask(StrictModel):
     subject: str = Field(min_length=1, max_length=300)
     condition: str = Field(min_length=1, max_length=600)
-    summary: str = Field(min_length=1, max_length=600)
-    request_evidence: str = Field(min_length=1, max_length=1500)
-    identifiers: list[TargetIdentifier] = Field(max_length=12)
+    summary: str = Field(
+        min_length=1,
+        max_length=600,
+        description="Short subject and trigger in the request's language, "
+        "not an English translation.",
+    )
+    request_evidence: str = Field(
+        min_length=1,
+        max_length=1500,
+        description="Copy request exactly, including punctuation. "
+        "No introductory text or translation.",
+    )
+    identifiers: list[TargetIdentifier] = Field(
+        max_length=12,
+        description="Every required number/code/name. Include numbers expressed as words; "
+        "empty only when the task has no specific identity.",
+    )
 
 
 class Intent(StrictModel):
-    intent: Literal["monitor_event", "monitor_announcement", "unsupported", "unclear"]
+    intent: Literal["monitor_event", "monitor_announcement", "unsupported", "unclear"] = Field(
+        description="unsupported for non-speech sounds or unavailable actions; unclear if subject "
+        "or trigger is missing; otherwise monitor_event. Never select legacy monitor_announcement.",
+    )
     context: str | None
     token: str | None = Field(description="Legacy queue field. Null for monitor_event tasks.")
-    alert_preferences: list[Literal["visual", "vibration", "sound"]]
+    alert_preferences: list[Literal["visual", "vibration", "sound"]] = Field(
+        description='Default exactly ["visual","vibration","sound"]. Explicit silent/no-sound: '
+        '["visual","vibration"]. Explicit visual-only: ["visual"]. Always include visual.',
+    )
     clarification: str | None
     # Exact substring of the user's request that names the target.
     target_evidence: str | None = Field(
-        description="Legacy queue field; null for monitor_event. "
-        "Only the exact token identifier or spoken number words from the request, "
-        "including its prefix if present. Exclude surrounding words such as token, pharmacy, "
-        "or ടോക്കൺ. Example: pharmacy token 442 -> 442; token four hundred forty two -> "
-        "four hundred forty two. Null if missing or ambiguous."
+        description="Legacy queue field. Null for monitor_event, unclear and unsupported. "
+        "For legacy monitor_announcement only: copy the exact identifier words, without labels."
     )
-    task: MonitoringTask | None = None
+    task: MonitoringTask | None = Field(
+        default=None,
+        description="Required for monitor_event. Null for unclear/unsupported with a relevant "
+        "clarification in the request's language.",
+    )
 
 
 class Segment(StrictModel):
