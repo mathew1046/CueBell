@@ -34,7 +34,8 @@ export async function api<T>(connection: Connection | string, path: string, body
     method, headers: { 'Content-Type': 'application/json',
       ...(typeof connection === 'string' ? {} : { Authorization: `Bearer ${connection.token}` }) },
     body: body ? JSON.stringify(body) : undefined,
-    signal: AbortSignal.timeout(20000),
+    // Intent setup may cold-start Evon on Modal (backend setup deadline: 130s).
+    signal: AbortSignal.timeout(path === '/v1/intent' ? 135000 : 20000),
   }).catch(() => { throw new Error('Could not reach CueBell. Check your internet connection and try again.'); });
   const result = await response.json().catch(() => ({}));
   if (!response.ok) {

@@ -1,3 +1,5 @@
+from typing import Literal
+
 from pydantic import Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -7,8 +9,14 @@ class Settings(BaseSettings):
     gnani_api_key: str = ""
     # Prisma v3 detects per utterance; a list prioritizes languages, not a restriction.
     gnani_language_code: str = "indic-auto"
+    text_provider: Literal["openai_fallback", "gnani_evon"] = "openai_fallback"
     openai_api_key: str = ""
     openai_model: str = ""
+    evon_api_key: str = ""
+    evon_base_url: str = ""
+    evon_model: str = "gnani/gnani-evon-v3.3-30B-A3B"
+    evon_timeout_seconds: float = Field(default=12, gt=0, le=15)
+    evon_setup_timeout_seconds: float = Field(default=130, gt=0, le=130)
     demo_access_code: str = ""
     allow_app_sessions: bool = False
     allow_insecure_local: bool = False
@@ -45,4 +53,6 @@ class Settings(BaseSettings):
 
     @property
     def model_ready(self) -> bool:
+        if self.text_provider == "gnani_evon":
+            return bool(self.evon_api_key and self.evon_base_url and self.evon_model)
         return bool(self.openai_api_key and self.openai_model)

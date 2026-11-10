@@ -105,6 +105,34 @@ def expect_closed(socket):
     pytest.fail("Stream did not close")
 
 
+@pytest.mark.parametrize("provider", ["openai_fallback", "gnani_evon"])
+def test_stream_consent_matches_selected_provider(settings, intelligence, monkeypatch, provider):
+    settings.text_provider = provider
+    settings.gnani_api_key = "dummy-test-key"
+
+    @asynccontextmanager
+    async def prisma(settings):
+        yield FakePrisma()
+
+    monkeypatch.setattr("app.main.prisma", prisma)
+    with TestClient(create_app(settings, intelligence)) as client:
+        auth = pair(client)
+        wrong = "text-openai" if provider == "gnani_evon" else "text-evon-modal"
+        with pytest.raises(WebSocketDisconnect) as error:
+            with client.websocket_connect(
+                "/v1/stream?mode=request",
+                headers={**auth, "x-processing-consent": f"audio-gnani;{wrong}"},
+            ):
+                pass
+        assert error.value.code == 4403
+        with client.websocket_connect(
+            "/v1/stream?mode=request",
+            headers={**auth, "x-processing-consent": "audio-gnani;text-openai;text-evon-modal"},
+        ) as socket:
+            ready(socket)
+            socket.send_json({"type": "stop"})
+
+
 def test_general_task_flows_from_confirmed_request_through_speech_to_alert(
     relay, intelligence, monkeypatch
 ):

@@ -35,7 +35,7 @@ test('request handoff keeps the foreground service but releases audio and closes
   assert.match(request, /socket\?\.close\(1000, null\)/);
   assert.match(request, /status\("PROCESSING"/);
   assert.equal(request.includes('stopSelf()'), false);
-  assert.match(request, /postDelayed\(processingTimeout, 45000\)/);
+  assert.match(request, /postDelayed\(processingTimeout, 150000\)/);
   assert.match(service, /waitingForTask &&/);
   assert.match(service, /if \(!stopping && waitingForTask\)/);
 });

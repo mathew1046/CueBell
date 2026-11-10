@@ -163,7 +163,7 @@ class ListenerService : Service() {
     lastMessage = connectedAt
     val url = baseUrl.replaceFirst("https://", "wss://").trimEnd('/') + "/v1/stream?mode=$mode"
     val request = Request.Builder().url(url).header("Authorization", "Bearer $bearer")
-      .header("x-processing-consent", "audio-gnani;text-openai").build()
+      .header("x-processing-consent", "audio-gnani;text-openai;text-evon-modal").build()
     socket = client.newWebSocket(request, object : WebSocketListener() {
       override fun onMessage(webSocket: WebSocket, text: String) {
         main.post {
@@ -208,7 +208,8 @@ class ListenerService : Service() {
                   stopCapture()
                   socket?.close(1000, null); socket = null
                   status("PROCESSING", "Creating your listening task…")
-                  main.postDelayed(processingTimeout, 45000)
+                  // Allow the 135s HTTP setup deadline plus confirmation/handoff.
+                  main.postDelayed(processingTimeout, 150000)
                 }
                 ListenerMemory.emit(event)
               }

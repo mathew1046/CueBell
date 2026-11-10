@@ -38,8 +38,14 @@ provider keys or the operator pairing code in source control or the APK.
 | --- | --- |
 | `GNANI_API_KEY` | Required for speech; sent only to Gnani Prisma. |
 | `GNANI_LANGUAGE_CODE` | `indic-auto`; automatic detection among Prisma's 10 supported languages. Optional 1–4 language codes such as `ml-IN,en-IN` prioritize languages, not restrict recognition. |
-| `OPENAI_API_KEY` | Required for text intent and announcement interpretation. |
-| `OPENAI_MODEL` | Exact Responses API ID enabled in your account. The example uses account-verified `gpt-6-luna` with structured output support; no nickname or automatic substitution. |
+| `TEXT_PROVIDER` | `openai_fallback`; set `gnani_evon` for the Modal gateway. No automatic failover between providers. |
+| `OPENAI_API_KEY` | Required only with `TEXT_PROVIDER=openai_fallback`. |
+| `OPENAI_MODEL` | Exact Responses API ID for the OpenAI provider. The example uses account-verified `gpt-6-luna` with structured output support. |
+| `EVON_API_KEY` | Required with `TEXT_PROVIDER=gnani_evon`; the bearer secret configured on your Modal gateway. |
+| `EVON_BASE_URL` | Required for Evon; your gateway's HTTPS base URL ending in `/v1`. |
+| `EVON_MODEL` | `gnani/gnani-evon-v3.3-30B-A3B`; must match the gateway's model ID. |
+| `EVON_TIMEOUT_SECONDS` | `12`; live interpretation deadline, greater than 0 and at most 15 seconds. |
+| `EVON_SETUP_TIMEOUT_SECONDS` | `130`; intent/setup deadline, greater than 0 and at most 130 seconds. |
 | `DEMO_ACCESS_CODE` | Operator-generated random pairing secret, at least 16 characters; required for code-based pairing. No usable default. |
 | `ALLOW_APP_SESSIONS` | `false`; explicitly set `true` to accept anonymous no-login demo app sessions without a pairing code. |
 | `ALLOW_INSECURE_LOCAL` | `false`; use `true` only for isolated local development, never public hosting. |
@@ -53,6 +59,52 @@ Generate a pairing code, for example, with
 `.venv/bin/python -c 'import secrets; print(secrets.token_urlsafe(32))'`.
 Give the user the public HTTPS backend URL and pairing code out of band. The
 app receives a short-lived session Bearer token; provider keys stay on the host.
+
+### Evon on Modal
+
+Set these on the **CueBell backend**, using the URL and secret from your deployed
+gateway. The URL below is the one recorded in the supplied deployment handoff;
+replace it if your deployment has a different address.
+The branch's `.env.example` includes these non-secret trial settings. The bearer
+key itself was deliberately excluded from the archive; use the `EVON_API_KEY`
+stored in Modal Secret `cuebell-evon-api`.
+
+```dotenv
+TEXT_PROVIDER=gnani_evon
+EVON_BASE_URL=https://mathewjosephparakka--cuebell-evon-api.us-east.modal.run/v1
+EVON_MODEL=gnani/gnani-evon-v3.3-30B-A3B
+EVON_API_KEY=<your-modal-gateway-bearer-secret>
+EVON_TIMEOUT_SECONDS=12
+EVON_SETUP_TIMEOUT_SECONDS=130
+```
+
+Keep `GNANI_API_KEY` for speech and `ALLOW_APP_SESSIONS=true` for the no-login app.
+OpenAI credentials are not needed in Evon mode. Restart the relay after changing
+configuration. `/health` should report `text_provider: "gnani_evon"`,
+`intent_configured: true` and `evon: "configured"`; this does not invoke the model.
+
+The adapter calls `/v1/chat/completions` with bearer authentication, JSON schemas,
+`store=false`, and `chat_template_kwargs.enable_thinking=false`. It uses the
+existing prompts and local Pydantic/evidence validation for setup, general events
+and legacy queue extraction. Incomplete/refused/invalid responses are rejected;
+SDK retries and automatic provider switching are disabled.
+
+Rebuild/install the Android client from this branch for its Evon disclosure and
+WebSocket consent header. The published v1.3.0 APK has OpenAI-only consent. Setup
+remains a synchronous HTTP request: the app waits up to 135 seconds, and spoken
+setup keeps its microphone-off service handoff alive for 150 seconds. Allow at
+least 135 seconds through the relay's HTTP proxy too.
+
+The handoff measured roughly 20–28-second cold starts and 0.5–5-second warm
+responses. Its Modal `IDLE_SECONDS=2` scales the GPU down between requests. For
+live monitoring, increase that deployment idle window to keep the GPU warm over
+expected announcement gaps; budget for the additional idle GPU time. The live
+12-second request timeout and existing 15-second freshness cutoff still apply,
+so a cold live request may lose coverage rather than emit a stale alert.
+
+Local adapter tests use mocked inference. The handoff's model-quality probes
+also recorded negation/voice-stop mistakes; live inference and deployment checks
+remain separate from transport/schema compatibility.
 
 ### Opt-in no-login demo client
 
@@ -175,8 +227,11 @@ Session creation advertises `monitoring_schema: "speech-event-v1"`.
 - `DELETE /v1/session`: invalidates pairing and closes its stream, including
   when the ordinary authenticated-request rate limit has been exhausted.
 - WebSocket `/v1/stream?mode=request|monitor` requires the same authorization
-  header and `x-processing-consent: audio-gnani;text-openai`. Browser `Origin`
-  headers are rejected; tokens are not accepted in query strings.
+  header and `x-processing-consent` containing `audio-gnani` plus `text-openai`
+  or `text-evon-modal`, matching the selected provider. The updated Android app
+  discloses both supported text providers and sends
+  `audio-gnani;text-openai;text-evon-modal`. Browser `Origin` headers are rejected;
+  tokens are not accepted in query strings.
 - Wait for `status` with `state: READY`, then send real-time **1024-byte frames
   of signed PCM16 little-endian, 16 kHz, mono** (512 samples / 32 ms). No WAV
   headers, compressed audio, or bulk replay. `request` returns one final spoken
@@ -226,8 +281,9 @@ or a substitute for edge rate limits and spending controls.
   Responses API, structured output, `store=false`, a 12-second timeout and no
   automatic SDK retries. This flag is not a promise about provider retention;
    check current provider terms and obtain consent before any processing.
-- **Evon is unavailable**: no verified hosted API contract/endpoint is configured.
-  There is no guessed endpoint, Evon integration, or silent model substitution.
+- **Gnani Evon on Modal** is selected with `TEXT_PROVIDER=gnani_evon`, using the
+  Chat Completions contract above. Text goes to your Modal deployment; speech
+  still goes to Gnani Prisma. Only the selected text provider is called.
 - No venue token grammar, digit count, prefix whitelist, number dictionary or
   counter range is enforced. The text model interprets setup and announcement
   identifiers consistently; users review the proposed target before monitoring.

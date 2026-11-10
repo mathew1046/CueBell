@@ -17,7 +17,7 @@ def test_health_discloses_configuration_without_secrets(client):
         "speech_configured": False,
         "intent_configured": True,
         "text_provider": "openai_fallback",
-        "evon": "contract_not_configured",
+        "evon": "not_configured",
     }
     assert response.headers["cache-control"] == "no-store"
     assert response.headers["x-content-type-options"] == "nosniff"

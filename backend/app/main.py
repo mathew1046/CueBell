@@ -16,7 +16,7 @@ from .config import Settings
 from .engine import Engine
 from .gnani import parse_message, prisma
 from .guard import RequestGuard
-from .intelligence import OpenAIFallback
+from .intelligence import GnaniEvon, OpenAIFallback
 from .models import (
     ConfirmRequest,
     ControlRequest,
@@ -50,7 +50,9 @@ def create_app(settings: Settings | None = None, intelligence=None) -> FastAPI:
     sessions: dict[str, Session] = {}
     pair_attempts: deque = deque(maxlen=100)
     app_admissions: dict[str, deque] = {}
-    fallback: OpenAIFallback | None = None
+    fallback: OpenAIFallback | GnaniEvon | None = None
+    uses_evon = settings.text_provider == "gnani_evon"
+    text_recipient = "Gnani Evon hosted on Modal" if uses_evon else "OpenAI text fallback"
 
     async def close_stream(session: Session, code: int, reason: str):
         if session.socket:
@@ -85,9 +87,13 @@ def create_app(settings: Settings | None = None, intelligence=None) -> FastAPI:
         if intelligence:
             return intelligence
         if not settings.model_ready:
+            if uses_evon:
+                raise HTTPException(
+                    503, "Set EVON_API_KEY, EVON_BASE_URL and EVON_MODEL on the backend."
+                )
             raise HTTPException(503, "Set OPENAI_API_KEY and an exact OPENAI_MODEL on the backend.")
         if fallback is None:
-            fallback = OpenAIFallback(settings)
+            fallback = GnaniEvon(settings) if uses_evon else OpenAIFallback(settings)
         return fallback
 
     def lookup(authorization: str | None) -> Session:
@@ -111,8 +117,8 @@ def create_app(settings: Settings | None = None, intelligence=None) -> FastAPI:
             "status": "ok",
             "speech_configured": bool(settings.gnani_api_key),
             "intent_configured": settings.model_ready or intelligence is not None,
-            "text_provider": "openai_fallback",
-            "evon": "contract_not_configured",
+            "text_provider": settings.text_provider,
+            "evon": "configured" if uses_evon and settings.model_ready else "not_configured",
         }
 
     @app.post("/v1/sessions")
@@ -162,7 +168,7 @@ def create_app(settings: Settings | None = None, intelligence=None) -> FastAPI:
             "expires_at": expires,
             "venue": "nearby_speech",
             "monitoring_schema": "speech-event-v1",
-            "disclosure": "Audio: Gnani Prisma. Requests and transcripts: OpenAI text fallback. "
+            "disclosure": f"Audio: Gnani Prisma. Requests and transcripts: {text_recipient}. "
             "No recordings or transcript persistence by this relay; provider terms apply.",
         }
 
@@ -261,7 +267,9 @@ def create_app(settings: Settings | None = None, intelligence=None) -> FastAPI:
             mode = socket.query_params.get("mode", "monitor")
             if mode not in {"request", "monitor"} or session.busy or session.extracting:
                 raise HTTPException(409, "Stream already open or mode invalid.")
-            if socket.headers.get("x-processing-consent") != "audio-gnani;text-openai":
+            consent = set(socket.headers.get("x-processing-consent", "").split(";"))
+            required = {"audio-gnani", "text-evon-modal" if uses_evon else "text-openai"}
+            if not required <= consent:
                 raise HTTPException(400, "Processing disclosure must be accepted.")
             if mode == "monitor" and (
                 not session.engine.rule or session.engine.rule["status"] != "ACTIVE"

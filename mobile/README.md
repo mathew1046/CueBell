@@ -6,7 +6,15 @@ Requires Node 24.3+ (or the SDK-supported Node 22.13+), Java 17, Android SDK / N
 
 Copy `.env.example` to `.env` only if there is no existing configured file. Set `EXPO_PUBLIC_API_URL` to your actual deployed trusted HTTPS origin (no path/query/credentials). For the controlled no-login demo, the separately hosted backend must explicitly enable `ALLOW_APP_SESSIONS=true`. The app requests a short-lived bearer automatically on the first user action after consent and stores it encrypted. Existing expiry and session isolation remain in effect.
 
-Only the service address is public. **Never embed `DEMO_ACCESS_CODE`, Gnani/OpenAI keys, or any long-lived credential in an APK or `EXPO_PUBLIC_` variable.** Anonymous demo admission is off by default and permits paid-provider usage; do not treat rate limits or an APK as production authentication. See the backend hosting/security guide before public distribution.
+Only the service address is public. **Never embed `DEMO_ACCESS_CODE`, Gnani/OpenAI/Evon keys, or any long-lived credential in an APK or `EXPO_PUBLIC_` variable.** Anonymous demo admission is off by default and permits paid-provider usage; do not treat rate limits or an APK as production authentication. See the backend hosting/security guide before public distribution.
+
+For Evon on Modal, configure `TEXT_PROVIDER=gnani_evon` and `EVON_*` on the backend
+as described in `backend/README.md`. `EXPO_PUBLIC_API_URL` still points to the
+CueBell relay, not directly to Modal. Rebuild/install this branch: its processing
+disclosure and native WebSocket header cover Evon as well as OpenAI. The published
+v1.3.0 APK has OpenAI-only consent. Intent setup now waits up to 135 seconds for
+Modal cold starts; the microphone-off spoken-setup handoff expires at 150 seconds.
+Other HTTP calls retain their 20-second deadline.
 
 The preview and production EAS profiles now set the public origin to:
 https://cuebell.mathewjoseph.xyz

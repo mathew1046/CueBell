@@ -92,10 +92,10 @@ Voice stopping depends on connectivity, speech recognition and model interpretat
 | Native background runtime | Kotlin local Expo module, `AudioRecord`, OkHttp WebSocket, microphone foreground service, notification channels |
 | Separate backend | Python 3.12+, FastAPI, bounded in-memory sessions; one worker / one instance |
 | Speech | Gnani Prisma `prisma-v3.0`, `indic-auto`; audio goes only to Gnani |
-| Text intent and events | OpenAI structured output, configured as `gpt-6-luna` in the tested account; explicitly authorized fallback for Evon |
+| Text intent and events | Selectable Gnani Evon on Modal (Chat Completions) or OpenAI structured output (`gpt-6-luna` in the tested account) |
 | Persistence | No database or app/relay recording files; bounded session memory and encrypted Android connection metadata |
 
-Gnani Evon is **not integrated**: its usable API contract has not been supplied. There is no invented endpoint or silent speech-provider substitution. Provider retention policies are separate from the app's no-recording policy.
+Set `TEXT_PROVIDER=gnani_evon` and the `EVON_*` settings documented in `backend/README.md` to use the supplied Modal gateway contract. The default remains `openai_fallback`; there is no automatic provider switching. Rebuild the Android client for Evon consent and cold-start setup timeouts; the published APK predates this integration. Provider retention policies are separate from the app's no-recording policy.
 
 ## Try the Android preview
 

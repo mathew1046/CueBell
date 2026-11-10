@@ -15,7 +15,7 @@ const about = [
   { icon: 'cellphone-message', text: 'When speech matches your task, CueBell shows what was heard, vibrates and sounds an alarm, unless you ask for silent alerts.' },
   { icon: 'account-voice', text: 'Spoken alerts use an installed offline Android voice when sound is enabled. Stop in Settings also clears your task and history.' },
   { icon: 'ear-hearing', text: 'CueBell listens to speech. It does not track live transport data, detect non-speech sounds, send messages or replace emergency warning systems.' },
-  { icon: 'shield-lock-outline', text: 'Gnani Prisma processes microphone audio. OpenAI processes requests and announcement text. The app and relay save no recordings or transcripts on disk. Provider terms apply.' },
+  { icon: 'shield-lock-outline', text: 'Gnani Prisma processes microphone audio. {provider} processes requests and announcement text. The app and relay save no recordings or transcripts on disk. Provider terms apply.' },
   { icon: 'cellphone-information', text: 'Android can interrupt listening in the background. Keep the microphone notification visible. This is an aid, not an official source.' },
 ];
 
@@ -44,7 +44,7 @@ export default function Help() {
       <SoftCard style={styles.about}>
         {about.map(item => <View key={item.icon} style={styles.row}>
           <Icon source={item.icon} size={24} color={theme.colors.onSurface} />
-          <Text variant="bodyLarge" style={[styles.flex, ink]}>{t(item.text)}</Text>
+          <Text variant="bodyLarge" style={[styles.flex, ink]}>{t(item.text, { provider: 'OpenAI / Gnani Evon (Modal)' })}</Text>
         </View>)}
       </SoftCard>
 

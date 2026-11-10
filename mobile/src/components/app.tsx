@@ -38,7 +38,7 @@ export function ConsentCard() {
     <View style={styles.inline}>
       <Icon source="shield-lock-outline" size={20} color={theme.colors.onSurfaceVariant} />
       <Text variant="bodyMedium" style={[styles.flex, { color: theme.colors.onSurfaceVariant }]}>
-        {app.native.running ? t('Allowed. Pause listening to change this.') : t('Audio goes to Gnani. Text goes to OpenAI.')}</Text>
+        {app.native.running ? t('Allowed. Pause listening to change this.') : t('Audio goes to Gnani. Text goes to {provider}.', { provider: 'OpenAI / Gnani Evon (Modal)' })}</Text>
     </View>
   </SoftCard>;
 }

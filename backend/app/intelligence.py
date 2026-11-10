@@ -1,4 +1,4 @@
-"""Provider boundary. No fabricated Evon endpoint and no non-Gnani speech model."""
+"""Shared structured prompts with OpenAI Responses and Modal Evon chat adapters."""
 
 import json
 from typing import Protocol, TypeVar
@@ -21,29 +21,9 @@ class Intelligence(Protocol):
     ) -> EventExtraction: ...
 
 
-class OpenAIFallback:
-    name = "openai_fallback"
-
-    def __init__(self, settings: Settings):
-        if not settings.model_ready:
-            raise RuntimeError("Configure OPENAI_API_KEY and an exact OPENAI_MODEL API identifier.")
-        self.model = settings.openai_model
-        self.client = AsyncOpenAI(api_key=settings.openai_api_key, timeout=12, max_retries=0)
-
+class StructuredIntelligence:
     async def _parse(self, system: str, data: dict, schema: type[T]) -> T:
-        response = await self.client.responses.parse(
-            model=self.model,
-            store=False,
-            input=[
-                {"role": "system", "content": system},
-                {"role": "user", "content": json.dumps(data, ensure_ascii=False)},
-            ],
-            text_format=schema,
-            max_output_tokens=2000,
-        )
-        if response.status != "completed" or response.output_parsed is None:
-            raise RuntimeError("Model refused or did not complete structured extraction.")
-        return response.output_parsed
+        raise NotImplementedError
 
     async def intent(self, text: str) -> Intent:
         return await self._parse(
@@ -122,3 +102,78 @@ class OpenAIFallback:
             {"segments": [s.model_dump() for s in window], "recent_observations": recent},
             Extraction,
         )
+
+
+class OpenAIFallback(StructuredIntelligence):
+    name = "openai_fallback"
+
+    def __init__(self, settings: Settings):
+        if not (settings.openai_api_key and settings.openai_model):
+            raise RuntimeError("Configure OPENAI_API_KEY and an exact OPENAI_MODEL API identifier.")
+        self.model = settings.openai_model
+        self.client = AsyncOpenAI(api_key=settings.openai_api_key, timeout=12, max_retries=0)
+
+    async def _parse(self, system: str, data: dict, schema: type[T]) -> T:
+        response = await self.client.responses.parse(
+            model=self.model,
+            store=False,
+            input=[
+                {"role": "system", "content": system},
+                {"role": "user", "content": json.dumps(data, ensure_ascii=False)},
+            ],
+            text_format=schema,
+            max_output_tokens=2000,
+        )
+        if response.status != "completed" or response.output_parsed is None:
+            raise RuntimeError("Model refused or did not complete structured extraction.")
+        return response.output_parsed
+
+
+class GnaniEvon(StructuredIntelligence):
+    name = "gnani_evon"
+
+    def __init__(self, settings: Settings):
+        if not (settings.evon_api_key and settings.evon_base_url and settings.evon_model):
+            raise RuntimeError("Configure EVON_API_KEY, EVON_BASE_URL and EVON_MODEL.")
+        self.model = settings.evon_model
+        self.setup_timeout = settings.evon_setup_timeout_seconds
+        self.client = AsyncOpenAI(
+            api_key=settings.evon_api_key,
+            base_url=settings.evon_base_url.rstrip("/"),
+            timeout=settings.evon_timeout_seconds,
+            max_retries=0,
+        )
+
+    async def _parse(self, system: str, data: dict, schema: type[T]) -> T:
+        # Setup can wait for a cold GPU; live observations must stay within the
+        # existing freshness window. Neither path retries or falls back to OpenAI.
+        client = (
+            self.client.with_options(timeout=self.setup_timeout)
+            if schema is Intent
+            else self.client
+        )
+        response = await client.chat.completions.create(
+            model=self.model,
+            store=False,
+            messages=[
+                {"role": "system", "content": system},
+                {"role": "user", "content": json.dumps(data, ensure_ascii=False)},
+            ],
+            response_format={
+                "type": "json_schema",
+                "json_schema": {
+                    "name": schema.__name__,
+                    "schema": schema.model_json_schema(),
+                    "strict": True,
+                },
+            },
+            max_tokens=2000,
+            temperature=0,
+            extra_body={"chat_template_kwargs": {"enable_thinking": False}},
+        )
+        if not response.choices:
+            raise RuntimeError("Model returned no structured extraction.")
+        choice = response.choices[0]
+        if choice.finish_reason != "stop" or choice.message.refusal or not choice.message.content:
+            raise RuntimeError("Model refused or did not complete structured extraction.")
+        return schema.model_validate_json(choice.message.content)
