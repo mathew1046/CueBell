@@ -197,6 +197,25 @@ test('cancelling a pending permission cannot start a microphone after the user s
     .cuebellTestStreams.every(stream => stream.getTracks().every(track => track.readyState === 'ended')))).toBe(true);
   expect(mock.sockets).toEqual([]);
   expect(mock.frames).toEqual([]);
+  await expect(page.getByTestId('listening-control')).toHaveAccessibleName('Start Listening');
+  await expect(page.getByText('Listening cancelled.', { exact: true })).toHaveCount(0);
+  await expect(page.getByRole('alert')).toHaveCount(0);
+});
+
+test('blocked browser storage still permits task activation and microphone capture', async ({ page }) => {
+  const mock = await relay(page);
+  await page.addInitScript(() => {
+    for (const name of ['sessionStorage', 'localStorage']) {
+      Object.defineProperty(window, name, { configurable: true, get() { throw new DOMException('Blocked', 'SecurityError'); } });
+    }
+  });
+  await typedTask(page);
+  await expect.poll(() => mock.frames.length).toBeGreaterThan(1);
+  await page.getByTestId('listening-control').click();
+  await expect(page.getByTestId('listening-control')).toHaveAccessibleName('Start Listening');
+  await page.getByTestId('listening-control').click();
+  await expect.poll(() => mock.sockets.length).toBe(2);
+  await expect(page.getByTestId('listening-control')).toHaveAccessibleName('Stop Listening');
 });
 
 test('alert preferences independently control sound and vibration and suppress repeated delivery', async ({ page }) => {

@@ -47,6 +47,7 @@ class Session:
 
 
 def create_app(settings: Settings | None = None, intelligence=None) -> FastAPI:
+    """Build the session-scoped relay with native and explicitly allowed browser transports."""
     settings = settings or Settings()
     sessions: dict[str, Session] = {}
     pair_attempts: deque = deque(maxlen=100)
@@ -259,6 +260,7 @@ def create_app(settings: Settings | None = None, intelligence=None) -> FastAPI:
 
     @app.websocket("/v1/stream")
     async def stream(socket: WebSocket):
+        """Authenticate consent and session ownership before connecting framed PCM to Prisma."""
         browser = False
         try:
             if socket.url.scheme != "wss" and not settings.allow_insecure_local:

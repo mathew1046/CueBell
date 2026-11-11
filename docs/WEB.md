@@ -58,6 +58,11 @@ The service worker handles notification clicks. It does not cache API responses,
 audio, credentials or transcripts. The app requires an internet connection.
 The existing backend admission and provider limits also apply to web clients.
 
+When browser site storage is blocked or full, session credentials and preferences
+remain usable in page memory. Reloading the page discards changes that could not
+be persisted. Successful storage operations retain the usual tab-scoped bearer
+and local preferences.
+
 ## Browser behavior
 
 | Feature | Web behavior |
@@ -95,8 +100,7 @@ cd mobile
 npm test
 npm run typecheck
 npm run lint
-# Configure EXPO_PUBLIC_API_URL first.
-npm run build:web
+# Configure EXPO_PUBLIC_API_URL first. Browser tests build their own production export.
 npx playwright install chromium
 npm run test:web
 
@@ -105,6 +109,11 @@ python -m pytest -q
 python -m ruff check app tests
 python -m ruff format --check app tests
 ```
+
+`npm run test:web` builds `dist` before starting its preview server, so it works
+from a fresh checkout after dependencies and the public relay origin are configured.
+Set `PORT` to use a different local port. Playwright and the preview server share
+that value, defaulting to 4173. A separately running local preview can be reused.
 
 Browser tests use Chromium's synthetic microphone and mock relay output. Backend
 tests exercise the real authenticated relay with mocked provider output. They

@@ -1,5 +1,6 @@
 /** Streaming area resampler. Preserve fractional sample weights across audio quanta. */
 export class PcmFramer {
+  /** Allocate one PCM frame and retain fractional resampling state across worklet quanta. */
   constructor(sampleRate, emit) {
     if (!Number.isFinite(sampleRate) || sampleRate < 16000) throw new Error('Unsupported sample rate');
     this.ratio = sampleRate / 16000;
@@ -12,6 +13,7 @@ export class PcmFramer {
     this.view = new DataView(this.frame);
   }
 
+  /** Downsample finite bounded input and emit complete 512-sample little-endian frames with RMS. */
   push(samples) {
     for (let index = 0; index < samples.length; index++) {
       const sample = Number.isFinite(samples[index]) ? Math.max(-1, Math.min(1, samples[index])) : 0;

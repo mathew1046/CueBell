@@ -1,4 +1,5 @@
 import type { NativeSnapshot, QueueEvent } from '../../src/lib/types';
+import { CaptureCancelledError } from '../../src/lib/listening';
 import { audioContext, clearAlerts, dismissAlert, setLanguage, setSpokenAlertsEnabled,
   showAlert, silenceAlerts, spokenAlertsEnabled } from './browser-alerts';
 
@@ -6,21 +7,34 @@ export { primeAudio } from './browser-alerts';
 
 let prepared: MediaStream | null = null;
 let permissionGeneration = 0;
+let permissionRequest: Promise<void> | null = null;
 
 const cancelHiddenPermission = () => {
   if (document.visibilityState === 'hidden') releasePreparedMicrophone();
 };
 
+/** Invalidate pending grants and release capture permission resources before closing a session. */
 export function releasePreparedMicrophone(): void {
   permissionGeneration++;
+  permissionRequest = null;
   prepared?.getTracks().forEach(track => track.stop());
   prepared = null;
   document.removeEventListener('visibilitychange', cancelHiddenPermission);
   window.removeEventListener('pagehide', releasePreparedMicrophone);
 }
 
-/** Request access only after an explicit listening action, retaining one stream for capture. */
-export async function requestMicrophone(): Promise<void> {
+/** Share pending permission requests so concurrent callers cannot acquire competing streams. */
+export function requestMicrophone(): Promise<void> {
+  if (permissionRequest) return permissionRequest;
+  const request = acquireMicrophone().finally(() => {
+    if (permissionRequest === request) permissionRequest = null;
+  });
+  permissionRequest = request;
+  return request;
+}
+
+/** Retain one stream for capture and stop a late grant after cancellation or page hiding. */
+async function acquireMicrophone(): Promise<void> {
   if (!window.isSecureContext || !navigator.mediaDevices?.getUserMedia || !window.AudioWorkletNode) {
     throw new Error('Use a supported browser over HTTPS to allow microphone access.');
   }
@@ -35,10 +49,11 @@ export async function requestMicrophone(): Promise<void> {
     } });
     if (attempt !== permissionGeneration || document.hidden) {
       stream.getTracks().forEach(track => track.stop());
-      throw new Error('Listening cancelled.');
+      throw new CaptureCancelledError();
     }
     prepared = stream;
   } catch (error) {
+    if (attempt !== permissionGeneration || document.hidden) throw new CaptureCancelledError();
     if (error instanceof DOMException && ['NotAllowedError', 'SecurityError'].includes(error.name)) {
       throw new Error('Microphone permission was denied. Allow microphone access in your browser site settings, then retry.');
     }
@@ -74,16 +89,19 @@ export class BrowserListener {
   setLanguage = setLanguage;
   dismissAlert = dismissAlert;
 
+  /** Subscribe through the shared native event contract and return an independent cleanup handle. */
   addListener(_name: 'onEvent', observer: (event: { json: string }) => void) {
     this.observers.add(observer);
     return { remove: () => { this.observers.delete(observer); } };
   }
 
+  /** Clear in-memory history and notifications after explicit task replacement or deletion. */
   clear(): void {
     this.state.events = [];
     clearAlerts();
   }
 
+  /** Retain a bounded event snapshot and notify subscribers without recording microphone data. */
   private emit(event: QueueEvent): void {
     if (event.type === 'status') {
       this.state.state = event.state ?? '';
@@ -97,10 +115,12 @@ export class BrowserListener {
     for (const observer of this.observers) observer({ json });
   }
 
+  /** Publish microphone health through the same status events consumed by Android screens. */
   private status(state: string, message: string): void {
     this.emit({ type: 'status', state, message });
   }
 
+  /** Stop every microphone track and disconnect worklet, waveform level and screen wake lock. */
   private releaseAudio(): void {
     this.level = 0;
     if (this.processor) {
@@ -118,6 +138,7 @@ export class BrowserListener {
     this.wake = null;
   }
 
+  /** Detach stale socket callbacks and stop transport timers before releasing local capture. */
   private closeTransport(): void {
     if (this.socket) {
       this.socket.onclose = null;
@@ -132,6 +153,7 @@ export class BrowserListener {
     this.releaseAudio();
   }
 
+  /** Stop hidden-page capture and require a visible, explicit user action to restart it. */
   private pageHidden = () => {
     if (!this.state.running) return;
     if (document.visibilityState === 'hidden') {
@@ -141,6 +163,7 @@ export class BrowserListener {
 
   private pageLeaving = () => { void this.stop(); };
 
+  /** Start a secure visible-page stream or hand completed request capture over to its monitor. */
   async start(url: string, token: string, mode: 'request' | 'monitor'): Promise<void> {
     if (!/^https:\/\//.test(url) || !token) throw new Error('A secure HTTPS backend URL is required.');
     const handoff = this.state.running && this.state.mode === 'request' && this.state.state === 'PROCESSING';
@@ -165,6 +188,7 @@ export class BrowserListener {
     catch (error) { await this.stop(); throw error; }
   }
 
+  /** Invalidate asynchronous callbacks before releasing microphone, credentials and lifecycle hooks. */
   async stop(): Promise<void> {
     this.generation++;
     this.state.running = false;
@@ -180,6 +204,7 @@ export class BrowserListener {
     this.status('STOPPED', 'Microphone is off.');
   }
 
+  /** Authenticate before sending audio and route relay events through guarded session callbacks. */
   private connect(): void {
     const generation = ++this.generation;
     this.status(this.retries ? 'RECONNECTING' : 'STARTING', this.retries ?
@@ -238,6 +263,7 @@ export class BrowserListener {
     }, 1000);
   }
 
+  /** Share one live microphone with local RMS and bounded PCM delivery after relay readiness. */
   private async capture(generation: number): Promise<void> {
     if (this.processor) return;
     const audio = audioContext();
@@ -280,6 +306,7 @@ export class BrowserListener {
     }
   }
 
+  /** End stale capture immediately and retry eligible monitors with bounded exponential delays. */
   private fail(generation: number, reason: string, permanent = false): void {
     if (generation !== this.generation || !this.state.running) return;
     this.generation++;

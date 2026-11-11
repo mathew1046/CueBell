@@ -9,6 +9,7 @@ const announced = new Set<string>();
 const tones = new Set<OscillatorNode>();
 let spokenPreference: boolean | null = null;
 
+/** Share the gesture-unlocked audio context between microphone processing and requested alarms. */
 export function audioContext(): AudioContext {
   context ??= new AudioContext();
   return context;
@@ -20,10 +21,12 @@ export function primeAudio(): void {
   try { void audioContext().resume().catch(() => {}); } catch { /* Capture reports unavailable audio when started. */ }
 }
 
+/** Translate public alert templates locally while preserving their runtime identifiers. */
 function text(message: string, parameters: Record<string, string> = {}) {
   return (catalog[message] || message).replace(/\{(\w+)\}/g, (match, key: string) => parameters[key] ?? match);
 }
 
+/** Update alert templates, local voice selection and document reading direction together. */
 export function setLanguage(next: string, translations: string): void {
   language = next;
   try { catalog = JSON.parse(translations); } catch { catalog = {}; }
@@ -33,17 +36,20 @@ export function setLanguage(next: string, translations: string): void {
   }
 }
 
+/** Restore the optional speech preference, using the page's current choice if storage is blocked. */
 export function spokenAlertsEnabled(): boolean {
   if (spokenPreference !== null) return spokenPreference;
   try { spokenPreference = localStorage.getItem('cuebell.spoken.v1') === 'true'; } catch { spokenPreference = false; }
   return spokenPreference;
 }
 
+/** Apply speech preferences immediately and persist them when site storage is available. */
 export function setSpokenAlertsEnabled(enabled: boolean): void {
   spokenPreference = enabled;
   try { localStorage.setItem('cuebell.spoken.v1', String(enabled)); } catch { /* Usable for this session via the control. */ }
 }
 
+/** Cancel active alarms, vibration and queued speech without discarding the visual alerts. */
 export function silenceAlerts(): void {
   for (const tone of tones) { try { tone.stop(); } catch {} }
   tones.clear();
@@ -51,6 +57,7 @@ export function silenceAlerts(): void {
   window.speechSynthesis?.cancel();
 }
 
+/** Withdraw a specific pending or displayed notification and silence its device feedback. */
 export function dismissAlert(id: string): void {
   pendingNotifications.delete(id);
   notifications.get(id)?.close();
@@ -63,6 +70,7 @@ export function dismissAlert(id: string): void {
   silenceAlerts();
 }
 
+/** Clear delivered and queued notifications along with this session's duplicate tracking. */
 export function clearAlerts(): void {
   for (const notification of notifications.values()) notification.close();
   notifications.clear();
