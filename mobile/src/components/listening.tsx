@@ -1,18 +1,11 @@
-import { requireNativeView } from 'expo';
 import { ComponentRef, useRef, useState } from 'react';
-import { NativeScrollEvent, NativeSyntheticEvent, ScrollView, StyleSheet, View, ViewProps } from 'react-native';
+import { NativeScrollEvent, NativeSyntheticEvent, ScrollView, StyleSheet, View } from 'react-native';
 import { Button, Text } from 'react-native-paper';
 import type { QueueEvent } from '../lib/types';
 import { useAppTheme } from '../lib/theme';
 import { useLanguage } from '../lib/i18n';
 
-const NativeWaveform = requireNativeView<ViewProps & { animate: boolean; barColor: string }>('QueueListener');
-
-export function ListeningWaveform({ animate, color, height }: { animate: boolean; color: string; height: number }) {
-  return <NativeWaveform animate={animate} barColor={color}
-    importantForAccessibility="no-hide-descendants" pointerEvents="none"
-    style={{ width: '100%', height }} />;
-}
+export { ListeningWaveform } from './waveform';
 
 export function LiveTranscription({ events, listening, mode }: {
   events: QueueEvent[]; listening: boolean; mode: 'request' | 'monitor';

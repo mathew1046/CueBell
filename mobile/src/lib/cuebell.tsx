@@ -1,17 +1,20 @@
 import { createContext, ReactNode, useCallback, useContext, useEffect, useRef, useState } from 'react';
-import { AccessibilityInfo, AppState, Keyboard, PermissionsAndroid, Permission, Platform } from 'react-native';
+import { AppState, Keyboard } from 'react-native';
 import Listener from '../../modules/queue-listener';
 import type { Tone } from '../components/ui';
 import { haptic, spell } from './a11y';
 import { api, ensureSession, loadConnection, removeConnection, saveConnection } from './api';
-import { CaptureOperation, listeningPhase } from './listening';
+import { CaptureCancelledError, CaptureOperation, listeningPhase } from './listening';
 import { prepareConsentedSession, requireProcessingConsent } from './session';
 import { stopListening } from './stop-listening';
 import { startListeningIfCurrent } from './start-listening';
+import { prepareCaptureGesture, releaseCapturePermission, requestCapturePermissions } from './capture-permissions';
+import { announce } from './announce';
 import { Connection, Intent, NativeSnapshot, QueueAlert, QueueEvent, Rule } from './types';
 import { useLanguage } from './i18n';
 import { translateServiceMessage } from './i18n/translate';
 
+/** Coordinate consent, session state and shared screens while platform listeners own capture. */
 function useCueBellState() {
   const { t, language } = useLanguage();
   const translator = useRef(t);
@@ -61,7 +64,7 @@ function useCueBellState() {
       const alert = event.alert;
       setAlerts(old => [alert, ...old.filter(a => a.id !== alert.id)].slice(0, 20));
       if (event.type === 'alert' || event.type === 'alert.corrected') {
-        AccessibilityInfo.announceForAccessibility(event.type === 'alert.corrected' ?
+        announce(event.type === 'alert.corrected' ?
           translator.current('The previous alert was corrected or cancelled. Check the official source.') :
           alert.summary ? translator.current('Event detected. {summary}', { summary: alert.summary }) :
           translator.current('Your turn. Token {token} called. {counter}', { token: spell(alert.token ?? ''), counter: alert.counter ? translator.current('Counter {counter}.', { counter: alert.counter }) : translator.current('Counter unknown.') }));
@@ -87,6 +90,7 @@ function useCueBellState() {
     return c;
   }, []);
 
+  /** Recheck consent and cancellation around permission prompts, activation and microphone startup. */
   const start = useCallback(async (
     mode: 'request' | 'monitor',
     activate?: (connection: Connection) => Promise<void>,
@@ -101,18 +105,7 @@ function useCueBellState() {
       const snapshot: NativeSnapshot = JSON.parse(Listener.snapshot());
       const handoff = mode === 'monitor' && snapshot.running && snapshot.mode === 'request' && snapshot.state === 'PROCESSING';
       if (!handoff && AppState.currentState !== 'active') throw new Error('Open the app to start the microphone.');
-      const permissions: Permission[] = [PermissionsAndroid.PERMISSIONS.RECORD_AUDIO];
-      if (Number(Platform.Version) >= 33) permissions.push(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS);
-      const checks = await Promise.all(permissions.map(permission => PermissionsAndroid.check(permission)));
-      const missing = permissions.filter((_, index) => !checks[index]);
-      if (missing.length) {
-        setOperation({ mode, phase: 'REQUESTING_PERMISSION' });
-        const granted = await PermissionsAndroid.requestMultiple(missing);
-        if (missing.some(permission => granted[permission] !== PermissionsAndroid.RESULTS.GRANTED)) {
-          setPermissionError(true);
-          throw new Error('Allow microphone and notification access to start listening.');
-        }
-      }
+      await requestCapturePermissions(() => setOperation({ mode, phase: 'REQUESTING_PERMISSION' }));
       requireProcessingConsent(() => consentRef.current);
       if (!allowed()) return;
       setOperation({ mode, phase: 'CONNECTING' });
@@ -130,8 +123,12 @@ function useCueBellState() {
         throw error;
       }
     } catch (error) {
+      if (error instanceof CaptureCancelledError && !allowed()) return;
       setCaptureError(true);
+      if (error instanceof Error && /permission|notification|microphone access/i.test(error.message)) setPermissionError(true);
       throw error;
+    } finally {
+      releaseCapturePermission();
     }
   }, [prepareSession]);
 
@@ -323,7 +320,7 @@ function useCueBellState() {
     if (lastHealthAnnouncement.current === key) return;
     const initial = lastHealthAnnouncement.current === '';
     lastHealthAnnouncement.current = key;
-    if (!initial) AccessibilityInfo.announceForAccessibility(statusDetail ? `${statusLabel}. ${statusDetail}` : statusLabel);
+    if (!initial) announce(statusDetail ? `${statusLabel}. ${statusDetail}` : statusLabel);
     // Heartbeats and repeated reconnect countdowns do not interrupt TalkBack.
   }, [captureMode, phase, statusDetail, statusLabel]);
 
@@ -341,8 +338,8 @@ function useCueBellState() {
     proposal, clearProposal: () => setProposal(null), clarification: translateServiceMessage(language, clarification, clarification),
     activeRule, events, outstanding, takeover, latestUnclear,
     native, phase, captureMode, listening, capturing, statusLabel, statusDetail, statusIcon, tone,
-    analyze: (text: string) => void analyze(text),
-    speak: () => void run(async () => { haptic.tap(); await start('request'); }),
+    analyze: (text: string) => { prepareCaptureGesture(); void analyze(text); },
+    speak: () => { prepareCaptureGesture(); void run(async () => { haptic.tap(); await start('request'); }); },
     cancelCapture: () => void (async () => {
       setupAttempt.current++;
       setOperation({ mode: 'request', phase: 'STOPPING' });
@@ -350,9 +347,9 @@ function useCueBellState() {
       catch (e) { setError(e instanceof Error ? e.message : 'Something went wrong. Please try again.'); }
       finally { sync(); setOperation(null); }
     })(),
-    confirm: () => void confirm(),
+    confirm: () => { prepareCaptureGesture(); void confirm(); },
     pause: () => void run(() => control('pause')),
-    resume: () => void run(() => control('resume')),
+    resume: () => { prepareCaptureGesture(); void run(() => control('resume')); },
     stop: () => void run(() => control('stop')),
     acknowledge: (id: string) => void run(async () => { haptic.tap(); await control('acknowledge', id); }),
     deferAlert: (id: string) => setLaterAlerts(old => [...old, id]),

@@ -10,6 +10,7 @@ from dataclasses import dataclass, field
 
 from anyio import move_on_after
 from fastapi import Depends, FastAPI, Header, HTTPException, Request, WebSocket, WebSocketDisconnect
+from fastapi.middleware.cors import CORSMiddleware
 from websockets.exceptions import InvalidStatus
 
 from .config import Settings
@@ -46,6 +47,7 @@ class Session:
 
 
 def create_app(settings: Settings | None = None, intelligence=None) -> FastAPI:
+    """Build the session-scoped relay with native and explicitly allowed browser transports."""
     settings = settings or Settings()
     sessions: dict[str, Session] = {}
     pair_attempts: deque = deque(maxlen=100)
@@ -79,6 +81,13 @@ def create_app(settings: Settings | None = None, intelligence=None) -> FastAPI:
 
     app = FastAPI(title="CueBell relay", lifespan=lifespan)
     app.add_middleware(RequestGuard, allow_insecure_local=settings.allow_insecure_local)
+    if settings.web_origins:
+        app.add_middleware(
+            CORSMiddleware,
+            allow_origins=settings.web_origins,
+            allow_methods=["GET", "POST", "DELETE"],
+            allow_headers=["Authorization", "Content-Type"],
+        )
 
     def ai():
         nonlocal fallback
@@ -251,17 +260,37 @@ def create_app(settings: Settings | None = None, intelligence=None) -> FastAPI:
 
     @app.websocket("/v1/stream")
     async def stream(socket: WebSocket):
+        """Authenticate consent and session ownership before connecting framed PCM to Prisma."""
+        browser = False
         try:
             if socket.url.scheme != "wss" and not settings.allow_insecure_local:
                 raise HTTPException(400, "TLS required.")
-            # This is an authenticated native-only protocol, not a browser-origin API.
-            if socket.headers.get("origin"):
-                raise HTTPException(403, "Browser origins are not accepted.")
-            session = lookup(socket.headers.get("authorization"))
+            origin = socket.headers.get("origin")
+            if origin:
+                if origin not in settings.web_origins:
+                    raise HTTPException(403, "Browser origin is not allowed.")
+                await socket.accept()
+                browser = True
+                # Browser WebSockets cannot set native headers. Credentials stay out of URLs.
+                raw = await asyncio.wait_for(socket.receive_text(), timeout=5)
+                if len(raw) > 2048:
+                    raise HTTPException(400, "Authentication frame too large.")
+                handshake = json.loads(raw)
+                if not isinstance(handshake, dict) or handshake.get("type") != "authenticate":
+                    raise HTTPException(400, "Authenticate before sending audio.")
+                bearer = handshake.get("token")
+                if not isinstance(bearer, str) or not 1 <= len(bearer) <= 256:
+                    raise HTTPException(401, "Invalid session credential.")
+                authorization = "Bearer " + bearer
+                consent = handshake.get("consent")
+            else:
+                authorization = socket.headers.get("authorization")
+                consent = socket.headers.get("x-processing-consent")
+            session = lookup(authorization)
             mode = socket.query_params.get("mode", "monitor")
             if mode not in {"request", "monitor"} or session.busy or session.extracting:
                 raise HTTPException(409, "Stream already open or mode invalid.")
-            if socket.headers.get("x-processing-consent") != "audio-gnani;text-openai":
+            if consent != "audio-gnani;text-openai":
                 raise HTTPException(400, "Processing disclosure must be accepted.")
             if mode == "monitor" and (
                 not session.engine.rule or session.engine.rule["status"] != "ACTIVE"
@@ -270,12 +299,14 @@ def create_app(settings: Settings | None = None, intelligence=None) -> FastAPI:
             if not settings.gnani_api_key:
                 raise HTTPException(503, "Configure GNANI_API_KEY on the backend.")
             model = ai() if mode == "monitor" else None
-        except HTTPException:
-            await socket.close(4403, "Check credentials, consent, and backend configuration.")
+        except (HTTPException, ValueError, KeyError, TimeoutError, WebSocketDisconnect):
+            with suppress(RuntimeError, WebSocketDisconnect):
+                await socket.close(4403, "Check credentials, consent, and backend configuration.")
             return
         session.busy, session.socket = True, socket
         try:
-            await socket.accept()
+            if not browser:
+                await socket.accept()
         except BaseException:
             session.engine.gap()
             session.busy, session.socket = False, None

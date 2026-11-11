@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { Platform, ScrollView, StyleSheet, View } from 'react-native';
 import { Icon, Text } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ScreenHeader, SoftCard } from '../components/ui';
@@ -8,15 +8,21 @@ import { useLanguage } from '../lib/i18n';
 const steps = [
   { icon: 'microphone', title: 'Describe your listening task', body: 'Say or type what to listen for and when to alert you: a train arriving, boarding starting, your name being called, or another spoken event.' },
   { icon: 'ear-hearing', title: 'Listening starts automatically', body: 'Once your request is understood, CueBell starts listening. No second tap is needed.' },
-  { icon: 'cellphone', title: 'Use your phone normally', body: 'Listening continues with the app in the background or the screen locked. Keep the microphone notification visible. Tap Stop Listening or Stop microphone to end it.' },
+  { icon: 'cellphone', title: Platform.OS === 'web' ? 'Keep CueBell visible' : 'Use your phone normally', body: Platform.OS === 'web'
+    ? 'Keep this page visible and your screen unlocked. Listening pauses when you hide this page.'
+    : 'Listening continues with the app in the background or the screen locked. Keep the microphone notification visible. Tap Stop Listening or Stop microphone to end it.' },
 ];
 
 const about = [
   { icon: 'cellphone-message', text: 'When speech matches your task, CueBell shows what was heard, vibrates and sounds an alarm, unless you ask for silent alerts.' },
-  { icon: 'account-voice', text: 'Spoken alerts use an installed offline Android voice when sound is enabled. Stop in Settings also clears your task and history.' },
+  { icon: 'account-voice', text: Platform.OS === 'web'
+    ? 'Spoken alerts use a locally installed browser voice when sound is enabled. Availability depends on your browser and language.'
+    : 'Spoken alerts use an installed offline Android voice when sound is enabled. Stop in Settings also clears your task and history.' },
   { icon: 'ear-hearing', text: 'CueBell listens to speech. It does not track live transport data, detect non-speech sounds, send messages or replace emergency warning systems.' },
   { icon: 'shield-lock-outline', text: 'Gnani Prisma processes microphone audio. OpenAI processes requests and announcement text. The app and relay save no recordings or transcripts on disk. Provider terms apply.' },
-  { icon: 'cellphone-information', text: 'Android can interrupt listening in the background. Keep the microphone notification visible. This is an aid, not an official source.' },
+  { icon: 'cellphone-information', text: Platform.OS === 'web'
+    ? 'Your browser can interrupt audio and may not support vibration or system notifications. Check the listening status and the official source.'
+    : 'Android can interrupt listening in the background. Keep the microphone notification visible. This is an aid, not an official source.' },
 ];
 
 export default function Help() {
