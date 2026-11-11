@@ -1,4 +1,4 @@
-import * as SecureStore from 'expo-secure-store';
+import * as SecureStore from './storage';
 import { Connection } from './types';
 import { createSessionManager, serviceOrigin } from './session';
 

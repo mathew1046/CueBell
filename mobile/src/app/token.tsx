@@ -1,6 +1,6 @@
 import { useIsFocused, useRouter } from 'expo-router';
 import { useEffect } from 'react';
-import { AccessibilityInfo, Animated, KeyboardAvoidingView, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { Animated, KeyboardAvoidingView, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { ActivityIndicator, Button, Icon, Text, TextInput } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ConsentCard, ErrorBanner } from '../components/app';
@@ -8,6 +8,7 @@ import { actionStyles, Notice, ScreenHeader, usePulse } from '../components/ui';
 import { haptic, useReduceMotion } from '../lib/a11y';
 import { useCueBell } from '../lib/cuebell';
 import { useLanguage } from '../lib/i18n';
+import { announce } from '../lib/announce';
 import { useAppTheme } from '../lib/theme';
 
 export default function TokenScreen() {
@@ -45,7 +46,7 @@ export default function TokenScreen() {
         <Text variant="headlineSmall" style={[styles.center, { color: theme.colors.onSurface }]}>{t('Describe what to listen for')}</Text>
       </View> :
         <Pressable onPress={app.consent ? app.speak : () => {
-          haptic.stopped(); AccessibilityInfo.announceForAccessibility(t('First tick Allow audio and text processing, above.'));
+          haptic.stopped(); announce(t('First tick Allow audio and text processing, above.'));
         }} disabled={app.busy} accessibilityRole="button"
           accessibilityLabel={app.consent ? t('Speak') : t('Speak. Tick Allow above first.')}
           accessibilityHint={t('For example: alert me when train 14922 arrives. Short pauses are OK.')}
@@ -65,6 +66,7 @@ export default function TokenScreen() {
       </View>
 
       <TextInput mode="outlined" label={t('What should I listen for?')} multiline value={app.request} onChangeText={app.editRequest}
+        accessibilityLabel={t('What should I listen for?')}
         placeholder={t('Alert me when train 14922 arrives.')} outlineStyle={styles.outline} outlineColor={theme.colors.outline}
         activeOutlineColor={theme.colors.onSurface} style={[styles.input, { backgroundColor: theme.colors.surface }]}
         maxLength={1500} editable={!app.busy && !app.native.running} />

@@ -56,3 +56,8 @@ jobs:
       - run: npm test
       - run: npm run typecheck
       - run: npm run lint
+      - run: npm run build:web -- --max-workers 2
+        env:
+          EXPO_PUBLIC_API_URL: https://cuebell.mathewjoseph.xyz
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:web

@@ -1,16 +1,18 @@
 import { useIsFocused, useRouter } from 'expo-router';
 import { useState } from 'react';
-import { AccessibilityInfo, ActivityIndicator, Image, Pressable, ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
+import { ActivityIndicator, Image, Platform, Pressable, ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
 import { Button, Icon, Text } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ConsentCard, ErrorBanner } from '../components/app';
 import { ListeningWaveform, LiveTranscription } from '../components/listening';
 import { LanguageMenu } from '../components/language-menu';
+import { WebAppSupport } from '../components/web-app';
 import { AlertCard, NavTile, Notice, SoftCard, SoftIconButton } from '../components/ui';
 import { spell, useReduceMotion } from '../lib/a11y';
 import { useCueBell } from '../lib/cuebell';
 import { useLanguage } from '../lib/i18n';
 import { useAppTheme } from '../lib/theme';
+import { announce } from '../lib/announce';
 
 export default function Home() {
   const { t, language } = useLanguage();
@@ -21,7 +23,7 @@ export default function Home() {
   const focused = useIsFocused();
   const { width, fontScale } = useWindowDimensions();
   const [consentRequested, setConsentRequested] = useState(false);
-  const [captionsOpen, setCaptionsOpen] = useState(false);
+  const [captionsOpen, setCaptionsOpen] = useState(Platform.OS === 'web');
   const app = useCueBell();
   const { activeRule, proposal, native, listening, capturing, captureMode, consent, busy, phase } = app;
   const token = (proposal?.intent ?? activeRule)?.token;
@@ -51,7 +53,7 @@ export default function Home() {
     }
     if (!consent) {
       setConsentRequested(true);
-      AccessibilityInfo.announceForAccessibility(t('Allow audio and text processing below before starting.'));
+      announce(t('Allow audio and text processing below before starting.'));
       return;
     }
     setConsentRequested(false);
@@ -81,6 +83,7 @@ export default function Home() {
             onPress={() => router.push({ pathname: '/settings', params: { section: 'accessibility' } })} />
         </View>
       </View>
+
 
       {app.booting ? <ActivityIndicator size="large" style={styles.restoring}
         accessibilityLabel={t('Restoring your session')} /> : <>
@@ -152,6 +155,7 @@ export default function Home() {
           <NavTile icon="cog-outline" label={t('Settings')} onPress={() => router.push('/settings')} />
           <NavTile icon="help-circle-outline" label={t('Help')} onPress={() => router.push('/help')} />
         </View>
+        <WebAppSupport />
       </>}
     </ScrollView>
   </View>;
