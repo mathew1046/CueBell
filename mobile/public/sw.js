@@ -9,7 +9,8 @@ self.addEventListener('notificationclick', event => {
     catch { destination = new URL('/', self.location.origin); }
     if (destination.origin !== self.location.origin) destination = new URL('/', self.location.origin);
     const windows = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
-    const window = windows.find(client => client.url === destination.href);
+    const window = windows.find(client => client.url === destination.href) ??
+      windows.find(client => new URL(client.url).origin === self.location.origin);
     if (window) await window.focus();
     else await self.clients.openWindow(destination.href);
   })());
