@@ -3,6 +3,7 @@ import { PermissionsAndroid, Platform, type Permission } from 'react-native';
 export function prepareCaptureGesture() {}
 export function releaseCapturePermission() {}
 
+/** Request only missing Android permissions and keep the listening UI aware of the prompt. */
 export async function requestCapturePermissions(requesting: () => void): Promise<void> {
   const permissions: Permission[] = [PermissionsAndroid.PERMISSIONS.RECORD_AUDIO];
   if (Number(Platform.Version) >= 33) permissions.push(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS);

@@ -1,5 +1,13 @@
 import type { NativeSnapshot } from './types';
 
+/** Distinguish an invalidated permission request from microphone and network failures. */
+export class CaptureCancelledError extends Error {
+  constructor() {
+    super('Listening cancelled.');
+    this.name = 'CaptureCancelledError';
+  }
+}
+
 export type ListeningPhase =
   | 'IDLE' | 'REQUESTING_PERMISSION' | 'CONNECTING' | 'LISTENING'
   | 'PROCESSING' | 'RECONNECTING' | 'STOPPING' | 'ERROR';

@@ -5,7 +5,7 @@ import type { NoiseReductionMode } from '../../modules/queue-listener';
 import type { Tone } from '../components/ui';
 import { haptic, spell } from './a11y';
 import { api, ensureSession, loadConnection, removeConnection, saveConnection } from './api';
-import { CaptureOperation, listeningPhase } from './listening';
+import { CaptureCancelledError, CaptureOperation, listeningPhase } from './listening';
 import { prepareConsentedSession, requireProcessingConsent } from './session';
 import { stopListening } from './stop-listening';
 import { startListeningIfCurrent } from './start-listening';
@@ -17,6 +17,7 @@ import { translateServiceMessage } from './i18n/translate';
 import { canChangeNoiseReduction, isNoiseReductionFallback } from './noise-reduction';
 import { useNoiseReductionPreference } from './use-noise-reduction';
 
+/** Coordinate consent, session state and shared screens while platform listeners own capture. */
 function useCueBellState() {
   const { t, language } = useLanguage();
   const translator = useRef(t);
@@ -94,6 +95,7 @@ function useCueBellState() {
     return c;
   }, []);
 
+  /** Recheck consent and cancellation around permission prompts, activation and microphone startup. */
   const start = useCallback(async (
     mode: 'request' | 'monitor',
     activate?: (connection: Connection) => Promise<void>,
@@ -130,6 +132,7 @@ function useCueBellState() {
         throw error;
       }
     } catch (error) {
+      if (error instanceof CaptureCancelledError && !allowed()) return;
       setCaptureError(true);
       if (error instanceof Error && /permission|notification|microphone access/i.test(error.message)) setPermissionError(true);
       throw error;

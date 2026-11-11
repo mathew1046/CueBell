@@ -3,6 +3,7 @@ import { readFile, stat } from 'node:fs/promises';
 import { extname, resolve, sep } from 'node:path';
 
 const root = resolve('dist');
+const port = Number(process.env.PORT || 4173);
 const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.mjs': 'text/javascript',
   '.css': 'text/css', '.json': 'application/json', '.webmanifest': 'application/manifest+json',
   '.png': 'image/png', '.ico': 'image/x-icon', '.ttf': 'font/ttf', '.woff2': 'font/woff2' };
@@ -19,4 +20,4 @@ createServer(async (request, response) => {
       'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' });
     response.end(await readFile(file));
   } catch { response.writeHead(404).end('Not found'); }
-}).listen(Number(process.env.PORT || 4173), '127.0.0.1', () => console.log('CueBell preview at http://127.0.0.1:4173'));
+}).listen(port, '127.0.0.1', () => console.log(`CueBell preview at http://127.0.0.1:${port}`));
