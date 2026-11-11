@@ -16,7 +16,11 @@
 
 ## Project overview
 
-**Status:** active prototype · Android only · development-signed preview
+**Status:** active prototype · Android preview and installable web app
+
+The web app uses the same screens and speech backend. See [Web deployment](docs/WEB.md)
+for build commands, origin configuration and browser capability details. Keep the
+web page visible and the screen unlocked while listening.
 
 **Download the Android preview:**
 https://github.com/mathew1046/CueBell/releases/tag/v1.3.0-preview

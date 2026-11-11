@@ -1,6 +1,6 @@
 import { useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
-import { Linking, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { Button, Icon, Switch, Text } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Listener from '../../modules/queue-listener';
@@ -11,6 +11,7 @@ import { useCueBell } from '../lib/cuebell';
 import { useAppTheme } from '../lib/theme';
 import { ThemeMode, useThemeMode } from '../lib/themeMode';
 import { useLanguage } from '../lib/i18n';
+import { PermissionHelp } from '../components/permission-help';
 
 const modes: { value: ThemeMode; label: string; icon: string }[] = [
   { value: 'system', label: 'Auto', icon: 'theme-light-dark' },
@@ -80,13 +81,7 @@ export default function Settings() {
       </SoftCard>
 
       {heading('Phone')}
-      <Pressable onPress={() => void Linking.openSettings()} accessibilityRole="button" accessibilityLabel={t('Android permissions')}
-        accessibilityHint={t('Opens Android settings for microphone and notifications')}
-        style={({ pressed }) => [styles.row, { backgroundColor: theme.colors.surface, boxShadow: pressed ? theme.shadow.inset : theme.shadow.soft }]}>
-        <Icon source="cellphone-cog" size={28} color={theme.colors.onSurface} />
-        <Text variant="titleMedium" style={[styles.flex, { color: theme.colors.onSurface }]}>{t('Android permissions')}</Text>
-        <Icon source="chevron-right" size={28} color={theme.colors.onSurfaceVariant} />
-      </Pressable>
+      <PermissionHelp />
     </ScrollView>
   </View>;
 }

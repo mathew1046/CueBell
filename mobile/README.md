@@ -92,3 +92,13 @@ The Kotlin foreground service owns microphone capture, framing, networking, hear
 Session metadata (build-time origin, bearer credential, expiry and a local monitor-suppression flag) and the app language choice are encrypted in SecureStore. The native service also stores the language choice and its public UI catalog in private preferences so background notifications retain their language. Transcripts and captured audio are not written to app storage. The bundled alarm is public, generated audio, not a recording. No admission request is sent until a user acts after consenting. Android/OS diagnostics and the configured cloud providers have separate policies. The ongoing notification and alert channels can be controlled by the user in Android settings.
 
 Current dependency audit: 12 moderate reports propagated from Expo/lint tooling's `glob` / `minimatch` dependency ranges; no high/critical reports at implementation time. Audit suggests incompatible SDK downgrades, which were not forced. Recheck and update within a compatible SDK before production.
+
+## Web deployment
+
+The shared Expo application also exports an installable web app. From this
+directory, set `EXPO_PUBLIC_API_URL` to your relay's HTTPS origin and run
+`npm ci` followed by `npm run build:web`. Deploy `dist` to a static HTTPS host.
+The backend must include your exact web origin in `WEB_ORIGINS`.
+
+See [the web guide](../docs/WEB.md) for preview, testing, privacy and browser
+behavior, including the requirement to keep the page visible while listening.
