@@ -34,6 +34,13 @@ test('notification clicks open the resolved destination when no window matches',
   assert.deepEqual((await click('/history?alert=42')).opened, [origin + '/history?alert=42']);
 });
 
+test('notification clicks retain an existing CueBell session on another app screen', async () => {
+  let focused = false;
+  const result = await click('/', [{ url: origin + '/settings', focus: async () => { focused = true; } }]);
+  assert.equal(focused, true);
+  assert.deepEqual(result.opened, []);
+});
+
 test('missing, malformed and external notification destinations return to CueBell', async () => {
   for (const url of [undefined, '', 'http://[', 'https://untrusted.example/', '//untrusted.example/']) {
     assert.deepEqual((await click(url)).opened, [origin + '/']);
