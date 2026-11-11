@@ -89,6 +89,15 @@ existing prompts and local Pydantic/evidence validation for setup, general event
 and legacy queue extraction. Incomplete/refused/invalid responses are rejected;
 SDK retries and automatic provider switching are disabled.
 
+If Evon returns a translated or normalized quote instead of the user's exact
+words during setup, one additional source-index pass can repair the evidence.
+It interprets the original request independently, without seeing the proposed
+identifiers. Quotes are repaired only when every identifier agrees and its
+original word span passes the existing evidence checks. Otherwise the proposal
+still needs clarification. Both passes share `EVON_SETUP_TIMEOUT_SECONDS`; valid
+proposals use one call. The indexed pass is limited to requests of 128 words or
+fewer and does not run for live announcements.
+
 Rebuild/install the Android client from this branch for its Evon disclosure and
 WebSocket consent header. The published v1.3.0 APK has OpenAI-only consent. Setup
 remains a synchronous HTTP request: the app waits up to 135 seconds, and spoken

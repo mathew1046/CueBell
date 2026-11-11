@@ -1,6 +1,8 @@
 """Exercise the real OpenAI SDK's Evon wire format without a hosted model."""
 
+import asyncio
 import json
+from unittest.mock import AsyncMock
 
 import httpx
 import pytest
@@ -9,9 +11,10 @@ from openai import AsyncOpenAI
 from pydantic import ValidationError
 
 from app.config import Settings
-from app.intelligence import GnaniEvon
+from app.intelligence import GnaniEvon, SourcePlan, repair_source_evidence
 from app.main import create_app
-from app.models import EventExtraction, Extraction, Intent
+from app.models import EventExtraction, Extraction, Intent, MonitoringTask
+from app.validation import intent_errors
 from tests.conftest import ACCESS_CODE, make_segment, pair
 from tests.test_event_monitor import REQUEST, task_intent
 
@@ -37,6 +40,7 @@ async def evon_http(monkeypatch):
         "Extraction": Extraction(events=[]),
         "EventExtraction": EventExtraction(events=[]),
     }
+    response["outputs"] = outputs
 
     def handle(request):
         requests.append(request)
@@ -96,17 +100,20 @@ def test_unknown_provider_cannot_silently_select_openai():
 async def test_evon_sdk_roundtrips_all_schemas_and_separates_setup_timeout(
     evon_settings, evon_http
 ):
-    requests, _, _ = evon_http
+    requests, response, _ = evon_http
     evon_settings.evon_timeout_seconds = 8
     evon_settings.evon_setup_timeout_seconds = 125
     evon = GnaniEvon(evon_settings)
     text = "ട്രെയിൻ 14922 എത്തുമ്പോൾ അറിയിക്കുക"
+    expected = task_intent()
+    expected.task.request_evidence = text
+    response["outputs"]["Intent"] = expected
     segment = make_segment(text="ട്രെയിൻ 14922 എത്തിയിരിക്കുന്നു")
     task = task_intent().task
     assert evon_settings.model_ready  # No OpenAI credentials required.
     assert evon.client.max_retries == 0
     try:
-        assert await evon.intent(text) == task_intent()
+        assert await evon.intent(text) == expected
         assert await evon.extract([segment], []) == Extraction(events=[])
         assert await evon.observe([segment], [], task) == EventExtraction(events=[])
     finally:
@@ -230,3 +237,161 @@ def test_evon_failure_is_sanitized_without_retry_or_provider_switch(evon_setting
         )
         assert len(requests) == 1
         assert requests[0].url.host == "evon.example"
+
+
+MALAYALAM_REQUEST = "ഫാർമസിയിൽ ടോക്കൺ അറുപത്തൊൻപത് വിളിക്കുമ്പോൾ എന്നെ അറിയിക്കൂ."
+
+
+def ungrounded_token_intent():
+    return Intent(
+        intent="monitor_event",
+        context=None,
+        token=None,
+        target_evidence=None,
+        clarification=None,
+        task=MonitoringTask(
+            subject="pharmacy token 69",
+            condition="is called at the pharmacy",
+            summary="Notify me when pharmacy token 69 is called.",
+            request_evidence="Call when token number 69 is called",
+            identifiers=[{"value": "69", "evidence_text": "69"}],
+        ),
+        alert_preferences=["visual", "vibration", "sound"],
+    )
+
+
+def source_plan(value="69", ids=None, **changes):
+    return SourcePlan.model_validate(
+        {
+            "intent": "monitor_event",
+            "subject": "token",
+            "condition": "is called",
+            "summary": "Notify when the token is called.",
+            "identifiers": [{"value": value, "source_word_ids": [2] if ids is None else ids}],
+            "alert_preferences": ["sound"],
+            "clarification": "The event has not happened yet.",
+            **changes,
+        }
+    )
+
+
+def test_relay_repairs_malayalam_source_quotes_without_changing_the_task(evon_settings, evon_http):
+    requests, response, _ = evon_http
+    original = ungrounded_token_intent()
+    assert intent_errors(original, MALAYALAM_REQUEST)
+    response["outputs"].update(Intent=original, SourcePlan=source_plan())
+    with TestClient(create_app(evon_settings)) as client:
+        result = client.post(
+            "/v1/intent",
+            headers=pair(client),
+            json={"text": MALAYALAM_REQUEST, "consent_to_text_processing": True},
+        )
+        assert result.status_code == 200
+        proposal = result.json()
+        assert proposal["status"] == "confirm"
+        repaired = Intent.model_validate(proposal["intent"])
+        assert not intent_errors(repaired, MALAYALAM_REQUEST)
+        assert repaired.task.request_evidence == MALAYALAM_REQUEST
+        assert repaired.task.identifiers[0].evidence_text == "അറുപത്തൊൻപത്"
+        expected = original.model_dump()
+        expected["task"]["request_evidence"] = MALAYALAM_REQUEST
+        expected["task"]["identifiers"][0]["evidence_text"] = "അറുപത്തൊൻപത്"
+        assert repaired.model_dump() == expected
+        assert original.task.identifiers[0].evidence_text == "69"
+    assert len(requests) == 2
+    second = json.loads(requests[1].content)
+    assert second["response_format"]["json_schema"]["name"] == "SourcePlan"
+    data = json.loads(second["messages"][1]["content"])
+    assert set(data) == {"request", "source_words"}
+    assert data["request"] == MALAYALAM_REQUEST
+    assert data["source_words"][2] == {"id": 2, "text": "അറുപത്തൊൻപത്"}
+    assert "69" not in second["messages"][1]["content"]  # No proposed identity to copy.
+    assert requests[1].extensions["timeout"]["read"] == 130
+
+
+@pytest.mark.parametrize(
+    "source",
+    [
+        source_plan(value="68"),
+        source_plan(ids=[-1]),
+        source_plan(ids=[99]),
+        source_plan(ids=[2, 2]),
+        source_plan(ids=[3, 2]),
+        source_plan(ids=[1, 3]),
+        source_plan(intent="unclear"),
+        source_plan(condition=" "),
+        source_plan(identifiers=[]),
+        source_plan(
+            identifiers=[
+                {"value": "69", "source_word_ids": [2]},
+                {"value": "69", "source_word_ids": [1, 2]},
+            ]
+        ),
+    ],
+)
+def test_evon_source_repair_rejects_disagreement_invalid_indices_and_ambiguity(source):
+    original = ungrounded_token_intent()
+    assert repair_source_evidence(original, MALAYALAM_REQUEST, source) is original
+    assert intent_errors(original, MALAYALAM_REQUEST)
+
+
+@pytest.mark.parametrize(("value", "quote"), [("69", "68"), ("B7", "B007"), ("P042", "P0420")])
+def test_evon_source_repair_cannot_change_literal_identity_or_drop_leading_zeros(value, quote):
+    original = ungrounded_token_intent()
+    original.task.identifiers[0].value = value
+    text = f"Call token {quote}."
+    assert repair_source_evidence(original, text, source_plan(value=value)) is original
+
+
+def test_relay_keeps_disagreed_evon_proposal_in_clarification(evon_settings, evon_http):
+    requests, response, _ = evon_http
+    original = ungrounded_token_intent()
+    response["outputs"].update(Intent=original, SourcePlan=source_plan(value="68"))
+    with TestClient(create_app(evon_settings)) as client:
+        result = client.post(
+            "/v1/intent",
+            headers=pair(client),
+            json={"text": MALAYALAM_REQUEST, "consent_to_text_processing": True},
+        )
+        assert result.status_code == 200
+        assert result.json()["status"] == "clarify"
+        assert "proposal_id" not in result.json()
+        assert result.json()["intent"] == original.model_dump()
+    assert len(requests) == 2
+
+
+async def test_evon_repair_is_bounded_by_the_original_setup_deadline(evon_settings, monkeypatch):
+    evon = GnaniEvon(evon_settings)
+    evon.setup_timeout = 0.02
+    cancelled = asyncio.Event()
+
+    async def parse(system, data, schema):
+        if schema is Intent:
+            return ungrounded_token_intent()
+        try:
+            await asyncio.Event().wait()
+        finally:
+            cancelled.set()
+
+    parse_mock = AsyncMock(side_effect=parse)
+    monkeypatch.setattr(evon, "_parse", parse_mock)
+    started = asyncio.get_running_loop().time()
+    try:
+        with pytest.raises(TimeoutError):
+            await asyncio.wait_for(evon.intent(MALAYALAM_REQUEST), timeout=0.5)
+        assert asyncio.get_running_loop().time() - started < 0.3
+        assert cancelled.is_set()
+        assert parse_mock.await_count == 2
+    finally:
+        await evon.client.close()
+
+
+async def test_evon_does_not_expand_long_requests_into_indexed_prompts(evon_settings, evon_http):
+    requests, _, _ = evon_http
+    evon = GnaniEvon(evon_settings)
+    try:
+        result = await evon.intent("word " * 129)
+        assert intent_errors(result, "word " * 129)
+        assert len(requests) == 1
+    finally:
+        await evon.client.close()
