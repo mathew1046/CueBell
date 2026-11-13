@@ -19,7 +19,7 @@
 **Status:** active prototype · Android only · development-signed preview
 
 **Download the Android preview:**
-https://github.com/mathew1046/CueBell/releases/tag/v1.3.0-preview
+https://github.com/mathew1046/CueBell/releases/tag/v1.3.1-preview
 
 **Report a bug or suggest an improvement:**
 https://github.com/mathew1046/CueBell/issues
@@ -84,7 +84,7 @@ Grounded task match → visual alert + optional vibration / sound
 
 The user's target is **not** supplied as a speech-recognition hint. The text model evaluates the active subject and condition against the transcript; source evidence must pass validation. Announcements cannot create monitors or change alert preferences.
 
-Voice stopping depends on connectivity, speech recognition and model interpretation; it is not an instant or offline microphone kill switch. Speech-language coverage remains limited by the speech provider. There is no speaker identification, so a nearby person's request may also pause listening. Check that the microphone notification disappears; use the app or notification stop control if speech is missed. Voice-stop tests use mocked model decisions and do not establish live multilingual accuracy.
+Voice stopping depends on connectivity, speech recognition and model interpretation; it is not an instant or offline microphone kill switch. Speech-language coverage remains limited by the speech provider. There is no speaker identification, so a nearby person's request may also pause listening. Check that the microphone notification disappears; use the app or notification stop control if speech is missed. Mocked workflow tests and staged six-language provider replays cover voice stop; they do not establish real-world multilingual accuracy.
 
 | Layer | Stack |
 | --- | --- |
@@ -100,14 +100,14 @@ Gnani Evon is **not integrated**: its usable API contract has not been supplied.
 ## Try the Android preview
 
 APK download:
-https://github.com/mathew1046/CueBell/releases/download/v1.3.0-preview/CueBell-1.3.0-arm64.apk
+https://github.com/mathew1046/CueBell/releases/download/v1.3.1-preview/CueBell-1.3.1-arm64.apk
 
 Checksum:
-https://github.com/mathew1046/CueBell/releases/download/v1.3.0-preview/CueBell-1.3.0-SHA256SUMS
+https://github.com/mathew1046/CueBell/releases/download/v1.3.1-preview/CueBell-1.3.1-SHA256SUMS
 
 - Android 7+ on an ARM64 phone; iOS is not implemented.
-- Version **1.3.0**, Android version code **5**, package `app.cuebell.mobile`.
-- Development-signed preview, **not a production/store distribution**. Its signing certificate matches the 1.2.0 preview for in-place updates.
+- Version **1.3.1**, Android version code **6**, package `app.cuebell.mobile`.
+- Development-signed preview, **not a production/store distribution**. Its signing certificate matches the 1.3.0 preview for in-place updates.
 - The preview is preconfigured; there is no backend URL or provider-key setup on the phone. Sessions for an older deployment are not reused: submit your request again after updating.
 - **Expo Go cannot run the custom native microphone service.** Use the APK or a native development build.
 
@@ -131,8 +131,11 @@ The guide includes exact commands, a three-minute script, correction and interru
 
 ## Verification
 
-The 1.3.0 preview passed **280 backend tests, 43 mobile tests and 14 native unit tests**, plus TypeScript, lint, all 20 Expo Doctor checks and APK packaging/signature checks. The verification record separates mocked tests, historical smoke checks and unverified real-world behavior:
+The included backend work passed **410 tests**. Mobile checks cover 43 workflow tests, TypeScript and lint. The versioned verification record includes native tests, APK checks, device installation and toolchain notices:
 https://github.com/mathew1046/CueBell/blob/main/docs/VERIFICATION.md
+
+The real-provider latency campaign used 24 synthetic speech fixtures in six languages across 22 runs and 174 case attempts. A tested Fast/speech-aware setup profile reduced median confirmation time from 10.75 to 6.21 seconds, with six successful trials in each arm. Full monitoring validation did not preserve the target-and-counter quality gate, so experimental settings remain opt-in and baseline defaults are retained. These are backend replay measurements, not physical-phone or real-venue latency:
+https://github.com/mathew1046/CueBell/blob/main/docs/LATENCY_BENCHMARK_2026-11-13.md
 
 GitHub Actions runs backend tests/lint and mobile tests/typecheck/lint without provider credentials. It does not build the APK, call paid providers or establish physical-phone reliability.
 

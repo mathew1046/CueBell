@@ -3,6 +3,57 @@
 This is an evidence record, not an accuracy benchmark or a reliability guarantee.
 Results are grouped by preview version; historical checks are labelled separately.
 
+## 1.3.1-preview — 2026-11-14
+
+### Automated checks
+
+| Check | Result and scope |
+| --- | --- |
+| Backend | The included latency implementation passed 410 tests; lint and formatting passed. GitHub Actions also passed for implementation commit `09b7cf19ddecd4b6df2dab05ff35ee1be624aae0`. |
+| Mobile | 43 tests passed with version 1.3.1 / code 6, including metadata consistency. TypeScript, lint and build-time service-origin validation passed. |
+| Native Android | 14 JUnit tests passed, with no failures, errors or skips. ARM64 release compilation succeeded. |
+| Expo Doctor | 19 of 20 checks passed. The dependency-version check recommends seven newer SDK 58 patch releases; the tested dependency versions are retained. |
+
+The patch-version notice lists Expo 58.0.23 (recommended 58.0.25), Constants
+58.0.15 (58.0.16), Font 58.0.11 (58.0.12), Linking 58.0.16 (58.0.17), Router
+58.0.30 (58.0.31), SecureStore 58.0.2 (58.0.3) and StatusBar 58.0.4 (58.0.5).
+Existing Node module-type and Starlette/httpx deprecation warnings are recorded
+in the corresponding test output.
+
+### Real-provider replay evidence
+
+- 24 ElevenLabs fixtures in six languages; 22 experiment runs and 174 case attempts
+  using real Gnani Prisma and GPT-6 Luna through a local backend.
+- Fast/speech-aware spoken setup: six of six trials passed, median confirmation
+  6.21 seconds; baseline six of six passed, median 10.75 seconds.
+- Full monitoring: baseline 23 passed / 1 failed / 4 inconclusive; candidate
+  22 / 2 / 4 after uniform label review. The target-and-counter quality gate was
+  not met, so experimental latency controls remain opt-in.
+- These are synthetic backend replays, not physical-phone microphone,
+  notification, battery or real-venue accuracy measurements.
+
+Results, failed cases, provider errors and reproducible evidence:
+https://github.com/mathew1046/CueBell/blob/v1.3.1-preview/docs/LATENCY_BENCHMARK_2026-11-13.md
+
+Implementation CI:
+https://github.com/mathew1046/CueBell/actions/runs/43481314804
+
+### Release artifact
+
+- Package `app.cuebell.mobile`, version 1.3.1, Android version code 6;
+  ARM64 only, minimum SDK 24, target SDK 36, compile SDK 37.
+- APK signature and 16 KB ZIP alignment passed. The non-debuggable APK uses the
+  same development signing certificate as 1.3.0 for in-place updates.
+- Verified the compiled service origin, native microphone service and
+  cleartext-traffic rejection. The bundled alarm bytes match the original.
+- No environment/keystore files or configured private backend values were found
+  in the APK; this is a targeted packaging check, not a comprehensive audit.
+- APK size: 16,002,893 bytes. SHA-256:
+  `cd76b8d6ef7c70069c59b167aa73ca9dd0c42bdb4908f52f8c3ea6c3cf321505`.
+
+Release artifact and checksum:
+https://github.com/mathew1046/CueBell/releases/tag/v1.3.1-preview
+
 ## 1.3.0-preview — 2026-11-08
 
 ### Automated checks
@@ -87,8 +138,8 @@ https://github.com/mathew1046/CueBell/releases/tag/v1.2.0-preview
 ## Not established
 
 - Real PA speech accuracy, false-alert/missed-call rates and end-to-end latency.
-- Live voice-stop accuracy, locked-screen delivery and physical-phone behavior of
-  the 1.3.0 APK.
+- Real-venue voice-stop accuracy, locked-screen delivery and sustained
+  physical-phone microphone behavior of the current APK.
 - TalkBack usability, alert vibration/sound, OEM battery management and endurance.
 - Fewer missed turns, reduced waiting time or successful venue deployments.
 

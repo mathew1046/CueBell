@@ -3,6 +3,43 @@
 Changes to downloadable Android previews are recorded here. Release assets and
 checksums are authoritative for each published build; historical APKs are not renamed.
 
+## 1.3.1-preview — 2026-11-14
+
+### Added
+
+- Opt-in backend controls for correction-aware alert scheduling, ordered outbound
+  delivery, OpenAI reasoning/service tier/prompt options and Gnani endpointing.
+- Speech-aware spoken-request completion that tracks outstanding utterances before
+  applying a shorter quiet period, available as an opt-in server setting.
+- A reproducible real-provider benchmark: 24 ElevenLabs fixtures in six languages,
+  22 experiment runs and 174 case attempts, with frozen sources, traces and results.
+
+### Fixed
+
+- Stream teardown invalidates pending interpretations and cancels workers before
+  provider shutdown, preventing a delayed alert during failed-stream cleanup.
+
+### Evaluation
+
+- The tested Fast/speech-aware setup profile reduced median confirmation time from
+  10.75 to 6.21 seconds, with six successful trials in each arm.
+- Full monitoring validation did not meet the target-and-counter accuracy gate:
+  baseline 23 passed / 1 failed / 4 inconclusive; candidate 22 / 2 / 4. Experimental
+  latency settings therefore remain opt-in with baseline defaults retained.
+- Measurements use paced synthetic audio through real Gnani and GPT-6 Luna APIs;
+  they are not physical-microphone, real-venue or notification-latency measurements.
+
+### Distribution
+
+- Android version 1.3.1 / version code 6; ARM64, development-signed preview.
+- Preconfigured for https://cuebell.mathewjoseph.xyz with `speech-event-v1` support.
+
+Benchmark report:
+https://github.com/mathew1046/CueBell/blob/main/docs/LATENCY_BENCHMARK_2026-11-13.md
+
+Release notes, APK and checksum:
+https://github.com/mathew1046/CueBell/releases/tag/v1.3.1-preview
+
 ## 1.3.0-preview — 2026-11-08
 
 ### Added

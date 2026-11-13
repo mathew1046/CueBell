@@ -13,12 +13,13 @@ https://cuebell.mathewjoseph.xyz
 
 For local builds, set the same `EXPO_PUBLIC_API_URL` in `.env` or the shell. No provider secrets belong in this file. The EAS post-install hook rejects missing/placeholder routing configuration.
 
-The v1.3.0 ARM64 preview APK and checksum are published at:
-https://github.com/mathew1046/CueBell/releases/tag/v1.3.0-preview
+The v1.3.1 ARM64 preview APK and checksum are published at:
+https://github.com/mathew1046/CueBell/releases/tag/v1.3.1-preview
 
-Version 1.3.0 / Android version code 5 includes general listening tasks, automatic activation, spoken-request service handoff, 21 app-language catalogs and a bundled alarm. It retains captions, the waveform, spoken alerts and semantic voice stop. Submit a fresh request after updating. The hosted backend supports `speech-event-v1`; health, automatic admission, authenticated state and temporary-session deletion passed without microphone or paid-model usage. Provider-key changes remain server-only and do not require an APK rebuild. Source checks include 43 mobile workflow/session/branding tests. Earlier emulator and physical-phone checks do not establish this release's real-phone reliability.
+Version 1.3.1 / Android version code 6 accompanies the backend latency controls, stream-shutdown fix and real-provider benchmark evidence. Experimental latency settings remain opt-in because full monitoring validation did not meet the target-and-counter quality gate. It retains general listening tasks, automatic activation, spoken-request service handoff, 21 app-language catalogs, the bundled alarm, captions, waveform and semantic voice stop. Submit a fresh request after updating. The hosted backend supports `speech-event-v1`. Provider-key changes remain server-only and do not require an APK rebuild. Source checks include 43 mobile workflow/session/branding tests. Device installation and backend audio replays do not establish real-venue or locked-screen reliability.
 
-The signing certificate matches the 1.2.0 preview for in-place updates. The release APK passed signature, package/version, bundled-origin/alarm and 16 KB ZIP alignment checks.
+The signing certificate matches the 1.3.0 preview for in-place updates. Versioned APK and device checks are recorded at:
+https://github.com/mathew1046/CueBell/blob/main/docs/VERIFICATION.md
 
 ```sh
 npm ci
@@ -36,7 +37,7 @@ Then, from the generated `android` directory:
 ./gradlew :queue-listener:testDebugUnitTest
 ```
 
-The standalone APK is generated at `android/app/build/outputs/apk/release/app-release.apk`. The command above includes emulators; for the phone-only release use `-PreactNativeArchitectures=arm64-v8a`. The downloadable v1.3.0 APK is ARM64 only. Its application ID is `app.cuebell.mobile`, scheme `cuebell` and encrypted session key `cuebell.connection.v1`. It does not read another app's private storage. To support older 32-bit phones, include `armeabi-v7a` explicitly when building.
+The standalone APK is generated at `android/app/build/outputs/apk/release/app-release.apk`. The command above includes emulators; for the phone-only release use `-PreactNativeArchitectures=arm64-v8a`. The downloadable v1.3.1 APK is ARM64 only. Its application ID is `app.cuebell.mobile`, scheme `cuebell` and encrypted session key `cuebell.connection.v1`. It does not read another app's private storage. To support older 32-bit phones, include `armeabi-v7a` explicitly when building.
 
 **Local preview signing:** Expo's generated local release configuration uses its development/debug signing key. The preview is installable for review, not a production/store-signed distribution. Set up your own production keystore through a config plugin or use your own EAS project and signing credentials before publishing. Do not edit generated Android source; keep native service code under `modules/queue-listener` and configuration in `app.json` / config plugins.
 
