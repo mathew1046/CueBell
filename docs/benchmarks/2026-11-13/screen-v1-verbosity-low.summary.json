@@ -1,0 +1,453 @@
+{
+  "schema_version": 1,
+  "run_id": "fc88aa1d00ae4cfe9c5fc70c30f215a8",
+  "label": "screen-v1-verbosity-low",
+  "mode": "monitor",
+  "base_url": "http://127.0.0.1:8091",
+  "manifest": "/home/mathew/Arrakis/CueBell/backend/benchmarks/corpus.json",
+  "manifest_sha256": "0475b1692d8e93ee79404aa64ef652a43a02c44882a5ce4cbcfefea82c542832",
+  "output": "/home/mathew/Arrakis/CueBell/docs/benchmarks/2026-11-13/screen-v1-verbosity-low.jsonl",
+  "options": {
+    "base_url": "http://127.0.0.1:8091",
+    "mode": "monitor",
+    "label": "screen-v1-verbosity-low",
+    "leading_silence": 0.3,
+    "tail_silence": 24.0,
+    "max_stream_seconds": 90.0,
+    "ready_timeout": 30.0,
+    "http_timeout": 45.0,
+    "close_timeout": 3.0
+  },
+  "repeat": 1,
+  "selected_cases": [
+    "hi-positive",
+    "hi-near-miss",
+    "ml-positive",
+    "ml-voice-stop",
+    "en-positive",
+    "hi-correction"
+  ],
+  "max_cases": null,
+  "counts": {
+    "attempts": 6,
+    "pass": 2,
+    "fail": 0,
+    "inconclusive": 4,
+    "statuses": {
+      "completed": 2,
+      "provider_degraded": 2,
+      "error": 2
+    },
+    "with_errors": 2,
+    "false_positive_any": 0,
+    "false_positive_terminal": 0,
+    "voice_stops": 0,
+    "corrections": 0
+  },
+  "usage_proxy": {
+    "audio_stream_seconds": 110.784,
+    "connection_open_seconds": 114.47313624099979,
+    "intent_attempt_count": 6,
+    "successful_intent_count": 4,
+    "confirmed_intent_count": 4,
+    "observed_transcript_count": 6
+  },
+  "per_language": {
+    "en": {
+      "cases": 1,
+      "verdicts": {
+        "inconclusive": 1
+      },
+      "metrics": {
+        "setup_ms": {
+          "n": 0,
+          "median": null,
+          "p95": null,
+          "min": null,
+          "max": null,
+          "small_n": true
+        },
+        "connect_ready_ms": {
+          "n": 0,
+          "median": null,
+          "p95": null,
+          "min": null,
+          "max": null,
+          "small_n": true
+        },
+        "intent_ms": {
+          "n": 1,
+          "median": 11910.21205800007,
+          "p95": 11910.21205800007,
+          "min": 11910.21205800007,
+          "max": 11910.21205800007,
+          "small_n": true
+        },
+        "confirm_ms": {
+          "n": 0,
+          "median": null,
+          "p95": null,
+          "min": null,
+          "max": null,
+          "small_n": true
+        },
+        "speech_end_to_transcript_ms": {
+          "n": 0,
+          "median": null,
+          "p95": null,
+          "min": null,
+          "max": null,
+          "small_n": true
+        },
+        "speech_end_to_alert_ms": {
+          "n": 0,
+          "median": null,
+          "p95": null,
+          "min": null,
+          "max": null,
+          "small_n": true
+        },
+        "speech_end_to_voice_stop_ms": {
+          "n": 0,
+          "median": null,
+          "p95": null,
+          "min": null,
+          "max": null,
+          "small_n": true
+        },
+        "transcript_to_alert_ms": {
+          "n": 0,
+          "median": null,
+          "p95": null,
+          "min": null,
+          "max": null,
+          "small_n": true
+        },
+        "source_transcript_to_alert_ms": {
+          "n": 0,
+          "median": null,
+          "p95": null,
+          "min": null,
+          "max": null,
+          "small_n": true
+        },
+        "last_cue_to_correction_ms": {
+          "n": 0,
+          "median": null,
+          "p95": null,
+          "min": null,
+          "max": null,
+          "small_n": true
+        },
+        "request_workflow_ms": {
+          "n": 0,
+          "median": null,
+          "p95": null,
+          "min": null,
+          "max": null,
+          "small_n": true
+        },
+        "speech_end_to_confirmation_ms": {
+          "n": 0,
+          "median": null,
+          "p95": null,
+          "min": null,
+          "max": null,
+          "small_n": true
+        },
+        "sender_lateness_p50_ms": {
+          "n": 0,
+          "median": null,
+          "p95": null,
+          "min": null,
+          "max": null,
+          "small_n": true
+        },
+        "sender_lateness_p95_ms": {
+          "n": 0,
+          "median": null,
+          "p95": null,
+          "min": null,
+          "max": null,
+          "small_n": true
+        },
+        "sender_lateness_max_ms": {
+          "n": 0,
+          "median": null,
+          "p95": null,
+          "min": null,
+          "max": null,
+          "small_n": true
+        }
+      }
+    },
+    "hi": {
+      "cases": 3,
+      "verdicts": {
+        "pass": 2,
+        "inconclusive": 1
+      },
+      "metrics": {
+        "setup_ms": {
+          "n": 3,
+          "median": 3601.0285219999787,
+          "p95": 4186.752451400071,
+          "min": 3211.5630050002437,
+          "max": 4251.832888000081,
+          "small_n": true
+        },
+        "connect_ready_ms": {
+          "n": 3,
+          "median": 319.50715299990406,
+          "p95": 357.5138668000818,
+          "min": 252.1370240001488,
+          "max": 361.73683500010156,
+          "small_n": true
+        },
+        "intent_ms": {
+          "n": 3,
+          "median": 3596.2457390000964,
+          "p95": 4154.1715160003605,
+          "min": 3206.698385999971,
+          "max": 4216.16326900039,
+          "small_n": true
+        },
+        "confirm_ms": {
+          "n": 3,
+          "median": 1.6056380000009085,
+          "p95": 2.1233441003005282,
+          "min": 1.5235089999805496,
+          "max": 2.1808670003338193,
+          "small_n": true
+        },
+        "speech_end_to_transcript_ms": {
+          "n": 3,
+          "median": 723.324742999921,
+          "p95": 798.1604810002409,
+          "min": -5292.0939259997795,
+          "max": 806.4755630002765,
+          "small_n": true
+        },
+        "speech_end_to_alert_ms": {
+          "n": 1,
+          "median": 6973.120760999791,
+          "p95": 6973.120760999791,
+          "min": 6973.120760999791,
+          "max": 6973.120760999791,
+          "small_n": true
+        },
+        "speech_end_to_voice_stop_ms": {
+          "n": 0,
+          "median": null,
+          "p95": null,
+          "min": null,
+          "max": null,
+          "small_n": true
+        },
+        "transcript_to_alert_ms": {
+          "n": 1,
+          "median": 6249.79601799987,
+          "p95": 6249.79601799987,
+          "min": 6249.79601799987,
+          "max": 6249.79601799987,
+          "small_n": true
+        },
+        "source_transcript_to_alert_ms": {
+          "n": 1,
+          "median": 6249.79601799987,
+          "p95": 6249.79601799987,
+          "min": 6249.79601799987,
+          "max": 6249.79601799987,
+          "small_n": true
+        },
+        "last_cue_to_correction_ms": {
+          "n": 0,
+          "median": null,
+          "p95": null,
+          "min": null,
+          "max": null,
+          "small_n": true
+        },
+        "request_workflow_ms": {
+          "n": 0,
+          "median": null,
+          "p95": null,
+          "min": null,
+          "max": null,
+          "small_n": true
+        },
+        "speech_end_to_confirmation_ms": {
+          "n": 0,
+          "median": null,
+          "p95": null,
+          "min": null,
+          "max": null,
+          "small_n": true
+        },
+        "sender_lateness_p50_ms": {
+          "n": 3,
+          "median": 0.7765079999444424,
+          "p95": 0.7847092499787323,
+          "min": 0.6926100004420732,
+          "max": 0.7856204999825422,
+          "small_n": true
+        },
+        "sender_lateness_p95_ms": {
+          "n": 3,
+          "median": 1.2859254998147662,
+          "p95": 1.3051712798142032,
+          "min": 1.1716250001882142,
+          "max": 1.3073096998141407,
+          "small_n": true
+        },
+        "sender_lateness_max_ms": {
+          "n": 3,
+          "median": 1.787659999990865,
+          "p95": 1.8605240000852064,
+          "min": 1.511801000106061,
+          "max": 1.8686200000956887,
+          "small_n": true
+        }
+      }
+    },
+    "ml": {
+      "cases": 2,
+      "verdicts": {
+        "inconclusive": 2
+      },
+      "metrics": {
+        "setup_ms": {
+          "n": 1,
+          "median": 4969.488653000099,
+          "p95": 4969.488653000099,
+          "min": 4969.488653000099,
+          "max": 4969.488653000099,
+          "small_n": true
+        },
+        "connect_ready_ms": {
+          "n": 1,
+          "median": 671.6410829999404,
+          "p95": 671.6410829999404,
+          "min": 671.6410829999404,
+          "max": 671.6410829999404,
+          "small_n": true
+        },
+        "intent_ms": {
+          "n": 2,
+          "median": 8497.324182499824,
+          "p95": 11676.526522549852,
+          "min": 4964.8771379997925,
+          "max": 12029.771226999856,
+          "small_n": true
+        },
+        "confirm_ms": {
+          "n": 1,
+          "median": 1.6395160000683973,
+          "p95": 1.6395160000683973,
+          "min": 1.6395160000683973,
+          "max": 1.6395160000683973,
+          "small_n": true
+        },
+        "speech_end_to_transcript_ms": {
+          "n": 1,
+          "median": 812.7890999999181,
+          "p95": 812.7890999999181,
+          "min": 812.7890999999181,
+          "max": 812.7890999999181,
+          "small_n": true
+        },
+        "speech_end_to_alert_ms": {
+          "n": 0,
+          "median": null,
+          "p95": null,
+          "min": null,
+          "max": null,
+          "small_n": true
+        },
+        "speech_end_to_voice_stop_ms": {
+          "n": 0,
+          "median": null,
+          "p95": null,
+          "min": null,
+          "max": null,
+          "small_n": true
+        },
+        "transcript_to_alert_ms": {
+          "n": 0,
+          "median": null,
+          "p95": null,
+          "min": null,
+          "max": null,
+          "small_n": true
+        },
+        "source_transcript_to_alert_ms": {
+          "n": 0,
+          "median": null,
+          "p95": null,
+          "min": null,
+          "max": null,
+          "small_n": true
+        },
+        "last_cue_to_correction_ms": {
+          "n": 0,
+          "median": null,
+          "p95": null,
+          "min": null,
+          "max": null,
+          "small_n": true
+        },
+        "request_workflow_ms": {
+          "n": 0,
+          "median": null,
+          "p95": null,
+          "min": null,
+          "max": null,
+          "small_n": true
+        },
+        "speech_end_to_confirmation_ms": {
+          "n": 0,
+          "median": null,
+          "p95": null,
+          "min": null,
+          "max": null,
+          "small_n": true
+        },
+        "sender_lateness_p50_ms": {
+          "n": 1,
+          "median": 0.7086279999839462,
+          "p95": 0.7086279999839462,
+          "min": 0.7086279999839462,
+          "max": 0.7086279999839462,
+          "small_n": true
+        },
+        "sender_lateness_p95_ms": {
+          "n": 1,
+          "median": 1.2130587497267697,
+          "p95": 1.2130587497267697,
+          "min": 1.2130587497267697,
+          "max": 1.2130587497267697,
+          "small_n": true
+        },
+        "sender_lateness_max_ms": {
+          "n": 1,
+          "median": 1.4267189994825458,
+          "p95": 1.4267189994825458,
+          "min": 1.4267189994825458,
+          "max": 1.4267189994825458,
+          "small_n": true
+        }
+      }
+    }
+  },
+  "notes": [
+    "Medians/p95 use only observed values, including failed cases; missing values stay null.",
+    "p95 uses linear interpolation. n<20 is flagged; small samples are descriptive only.",
+    "Times are monotonic client arrivals and manifest speech boundaries at 32 ms packet submission granularity, not physical microphone or separately measured STT/model delays.",
+    "t_speech_end is the LAST cue speech endpoint, distinct from the full sequence end. First-event offsets can be negative for multi-cue/correction sequences.",
+    "Request workflow is first audio frame through confirmation; setup includes pairing. No TTS generation time is included.",
+    "Usage is a proxy, not provider billing: submitted PCM seconds, websocket-open seconds, HTTP-2xx intent responses (including clarify), and observed final transcripts. Unobserved upstream calls/retries and request-mode intermediate finals are unknown.",
+    "Exact structured identifiers are scored. Location aliases, if supplied, are explicit verbatim ground truth; raw literal location checks remain recorded. References and all websocket events remain in JSONL for manual review.",
+    "Monitor coverage requires a final transcript and the full window (or expected voice stop). This cannot prove all model calls or the latest interpretation completed; negative outcomes require an offline server-trace cross-check.",
+    "Expected correction scores absence of surviving wrong alerts. Safe suppression does not imply a semantic correction or retraction was observed; those are separate."
+  ]
+}

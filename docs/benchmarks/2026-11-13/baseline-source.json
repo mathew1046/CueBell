@@ -1,0 +1,24 @@
+{
+  "commit": "6e98d54a166f2d6d617ee0e36a0f2cd499659882",
+  "branch": "main",
+  "openai_model": "gpt-6-luna",
+  "gnani_language_code": "indic-auto",
+  "correction_grace_seconds": 1.2,
+  "request_pause_seconds": 3.5,
+  "providers_configured": {
+    "gnani": true,
+    "openai": true
+  },
+  "source_hashes": {
+    "backend/app/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "backend/app/config.py": "cb3b5b317303798af299277ad63fb1b85c1f55f453fed78202177e72fe90b079",
+    "backend/app/engine.py": "6704433d5b7e0d65556405f5b693eea9dd221d2c24c64d3efab501c7ce1cb8dd",
+    "backend/app/gnani.py": "b4a60c1f528fda1c3792c5ce15277f2ed8a0bddbadd71fabaa33681ec94bda91",
+    "backend/app/guard.py": "951830741583d7f821603ed5bbbfe2db1763b486792ad1b16050e1d88e423d27",
+    "backend/app/intelligence.py": "7674ed67f287ea13ea654f5f7e94023b5c11b0c4d3e3e1976275022650401155",
+    "backend/app/main.py": "06b4c2561ceedcc50c51f4c346ecd6de4ee35de8ef7d89a34cb63255b24ff31d",
+    "backend/app/models.py": "27fd068e955a68f5fe794c6eeaed0c1fc36ae90a5b264b5c51a9af8d55fbe434",
+    "backend/app/prompts.py": "1f4dc65cac4a07b2adad3989d1f51b85e9139b3ce998199a11af9b3360b5c3b4",
+    "backend/app/validation.py": "b90163f714228fe87f38597aff73ba1695314088f9a0e431260e597a2d70e5ca"
+  }
+}

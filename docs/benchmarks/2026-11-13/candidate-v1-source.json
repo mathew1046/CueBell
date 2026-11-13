@@ -1,0 +1,19 @@
+{
+  "source": "/tmp/opencode/cuebell-benchmark-20261113/candidate-v1/backend",
+  "baseline_commit": "6e98d54a166f2d6d617ee0e36a0f2cd499659882",
+  "hashes": {
+    "app/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "app/config.py": "86178379dd3cd24caa8bd8287599c313bc7c28ff61ce5de6d4fdacdb98d69313",
+    "app/engine.py": "b1db23dd429fe5f44292c806e7611d23503204741679c4a399866366c6375a74",
+    "app/gnani.py": "879bc42230eeee5385d9cc1ae9eb0d65163d3ab48fc76ef9e2d6e7bfc5fe1bdd",
+    "app/guard.py": "951830741583d7f821603ed5bbbfe2db1763b486792ad1b16050e1d88e423d27",
+    "app/intelligence.py": "4d0220a214e277e759e537959bde4902ed6b8be7113fb75e335d95751229923b",
+    "app/main.py": "be1285d6552cb654775fa8fa3bbd618f3c44a9ee8ec68a487a27bbefb1931ba2",
+    "app/models.py": "27fd068e955a68f5fe794c6eeaed0c1fc36ae90a5b264b5c51a9af8d55fbe434",
+    "app/prompts.py": "fdea2e2b1e390c9581937d93a65d7dd0caedd21b38a0319e09ed0b6895be5add",
+    "app/validation.py": "b90163f714228fe87f38597aff73ba1695314088f9a0e431260e597a2d70e5ca",
+    "pyproject.toml": "7236c67880546840839b4696310da62dc457714a262e67f76a482c06031e5bc7",
+    "requirements.lock": "f45b1cd576853438364c4bfe544a35bec0151d356bf139d161b978085a32ac8c"
+  },
+  "validation": "375 offline tests passed before snapshot; no settings defaults promoted"
+}

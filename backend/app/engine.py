@@ -250,6 +250,9 @@ class Engine:
                 self.pending.append((now + self.grace, observation))
         return outputs
 
+    def next_pending_due(self) -> float | None:
+        return min((due for due, _ in self.pending), default=None)
+
     def flush(self, now: float) -> list[dict]:
         ready = [o for due, o in self.pending if due <= now]
         self.pending = [(due, o) for due, o in self.pending if due > now]

@@ -1,0 +1,82 @@
+{
+  "id": "te-voice-stop",
+  "started_at": "2026-11-13T16:03:30.499547+00:00",
+  "characters": 20,
+  "estimated_cost_usd": 0.006,
+  "cost_status": "estimated",
+  "cost_entry_id": "871656d08213",
+  "status": "generated",
+  "generator_sha256": "1c1aacf53fea76885a7f6182e2546985ca5cf72813942d5f69adf0f5e395bacf",
+  "inputs": {
+    "text": "క్యూబెల్, వినడం ఆపు.",
+    "voice_id": "bajNon13EdhNMndG3z05",
+    "model_id": "eleven_v3",
+    "language_code": "te",
+    "output_format": "pcm_16000",
+    "with_timestamps": true,
+    "stability": 0.5,
+    "similarity_boost": 0.75,
+    "style": 0.0,
+    "speed": 1.0,
+    "use_speaker_boost": true,
+    "output_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/te-voice-stop.wav"
+  },
+  "finished_at": "2026-11-13T16:03:32.540709+00:00",
+  "generation_duration_s": 2.039844,
+  "http": [
+    {
+      "status_code": 200,
+      "request_id": "LZ7CSeotFPbXjLWjNSP7",
+      "character-cost": 4
+    }
+  ],
+  "tool_result": {
+    "success": true,
+    "data": {
+      "provider": "elevenlabs",
+      "model": "eleven_v3",
+      "voice_id": "bajNon13EdhNMndG3z05",
+      "voice_settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 1.0,
+        "use_speaker_boost": true
+      },
+      "text_length": 20,
+      "output": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/te-voice-stop.wav",
+      "format": "pcm_16000",
+      "request_id": "LZ7CSeotFPbXjLWjNSP7",
+      "word_timestamps": [
+        {
+          "word": "క్యూబెల్,",
+          "start": 0.0,
+          "end": 0.72
+        },
+        {
+          "word": "వినడం",
+          "start": 0.88,
+          "end": 1.16
+        },
+        {
+          "word": "ఆపు.",
+          "start": 1.2,
+          "end": 1.6
+        }
+      ],
+      "alignment_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/te-voice-stop.wav.alignment.json",
+      "alignment_matches_text": true,
+      "cost_status": "estimated"
+    },
+    "artifacts": [
+      "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/te-voice-stop.wav",
+      "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/te-voice-stop.wav.alignment.json"
+    ],
+    "error": null,
+    "cost_usd": 0.006,
+    "duration_seconds": 2.04,
+    "seed": null,
+    "model": "eleven_v3",
+    "from_cache": false
+  }
+}

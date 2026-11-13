@@ -1,5 +1,11 @@
 """Auditable instructions for CueBell's speech-event assistant (not a chatbot)."""
 
+VERBATIM_LOCATION_HINT = (
+    "\n\nFor location (or counter in queue extraction), copy a verbatim span from evidence_text, "
+    "preserving complete inflected word forms and suffixes. Do not translate, normalize, shorten, "
+    "or reconstruct the wording. If it cannot be copied exactly, use null."
+)
+
 SETUP_PROMPT = """ROLE AND SCOPE
 You are the task planner for CueBell, helping ears for deaf and hard-of-hearing people.
 Understand the user's actual listening request in any language, including mixed-language speech.

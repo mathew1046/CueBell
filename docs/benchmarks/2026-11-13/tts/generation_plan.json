@@ -1,0 +1,470 @@
+{
+  "created_at": "2026-11-13T15:59:13.030865+00:00",
+  "user_approved": true,
+  "tool": "elevenlabs_tts",
+  "tool_version": "0.1.0",
+  "provider": "elevenlabs",
+  "model": "eleven_v3",
+  "voice_id": "bajNon13EdhNMndG3z05",
+  "voice_name": "Viraj",
+  "language_codes": [
+    "hi",
+    "ml",
+    "ta",
+    "te",
+    "mr",
+    "en"
+  ],
+  "planned_characters": 1097,
+  "planned_cost_usd": 0.3291,
+  "cost_status": "estimated",
+  "character_count_method": "Python len(text): Unicode code points, including spaces, punctuation and combining marks",
+  "max_submitted_characters_including_failures": 2000,
+  "max_estimated_cost_usd": 0.6,
+  "quota_preflight": {
+    "used": 7794,
+    "limit": 10000,
+    "remaining": 2206,
+    "provenance": "Parent-session read-only provider preflight; not re-fetched by this utility",
+    "extension_approved": false
+  },
+  "format": {
+    "provider_output": "pcm_16000",
+    "container": "WAV",
+    "sample_rate": 16000,
+    "channels": 1,
+    "sample_width_bytes": 2
+  },
+  "format_provenance": "Inspected OpenMontage tool wraps provider raw signed 16-bit mono PCM in a WAV container without DSP",
+  "retry_policy": {
+    "max_retries": 0,
+    "retakes": "Not scheduled; any failed attempt blocks batch continuation"
+  },
+  "audio_processing": "None beyond WAV container wrapping; no denoising, gain normalization, resampling, trimming, speed change or added noise",
+  "quality_scope": "Synthetic stock-voice benchmark; PCM/file/alignment integrity checks only. No independent listening or native-speaker quality validation is claimed.",
+  "script_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/script.json",
+  "script_sha256": "9d60712b542ff5b303f7a49e32f332469bc768d9f6f947d37de78d1c6f80f783",
+  "generator_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/generate_corpus.py",
+  "tool_source_path": "/home/mathew/.config/opencode/skills/openmontage/tools/audio/elevenlabs_tts.py",
+  "tool_source_sha256": "842381ebb244785403eb95f4dec943b60f8272a5057120822235d84a7e90477f",
+  "fixtures": [
+    {
+      "id": "hi-positive",
+      "characters": 44,
+      "estimated_cost_usd": 0.0132,
+      "inputs": {
+        "text": "टोकन चार सौ बयालीस, कृपया काउंटर दो पर जाएँ।",
+        "voice_id": "bajNon13EdhNMndG3z05",
+        "model_id": "eleven_v3",
+        "language_code": "hi",
+        "output_format": "pcm_16000",
+        "with_timestamps": true,
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 1.0,
+        "use_speaker_boost": true,
+        "output_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/hi-positive.wav"
+      }
+    },
+    {
+      "id": "ml-positive",
+      "characters": 56,
+      "estimated_cost_usd": 0.0168,
+      "inputs": {
+        "text": "ടോക്കൺ നാനൂറ്റി നാൽപ്പത്തിരണ്ട്, കൗണ്ടർ രണ്ടിലേക്ക് വരൂ.",
+        "voice_id": "bajNon13EdhNMndG3z05",
+        "model_id": "eleven_v3",
+        "language_code": "ml",
+        "output_format": "pcm_16000",
+        "with_timestamps": true,
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 1.0,
+        "use_speaker_boost": true,
+        "output_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/ml-positive.wav"
+      }
+    },
+    {
+      "id": "ta-positive",
+      "characters": 62,
+      "estimated_cost_usd": 0.0186,
+      "inputs": {
+        "text": "டோக்கன் நானூற்று நாற்பத்து இரண்டு, கவுன்டர் இரண்டிற்கு வரவும்.",
+        "voice_id": "bajNon13EdhNMndG3z05",
+        "model_id": "eleven_v3",
+        "language_code": "ta",
+        "output_format": "pcm_16000",
+        "with_timestamps": true,
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 1.0,
+        "use_speaker_boost": true,
+        "output_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/ta-positive.wav"
+      }
+    },
+    {
+      "id": "te-positive",
+      "characters": 51,
+      "estimated_cost_usd": 0.0153,
+      "inputs": {
+        "text": "టోకెన్ నాలుగు వందల నలభై రెండు, కౌంటర్ రెండుకు రండి.",
+        "voice_id": "bajNon13EdhNMndG3z05",
+        "model_id": "eleven_v3",
+        "language_code": "te",
+        "output_format": "pcm_16000",
+        "with_timestamps": true,
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 1.0,
+        "use_speaker_boost": true,
+        "output_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/te-positive.wav"
+      }
+    },
+    {
+      "id": "mr-positive",
+      "characters": 42,
+      "estimated_cost_usd": 0.0126,
+      "inputs": {
+        "text": "टोकन चारशे बेचाळीस, कृपया काउंटर दोनवर या.",
+        "voice_id": "bajNon13EdhNMndG3z05",
+        "model_id": "eleven_v3",
+        "language_code": "mr",
+        "output_format": "pcm_16000",
+        "with_timestamps": true,
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 1.0,
+        "use_speaker_boost": true,
+        "output_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/mr-positive.wav"
+      }
+    },
+    {
+      "id": "en-positive",
+      "characters": 59,
+      "estimated_cost_usd": 0.0177,
+      "inputs": {
+        "text": "Token four hundred and forty two, please go to counter two.",
+        "voice_id": "bajNon13EdhNMndG3z05",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "output_format": "pcm_16000",
+        "with_timestamps": true,
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 1.0,
+        "use_speaker_boost": true,
+        "output_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/en-positive.wav"
+      }
+    },
+    {
+      "id": "hi-near-miss",
+      "characters": 47,
+      "estimated_cost_usd": 0.0141,
+      "inputs": {
+        "text": "टोकन चार सौ तैंतालीस, कृपया काउंटर तीन पर जाएँ।",
+        "voice_id": "bajNon13EdhNMndG3z05",
+        "model_id": "eleven_v3",
+        "language_code": "hi",
+        "output_format": "pcm_16000",
+        "with_timestamps": true,
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 1.0,
+        "use_speaker_boost": true,
+        "output_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/hi-near-miss.wav"
+      }
+    },
+    {
+      "id": "ml-near-miss",
+      "characters": 58,
+      "estimated_cost_usd": 0.0174,
+      "inputs": {
+        "text": "ടോക്കൺ നാനൂറ്റി നാൽപ്പത്തിമൂന്ന്, കൗണ്ടർ മൂന്നിലേക്ക് വരൂ.",
+        "voice_id": "bajNon13EdhNMndG3z05",
+        "model_id": "eleven_v3",
+        "language_code": "ml",
+        "output_format": "pcm_16000",
+        "with_timestamps": true,
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 1.0,
+        "use_speaker_boost": true,
+        "output_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/ml-near-miss.wav"
+      }
+    },
+    {
+      "id": "ta-near-miss",
+      "characters": 62,
+      "estimated_cost_usd": 0.0186,
+      "inputs": {
+        "text": "டோக்கன் நானூற்று நாற்பத்து மூன்று, கவுன்டர் மூன்றிற்கு வரவும்.",
+        "voice_id": "bajNon13EdhNMndG3z05",
+        "model_id": "eleven_v3",
+        "language_code": "ta",
+        "output_format": "pcm_16000",
+        "with_timestamps": true,
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 1.0,
+        "use_speaker_boost": true,
+        "output_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/ta-near-miss.wav"
+      }
+    },
+    {
+      "id": "te-near-miss",
+      "characters": 49,
+      "estimated_cost_usd": 0.0147,
+      "inputs": {
+        "text": "టోకెన్ నాలుగు వందల నలభై మూడు, కౌంటర్ మూడుకు రండి.",
+        "voice_id": "bajNon13EdhNMndG3z05",
+        "model_id": "eleven_v3",
+        "language_code": "te",
+        "output_format": "pcm_16000",
+        "with_timestamps": true,
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 1.0,
+        "use_speaker_boost": true,
+        "output_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/te-near-miss.wav"
+      }
+    },
+    {
+      "id": "mr-near-miss",
+      "characters": 44,
+      "estimated_cost_usd": 0.0132,
+      "inputs": {
+        "text": "टोकन चारशे त्रेचाळीस, कृपया काउंटर तीनवर या.",
+        "voice_id": "bajNon13EdhNMndG3z05",
+        "model_id": "eleven_v3",
+        "language_code": "mr",
+        "output_format": "pcm_16000",
+        "with_timestamps": true,
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 1.0,
+        "use_speaker_boost": true,
+        "output_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/mr-near-miss.wav"
+      }
+    },
+    {
+      "id": "en-near-miss",
+      "characters": 63,
+      "estimated_cost_usd": 0.0189,
+      "inputs": {
+        "text": "Token four hundred and forty three, please go to counter three.",
+        "voice_id": "bajNon13EdhNMndG3z05",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "output_format": "pcm_16000",
+        "with_timestamps": true,
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 1.0,
+        "use_speaker_boost": true,
+        "output_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/en-near-miss.wav"
+      }
+    },
+    {
+      "id": "hi-voice-stop",
+      "characters": 23,
+      "estimated_cost_usd": 0.0069,
+      "inputs": {
+        "text": "क्यूबेल, सुनना बंद करो।",
+        "voice_id": "bajNon13EdhNMndG3z05",
+        "model_id": "eleven_v3",
+        "language_code": "hi",
+        "output_format": "pcm_16000",
+        "with_timestamps": true,
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 1.0,
+        "use_speaker_boost": true,
+        "output_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/hi-voice-stop.wav"
+      }
+    },
+    {
+      "id": "ml-voice-stop",
+      "characters": 30,
+      "estimated_cost_usd": 0.009,
+      "inputs": {
+        "text": "ക്യൂബെൽ, കേൾക്കുന്നത് നിർത്തൂ.",
+        "voice_id": "bajNon13EdhNMndG3z05",
+        "model_id": "eleven_v3",
+        "language_code": "ml",
+        "output_format": "pcm_16000",
+        "with_timestamps": true,
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 1.0,
+        "use_speaker_boost": true,
+        "output_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/ml-voice-stop.wav"
+      }
+    },
+    {
+      "id": "ta-voice-stop",
+      "characters": 27,
+      "estimated_cost_usd": 0.0081,
+      "inputs": {
+        "text": "கியூபெல், கேட்பதை நிறுத்து.",
+        "voice_id": "bajNon13EdhNMndG3z05",
+        "model_id": "eleven_v3",
+        "language_code": "ta",
+        "output_format": "pcm_16000",
+        "with_timestamps": true,
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 1.0,
+        "use_speaker_boost": true,
+        "output_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/ta-voice-stop.wav"
+      }
+    },
+    {
+      "id": "te-voice-stop",
+      "characters": 20,
+      "estimated_cost_usd": 0.006,
+      "inputs": {
+        "text": "క్యూబెల్, వినడం ఆపు.",
+        "voice_id": "bajNon13EdhNMndG3z05",
+        "model_id": "eleven_v3",
+        "language_code": "te",
+        "output_format": "pcm_16000",
+        "with_timestamps": true,
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 1.0,
+        "use_speaker_boost": true,
+        "output_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/te-voice-stop.wav"
+      }
+    },
+    {
+      "id": "mr-voice-stop",
+      "characters": 20,
+      "estimated_cost_usd": 0.006,
+      "inputs": {
+        "text": "क्यूबेल, ऐकणे थांबव.",
+        "voice_id": "bajNon13EdhNMndG3z05",
+        "model_id": "eleven_v3",
+        "language_code": "mr",
+        "output_format": "pcm_16000",
+        "with_timestamps": true,
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 1.0,
+        "use_speaker_boost": true,
+        "output_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/mr-voice-stop.wav"
+      }
+    },
+    {
+      "id": "en-voice-stop",
+      "characters": 24,
+      "estimated_cost_usd": 0.0072,
+      "inputs": {
+        "text": "CueBell, stop listening.",
+        "voice_id": "bajNon13EdhNMndG3z05",
+        "model_id": "eleven_v3",
+        "language_code": "en",
+        "output_format": "pcm_16000",
+        "with_timestamps": true,
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 1.0,
+        "use_speaker_boost": true,
+        "output_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/en-voice-stop.wav"
+      }
+    },
+    {
+      "id": "hi-correction",
+      "characters": 66,
+      "estimated_cost_usd": 0.0198,
+      "inputs": {
+        "text": "सुधार: चार सौ बयालीस नहीं, टोकन चार सौ तैंतालीस काउंटर तीन पर आएँ।",
+        "voice_id": "bajNon13EdhNMndG3z05",
+        "model_id": "eleven_v3",
+        "language_code": "hi",
+        "output_format": "pcm_16000",
+        "with_timestamps": true,
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 1.0,
+        "use_speaker_boost": true,
+        "output_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/hi-correction.wav"
+      }
+    },
+    {
+      "id": "ml-correction",
+      "characters": 98,
+      "estimated_cost_usd": 0.0294,
+      "inputs": {
+        "text": "തിരുത്ത്: നാനൂറ്റി നാൽപ്പത്തിരണ്ട് അല്ല, ടോക്കൺ നാനൂറ്റി നാൽപ്പത്തിമൂന്ന് കൗണ്ടർ മൂന്നിലേക്ക് വരൂ.",
+        "voice_id": "bajNon13EdhNMndG3z05",
+        "model_id": "eleven_v3",
+        "language_code": "ml",
+        "output_format": "pcm_16000",
+        "with_timestamps": true,
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 1.0,
+        "use_speaker_boost": true,
+        "output_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/ml-correction.wav"
+      }
+    },
+    {
+      "id": "hi-cancellation",
+      "characters": 63,
+      "estimated_cost_usd": 0.0189,
+      "inputs": {
+        "text": "टोकन चार सौ बयालीस की पिछली घोषणा रद्द है। अभी काउंटर पर न आएँ।",
+        "voice_id": "bajNon13EdhNMndG3z05",
+        "model_id": "eleven_v3",
+        "language_code": "hi",
+        "output_format": "pcm_16000",
+        "with_timestamps": true,
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 1.0,
+        "use_speaker_boost": true,
+        "output_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/hi-cancellation.wav"
+      }
+    },
+    {
+      "id": "ml-cancellation",
+      "characters": 89,
+      "estimated_cost_usd": 0.0267,
+      "inputs": {
+        "text": "ടോക്കൺ നാനൂറ്റി നാൽപ്പത്തിരണ്ടിന്റെ മുൻ അറിയിപ്പ് റദ്ദാക്കി. ഇപ്പോൾ കൗണ്ടറിലേക്ക് വരേണ്ട.",
+        "voice_id": "bajNon13EdhNMndG3z05",
+        "model_id": "eleven_v3",
+        "language_code": "ml",
+        "output_format": "pcm_16000",
+        "with_timestamps": true,
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 1.0,
+        "use_speaker_boost": true,
+        "output_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/ml-cancellation.wav"
+      }
+    }
+  ]
+}

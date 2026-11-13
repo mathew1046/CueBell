@@ -3,6 +3,7 @@ import json
 import threading
 import time
 from contextlib import asynccontextmanager
+from types import SimpleNamespace
 
 import httpx
 import pytest
@@ -12,6 +13,7 @@ from websockets.datastructures import Headers
 from websockets.exceptions import InvalidStatus
 from websockets.http11 import Response
 
+from app import main
 from app.engine import Engine
 from app.main import create_app
 from app.models import EventExtraction, Extraction, StopListeningRequest
@@ -64,7 +66,10 @@ class FakePrisma:
 
 
 @pytest.fixture
-def relay(settings, intelligence, monkeypatch):
+def relay(settings, intelligence, monkeypatch, request):
+    if getattr(request, "param", False):
+        settings.optimized_scheduling = True
+        settings.outbound_writer = True
     settings.gnani_api_key = "dummy-test-key"
     settings.request_pause_seconds = 1
     created = []
@@ -105,6 +110,7 @@ def expect_closed(socket):
     pytest.fail("Stream did not close")
 
 
+@pytest.mark.parametrize("relay", [False, True], indirect=True)
 def test_general_task_flows_from_confirmed_request_through_speech_to_alert(
     relay, intelligence, monkeypatch
 ):
@@ -171,6 +177,7 @@ def test_stream_rejects_missing_auth_consent_origin_mode_or_confirmation(relay, 
     assert not created
 
 
+@pytest.mark.parametrize("relay", [False, True], indirect=True)
 def test_request_stream_forwards_pcm_and_returns_one_final_transcript(relay):
     client, created, options = relay
     options["transcripts"] = [
@@ -233,6 +240,267 @@ def test_request_waits_through_sentence_pause_and_unfinished_partial(relay):
         assert transcript["segment"]["text"] == "Token ten. Vibrate and sound an alarm."
         expect_closed(socket)
     assert client.get("/v1/state", headers=auth).json()["rule"] is None
+
+
+@pytest.fixture
+def request_clock(relay, settings, monkeypatch):
+    # Advance only the application's clock; asyncio and network deadlines stay real.
+    settings.request_pause_seconds = 1.5
+    clock = SimpleNamespace(now=1001.0)
+    monkeypatch.setattr(main, "time", SimpleNamespace(monotonic=lambda: clock.now, time=time.time))
+    relay[2]["transcripts"] = []
+    return clock
+
+
+def emit_provider_messages(socket, provider, *messages):
+    async def deliver():
+        for message in messages:
+            provider.messages.put_nowait(json.dumps(message))
+        # The request receiver consumes this batch before the test advances the clock.
+        await asyncio.sleep(0)
+
+    socket.portal.call(deliver)
+
+
+def assert_request_open_after(socket, clock, seconds):
+    clock.now += seconds
+    time.sleep(0.25)  # Give the 200ms health poll a chance to complete the request.
+    socket.send_json({"type": "ping"})
+    for _ in range(20):
+        message = socket.receive_json()
+        assert message.get("type") != "transcript", "Request completed during active speech"
+        if message.get("type") == "pong":
+            return
+    pytest.fail("Request stream did not answer ping")
+
+
+@pytest.mark.parametrize("relay", [False, True], indirect=True)
+@pytest.mark.parametrize("new_start_before_old_final", [False, True])
+def test_speech_aware_request_waits_for_each_final_and_then_full_quiet_period(
+    relay, settings, request_clock, new_start_before_old_final
+):
+    client, created, _ = relay
+    settings.request_speech_aware_completion = True
+    old_final = {
+        "type": "transcript",
+        "utterance_id": "first",
+        "segment_id": "p1",
+        "is_final": True,
+        "text": "Token ten.",
+    }
+    new_start = {"type": "speech_start", "utterance_id": "second"}
+    middle = [new_start, old_final] if new_start_before_old_final else [old_final, new_start]
+    auth = pair(client)
+    with client.websocket_connect("/v1/stream?mode=request", headers={**auth, **CONSENT}) as socket:
+        ready(socket)
+        socket.send_bytes(b"\0" * 1024)
+        emit_provider_messages(
+            socket, created[0], {"type": "speech_start", "utterance_id": "first"}, *middle
+        )
+        # No partial or processing events are required to keep the newer utterance open.
+        assert_request_open_after(socket, request_clock, 1.6)
+        emit_provider_messages(
+            socket,
+            created[0],
+            {
+                **old_final,
+                "utterance_id": "second",
+                "segment_id": "p2",
+                "text": "Vibrate and sound an alarm.",
+            },
+        )
+        assert_request_open_after(socket, request_clock, 1.49)
+        request_clock.now += 0.02
+        transcript = receive_type(socket, "transcript")
+        assert transcript["segment"]["text"] == "Token ten. Vibrate and sound an alarm."
+        assert transcript["mode"] == "request"
+        expect_closed(socket)
+    state = client.get("/v1/state", headers=auth).json()
+    assert state["rule"] is None
+    assert not state["stream_connected"]
+
+
+@pytest.mark.parametrize("relay", [False, True], indirect=True)
+def test_speech_aware_request_is_off_by_default_and_preserves_old_completion(
+    relay, settings, request_clock
+):
+    client, created, _ = relay
+    assert settings.request_speech_aware_completion is False
+    auth = pair(client)
+    with client.websocket_connect("/v1/stream?mode=request", headers={**auth, **CONSENT}) as socket:
+        ready(socket)
+        socket.send_bytes(b"\0" * 1024)
+        emit_provider_messages(
+            socket,
+            created[0],
+            {"type": "speech_start", "utterance_id": "first"},
+            {"type": "speech_start", "utterance_id": "second"},
+            {
+                "type": "transcript",
+                "utterance_id": "first",
+                "segment_id": "p1",
+                "text": "Token ten.",
+                "is_final": True,
+            },
+        )
+        request_clock.now += 1.6
+        assert receive_type(socket, "transcript")["segment"]["text"] == "Token ten."
+        expect_closed(socket)
+
+
+@pytest.mark.parametrize("final_text", ["", "   "])
+def test_speech_aware_request_empty_final_retires_only_its_utterance(
+    relay, settings, request_clock, final_text
+):
+    client, created, _ = relay
+    settings.request_speech_aware_completion = True
+    final = {
+        "type": "transcript",
+        "utterance_id": "first",
+        "segment_id": "p1",
+        "text": "Token ten.",
+        "is_final": True,
+    }
+    auth = pair(client)
+    with client.websocket_connect("/v1/stream?mode=request", headers={**auth, **CONSENT}) as socket:
+        ready(socket)
+        socket.send_bytes(b"\0" * 1024)
+        emit_provider_messages(
+            socket,
+            created[0],
+            final,
+            {"type": "speech_start", "utterance_id": "second"},
+            {**final, "utterance_id": "second", "text": "Unfinished", "is_final": False},
+            {**final, "text": final_text},
+        )
+        assert_request_open_after(socket, request_clock, 1.6)
+        emit_provider_messages(
+            socket, created[0], {**final, "utterance_id": "second", "text": final_text}
+        )
+        assert_request_open_after(socket, request_clock, 1.49)
+        request_clock.now += 0.02
+        assert receive_type(socket, "transcript")["segment"]["text"] == "Token ten."
+        expect_closed(socket)
+
+
+@pytest.mark.parametrize("with_ids", [False, True])
+def test_speech_aware_request_preserves_transcript_only_streams(
+    relay, settings, request_clock, with_ids
+):
+    client, created, _ = relay
+    settings.request_speech_aware_completion = True
+    first_id = {"utterance_id": "first"} if with_ids else {}
+    second_id = {"utterance_id": "second"} if with_ids else {}
+    auth = pair(client)
+    with client.websocket_connect("/v1/stream?mode=request", headers={**auth, **CONSENT}) as socket:
+        ready(socket)
+        socket.send_bytes(b"\0" * 1024)
+        emit_provider_messages(
+            socket,
+            created[0],
+            {
+                "type": "transcript",
+                "segment_id": "p1",
+                "text": "Token ten.",
+                "is_final": True,
+                **first_id,
+            },
+            {
+                "type": "transcript",
+                "segment_id": "p2",
+                "text": "Vibrate",
+                "is_final": False,
+                **second_id,
+            },
+        )
+        assert_request_open_after(socket, request_clock, 1.6)
+        emit_provider_messages(
+            socket,
+            created[0],
+            {
+                "type": "transcript",
+                "segment_id": "p2",
+                "text": "Vibrate for it.",
+                "is_final": True,
+                **second_id,
+            },
+        )
+        request_clock.now += 1.6
+        assert receive_type(socket, "transcript")["segment"]["text"] == "Token ten. Vibrate for it."
+        expect_closed(socket)
+
+
+@pytest.mark.parametrize(
+    "start_metadata,final_metadata,final_text",
+    [
+        ({"utterance_id": "pending"}, {}, "Token ten."),
+        ({"utterance_id": "pending"}, {"utterance_id": "other"}, "Token ten."),
+        ({"utterance_id": "pending"}, {"utterance_id": "pending"}, None),
+        ({}, {}, "Token ten."),
+        ({"utterance_id": None}, {"utterance_id": "other"}, "Token ten."),
+        ({"utterance_id": ""}, {"utterance_id": ""}, "Token ten."),
+        ({"utterance_id": []}, {"utterance_id": []}, "Token ten."),
+    ],
+)
+def test_speech_aware_request_unmatched_speech_uses_existing_bounded_timeout(
+    relay, settings, request_clock, monkeypatch, start_metadata, final_metadata, final_text
+):
+    client, created, _ = relay
+    settings.request_speech_aware_completion = True
+    assert settings.request_timeout_seconds == 90
+    errors = []
+    original_provider = main.prisma
+
+    @asynccontextmanager
+    async def provider(settings):
+        try:
+            async with original_provider(settings) as connection:
+                yield connection
+        except TimeoutError as error:
+            errors.append(str(error))
+            raise
+
+    monkeypatch.setattr(main, "prisma", provider)
+    auth = pair(client)
+    with client.websocket_connect("/v1/stream?mode=request", headers={**auth, **CONSENT}) as socket:
+        ready(socket)
+        socket.send_bytes(b"\0" * 1024)
+        final = {"type": "transcript", "text": "Token ten.", "is_final": True}
+        emit_provider_messages(
+            socket,
+            created[0],
+            {**final, "segment_id": "first"},
+            {"type": "speech_start", **start_metadata},
+            {**final, "segment_id": "second", "text": final_text, **final_metadata},
+        )
+        assert_request_open_after(socket, request_clock, 1.6)
+        request_clock.now += 90
+        while True:
+            message = socket.receive_json()
+            assert message["type"] != "transcript"
+            if message.get("state") == "DISCONNECTED":
+                break
+        expect_closed(socket)
+    assert errors == ["No completed spoken request. Please try again or type."]
+    assert not client.get("/v1/state", headers=auth).json()["stream_connected"]
+
+
+def test_speech_aware_completion_does_not_gate_monitor_alerts(relay, settings, intelligence):
+    client, _, options = relay
+    settings.request_speech_aware_completion = True
+    options["transcripts"] = [
+        {"type": "speech_start", "utterance_id": "pending"},
+        {"type": "transcript", "text": "P042 to counter 2", "segment_id": "p1", "is_final": True},
+    ]
+    auth = pair(client)
+    activate(client, auth)
+    with client.websocket_connect("/v1/stream?mode=monitor", headers={**auth, **CONSENT}) as socket:
+        ready(socket)
+        socket.send_bytes(b"\0" * 1024)
+        assert receive_type(socket, "alert")["alert"]["token"] == "P042"
+        socket.send_json({"type": "stop"})
+        expect_closed(socket)
+    assert len(intelligence.extract_calls) == 1
 
 
 def test_monitor_stream_dedups_provider_segments_and_alerts(relay, intelligence):
@@ -416,6 +684,7 @@ def test_semantic_voice_stop_pauses_monitor_closes_stream_and_requires_explicit_
     assert client.post("/v1/control", headers=auth, json={"action": "resume"}).status_code == 200
 
 
+@pytest.mark.parametrize("relay", [False, True], indirect=True)
 def test_voice_stop_discards_pending_token_alerts(relay, intelligence, settings):
     client, _, options = relay
     settings.correction_grace_seconds = 10
@@ -548,6 +817,7 @@ def test_stream_configuration_and_tls_gates(settings, intelligence):
 @pytest.mark.parametrize(
     ("upstream_status", "close_code"), [(401, 4403), (403, 4403), (429, 1000), (503, 1000)]
 )
+@pytest.mark.parametrize("relay", [False, True], indirect=True)
 def test_provider_upgrade_failure_close_code_and_session_cleanup(
     relay, monkeypatch, upstream_status, close_code
 ):
@@ -590,6 +860,7 @@ def test_provider_upgrade_failure_close_code_and_session_cleanup(
         expect_closed(socket)
 
 
+@pytest.mark.parametrize("relay", [False, True], indirect=True)
 def test_gap_cancels_inflight_extraction_and_reconnect_has_fresh_context(relay, intelligence):
     client, _, _ = relay
     auth = pair(client)
@@ -633,6 +904,7 @@ def test_gap_cancels_inflight_extraction_and_reconnect_has_fresh_context(relay, 
         expect_closed(socket)
 
 
+@pytest.mark.parametrize("relay", [False, True], indirect=True)
 def test_uncertain_correction_queued_behind_call_never_releases_pending_alert(relay, intelligence):
     client, _, options = relay
     options["transcripts"] = [
@@ -714,6 +986,7 @@ async def test_failed_accept_does_not_leave_session_busy(settings, intelligence)
         assert not response.json()["stream_connected"]
 
 
+@pytest.mark.parametrize("relay", [False, True], indirect=True)
 def test_oversized_extraction_cannot_discard_a_correction_and_release_call(relay, intelligence):
     client, _, _ = relay
 

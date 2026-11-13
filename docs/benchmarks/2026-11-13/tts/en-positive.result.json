@@ -1,0 +1,122 @@
+{
+  "id": "en-positive",
+  "started_at": "2026-11-13T16:03:03.320505+00:00",
+  "characters": 59,
+  "estimated_cost_usd": 0.0177,
+  "cost_status": "estimated",
+  "cost_entry_id": "6a9380510c9e",
+  "status": "generated",
+  "generator_sha256": "1c1aacf53fea76885a7f6182e2546985ca5cf72813942d5f69adf0f5e395bacf",
+  "inputs": {
+    "text": "Token four hundred and forty two, please go to counter two.",
+    "voice_id": "bajNon13EdhNMndG3z05",
+    "model_id": "eleven_v3",
+    "language_code": "en",
+    "output_format": "pcm_16000",
+    "with_timestamps": true,
+    "stability": 0.5,
+    "similarity_boost": 0.75,
+    "style": 0.0,
+    "speed": 1.0,
+    "use_speaker_boost": true,
+    "output_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/en-positive.wav"
+  },
+  "finished_at": "2026-11-13T16:03:05.956410+00:00",
+  "generation_duration_s": 2.635012,
+  "http": [
+    {
+      "status_code": 200,
+      "request_id": "qJs4r5UfBoVPEAXr2N4F",
+      "character-cost": 13
+    }
+  ],
+  "tool_result": {
+    "success": true,
+    "data": {
+      "provider": "elevenlabs",
+      "model": "eleven_v3",
+      "voice_id": "bajNon13EdhNMndG3z05",
+      "voice_settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 1.0,
+        "use_speaker_boost": true
+      },
+      "text_length": 59,
+      "output": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/en-positive.wav",
+      "format": "pcm_16000",
+      "request_id": "qJs4r5UfBoVPEAXr2N4F",
+      "word_timestamps": [
+        {
+          "word": "Token",
+          "start": 0.0,
+          "end": 0.32
+        },
+        {
+          "word": "four",
+          "start": 0.384,
+          "end": 0.64
+        },
+        {
+          "word": "hundred",
+          "start": 0.68,
+          "end": 0.96
+        },
+        {
+          "word": "and",
+          "start": 1.0,
+          "end": 1.12
+        },
+        {
+          "word": "forty",
+          "start": 1.173,
+          "end": 1.44
+        },
+        {
+          "word": "two,",
+          "start": 1.52,
+          "end": 1.84
+        },
+        {
+          "word": "please",
+          "start": 2.034,
+          "end": 3.2
+        },
+        {
+          "word": "go",
+          "start": 3.307,
+          "end": 3.52
+        },
+        {
+          "word": "to",
+          "start": 3.573,
+          "end": 3.68
+        },
+        {
+          "word": "counter",
+          "start": 3.74,
+          "end": 4.16
+        },
+        {
+          "word": "two.",
+          "start": 4.28,
+          "end": 4.64
+        }
+      ],
+      "alignment_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/en-positive.wav.alignment.json",
+      "alignment_matches_text": true,
+      "cost_status": "estimated"
+    },
+    "artifacts": [
+      "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/en-positive.wav",
+      "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/en-positive.wav.alignment.json"
+    ],
+    "error": null,
+    "cost_usd": 0.0177,
+    "duration_seconds": 2.63,
+    "seed": null,
+    "model": "eleven_v3",
+    "from_cache": false
+  }
+}

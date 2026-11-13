@@ -1,0 +1,441 @@
+{
+  "runs": [
+    {
+      "label": "setup-v1-baseline",
+      "configuration": {},
+      "case_count": 6,
+      "verdicts": {
+        "pass": 6
+      },
+      "client_verdicts": {
+        "pass": 6
+      },
+      "false_positive_cases": 0,
+      "terminal_false_positive_cases": 0,
+      "by_kind": {
+        "request": {
+          "count": 6,
+          "verdicts": {
+            "pass": 6
+          },
+          "passing_case_latencies_ms": {
+            "speech_end_to_alert_ms": {
+              "count": 0
+            },
+            "speech_end_to_last_final_ms": {
+              "count": 6,
+              "p50": 4411.032,
+              "p95": 4429.519,
+              "max": 4431.493
+            },
+            "speech_end_to_voice_stop_ms": {
+              "count": 0
+            },
+            "speech_end_to_confirmation_ms": {
+              "count": 6,
+              "p50": 10746.764,
+              "p95": 11123.563,
+              "max": 11178.325
+            },
+            "latest_segment_queue_ms": {
+              "count": 0
+            },
+            "last_model_end_to_first_alert_ms": {
+              "count": 0
+            }
+          }
+        }
+      },
+      "provider": {
+        "trace": "/home/mathew/Arrakis/CueBell/docs/benchmarks/2026-11-13/setup-v1-baseline-server.jsonl",
+        "settings": {
+          "gnani_language_code": "indic-auto",
+          "openai_model": "gpt-6-luna",
+          "allow_app_sessions": false,
+          "allow_insecure_local": true,
+          "max_sessions": 8,
+          "session_ttl_seconds": 14400,
+          "correction_grace_seconds": 1.2,
+          "request_pause_seconds": 3.5,
+          "request_timeout_seconds": 90.0
+        },
+        "openai_requests_attempted": 6,
+        "openai_responses": 6,
+        "openai_errors": [],
+        "openai_response_ms": {
+          "count": 6,
+          "p50": 5056.156,
+          "p95": 5703.11,
+          "max": 5785.105
+        },
+        "interpretation_ms": {
+          "intent": {
+            "count": 6,
+            "p50": 5213.975,
+            "p95": 5703.39,
+            "max": 5785.394
+          }
+        },
+        "returned_service_tiers": {
+          "default": 6
+        },
+        "returned_models": {
+          "gpt-6-luna": 6
+        },
+        "tokens": {
+          "input": 7641,
+          "output": 1984,
+          "cached_input": 7548,
+          "cache_written_input": 75,
+          "reasoning_output": 1092
+        },
+        "openai_reference_cost_usd": 0.001079,
+        "cost_status": "estimate from published Luna rates, not an invoice; errors may be billable",
+        "gnani_streams": 6,
+        "gnani_audio_seconds": 60.064,
+        "gnani_connection_seconds": 68.526,
+        "gnani_provider_latency_ms": {
+          "count": 9,
+          "p50": 144.0,
+          "p95": 165.2,
+          "max": 168
+        },
+        "gnani_transcripts": 9,
+        "gnani_send_max_ms": 1.5172220000749803
+      },
+      "cases": [
+        {
+          "case_id": "hi-request",
+          "language": "hi",
+          "kind": "request",
+          "mode": "request",
+          "expected": {
+            "alert": false,
+            "token": "442",
+            "location": null,
+            "voice_stop": false,
+            "correction": false
+          },
+          "client_verdict": "pass",
+          "audited_verdict": "pass",
+          "latest_interpretation_completed_in_window": null,
+          "completed_interpretations": 0,
+          "interpretation_errors": [],
+          "checks": {
+            "combined_final_received": true,
+            "intent_confirmable": true,
+            "monitor_confirmed": true,
+            "target": true
+          },
+          "false_positive_any": false,
+          "false_positive_terminal": false,
+          "semantic_correction_observed": false,
+          "retraction_observed": false,
+          "voice_stop_observed": false,
+          "ambiguity_reasons": {},
+          "metrics": {
+            "pair_wait_ms": 0.0024450000637443736,
+            "setup_ms": 16360.911848999876,
+            "connect_ready_ms": 261.4076190002379,
+            "speech_end_to_transcript_ms": 4412.222211999961,
+            "speech_end_to_alert_ms": null,
+            "speech_end_to_voice_stop_ms": null,
+            "transcript_to_alert_ms": null,
+            "source_transcript_to_alert_ms": null,
+            "last_cue_to_correction_ms": null,
+            "request_workflow_ms": 16076.14855699967,
+            "speech_end_to_confirmation_ms": 10923.265382999944,
+            "sender_lateness_p50_ms": 0.6607719997191452,
+            "sender_lateness_p95_ms": 1.0944635999294405,
+            "sender_lateness_max_ms": 2.8172289999019995,
+            "intent_ms": 5172.052975000042,
+            "confirm_ms": 1.9891820002158056,
+            "speech_end_to_last_final_ms": 4412.222211999961,
+            "latest_segment_queue_ms": null,
+            "last_model_end_to_first_alert_ms": null
+          },
+          "transcripts": [
+            "जब फार्मेसी टोकन चार सौ बयालीस बुलाया जाए तो मुझे कंपन से सूचित करो।"
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "ml-request",
+          "language": "ml",
+          "kind": "request",
+          "mode": "request",
+          "expected": {
+            "alert": false,
+            "token": "442",
+            "location": null,
+            "voice_stop": false,
+            "correction": false
+          },
+          "client_verdict": "pass",
+          "audited_verdict": "pass",
+          "latest_interpretation_completed_in_window": null,
+          "completed_interpretations": 0,
+          "interpretation_errors": [],
+          "checks": {
+            "combined_final_received": true,
+            "intent_confirmable": true,
+            "monitor_confirmed": true,
+            "target": true
+          },
+          "false_positive_any": false,
+          "false_positive_terminal": false,
+          "semantic_correction_observed": false,
+          "retraction_observed": false,
+          "voice_stop_observed": false,
+          "ambiguity_reasons": {},
+          "metrics": {
+            "pair_wait_ms": 0.05726300014430308,
+            "setup_ms": 17646.93066100017,
+            "connect_ready_ms": 312.8796680002779,
+            "speech_end_to_transcript_ms": 4243.189410000014,
+            "speech_end_to_alert_ms": null,
+            "speech_end_to_voice_stop_ms": null,
+            "transcript_to_alert_ms": null,
+            "source_transcript_to_alert_ms": null,
+            "last_cue_to_correction_ms": null,
+            "request_workflow_ms": 17290.93437900019,
+            "speech_end_to_confirmation_ms": 11178.32509100026,
+            "sender_lateness_p50_ms": 0.7453614998667035,
+            "sender_lateness_p95_ms": 1.2648144996774133,
+            "sender_lateness_max_ms": 1.7165700000987272,
+            "intent_ms": 5787.537852999776,
+            "confirm_ms": 1.679703999798221,
+            "speech_end_to_last_final_ms": 4243.189410000014,
+            "latest_segment_queue_ms": null,
+            "last_model_end_to_first_alert_ms": null
+          },
+          "transcripts": [
+            "ഫാർമസി ടോക്ക് നാനൂറ്റി നാല്പത്തി രണ്ട്. വിളിക്കുമ്പോൾ വൈബ്രേഷനിലൂടെ എന്നെ അറിയിക്കൂ."
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "hi-request",
+          "language": "hi",
+          "kind": "request",
+          "mode": "request",
+          "expected": {
+            "alert": false,
+            "token": "442",
+            "location": null,
+            "voice_stop": false,
+            "correction": false
+          },
+          "client_verdict": "pass",
+          "audited_verdict": "pass",
+          "latest_interpretation_completed_in_window": null,
+          "completed_interpretations": 0,
+          "interpretation_errors": [],
+          "checks": {
+            "combined_final_received": true,
+            "intent_confirmable": true,
+            "monitor_confirmed": true,
+            "target": true
+          },
+          "false_positive_any": false,
+          "false_positive_terminal": false,
+          "semantic_correction_observed": false,
+          "retraction_observed": false,
+          "voice_stop_observed": false,
+          "ambiguity_reasons": {},
+          "metrics": {
+            "pair_wait_ms": 0.059638000038830796,
+            "setup_ms": 15659.835990000374,
+            "connect_ready_ms": 222.157808999782,
+            "speech_end_to_transcript_ms": 4409.840880999582,
+            "speech_end_to_alert_ms": null,
+            "speech_end_to_voice_stop_ms": null,
+            "transcript_to_alert_ms": null,
+            "source_transcript_to_alert_ms": null,
+            "last_cue_to_correction_ms": null,
+            "request_workflow_ms": 15395.68928100016,
+            "speech_end_to_confirmation_ms": 10242.73700499998,
+            "sender_lateness_p50_ms": 0.6769879996681993,
+            "sender_lateness_p95_ms": 1.1103402997377998,
+            "sender_lateness_max_ms": 1.3650239998241886,
+            "intent_ms": 4777.208101999804,
+            "confirm_ms": 1.6384470000048168,
+            "speech_end_to_last_final_ms": 4409.840880999582,
+            "latest_segment_queue_ms": null,
+            "last_model_end_to_first_alert_ms": null
+          },
+          "transcripts": [
+            "जब फार्मेसी टोकन चार सौ बयालीस बुलाया जाए तो मुझे कंपन से सूचित करो।"
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "ml-request",
+          "language": "ml",
+          "kind": "request",
+          "mode": "request",
+          "expected": {
+            "alert": false,
+            "token": "442",
+            "location": null,
+            "voice_stop": false,
+            "correction": false
+          },
+          "client_verdict": "pass",
+          "audited_verdict": "pass",
+          "latest_interpretation_completed_in_window": null,
+          "completed_interpretations": 0,
+          "interpretation_errors": [],
+          "checks": {
+            "combined_final_received": true,
+            "intent_confirmable": true,
+            "monitor_confirmed": true,
+            "target": true
+          },
+          "false_positive_any": false,
+          "false_positive_terminal": false,
+          "semantic_correction_observed": false,
+          "retraction_observed": false,
+          "voice_stop_observed": false,
+          "ambiguity_reasons": {},
+          "metrics": {
+            "pair_wait_ms": 0.03959599962399807,
+            "setup_ms": 17709.941807999712,
+            "connect_ready_ms": 634.9944479998157,
+            "speech_end_to_transcript_ms": 4431.493393999972,
+            "speech_end_to_alert_ms": null,
+            "speech_end_to_voice_stop_ms": null,
+            "transcript_to_alert_ms": null,
+            "source_transcript_to_alert_ms": null,
+            "last_cue_to_correction_ms": null,
+            "request_workflow_ms": 17071.65489099998,
+            "speech_end_to_confirmation_ms": 10959.276211999622,
+            "sender_lateness_p50_ms": 0.6737224998687452,
+            "sender_lateness_p95_ms": 1.1375609500873907,
+            "sender_lateness_max_ms": 1.6210379999392899,
+            "intent_ms": 5459.176059000129,
+            "confirm_ms": 1.5748460000395426,
+            "speech_end_to_last_final_ms": 4431.493393999972,
+            "latest_segment_queue_ms": null,
+            "last_model_end_to_first_alert_ms": null
+          },
+          "transcripts": [
+            "ഫാർമസി ടോക്ക് നാനൂറ്റി നാല്പത്തി രണ്ട്. വിളിക്കുമ്പോൾ വൈബ്രേഷനിലൂടെ എന്നെ അറിയിക്കൂ."
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "hi-request",
+          "language": "hi",
+          "kind": "request",
+          "mode": "request",
+          "expected": {
+            "alert": false,
+            "token": "442",
+            "location": null,
+            "voice_stop": false,
+            "correction": false
+          },
+          "client_verdict": "pass",
+          "audited_verdict": "pass",
+          "latest_interpretation_completed_in_window": null,
+          "completed_interpretations": 0,
+          "interpretation_errors": [],
+          "checks": {
+            "combined_final_received": true,
+            "intent_confirmable": true,
+            "monitor_confirmed": true,
+            "target": true
+          },
+          "false_positive_any": false,
+          "false_positive_terminal": false,
+          "semantic_correction_observed": false,
+          "retraction_observed": false,
+          "voice_stop_observed": false,
+          "ambiguity_reasons": {},
+          "metrics": {
+            "pair_wait_ms": 0.04776700006914325,
+            "setup_ms": 15707.582939000076,
+            "connect_ready_ms": 224.55712900000435,
+            "speech_end_to_transcript_ms": 4423.597446999793,
+            "speech_end_to_alert_ms": null,
+            "speech_end_to_voice_stop_ms": null,
+            "transcript_to_alert_ms": null,
+            "source_transcript_to_alert_ms": null,
+            "last_cue_to_correction_ms": null,
+            "request_workflow_ms": 15479.337832000056,
+            "speech_end_to_confirmation_ms": 10326.782692000052,
+            "sender_lateness_p50_ms": 0.7808370000930154,
+            "sender_lateness_p95_ms": 1.2864902496176,
+            "sender_lateness_max_ms": 1.5997149998838722,
+            "intent_ms": 4856.069218999892,
+            "confirm_ms": 1.8588100001579733,
+            "speech_end_to_last_final_ms": 4423.597446999793,
+            "latest_segment_queue_ms": null,
+            "last_model_end_to_first_alert_ms": null
+          },
+          "transcripts": [
+            "जब फार्मेसी टोकन चार सौ बयालीस बुलाया जाए तो मुझे कंपन से सूचित करो।"
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "ml-request",
+          "language": "ml",
+          "kind": "request",
+          "mode": "request",
+          "expected": {
+            "alert": false,
+            "token": "442",
+            "location": null,
+            "voice_stop": false,
+            "correction": false
+          },
+          "client_verdict": "pass",
+          "audited_verdict": "pass",
+          "latest_interpretation_completed_in_window": null,
+          "completed_interpretations": 0,
+          "interpretation_errors": [],
+          "checks": {
+            "combined_final_received": true,
+            "intent_confirmable": true,
+            "monitor_confirmed": true,
+            "target": true
+          },
+          "false_positive_any": false,
+          "false_positive_terminal": false,
+          "semantic_correction_observed": false,
+          "retraction_observed": false,
+          "voice_stop_observed": false,
+          "ambiguity_reasons": {},
+          "metrics": {
+            "pair_wait_ms": 0.05139900031281286,
+            "setup_ms": 16952.447982000194,
+            "connect_ready_ms": 227.25857800014637,
+            "speech_end_to_transcript_ms": 4259.662784000284,
+            "speech_end_to_alert_ms": null,
+            "speech_end_to_voice_stop_ms": null,
+            "transcript_to_alert_ms": null,
+            "source_transcript_to_alert_ms": null,
+            "last_cue_to_correction_ms": null,
+            "request_workflow_ms": 16682.873314000062,
+            "speech_end_to_confirmation_ms": 10570.263601000079,
+            "sender_lateness_p50_ms": 0.7330379999075376,
+            "sender_lateness_p95_ms": 1.2744481996378454,
+            "sender_lateness_max_ms": 1.884092000182136,
+            "intent_ms": 5261.027570999886,
+            "confirm_ms": 1.6303229999721225,
+            "speech_end_to_last_final_ms": 4259.662784000284,
+            "latest_segment_queue_ms": null,
+            "last_model_end_to_first_alert_ms": null
+          },
+          "transcripts": [
+            "ഫാർമസി ടോക്ക് നാനൂറ്റി നാല്പത്തി രണ്ട്. വിളിക്കുമ്പോൾ വൈബ്രേഷനിലൂടെ എന്നെ അറിയിക്കൂ."
+          ],
+          "errors": []
+        }
+      ]
+    }
+  ],
+  "method": "Raw replay records are unchanged. Monitor passes additionally require the latest transcript's interpretation to finish before the replay observation window closes. Observed false-alert exposure always fails. Latency cohorts retain their denominators and include only passing cases; do not compare conditional speed without pass rates. Multi-utterance first-final timing is not pooled with single-announcement ASR latency."
+}

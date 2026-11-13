@@ -1,0 +1,133 @@
+[
+  {
+    "label": "reasoning_low",
+    "options": {
+      "reasoning": {
+        "effort": "low"
+      }
+    },
+    "result": {
+      "intent": "monitor_event",
+      "context": null,
+      "token": null,
+      "alert_preferences": [
+        "visual",
+        "vibration",
+        "sound"
+      ],
+      "clarification": null,
+      "target_evidence": null,
+      "task": {
+        "subject": "pharmacy token 442",
+        "condition": "a spoken announcement calls token 442",
+        "summary": "Pharmacy token 442 called",
+        "request_evidence": "pharmacy token 442 is called",
+        "identifiers": [
+          {
+            "value": "442",
+            "evidence_text": "442"
+          }
+        ]
+      }
+    },
+    "elapsed_ms": 6782.159
+  },
+  {
+    "label": "reasoning_none",
+    "options": {
+      "reasoning": {
+        "effort": "none"
+      }
+    },
+    "result": {
+      "intent": "monitor_event",
+      "context": null,
+      "token": null,
+      "alert_preferences": [
+        "visual",
+        "vibration",
+        "sound"
+      ],
+      "clarification": null,
+      "target_evidence": null,
+      "task": {
+        "subject": "pharmacy token 442",
+        "condition": "The pharmacy token 442 is called.",
+        "summary": "Pharmacy token 442 called",
+        "request_evidence": "pharmacy token 442 is called",
+        "identifiers": [
+          {
+            "value": "442",
+            "evidence_text": "442"
+          }
+        ]
+      }
+    },
+    "elapsed_ms": 2360.891
+  },
+  {
+    "label": "fast",
+    "options": {
+      "service_tier": "fast"
+    },
+    "result": {
+      "intent": "monitor_event",
+      "context": null,
+      "token": null,
+      "alert_preferences": [
+        "visual",
+        "vibration",
+        "sound"
+      ],
+      "clarification": null,
+      "target_evidence": null,
+      "task": {
+        "subject": "pharmacy token 442",
+        "condition": "Notify when token 442 is called or clearly read out.",
+        "summary": "Pharmacy token 442 called",
+        "request_evidence": "pharmacy token 442 is called",
+        "identifiers": [
+          {
+            "value": "442",
+            "evidence_text": "442"
+          }
+        ]
+      }
+    },
+    "elapsed_ms": 1952.779
+  },
+  {
+    "label": "low_fast",
+    "options": {
+      "reasoning": {
+        "effort": "low"
+      },
+      "service_tier": "fast"
+    },
+    "result": {
+      "intent": "monitor_event",
+      "context": null,
+      "token": null,
+      "alert_preferences": [
+        "visual",
+        "vibration",
+        "sound"
+      ],
+      "clarification": null,
+      "target_evidence": null,
+      "task": {
+        "subject": "pharmacy token 442",
+        "condition": "Notify when token 442 is called or clearly read out in an announcement.",
+        "summary": "Pharmacy token 442 called",
+        "request_evidence": "pharmacy token 442 is called",
+        "identifiers": [
+          {
+            "value": "442",
+            "evidence_text": "442"
+          }
+        ]
+      }
+    },
+    "elapsed_ms": 2026.412
+  }
+]

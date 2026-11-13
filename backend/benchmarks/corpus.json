@@ -1,0 +1,1094 @@
+{
+  "version": 1,
+  "sample_rate": 16000,
+  "fixtures": [
+    {
+      "id": "hi-positive",
+      "language": "hi",
+      "kind": "positive",
+      "text": "टोकन चार सौ बयालीस, कृपया काउंटर दो पर जाएँ।",
+      "english_gloss": "Token four hundred forty two, please go to counter two.",
+      "audio_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/hi-positive.wav",
+      "speech_end_s": 3.12,
+      "sha256": "0861ca2815cadfda5e65d14904610437f50501d09e73886aa2d643e8af238746",
+      "duration_s": 3.12,
+      "speech_end_provenance": "ElevenLabs with-timestamps alignment: last non-whitespace character end (includes punctuation); not independent forced alignment or measured human speech offset",
+      "speech_end_raw_alignment_s": 3.12,
+      "speech_end_boundary_adjustment_s": 0.0,
+      "alignment_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/hi-positive.wav.alignment.json",
+      "alignment_sha256": "f4b28a948855606cf13a7a55ad80dfc6e805ad0cdb31d9d2de49a732e2bdf837",
+      "qa_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/hi-positive.qa.json",
+      "generation_result_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/hi-positive.result.json"
+    },
+    {
+      "id": "ml-positive",
+      "language": "ml",
+      "kind": "positive",
+      "text": "ടോക്കൺ നാനൂറ്റി നാൽപ്പത്തിരണ്ട്, കൗണ്ടർ രണ്ടിലേക്ക് വരൂ.",
+      "english_gloss": "Token four hundred forty two, come to counter two.",
+      "audio_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/ml-positive.wav",
+      "speech_end_s": 3.92,
+      "sha256": "b4fc0be4a1ffd5cbd7fc42bc678e603ec517d9fd67344e4a23ca4f141204bd46",
+      "duration_s": 3.92,
+      "speech_end_provenance": "ElevenLabs with-timestamps alignment: last non-whitespace character end (includes punctuation); not independent forced alignment or measured human speech offset",
+      "speech_end_raw_alignment_s": 3.92,
+      "speech_end_boundary_adjustment_s": 0.0,
+      "alignment_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/ml-positive.wav.alignment.json",
+      "alignment_sha256": "dcf56bb4ee6e5dc68b5c69df80e76d1d6c03db3f47897179782d2d62cef58387",
+      "qa_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/ml-positive.qa.json",
+      "generation_result_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/ml-positive.result.json"
+    },
+    {
+      "id": "ta-positive",
+      "language": "ta",
+      "kind": "positive",
+      "text": "டோக்கன் நானூற்று நாற்பத்து இரண்டு, கவுன்டர் இரண்டிற்கு வரவும்.",
+      "english_gloss": "Token four hundred forty two, please come to counter two.",
+      "audio_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/ta-positive.wav",
+      "speech_end_s": 4.64,
+      "sha256": "1d4a3963a5aa97e2d36acbf228a2e5d0a04ca3330101ce827d7f39c1e1b53fa0",
+      "duration_s": 4.64,
+      "speech_end_provenance": "ElevenLabs with-timestamps alignment: last non-whitespace character end (includes punctuation); not independent forced alignment or measured human speech offset; bounded to WAV duration for a sub-5ms provider timestamp overrun; raw alignment retained unchanged",
+      "speech_end_raw_alignment_s": 4.641,
+      "speech_end_boundary_adjustment_s": 0.001,
+      "alignment_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/ta-positive.wav.alignment.json",
+      "alignment_sha256": "d32ba57ac5c46576367b8a420496ee8b5f32cecd1349f29dc0b725bb4fb87068",
+      "qa_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/ta-positive.qa.json",
+      "generation_result_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/ta-positive.result.json"
+    },
+    {
+      "id": "te-positive",
+      "language": "te",
+      "kind": "positive",
+      "text": "టోకెన్ నాలుగు వందల నలభై రెండు, కౌంటర్ రెండుకు రండి.",
+      "english_gloss": "Token four hundred forty two, please come to counter two.",
+      "audio_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/te-positive.wav",
+      "speech_end_s": 3.84,
+      "sha256": "c63d716741f023ecffc2d9673f76ed1ff06ad06fc019e5079a1313e2c0d462d0",
+      "duration_s": 3.84,
+      "speech_end_provenance": "ElevenLabs with-timestamps alignment: last non-whitespace character end (includes punctuation); not independent forced alignment or measured human speech offset",
+      "speech_end_raw_alignment_s": 3.84,
+      "speech_end_boundary_adjustment_s": 0.0,
+      "alignment_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/te-positive.wav.alignment.json",
+      "alignment_sha256": "ae6238efb38a005dec5459ff2053bfa458103f4a045dfdf19ed0eb0fb7c70142",
+      "qa_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/te-positive.qa.json",
+      "generation_result_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/te-positive.result.json"
+    },
+    {
+      "id": "mr-positive",
+      "language": "mr",
+      "kind": "positive",
+      "text": "टोकन चारशे बेचाळीस, कृपया काउंटर दोनवर या.",
+      "english_gloss": "Token four hundred forty two, please come to counter two.",
+      "audio_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/mr-positive.wav",
+      "speech_end_s": 3.12,
+      "sha256": "e4fd430024e050ef2b96e02dbf78c66847feb6a9770b7a21097c37a197e6a1a1",
+      "duration_s": 3.12,
+      "speech_end_provenance": "ElevenLabs with-timestamps alignment: last non-whitespace character end (includes punctuation); not independent forced alignment or measured human speech offset",
+      "speech_end_raw_alignment_s": 3.12,
+      "speech_end_boundary_adjustment_s": 0.0,
+      "alignment_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/mr-positive.wav.alignment.json",
+      "alignment_sha256": "3d8cfc60d6fbba0af30ccbfb551f04806018980702ba0947d75c882199560a80",
+      "qa_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/mr-positive.qa.json",
+      "generation_result_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/mr-positive.result.json"
+    },
+    {
+      "id": "en-positive",
+      "language": "en",
+      "kind": "positive",
+      "text": "Token four hundred and forty two, please go to counter two.",
+      "english_gloss": "Token four hundred forty two, please go to counter two.",
+      "audio_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/en-positive.wav",
+      "speech_end_s": 4.64,
+      "sha256": "64feede2485f2d76eebf4ea42d63e7d936ea5212b9dc9d2b3ab313833a60cdc5",
+      "duration_s": 4.64,
+      "speech_end_provenance": "ElevenLabs with-timestamps alignment: last non-whitespace character end (includes punctuation); not independent forced alignment or measured human speech offset",
+      "speech_end_raw_alignment_s": 4.64,
+      "speech_end_boundary_adjustment_s": 0.0,
+      "alignment_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/en-positive.wav.alignment.json",
+      "alignment_sha256": "4d3efe0ddaf43dcbb4fcd96fdd29c71d7bdd155a799731b06a3820d360d09382",
+      "qa_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/en-positive.qa.json",
+      "generation_result_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/en-positive.result.json"
+    },
+    {
+      "id": "hi-near-miss",
+      "language": "hi",
+      "kind": "near-miss",
+      "text": "टोकन चार सौ तैंतालीस, कृपया काउंटर तीन पर जाएँ।",
+      "english_gloss": "Token four hundred forty three, please go to counter three.",
+      "audio_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/hi-near-miss.wav",
+      "speech_end_s": 3.92,
+      "sha256": "4f11aa2e3dd49493266ab85e0f42c7d1f3a466d8ef04e4a052f119a4ab5ea31f",
+      "duration_s": 3.92,
+      "speech_end_provenance": "ElevenLabs with-timestamps alignment: last non-whitespace character end (includes punctuation); not independent forced alignment or measured human speech offset",
+      "speech_end_raw_alignment_s": 3.92,
+      "speech_end_boundary_adjustment_s": 0.0,
+      "alignment_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/hi-near-miss.wav.alignment.json",
+      "alignment_sha256": "a213af948f9816b0f69611c31b18647ae8e711cc4dd4000a130bdadac0dee313",
+      "qa_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/hi-near-miss.qa.json",
+      "generation_result_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/hi-near-miss.result.json"
+    },
+    {
+      "id": "ml-near-miss",
+      "language": "ml",
+      "kind": "near-miss",
+      "text": "ടോക്കൺ നാനൂറ്റി നാൽപ്പത്തിമൂന്ന്, കൗണ്ടർ മൂന്നിലേക്ക് വരൂ.",
+      "english_gloss": "Token four hundred forty three, come to counter three.",
+      "audio_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/ml-near-miss.wav",
+      "speech_end_s": 4.08,
+      "sha256": "132f784d032ee74c60305b6e767995bf8d1808bbdd69856b700cb6fc511d0a89",
+      "duration_s": 4.08,
+      "speech_end_provenance": "ElevenLabs with-timestamps alignment: last non-whitespace character end (includes punctuation); not independent forced alignment or measured human speech offset",
+      "speech_end_raw_alignment_s": 4.08,
+      "speech_end_boundary_adjustment_s": 0.0,
+      "alignment_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/ml-near-miss.wav.alignment.json",
+      "alignment_sha256": "4c0ef97f3f4139995b883872ec7003139b17472635d86198557006273fb4a7aa",
+      "qa_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/ml-near-miss.qa.json",
+      "generation_result_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/ml-near-miss.result.json"
+    },
+    {
+      "id": "ta-near-miss",
+      "language": "ta",
+      "kind": "near-miss",
+      "text": "டோக்கன் நானூற்று நாற்பத்து மூன்று, கவுன்டர் மூன்றிற்கு வரவும்.",
+      "english_gloss": "Token four hundred forty three, please come to counter three.",
+      "audio_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/ta-near-miss.wav",
+      "speech_end_s": 5.36,
+      "sha256": "fba688f81dce9c07af9181b37e48b8055d11d4c5051eb20534d0f20d730b7f4e",
+      "duration_s": 5.36,
+      "speech_end_provenance": "ElevenLabs with-timestamps alignment: last non-whitespace character end (includes punctuation); not independent forced alignment or measured human speech offset",
+      "speech_end_raw_alignment_s": 5.36,
+      "speech_end_boundary_adjustment_s": 0.0,
+      "alignment_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/ta-near-miss.wav.alignment.json",
+      "alignment_sha256": "4f139de04f4708db81ca96766cf0020ce7867a870e7d65e4533ba98d2d246c5f",
+      "qa_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/ta-near-miss.qa.json",
+      "generation_result_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/ta-near-miss.result.json"
+    },
+    {
+      "id": "te-near-miss",
+      "language": "te",
+      "kind": "near-miss",
+      "text": "టోకెన్ నాలుగు వందల నలభై మూడు, కౌంటర్ మూడుకు రండి.",
+      "english_gloss": "Token four hundred forty three, please come to counter three.",
+      "audio_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/te-near-miss.wav",
+      "speech_end_s": 4.24,
+      "sha256": "c31d5a1b8d3b9a0e8065664e84c9effa0f30dc902785fce0d13431864f7fdc23",
+      "duration_s": 4.24,
+      "speech_end_provenance": "ElevenLabs with-timestamps alignment: last non-whitespace character end (includes punctuation); not independent forced alignment or measured human speech offset",
+      "speech_end_raw_alignment_s": 4.24,
+      "speech_end_boundary_adjustment_s": 0.0,
+      "alignment_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/te-near-miss.wav.alignment.json",
+      "alignment_sha256": "8969d5728532cf56c534aa95d61c9ce6f999403df7e01335c4c3f1ef2190bb73",
+      "qa_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/te-near-miss.qa.json",
+      "generation_result_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/te-near-miss.result.json"
+    },
+    {
+      "id": "mr-near-miss",
+      "language": "mr",
+      "kind": "near-miss",
+      "text": "टोकन चारशे त्रेचाळीस, कृपया काउंटर तीनवर या.",
+      "english_gloss": "Token four hundred forty three, please come to counter three.",
+      "audio_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/mr-near-miss.wav",
+      "speech_end_s": 3.2,
+      "sha256": "8370fe4b9bce80774b4812a3f16199453ef509a1c1f0cce5ae0514cf478ee3a2",
+      "duration_s": 3.2,
+      "speech_end_provenance": "ElevenLabs with-timestamps alignment: last non-whitespace character end (includes punctuation); not independent forced alignment or measured human speech offset",
+      "speech_end_raw_alignment_s": 3.2,
+      "speech_end_boundary_adjustment_s": 0.0,
+      "alignment_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/mr-near-miss.wav.alignment.json",
+      "alignment_sha256": "6857775cbb3f772d9bf1718d0ce33ec36f404a4e4c157828a097664f0b439300",
+      "qa_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/mr-near-miss.qa.json",
+      "generation_result_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/mr-near-miss.result.json"
+    },
+    {
+      "id": "en-near-miss",
+      "language": "en",
+      "kind": "near-miss",
+      "text": "Token four hundred and forty three, please go to counter three.",
+      "english_gloss": "Token four hundred forty three, please go to counter three.",
+      "audio_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/en-near-miss.wav",
+      "speech_end_s": 3.6,
+      "sha256": "e71e3fb3b0a66dd374f8efcfd8317fead45fa044885ac436fe2f5851f0617e7d",
+      "duration_s": 3.6,
+      "speech_end_provenance": "ElevenLabs with-timestamps alignment: last non-whitespace character end (includes punctuation); not independent forced alignment or measured human speech offset",
+      "speech_end_raw_alignment_s": 3.6,
+      "speech_end_boundary_adjustment_s": 0.0,
+      "alignment_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/en-near-miss.wav.alignment.json",
+      "alignment_sha256": "a18203669df4fe5c8a3084c7ab220792bfa08a91786dcd87a21a6dcd24e7e3bd",
+      "qa_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/en-near-miss.qa.json",
+      "generation_result_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/en-near-miss.result.json"
+    },
+    {
+      "id": "hi-voice-stop",
+      "language": "hi",
+      "kind": "voice-stop",
+      "text": "क्यूबेल, सुनना बंद करो।",
+      "english_gloss": "CueBell, stop listening.",
+      "audio_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/hi-voice-stop.wav",
+      "speech_end_s": 2.4,
+      "sha256": "2562a2b1a2911329a874e7643c1f5d9f2fad0f17bfe6166e771b4220cef520d6",
+      "duration_s": 2.4,
+      "speech_end_provenance": "ElevenLabs with-timestamps alignment: last non-whitespace character end (includes punctuation); not independent forced alignment or measured human speech offset",
+      "speech_end_raw_alignment_s": 2.4,
+      "speech_end_boundary_adjustment_s": 0.0,
+      "alignment_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/hi-voice-stop.wav.alignment.json",
+      "alignment_sha256": "88c9734b248970fef893aa2ff12bbf2256527ccccdd15ade42e1f037d74b1b38",
+      "qa_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/hi-voice-stop.qa.json",
+      "generation_result_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/hi-voice-stop.result.json"
+    },
+    {
+      "id": "ml-voice-stop",
+      "language": "ml",
+      "kind": "voice-stop",
+      "text": "ക്യൂബെൽ, കേൾക്കുന്നത് നിർത്തൂ.",
+      "english_gloss": "CueBell, stop listening.",
+      "audio_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/ml-voice-stop.wav",
+      "speech_end_s": 2.64,
+      "sha256": "4fa3295b93c8902068de6e7c4460160778ac7393f8150e67f144781e6c92b885",
+      "duration_s": 2.64,
+      "speech_end_provenance": "ElevenLabs with-timestamps alignment: last non-whitespace character end (includes punctuation); not independent forced alignment or measured human speech offset",
+      "speech_end_raw_alignment_s": 2.64,
+      "speech_end_boundary_adjustment_s": 0.0,
+      "alignment_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/ml-voice-stop.wav.alignment.json",
+      "alignment_sha256": "12ccd3c2f7dd4541d752210082cbc52e67921f278d98a05fd2546c345a4ef7b0",
+      "qa_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/ml-voice-stop.qa.json",
+      "generation_result_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/ml-voice-stop.result.json"
+    },
+    {
+      "id": "ta-voice-stop",
+      "language": "ta",
+      "kind": "voice-stop",
+      "text": "கியூபெல், கேட்பதை நிறுத்து.",
+      "english_gloss": "CueBell, stop listening.",
+      "audio_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/ta-voice-stop.wav",
+      "speech_end_s": 2.24,
+      "sha256": "ea15ab52942e2f082ab704a6acb4282d08992100ed496f5ba24a1832938b36c1",
+      "duration_s": 2.24,
+      "speech_end_provenance": "ElevenLabs with-timestamps alignment: last non-whitespace character end (includes punctuation); not independent forced alignment or measured human speech offset",
+      "speech_end_raw_alignment_s": 2.24,
+      "speech_end_boundary_adjustment_s": 0.0,
+      "alignment_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/ta-voice-stop.wav.alignment.json",
+      "alignment_sha256": "29b96789e2b4dbc735f76b8ef5c52c0611178b06c9c47b8dacd0be23a3984401",
+      "qa_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/ta-voice-stop.qa.json",
+      "generation_result_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/ta-voice-stop.result.json"
+    },
+    {
+      "id": "te-voice-stop",
+      "language": "te",
+      "kind": "voice-stop",
+      "text": "క్యూబెల్, వినడం ఆపు.",
+      "english_gloss": "CueBell, stop listening.",
+      "audio_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/te-voice-stop.wav",
+      "speech_end_s": 1.6,
+      "sha256": "e20e6c7475f5df4d5069cde6c8efde5aeea0c2ef760b876797d8f498392f2cef",
+      "duration_s": 1.6,
+      "speech_end_provenance": "ElevenLabs with-timestamps alignment: last non-whitespace character end (includes punctuation); not independent forced alignment or measured human speech offset",
+      "speech_end_raw_alignment_s": 1.6,
+      "speech_end_boundary_adjustment_s": 0.0,
+      "alignment_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/te-voice-stop.wav.alignment.json",
+      "alignment_sha256": "c13e861fd13fd8c999bb7557f59294b9bba955f03efafa070122f48c948db769",
+      "qa_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/te-voice-stop.qa.json",
+      "generation_result_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/te-voice-stop.result.json"
+    },
+    {
+      "id": "mr-voice-stop",
+      "language": "mr",
+      "kind": "voice-stop",
+      "text": "क्यूबेल, ऐकणे थांबव.",
+      "english_gloss": "CueBell, stop listening.",
+      "audio_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/mr-voice-stop.wav",
+      "speech_end_s": 2.08,
+      "sha256": "a7fcdccb0d45ae82dc7c61e632a4784a4b8251d3a174ff5dd333409ea64793f3",
+      "duration_s": 2.08,
+      "speech_end_provenance": "ElevenLabs with-timestamps alignment: last non-whitespace character end (includes punctuation); not independent forced alignment or measured human speech offset",
+      "speech_end_raw_alignment_s": 2.08,
+      "speech_end_boundary_adjustment_s": 0.0,
+      "alignment_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/mr-voice-stop.wav.alignment.json",
+      "alignment_sha256": "306003ac35304429698f22872a36ef23be5bb0593d50c90e3174ca8a94b51556",
+      "qa_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/mr-voice-stop.qa.json",
+      "generation_result_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/mr-voice-stop.result.json"
+    },
+    {
+      "id": "en-voice-stop",
+      "language": "en",
+      "kind": "voice-stop",
+      "text": "CueBell, stop listening.",
+      "english_gloss": "CueBell, stop listening.",
+      "audio_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/en-voice-stop.wav",
+      "speech_end_s": 1.84,
+      "sha256": "258d84a013d60d5813a1c258818fd7abdc8722c4a46b3e9d9028c6cd1911dd44",
+      "duration_s": 1.84,
+      "speech_end_provenance": "ElevenLabs with-timestamps alignment: last non-whitespace character end (includes punctuation); not independent forced alignment or measured human speech offset",
+      "speech_end_raw_alignment_s": 1.84,
+      "speech_end_boundary_adjustment_s": 0.0,
+      "alignment_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/en-voice-stop.wav.alignment.json",
+      "alignment_sha256": "8f0ecb29fefa6e60af8d8d004d373fda424823138e8c4ac33f4253b7333199b9",
+      "qa_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/en-voice-stop.qa.json",
+      "generation_result_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/en-voice-stop.result.json"
+    },
+    {
+      "id": "hi-correction",
+      "language": "hi",
+      "kind": "correction",
+      "text": "सुधार: चार सौ बयालीस नहीं, टोकन चार सौ तैंतालीस काउंटर तीन पर आएँ।",
+      "english_gloss": "Correction: not four hundred forty two; token four hundred forty three, come to counter three.",
+      "audio_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/hi-correction.wav",
+      "speech_end_s": 6.56,
+      "sha256": "d95a4d8960b672db04a065f5e7fdd5c6ea92f4dbaa0426f9d59f323e371a7397",
+      "duration_s": 7.52,
+      "speech_end_provenance": "ElevenLabs with-timestamps alignment: last non-whitespace character end (includes punctuation); not independent forced alignment or measured human speech offset",
+      "speech_end_raw_alignment_s": 6.56,
+      "speech_end_boundary_adjustment_s": 0.0,
+      "alignment_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/hi-correction.wav.alignment.json",
+      "alignment_sha256": "21183db1c071ab6f008b0580966091acd7d7680c2ffaa0a5369c921dc5daa721",
+      "qa_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/hi-correction.qa.json",
+      "generation_result_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/hi-correction.result.json"
+    },
+    {
+      "id": "ml-correction",
+      "language": "ml",
+      "kind": "correction",
+      "text": "തിരുത്ത്: നാനൂറ്റി നാൽപ്പത്തിരണ്ട് അല്ല, ടോക്കൺ നാനൂറ്റി നാൽപ്പത്തിമൂന്ന് കൗണ്ടർ മൂന്നിലേക്ക് വരൂ.",
+      "english_gloss": "Correction: not four hundred forty two; token four hundred forty three, come to counter three.",
+      "audio_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/ml-correction.wav",
+      "speech_end_s": 8.96,
+      "sha256": "0b871f2b195f80546dfe99bface06aa8c9b21a4e90608a0010a3dadd79586505",
+      "duration_s": 8.96,
+      "speech_end_provenance": "ElevenLabs with-timestamps alignment: last non-whitespace character end (includes punctuation); not independent forced alignment or measured human speech offset",
+      "speech_end_raw_alignment_s": 8.96,
+      "speech_end_boundary_adjustment_s": 0.0,
+      "alignment_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/ml-correction.wav.alignment.json",
+      "alignment_sha256": "04d0f91bb41a9e1bbb8191de24446ac7802f9536f4fad1210e31308872287539",
+      "qa_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/ml-correction.qa.json",
+      "generation_result_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/ml-correction.result.json"
+    },
+    {
+      "id": "hi-cancellation",
+      "language": "hi",
+      "kind": "cancellation",
+      "text": "टोकन चार सौ बयालीस की पिछली घोषणा रद्द है। अभी काउंटर पर न आएँ।",
+      "english_gloss": "The previous announcement for token four hundred forty two is cancelled. Do not come to the counter now.",
+      "audio_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/hi-cancellation.wav",
+      "speech_end_s": 5.04,
+      "sha256": "d51019d6174f66bff71c5024b058640b0e62ef68591d8c10d9c2963c14cdbce1",
+      "duration_s": 5.04,
+      "speech_end_provenance": "ElevenLabs with-timestamps alignment: last non-whitespace character end (includes punctuation); not independent forced alignment or measured human speech offset",
+      "speech_end_raw_alignment_s": 5.04,
+      "speech_end_boundary_adjustment_s": 0.0,
+      "alignment_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/hi-cancellation.wav.alignment.json",
+      "alignment_sha256": "5a6474112f5ceab94654ff01cfd1a8e2bf2b52355e3c643b0273d0bc4c68da72",
+      "qa_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/hi-cancellation.qa.json",
+      "generation_result_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/hi-cancellation.result.json"
+    },
+    {
+      "id": "ml-cancellation",
+      "language": "ml",
+      "kind": "cancellation",
+      "text": "ടോക്കൺ നാനൂറ്റി നാൽപ്പത്തിരണ്ടിന്റെ മുൻ അറിയിപ്പ് റദ്ദാക്കി. ഇപ്പോൾ കൗണ്ടറിലേക്ക് വരേണ്ട.",
+      "english_gloss": "The previous announcement for token four hundred forty two is cancelled. Do not come to the counter now.",
+      "audio_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/ml-cancellation.wav",
+      "speech_end_s": 6.72,
+      "sha256": "a08ab49fe8fe3365142123935334d1d5222dcd13b5cc49dc0ed89308ccb1e00d",
+      "duration_s": 6.72,
+      "speech_end_provenance": "ElevenLabs with-timestamps alignment: last non-whitespace character end (includes punctuation); not independent forced alignment or measured human speech offset",
+      "speech_end_raw_alignment_s": 6.72,
+      "speech_end_boundary_adjustment_s": 0.0,
+      "alignment_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/ml-cancellation.wav.alignment.json",
+      "alignment_sha256": "f25dcb38e96f42afaa405d76002fa8458868d929d9600ef5fc6d5424fea5d0c3",
+      "qa_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/ml-cancellation.qa.json",
+      "generation_result_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/ml-cancellation.result.json"
+    },
+    {
+      "id": "hi-request",
+      "language": "hi",
+      "kind": "request",
+      "text": "जब फ़ार्मेसी टोकन चार सौ बयालीस बुलाया जाए, तो मुझे कंपन से सूचित करो।",
+      "english_gloss": "When pharmacy token four hundred forty two is called, notify me with vibration.",
+      "audio_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/hi-request.wav",
+      "speech_end_s": 4.88,
+      "sha256": "92161a2ae61c29323c508416715558d2aed64d917f2528d708be29f987eb97d7",
+      "duration_s": 4.88,
+      "speech_end_provenance": "ElevenLabs with-timestamps alignment: last non-whitespace character end (includes punctuation); not independent forced alignment or measured human speech offset",
+      "speech_end_raw_alignment_s": 4.88,
+      "speech_end_boundary_adjustment_s": 0.0,
+      "alignment_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/hi-request.wav.alignment.json",
+      "alignment_sha256": "5fef56e82828612584f9b9b512d1f42519963b6b359d7f3f76b4035371aa07cc",
+      "qa_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/hi-request.qa.json",
+      "generation_result_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/hi-request.result.json"
+    },
+    {
+      "id": "ml-request",
+      "language": "ml",
+      "kind": "request",
+      "text": "ഫാർമസി ടോക്കൺ നാനൂറ്റി നാൽപ്പത്തിരണ്ട് വിളിക്കുമ്പോൾ വൈബ്രേഷനിലൂടെ എന്നെ അറിയിക്കൂ.",
+      "english_gloss": "When pharmacy token four hundred forty two is called, notify me through vibration.",
+      "audio_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/ml-request.wav",
+      "speech_end_s": 5.84,
+      "sha256": "b4109c8ac90e800a284f281e380620e7522c5a8b59e7ad99b5c804300fca211f",
+      "duration_s": 5.84,
+      "speech_end_provenance": "ElevenLabs with-timestamps alignment: last non-whitespace character end (includes punctuation); not independent forced alignment or measured human speech offset",
+      "speech_end_raw_alignment_s": 5.84,
+      "speech_end_boundary_adjustment_s": 0.0,
+      "alignment_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/ml-request.wav.alignment.json",
+      "alignment_sha256": "ec47b06f63c71a3e5408dcb02f7f904a78a7d9b48172e7de2bff99b2477fdd23",
+      "qa_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/ml-request.qa.json",
+      "generation_result_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/ml-request.result.json"
+    }
+  ],
+  "cases": [
+    {
+      "id": "hi-positive",
+      "language": "hi",
+      "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+      "kind": "positive",
+      "sequence": [
+        {
+          "fixture_id": "hi-positive",
+          "silence_after_s": 2.0
+        }
+      ],
+      "expected": {
+        "alert": true,
+        "token": "442",
+        "location": "counter 2",
+        "location_aliases": ["काउंटर दो", "काउंटर दो पर", "काउंटर 2", "counter two"],
+        "voice_stop": false,
+        "correction": false
+      }
+    },
+    {
+      "id": "hi-near-miss",
+      "language": "hi",
+      "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+      "kind": "near-miss",
+      "sequence": [
+        {
+          "fixture_id": "hi-near-miss",
+          "silence_after_s": 2.0
+        }
+      ],
+      "expected": {
+        "alert": false,
+        "token": null,
+        "location": null,
+        "voice_stop": false,
+        "correction": false
+      }
+    },
+    {
+      "id": "hi-voice-stop",
+      "language": "hi",
+      "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+      "kind": "voice-stop",
+      "sequence": [
+        {
+          "fixture_id": "hi-voice-stop",
+          "silence_after_s": 2.0
+        }
+      ],
+      "expected": {
+        "alert": false,
+        "token": null,
+        "location": null,
+        "voice_stop": true,
+        "correction": false
+      }
+    },
+    {
+      "id": "hi-burst",
+      "language": "hi",
+      "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+      "kind": "burst",
+      "sequence": [
+        {
+          "fixture_id": "hi-near-miss",
+          "silence_after_s": 0.15
+        },
+        {
+          "fixture_id": "hi-positive",
+          "silence_after_s": 2.0
+        }
+      ],
+      "expected": {
+        "alert": true,
+        "token": "442",
+        "location": "counter 2",
+        "location_aliases": ["काउंटर दो", "काउंटर दो पर", "काउंटर 2", "counter two"],
+        "voice_stop": false,
+        "correction": false
+      }
+    },
+    {
+      "id": "ml-positive",
+      "language": "ml",
+      "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+      "kind": "positive",
+      "sequence": [
+        {
+          "fixture_id": "ml-positive",
+          "silence_after_s": 2.0
+        }
+      ],
+      "expected": {
+        "alert": true,
+        "token": "442",
+        "location": "counter 2",
+        "location_aliases": ["കൗണ്ടർ രണ്ടിലേക്ക്", "കൗണ്ടർ രണ്ട്", "കൗണ്ടർ 2", "കൗണ്ടർ രണ്ടിൽ"],
+        "voice_stop": false,
+        "correction": false
+      }
+    },
+    {
+      "id": "ml-near-miss",
+      "language": "ml",
+      "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+      "kind": "near-miss",
+      "sequence": [
+        {
+          "fixture_id": "ml-near-miss",
+          "silence_after_s": 2.0
+        }
+      ],
+      "expected": {
+        "alert": false,
+        "token": null,
+        "location": null,
+        "voice_stop": false,
+        "correction": false
+      }
+    },
+    {
+      "id": "ml-voice-stop",
+      "language": "ml",
+      "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+      "kind": "voice-stop",
+      "sequence": [
+        {
+          "fixture_id": "ml-voice-stop",
+          "silence_after_s": 2.0
+        }
+      ],
+      "expected": {
+        "alert": false,
+        "token": null,
+        "location": null,
+        "voice_stop": true,
+        "correction": false
+      }
+    },
+    {
+      "id": "ml-burst",
+      "language": "ml",
+      "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+      "kind": "burst",
+      "sequence": [
+        {
+          "fixture_id": "ml-near-miss",
+          "silence_after_s": 0.15
+        },
+        {
+          "fixture_id": "ml-positive",
+          "silence_after_s": 2.0
+        }
+      ],
+      "expected": {
+        "alert": true,
+        "token": "442",
+        "location": "counter 2",
+        "location_aliases": ["കൗണ്ടർ രണ്ടിലേക്ക്", "കൗണ്ടർ രണ്ട്", "കൗണ്ടർ 2", "കൗണ്ടർ രണ്ടിൽ"],
+        "voice_stop": false,
+        "correction": false
+      }
+    },
+    {
+      "id": "ta-positive",
+      "language": "ta",
+      "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+      "kind": "positive",
+      "sequence": [
+        {
+          "fixture_id": "ta-positive",
+          "silence_after_s": 2.0
+        }
+      ],
+      "expected": {
+        "alert": true,
+        "token": "442",
+        "location": "counter 2",
+        "location_aliases": ["கவுன்டர் இரண்டிற்கு", "கவுன்டர் இரண்டு", "கவுண்டர் இரண்டிற்கு", "கவுண்டர் இரண்டு", "கவுன்டர் 2", "கவுண்டர் 2"],
+        "voice_stop": false,
+        "correction": false
+      }
+    },
+    {
+      "id": "ta-near-miss",
+      "language": "ta",
+      "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+      "kind": "near-miss",
+      "sequence": [
+        {
+          "fixture_id": "ta-near-miss",
+          "silence_after_s": 2.0
+        }
+      ],
+      "expected": {
+        "alert": false,
+        "token": null,
+        "location": null,
+        "voice_stop": false,
+        "correction": false
+      }
+    },
+    {
+      "id": "ta-voice-stop",
+      "language": "ta",
+      "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+      "kind": "voice-stop",
+      "sequence": [
+        {
+          "fixture_id": "ta-voice-stop",
+          "silence_after_s": 2.0
+        }
+      ],
+      "expected": {
+        "alert": false,
+        "token": null,
+        "location": null,
+        "voice_stop": true,
+        "correction": false
+      }
+    },
+    {
+      "id": "ta-burst",
+      "language": "ta",
+      "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+      "kind": "burst",
+      "sequence": [
+        {
+          "fixture_id": "ta-near-miss",
+          "silence_after_s": 0.15
+        },
+        {
+          "fixture_id": "ta-positive",
+          "silence_after_s": 2.0
+        }
+      ],
+      "expected": {
+        "alert": true,
+        "token": "442",
+        "location": "counter 2",
+        "location_aliases": ["கவுன்டர் இரண்டிற்கு", "கவுன்டர் இரண்டு", "கவுண்டர் இரண்டிற்கு", "கவுண்டர் இரண்டு", "கவுன்டர் 2", "கவுண்டர் 2"],
+        "voice_stop": false,
+        "correction": false
+      }
+    },
+    {
+      "id": "te-positive",
+      "language": "te",
+      "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+      "kind": "positive",
+      "sequence": [
+        {
+          "fixture_id": "te-positive",
+          "silence_after_s": 2.0
+        }
+      ],
+      "expected": {
+        "alert": true,
+        "token": "442",
+        "location": "counter 2",
+        "location_aliases": ["కౌంటర్ రెండుకు", "కౌంటర్ రెండు", "కౌంటర్ 2"],
+        "voice_stop": false,
+        "correction": false
+      }
+    },
+    {
+      "id": "te-near-miss",
+      "language": "te",
+      "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+      "kind": "near-miss",
+      "sequence": [
+        {
+          "fixture_id": "te-near-miss",
+          "silence_after_s": 2.0
+        }
+      ],
+      "expected": {
+        "alert": false,
+        "token": null,
+        "location": null,
+        "voice_stop": false,
+        "correction": false
+      }
+    },
+    {
+      "id": "te-voice-stop",
+      "language": "te",
+      "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+      "kind": "voice-stop",
+      "sequence": [
+        {
+          "fixture_id": "te-voice-stop",
+          "silence_after_s": 2.0
+        }
+      ],
+      "expected": {
+        "alert": false,
+        "token": null,
+        "location": null,
+        "voice_stop": true,
+        "correction": false
+      }
+    },
+    {
+      "id": "te-burst",
+      "language": "te",
+      "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+      "kind": "burst",
+      "sequence": [
+        {
+          "fixture_id": "te-near-miss",
+          "silence_after_s": 0.15
+        },
+        {
+          "fixture_id": "te-positive",
+          "silence_after_s": 2.0
+        }
+      ],
+      "expected": {
+        "alert": true,
+        "token": "442",
+        "location": "counter 2",
+        "location_aliases": ["కౌంటర్ రెండుకు", "కౌంటర్ రెండు", "కౌంటర్ 2"],
+        "voice_stop": false,
+        "correction": false
+      }
+    },
+    {
+      "id": "mr-positive",
+      "language": "mr",
+      "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+      "kind": "positive",
+      "sequence": [
+        {
+          "fixture_id": "mr-positive",
+          "silence_after_s": 2.0
+        }
+      ],
+      "expected": {
+        "alert": true,
+        "token": "442",
+        "location": "counter 2",
+        "location_aliases": ["काउंटर दोनवर", "काउंटर दोन", "काउंटर 2"],
+        "voice_stop": false,
+        "correction": false
+      }
+    },
+    {
+      "id": "mr-near-miss",
+      "language": "mr",
+      "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+      "kind": "near-miss",
+      "sequence": [
+        {
+          "fixture_id": "mr-near-miss",
+          "silence_after_s": 2.0
+        }
+      ],
+      "expected": {
+        "alert": false,
+        "token": null,
+        "location": null,
+        "voice_stop": false,
+        "correction": false
+      }
+    },
+    {
+      "id": "mr-voice-stop",
+      "language": "mr",
+      "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+      "kind": "voice-stop",
+      "sequence": [
+        {
+          "fixture_id": "mr-voice-stop",
+          "silence_after_s": 2.0
+        }
+      ],
+      "expected": {
+        "alert": false,
+        "token": null,
+        "location": null,
+        "voice_stop": true,
+        "correction": false
+      }
+    },
+    {
+      "id": "mr-burst",
+      "language": "mr",
+      "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+      "kind": "burst",
+      "sequence": [
+        {
+          "fixture_id": "mr-near-miss",
+          "silence_after_s": 0.15
+        },
+        {
+          "fixture_id": "mr-positive",
+          "silence_after_s": 2.0
+        }
+      ],
+      "expected": {
+        "alert": true,
+        "token": "442",
+        "location": "counter 2",
+        "location_aliases": ["काउंटर दोनवर", "काउंटर दोन", "काउंटर 2"],
+        "voice_stop": false,
+        "correction": false
+      }
+    },
+    {
+      "id": "en-positive",
+      "language": "en",
+      "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+      "kind": "positive",
+      "sequence": [
+        {
+          "fixture_id": "en-positive",
+          "silence_after_s": 2.0
+        }
+      ],
+      "expected": {
+        "alert": true,
+        "token": "442",
+        "location": "counter 2",
+        "location_aliases": ["counter two"],
+        "voice_stop": false,
+        "correction": false
+      }
+    },
+    {
+      "id": "en-near-miss",
+      "language": "en",
+      "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+      "kind": "near-miss",
+      "sequence": [
+        {
+          "fixture_id": "en-near-miss",
+          "silence_after_s": 2.0
+        }
+      ],
+      "expected": {
+        "alert": false,
+        "token": null,
+        "location": null,
+        "voice_stop": false,
+        "correction": false
+      }
+    },
+    {
+      "id": "en-voice-stop",
+      "language": "en",
+      "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+      "kind": "voice-stop",
+      "sequence": [
+        {
+          "fixture_id": "en-voice-stop",
+          "silence_after_s": 2.0
+        }
+      ],
+      "expected": {
+        "alert": false,
+        "token": null,
+        "location": null,
+        "voice_stop": true,
+        "correction": false
+      }
+    },
+    {
+      "id": "en-burst",
+      "language": "en",
+      "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+      "kind": "burst",
+      "sequence": [
+        {
+          "fixture_id": "en-near-miss",
+          "silence_after_s": 0.15
+        },
+        {
+          "fixture_id": "en-positive",
+          "silence_after_s": 2.0
+        }
+      ],
+      "expected": {
+        "alert": true,
+        "token": "442",
+        "location": "counter 2",
+        "location_aliases": ["counter two"],
+        "voice_stop": false,
+        "correction": false
+      }
+    },
+    {
+      "id": "hi-correction",
+      "language": "hi",
+      "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+      "kind": "correction",
+      "sequence": [
+        {
+          "fixture_id": "hi-positive",
+          "silence_after_s": 0.15
+        },
+        {
+          "fixture_id": "hi-correction",
+          "silence_after_s": 2.0
+        }
+      ],
+      "expected": {
+        "alert": false,
+        "token": null,
+        "location": null,
+        "voice_stop": false,
+        "correction": true
+      }
+    },
+    {
+      "id": "hi-cancellation",
+      "language": "hi",
+      "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+      "kind": "cancellation",
+      "sequence": [
+        {
+          "fixture_id": "hi-positive",
+          "silence_after_s": 0.15
+        },
+        {
+          "fixture_id": "hi-cancellation",
+          "silence_after_s": 2.0
+        }
+      ],
+      "expected": {
+        "alert": false,
+        "token": null,
+        "location": null,
+        "voice_stop": false,
+        "correction": true
+      }
+    },
+    {
+      "id": "ml-correction",
+      "language": "ml",
+      "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+      "kind": "correction",
+      "sequence": [
+        {
+          "fixture_id": "ml-positive",
+          "silence_after_s": 0.15
+        },
+        {
+          "fixture_id": "ml-correction",
+          "silence_after_s": 2.0
+        }
+      ],
+      "expected": {
+        "alert": false,
+        "token": null,
+        "location": null,
+        "voice_stop": false,
+        "correction": true
+      }
+    },
+    {
+      "id": "ml-cancellation",
+      "language": "ml",
+      "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+      "kind": "cancellation",
+      "sequence": [
+        {
+          "fixture_id": "ml-positive",
+          "silence_after_s": 0.15
+        },
+        {
+          "fixture_id": "ml-cancellation",
+          "silence_after_s": 2.0
+        }
+      ],
+      "expected": {
+        "alert": false,
+        "token": null,
+        "location": null,
+        "voice_stop": false,
+        "correction": true
+      }
+    },
+    {
+      "id": "hi-request",
+      "language": "hi",
+      "kind": "request",
+      "mode": "request",
+      "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+      "sequence": [
+        {
+          "fixture_id": "hi-request",
+          "silence_after_s": 2.0
+        }
+      ],
+      "expected": {
+        "alert": false,
+        "token": "442",
+        "location": null,
+        "voice_stop": false,
+        "correction": false
+      }
+    },
+    {
+      "id": "ml-request",
+      "language": "ml",
+      "kind": "request",
+      "mode": "request",
+      "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+      "sequence": [
+        {
+          "fixture_id": "ml-request",
+          "silence_after_s": 2.0
+        }
+      ],
+      "expected": {
+        "alert": false,
+        "token": "442",
+        "location": null,
+        "voice_stop": false,
+        "correction": false
+      }
+    }
+  ],
+  "metadata": {
+    "project_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113",
+    "generation_plan_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/generation_plan.json",
+    "provider": "elevenlabs",
+    "tool": "elevenlabs_tts",
+    "model": "eleven_v3",
+    "voice_id": "bajNon13EdhNMndG3z05",
+    "voice_name": "Viraj",
+    "corpus_type": "synthetic-stock-voice",
+    "translation_provenance": "Agent-authored native-script benchmark prompts and English glosses, established before synthesis; not derived from Gnani or Luna outputs; not reviewed by native speakers.",
+    "quality_scope": "Automated file/PCM/alignment validation; manual listening and native-speaker evaluation not performed",
+    "audio_processing": "Provider PCM wrapped in WAV only; no denoising or DSP",
+    "expected_location_semantics": "counter 2 is a canonical English ground-truth label for native-script counter two; returned evidence locations may be verbatim native text",
+    "correction_semantics": "Expected final alert is false once the initial 442 call is explicitly replaced by 443 or cancelled; transient earlier alerts must be separately recorded. correction=true includes explicit cancellation.",
+    "sequence_gap_note": "silence_after_s adds silence after the complete untrimmed WAV; intrinsic provider trailing silence also contributes to the effective gap",
+    "cost_status": "estimated",
+    "estimated_cost_usd": 0.375,
+    "submitted_characters_including_failures": 1250,
+    "script_extensions": [
+      {
+        "extension_id": "spoken-requests-hi-ml",
+        "script_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/request_extension_script.json",
+        "script_sha256": "cebe61a517e5623d88803fe323892b43cc7dc264c8515a97b568d4b849cd400a",
+        "plan_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/request_extension_plan.json",
+        "user_approved": true
+      }
+    ],
+    "request_case_selection": "Select hi-request and ml-request explicitly with --mode request; exclude kind=request cases from monitor-mode runs",
+    "request_translation_provenance": "Parent-supplied Hindi and Malayalam requests, fixed before synthesis; native pronunciation not independently verified"
+  }
+}

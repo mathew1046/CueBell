@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "extension_id": "spoken-requests-hi-ml",
+  "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+  "translation_provenance": "Parent-supplied Hindi and Malayalam spoken monitor requests, fixed before synthesis; not derived from Gnani or Luna outputs; native pronunciation not independently verified.",
+  "fixtures": [
+    {"id": "hi-request", "language": "hi", "kind": "request", "text": "जब फ़ार्मेसी टोकन चार सौ बयालीस बुलाया जाए, तो मुझे कंपन से सूचित करो।", "english_gloss": "When pharmacy token four hundred forty two is called, notify me with vibration."},
+    {"id": "ml-request", "language": "ml", "kind": "request", "text": "ഫാർമസി ടോക്കൺ നാനൂറ്റി നാൽപ്പത്തിരണ്ട് വിളിക്കുമ്പോൾ വൈബ്രേഷനിലൂടെ എന്നെ അറിയിക്കൂ.", "english_gloss": "When pharmacy token four hundred forty two is called, notify me through vibration."}
+  ]
+}

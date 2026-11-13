@@ -1,0 +1,3278 @@
+{
+  "runs": [
+    {
+      "label": "setup-v1-baseline",
+      "configuration": {},
+      "case_count": 6,
+      "verdicts": {
+        "pass": 6
+      },
+      "client_verdicts": {
+        "pass": 6
+      },
+      "false_positive_cases": 0,
+      "terminal_false_positive_cases": 0,
+      "asr_text_errors": {
+        "reference_words": 66,
+        "word_edits": 12,
+        "reference_characters": 390,
+        "character_edits": 12
+      },
+      "by_kind": {
+        "request": {
+          "count": 6,
+          "verdicts": {
+            "pass": 6
+          },
+          "passing_case_latencies_ms": {
+            "speech_end_to_alert_ms": {
+              "count": 0
+            },
+            "speech_end_to_last_final_ms": {
+              "count": 6,
+              "p50": 4411.032,
+              "p95": 4429.519,
+              "max": 4431.493
+            },
+            "speech_end_to_voice_stop_ms": {
+              "count": 0
+            },
+            "speech_end_to_confirmation_ms": {
+              "count": 6,
+              "p50": 10746.764,
+              "p95": 11123.563,
+              "max": 11178.325
+            },
+            "latest_segment_queue_ms": {
+              "count": 0
+            },
+            "last_model_end_to_first_alert_ms": {
+              "count": 0
+            }
+          }
+        }
+      },
+      "provider": {
+        "trace": "/home/mathew/Arrakis/CueBell/docs/benchmarks/2026-11-13/setup-v1-baseline-server.jsonl",
+        "settings": {
+          "gnani_language_code": "indic-auto",
+          "openai_model": "gpt-6-luna",
+          "allow_app_sessions": false,
+          "allow_insecure_local": true,
+          "max_sessions": 8,
+          "session_ttl_seconds": 14400,
+          "correction_grace_seconds": 1.2,
+          "request_pause_seconds": 3.5,
+          "request_timeout_seconds": 90.0
+        },
+        "openai_requests_attempted": 6,
+        "openai_responses": 6,
+        "openai_errors": [],
+        "openai_response_ms": {
+          "count": 6,
+          "p50": 5056.156,
+          "p95": 5703.11,
+          "max": 5785.105
+        },
+        "interpretation_ms": {
+          "intent": {
+            "count": 6,
+            "p50": 5213.975,
+            "p95": 5703.39,
+            "max": 5785.394
+          }
+        },
+        "returned_service_tiers": {
+          "default": 6
+        },
+        "returned_models": {
+          "gpt-6-luna": 6
+        },
+        "tokens": {
+          "input": 7641,
+          "output": 1984,
+          "cached_input": 7548,
+          "cache_written_input": 75,
+          "reasoning_output": 1092
+        },
+        "openai_reference_cost_usd": 0.001079,
+        "cost_status": "estimate from published Luna rates, not an invoice; errors may be billable",
+        "gnani_streams": 6,
+        "gnani_audio_seconds": 60.064,
+        "gnani_connection_seconds": 68.526,
+        "gnani_provider_latency_ms": {
+          "count": 9,
+          "p50": 144.0,
+          "p95": 165.2,
+          "max": 168
+        },
+        "gnani_transcripts": 9,
+        "gnani_send_max_ms": 1.5172220000749803
+      },
+      "cases": [
+        {
+          "case_id": "hi-request",
+          "language": "hi",
+          "kind": "request",
+          "mode": "request",
+          "expected": {
+            "alert": false,
+            "token": "442",
+            "location": null,
+            "voice_stop": false,
+            "correction": false
+          },
+          "client_verdict": "pass",
+          "audited_verdict": "pass",
+          "latest_interpretation_completed_in_window": null,
+          "completed_interpretations": 0,
+          "interpretation_errors": [],
+          "checks": {
+            "combined_final_received": true,
+            "intent_confirmable": true,
+            "monitor_confirmed": true,
+            "target": true
+          },
+          "false_positive_any": false,
+          "false_positive_terminal": false,
+          "semantic_correction_observed": false,
+          "retraction_observed": false,
+          "voice_stop_observed": false,
+          "ambiguity_reasons": {},
+          "asr_text_errors": {
+            "reference_words": 14,
+            "word_edits": 1,
+            "wer_percent": 7.142857142857143,
+            "reference_characters": 55,
+            "character_edits": 1,
+            "cer_percent": 1.8181818181818181
+          },
+          "metrics": {
+            "pair_wait_ms": 0.0024450000637443736,
+            "setup_ms": 16360.911848999876,
+            "connect_ready_ms": 261.4076190002379,
+            "speech_end_to_transcript_ms": 4412.222211999961,
+            "speech_end_to_alert_ms": null,
+            "speech_end_to_voice_stop_ms": null,
+            "transcript_to_alert_ms": null,
+            "source_transcript_to_alert_ms": null,
+            "last_cue_to_correction_ms": null,
+            "request_workflow_ms": 16076.14855699967,
+            "speech_end_to_confirmation_ms": 10923.265382999944,
+            "sender_lateness_p50_ms": 0.6607719997191452,
+            "sender_lateness_p95_ms": 1.0944635999294405,
+            "sender_lateness_max_ms": 2.8172289999019995,
+            "intent_ms": 5172.052975000042,
+            "confirm_ms": 1.9891820002158056,
+            "speech_end_to_last_final_ms": 4412.222211999961,
+            "latest_segment_queue_ms": null,
+            "last_model_end_to_first_alert_ms": null
+          },
+          "transcripts": [
+            "जब फार्मेसी टोकन चार सौ बयालीस बुलाया जाए तो मुझे कंपन से सूचित करो।"
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "ml-request",
+          "language": "ml",
+          "kind": "request",
+          "mode": "request",
+          "expected": {
+            "alert": false,
+            "token": "442",
+            "location": null,
+            "voice_stop": false,
+            "correction": false
+          },
+          "client_verdict": "pass",
+          "audited_verdict": "pass",
+          "latest_interpretation_completed_in_window": null,
+          "completed_interpretations": 0,
+          "interpretation_errors": [],
+          "checks": {
+            "combined_final_received": true,
+            "intent_confirmable": true,
+            "monitor_confirmed": true,
+            "target": true
+          },
+          "false_positive_any": false,
+          "false_positive_terminal": false,
+          "semantic_correction_observed": false,
+          "retraction_observed": false,
+          "voice_stop_observed": false,
+          "ambiguity_reasons": {},
+          "asr_text_errors": {
+            "reference_words": 8,
+            "word_edits": 3,
+            "wer_percent": 37.5,
+            "reference_characters": 75,
+            "character_edits": 3,
+            "cer_percent": 4.0
+          },
+          "metrics": {
+            "pair_wait_ms": 0.05726300014430308,
+            "setup_ms": 17646.93066100017,
+            "connect_ready_ms": 312.8796680002779,
+            "speech_end_to_transcript_ms": 4243.189410000014,
+            "speech_end_to_alert_ms": null,
+            "speech_end_to_voice_stop_ms": null,
+            "transcript_to_alert_ms": null,
+            "source_transcript_to_alert_ms": null,
+            "last_cue_to_correction_ms": null,
+            "request_workflow_ms": 17290.93437900019,
+            "speech_end_to_confirmation_ms": 11178.32509100026,
+            "sender_lateness_p50_ms": 0.7453614998667035,
+            "sender_lateness_p95_ms": 1.2648144996774133,
+            "sender_lateness_max_ms": 1.7165700000987272,
+            "intent_ms": 5787.537852999776,
+            "confirm_ms": 1.679703999798221,
+            "speech_end_to_last_final_ms": 4243.189410000014,
+            "latest_segment_queue_ms": null,
+            "last_model_end_to_first_alert_ms": null
+          },
+          "transcripts": [
+            "ഫാർമസി ടോക്ക് നാനൂറ്റി നാല്പത്തി രണ്ട്. വിളിക്കുമ്പോൾ വൈബ്രേഷനിലൂടെ എന്നെ അറിയിക്കൂ."
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "hi-request",
+          "language": "hi",
+          "kind": "request",
+          "mode": "request",
+          "expected": {
+            "alert": false,
+            "token": "442",
+            "location": null,
+            "voice_stop": false,
+            "correction": false
+          },
+          "client_verdict": "pass",
+          "audited_verdict": "pass",
+          "latest_interpretation_completed_in_window": null,
+          "completed_interpretations": 0,
+          "interpretation_errors": [],
+          "checks": {
+            "combined_final_received": true,
+            "intent_confirmable": true,
+            "monitor_confirmed": true,
+            "target": true
+          },
+          "false_positive_any": false,
+          "false_positive_terminal": false,
+          "semantic_correction_observed": false,
+          "retraction_observed": false,
+          "voice_stop_observed": false,
+          "ambiguity_reasons": {},
+          "asr_text_errors": {
+            "reference_words": 14,
+            "word_edits": 1,
+            "wer_percent": 7.142857142857143,
+            "reference_characters": 55,
+            "character_edits": 1,
+            "cer_percent": 1.8181818181818181
+          },
+          "metrics": {
+            "pair_wait_ms": 0.059638000038830796,
+            "setup_ms": 15659.835990000374,
+            "connect_ready_ms": 222.157808999782,
+            "speech_end_to_transcript_ms": 4409.840880999582,
+            "speech_end_to_alert_ms": null,
+            "speech_end_to_voice_stop_ms": null,
+            "transcript_to_alert_ms": null,
+            "source_transcript_to_alert_ms": null,
+            "last_cue_to_correction_ms": null,
+            "request_workflow_ms": 15395.68928100016,
+            "speech_end_to_confirmation_ms": 10242.73700499998,
+            "sender_lateness_p50_ms": 0.6769879996681993,
+            "sender_lateness_p95_ms": 1.1103402997377998,
+            "sender_lateness_max_ms": 1.3650239998241886,
+            "intent_ms": 4777.208101999804,
+            "confirm_ms": 1.6384470000048168,
+            "speech_end_to_last_final_ms": 4409.840880999582,
+            "latest_segment_queue_ms": null,
+            "last_model_end_to_first_alert_ms": null
+          },
+          "transcripts": [
+            "जब फार्मेसी टोकन चार सौ बयालीस बुलाया जाए तो मुझे कंपन से सूचित करो।"
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "ml-request",
+          "language": "ml",
+          "kind": "request",
+          "mode": "request",
+          "expected": {
+            "alert": false,
+            "token": "442",
+            "location": null,
+            "voice_stop": false,
+            "correction": false
+          },
+          "client_verdict": "pass",
+          "audited_verdict": "pass",
+          "latest_interpretation_completed_in_window": null,
+          "completed_interpretations": 0,
+          "interpretation_errors": [],
+          "checks": {
+            "combined_final_received": true,
+            "intent_confirmable": true,
+            "monitor_confirmed": true,
+            "target": true
+          },
+          "false_positive_any": false,
+          "false_positive_terminal": false,
+          "semantic_correction_observed": false,
+          "retraction_observed": false,
+          "voice_stop_observed": false,
+          "ambiguity_reasons": {},
+          "asr_text_errors": {
+            "reference_words": 8,
+            "word_edits": 3,
+            "wer_percent": 37.5,
+            "reference_characters": 75,
+            "character_edits": 3,
+            "cer_percent": 4.0
+          },
+          "metrics": {
+            "pair_wait_ms": 0.03959599962399807,
+            "setup_ms": 17709.941807999712,
+            "connect_ready_ms": 634.9944479998157,
+            "speech_end_to_transcript_ms": 4431.493393999972,
+            "speech_end_to_alert_ms": null,
+            "speech_end_to_voice_stop_ms": null,
+            "transcript_to_alert_ms": null,
+            "source_transcript_to_alert_ms": null,
+            "last_cue_to_correction_ms": null,
+            "request_workflow_ms": 17071.65489099998,
+            "speech_end_to_confirmation_ms": 10959.276211999622,
+            "sender_lateness_p50_ms": 0.6737224998687452,
+            "sender_lateness_p95_ms": 1.1375609500873907,
+            "sender_lateness_max_ms": 1.6210379999392899,
+            "intent_ms": 5459.176059000129,
+            "confirm_ms": 1.5748460000395426,
+            "speech_end_to_last_final_ms": 4431.493393999972,
+            "latest_segment_queue_ms": null,
+            "last_model_end_to_first_alert_ms": null
+          },
+          "transcripts": [
+            "ഫാർമസി ടോക്ക് നാനൂറ്റി നാല്പത്തി രണ്ട്. വിളിക്കുമ്പോൾ വൈബ്രേഷനിലൂടെ എന്നെ അറിയിക്കൂ."
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "hi-request",
+          "language": "hi",
+          "kind": "request",
+          "mode": "request",
+          "expected": {
+            "alert": false,
+            "token": "442",
+            "location": null,
+            "voice_stop": false,
+            "correction": false
+          },
+          "client_verdict": "pass",
+          "audited_verdict": "pass",
+          "latest_interpretation_completed_in_window": null,
+          "completed_interpretations": 0,
+          "interpretation_errors": [],
+          "checks": {
+            "combined_final_received": true,
+            "intent_confirmable": true,
+            "monitor_confirmed": true,
+            "target": true
+          },
+          "false_positive_any": false,
+          "false_positive_terminal": false,
+          "semantic_correction_observed": false,
+          "retraction_observed": false,
+          "voice_stop_observed": false,
+          "ambiguity_reasons": {},
+          "asr_text_errors": {
+            "reference_words": 14,
+            "word_edits": 1,
+            "wer_percent": 7.142857142857143,
+            "reference_characters": 55,
+            "character_edits": 1,
+            "cer_percent": 1.8181818181818181
+          },
+          "metrics": {
+            "pair_wait_ms": 0.04776700006914325,
+            "setup_ms": 15707.582939000076,
+            "connect_ready_ms": 224.55712900000435,
+            "speech_end_to_transcript_ms": 4423.597446999793,
+            "speech_end_to_alert_ms": null,
+            "speech_end_to_voice_stop_ms": null,
+            "transcript_to_alert_ms": null,
+            "source_transcript_to_alert_ms": null,
+            "last_cue_to_correction_ms": null,
+            "request_workflow_ms": 15479.337832000056,
+            "speech_end_to_confirmation_ms": 10326.782692000052,
+            "sender_lateness_p50_ms": 0.7808370000930154,
+            "sender_lateness_p95_ms": 1.2864902496176,
+            "sender_lateness_max_ms": 1.5997149998838722,
+            "intent_ms": 4856.069218999892,
+            "confirm_ms": 1.8588100001579733,
+            "speech_end_to_last_final_ms": 4423.597446999793,
+            "latest_segment_queue_ms": null,
+            "last_model_end_to_first_alert_ms": null
+          },
+          "transcripts": [
+            "जब फार्मेसी टोकन चार सौ बयालीस बुलाया जाए तो मुझे कंपन से सूचित करो।"
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "ml-request",
+          "language": "ml",
+          "kind": "request",
+          "mode": "request",
+          "expected": {
+            "alert": false,
+            "token": "442",
+            "location": null,
+            "voice_stop": false,
+            "correction": false
+          },
+          "client_verdict": "pass",
+          "audited_verdict": "pass",
+          "latest_interpretation_completed_in_window": null,
+          "completed_interpretations": 0,
+          "interpretation_errors": [],
+          "checks": {
+            "combined_final_received": true,
+            "intent_confirmable": true,
+            "monitor_confirmed": true,
+            "target": true
+          },
+          "false_positive_any": false,
+          "false_positive_terminal": false,
+          "semantic_correction_observed": false,
+          "retraction_observed": false,
+          "voice_stop_observed": false,
+          "ambiguity_reasons": {},
+          "asr_text_errors": {
+            "reference_words": 8,
+            "word_edits": 3,
+            "wer_percent": 37.5,
+            "reference_characters": 75,
+            "character_edits": 3,
+            "cer_percent": 4.0
+          },
+          "metrics": {
+            "pair_wait_ms": 0.05139900031281286,
+            "setup_ms": 16952.447982000194,
+            "connect_ready_ms": 227.25857800014637,
+            "speech_end_to_transcript_ms": 4259.662784000284,
+            "speech_end_to_alert_ms": null,
+            "speech_end_to_voice_stop_ms": null,
+            "transcript_to_alert_ms": null,
+            "source_transcript_to_alert_ms": null,
+            "last_cue_to_correction_ms": null,
+            "request_workflow_ms": 16682.873314000062,
+            "speech_end_to_confirmation_ms": 10570.263601000079,
+            "sender_lateness_p50_ms": 0.7330379999075376,
+            "sender_lateness_p95_ms": 1.2744481996378454,
+            "sender_lateness_max_ms": 1.884092000182136,
+            "intent_ms": 5261.027570999886,
+            "confirm_ms": 1.6303229999721225,
+            "speech_end_to_last_final_ms": 4259.662784000284,
+            "latest_segment_queue_ms": null,
+            "last_model_end_to_first_alert_ms": null
+          },
+          "transcripts": [
+            "ഫാർമസി ടോക്ക് നാനൂറ്റി നാല്പത്തി രണ്ട്. വിളിക്കുമ്പോൾ വൈബ്രേഷനിലൂടെ എന്നെ അറിയിക്കൂ."
+          ],
+          "errors": []
+        }
+      ]
+    },
+    {
+      "label": "setup-pause-v1-request-pause-1500",
+      "configuration": {
+        "request_pause_seconds": 1.5
+      },
+      "case_count": 6,
+      "verdicts": {
+        "pass": 3,
+        "inconclusive": 3
+      },
+      "client_verdicts": {
+        "pass": 3,
+        "inconclusive": 3
+      },
+      "false_positive_cases": 0,
+      "terminal_false_positive_cases": 0,
+      "asr_text_errors": {
+        "reference_words": 66,
+        "word_edits": 21,
+        "reference_characters": 390,
+        "character_edits": 132
+      },
+      "by_kind": {
+        "request": {
+          "count": 6,
+          "verdicts": {
+            "pass": 3,
+            "inconclusive": 3
+          },
+          "passing_case_latencies_ms": {
+            "speech_end_to_alert_ms": {
+              "count": 0
+            },
+            "speech_end_to_last_final_ms": {
+              "count": 3,
+              "p50": 2407.579,
+              "p95": 2412.155,
+              "max": 2412.664
+            },
+            "speech_end_to_voice_stop_ms": {
+              "count": 0
+            },
+            "speech_end_to_confirmation_ms": {
+              "count": 3,
+              "p50": 7560.001,
+              "p95": 8076.233,
+              "max": 8133.592
+            },
+            "latest_segment_queue_ms": {
+              "count": 0
+            },
+            "last_model_end_to_first_alert_ms": {
+              "count": 0
+            }
+          }
+        }
+      },
+      "provider": {
+        "trace": "/home/mathew/Arrakis/CueBell/docs/benchmarks/2026-11-13/setup-pause-v1-request-pause-1500-server.jsonl",
+        "settings": {
+          "gnani_language_code": "indic-auto",
+          "gnani_min_silence_ms": null,
+          "gnani_vad_threshold": null,
+          "gnani_min_speech_ms": null,
+          "gnani_min_segment_ms": null,
+          "gnani_max_speech_s": null,
+          "openai_model": "gpt-6-luna",
+          "openai_reasoning_effort": null,
+          "openai_service_tier": null,
+          "openai_verbosity": null,
+          "openai_prompt_cache_mode": null,
+          "openai_prompt_cache_ttl": null,
+          "openai_compact_input": false,
+          "openai_verbatim_location_hint": false,
+          "openai_max_output_tokens": 2000,
+          "optimized_scheduling": false,
+          "outbound_writer": false,
+          "outbound_queue_size": 64,
+          "allow_app_sessions": false,
+          "allow_insecure_local": true,
+          "max_sessions": 8,
+          "session_ttl_seconds": 14400,
+          "correction_grace_seconds": 1.2,
+          "request_pause_seconds": 1.5,
+          "request_timeout_seconds": 90.0
+        },
+        "openai_requests_attempted": 6,
+        "openai_responses": 6,
+        "openai_errors": [],
+        "openai_response_ms": {
+          "count": 6,
+          "p50": 4783.545,
+          "p95": 6017.839,
+          "max": 6207.795
+        },
+        "interpretation_ms": {
+          "intent": {
+            "count": 6,
+            "p50": 4907.623,
+            "p95": 6018.092,
+            "max": 6208.034
+          }
+        },
+        "returned_service_tiers": {
+          "default": 6
+        },
+        "returned_models": {
+          "gpt-6-luna": 6
+        },
+        "tokens": {
+          "input": 7596,
+          "output": 1825,
+          "cached_input": 7552,
+          "cache_written_input": 26,
+          "reasoning_output": 977
+        },
+        "openai_reference_cost_usd": 0.000993,
+        "cost_status": "estimate from published Luna rates, not an invoice; errors may be billable",
+        "gnani_streams": 6,
+        "gnani_audio_seconds": 39.04,
+        "gnani_connection_seconds": 46.84,
+        "gnani_provider_latency_ms": {
+          "count": 6,
+          "p50": 149.5,
+          "p95": 174.75,
+          "max": 175
+        },
+        "gnani_transcripts": 6,
+        "gnani_send_max_ms": 0.8805749998828105
+      },
+      "cases": [
+        {
+          "case_id": "hi-request",
+          "language": "hi",
+          "kind": "request",
+          "mode": "request",
+          "expected": {
+            "alert": false,
+            "token": "442",
+            "location": null,
+            "voice_stop": false,
+            "correction": false
+          },
+          "client_verdict": "pass",
+          "audited_verdict": "pass",
+          "latest_interpretation_completed_in_window": null,
+          "completed_interpretations": 0,
+          "interpretation_errors": [],
+          "checks": {
+            "combined_final_received": true,
+            "intent_confirmable": true,
+            "monitor_confirmed": true,
+            "target": true
+          },
+          "false_positive_any": false,
+          "false_positive_terminal": false,
+          "semantic_correction_observed": false,
+          "retraction_observed": false,
+          "voice_stop_observed": false,
+          "ambiguity_reasons": {},
+          "asr_text_errors": {
+            "reference_words": 14,
+            "word_edits": 1,
+            "wer_percent": 7.142857142857143,
+            "reference_characters": 55,
+            "character_edits": 1,
+            "cer_percent": 1.8181818181818181
+          },
+          "metrics": {
+            "pair_wait_ms": 0.001954999788722489,
+            "setup_ms": 13526.36918600001,
+            "connect_ready_ms": 219.2845159997887,
+            "speech_end_to_transcript_ms": 2407.5792309999997,
+            "speech_end_to_alert_ms": null,
+            "speech_end_to_voice_stop_ms": null,
+            "transcript_to_alert_ms": null,
+            "source_transcript_to_alert_ms": null,
+            "last_cue_to_correction_ms": null,
+            "request_workflow_ms": 13285.955648999789,
+            "speech_end_to_confirmation_ms": 8133.591844999955,
+            "sender_lateness_p50_ms": 0.6890860004205024,
+            "sender_lateness_p95_ms": 1.1468779999631806,
+            "sender_lateness_max_ms": 1.826179000090633,
+            "intent_ms": 4678.941938999742,
+            "confirm_ms": 2.0258539998394554,
+            "speech_end_to_last_final_ms": 2407.5792309999997,
+            "latest_segment_queue_ms": null,
+            "last_model_end_to_first_alert_ms": null
+          },
+          "transcripts": [
+            "जब फार्मेसी टोकन चार सौ बयालीस बुलाया जाए तो मुझे कंपन से सूचित करो।"
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "ml-request",
+          "language": "ml",
+          "kind": "request",
+          "mode": "request",
+          "expected": {
+            "alert": false,
+            "token": "442",
+            "location": null,
+            "voice_stop": false,
+            "correction": false
+          },
+          "client_verdict": "inconclusive",
+          "audited_verdict": "inconclusive",
+          "latest_interpretation_completed_in_window": null,
+          "completed_interpretations": 0,
+          "interpretation_errors": [],
+          "checks": {
+            "combined_final_received": true,
+            "intent_confirmable": true,
+            "monitor_confirmed": true,
+            "target": true
+          },
+          "false_positive_any": false,
+          "false_positive_terminal": false,
+          "semantic_correction_observed": false,
+          "retraction_observed": false,
+          "voice_stop_observed": false,
+          "ambiguity_reasons": {},
+          "asr_text_errors": {
+            "reference_words": 8,
+            "word_edits": 6,
+            "wer_percent": 75.0,
+            "reference_characters": 75,
+            "character_edits": 43,
+            "cer_percent": 57.333333333333336
+          },
+          "metrics": {
+            "pair_wait_ms": 0.07668700027352315,
+            "setup_ms": 11883.456493000267,
+            "connect_ready_ms": 254.6524379999937,
+            "speech_end_to_transcript_ms": null,
+            "speech_end_to_alert_ms": null,
+            "speech_end_to_voice_stop_ms": null,
+            "transcript_to_alert_ms": null,
+            "source_transcript_to_alert_ms": null,
+            "last_cue_to_correction_ms": null,
+            "request_workflow_ms": 11586.551946999862,
+            "speech_end_to_confirmation_ms": null,
+            "sender_lateness_p50_ms": 0.6267270000535063,
+            "sender_lateness_p95_ms": 1.071012200191035,
+            "sender_lateness_max_ms": 1.1872700001731573,
+            "intent_ms": 5140.822043999833,
+            "confirm_ms": 1.6199320002669992,
+            "speech_end_to_last_final_ms": null,
+            "latest_segment_queue_ms": null,
+            "last_model_end_to_first_alert_ms": null
+          },
+          "transcripts": [
+            "ഫാർമസി ടോക്ക് നാനൂറ്റി നാല്പത്തി രണ്ട്."
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "hi-request",
+          "language": "hi",
+          "kind": "request",
+          "mode": "request",
+          "expected": {
+            "alert": false,
+            "token": "442",
+            "location": null,
+            "voice_stop": false,
+            "correction": false
+          },
+          "client_verdict": "pass",
+          "audited_verdict": "pass",
+          "latest_interpretation_completed_in_window": null,
+          "completed_interpretations": 0,
+          "interpretation_errors": [],
+          "checks": {
+            "combined_final_received": true,
+            "intent_confirmable": true,
+            "monitor_confirmed": true,
+            "target": true
+          },
+          "false_positive_any": false,
+          "false_positive_terminal": false,
+          "semantic_correction_observed": false,
+          "retraction_observed": false,
+          "voice_stop_observed": false,
+          "ambiguity_reasons": {},
+          "asr_text_errors": {
+            "reference_words": 14,
+            "word_edits": 1,
+            "wer_percent": 7.142857142857143,
+            "reference_characters": 55,
+            "character_edits": 1,
+            "cer_percent": 1.8181818181818181
+          },
+          "metrics": {
+            "pair_wait_ms": 0.040996999814524315,
+            "setup_ms": 12979.80186299992,
+            "connect_ready_ms": 263.59336599989547,
+            "speech_end_to_transcript_ms": 2412.663726000119,
+            "speech_end_to_alert_ms": null,
+            "speech_end_to_voice_stop_ms": null,
+            "transcript_to_alert_ms": null,
+            "source_transcript_to_alert_ms": null,
+            "last_cue_to_correction_ms": null,
+            "request_workflow_ms": 12713.03868699988,
+            "speech_end_to_confirmation_ms": 7560.001079999893,
+            "sender_lateness_p50_ms": 0.6464830003096722,
+            "sender_lateness_p95_ms": 1.1179197997989831,
+            "sender_lateness_max_ms": 2.113690999976825,
+            "intent_ms": 4088.176020999981,
+            "confirm_ms": 2.3462289996132313,
+            "speech_end_to_last_final_ms": 2412.663726000119,
+            "latest_segment_queue_ms": null,
+            "last_model_end_to_first_alert_ms": null
+          },
+          "transcripts": [
+            "जब फार्मेसी टोकन चार सौ बयालीस बुलाया जाए तो मुझे कंपन से सूचित करो।"
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "ml-request",
+          "language": "ml",
+          "kind": "request",
+          "mode": "request",
+          "expected": {
+            "alert": false,
+            "token": "442",
+            "location": null,
+            "voice_stop": false,
+            "correction": false
+          },
+          "client_verdict": "inconclusive",
+          "audited_verdict": "inconclusive",
+          "latest_interpretation_completed_in_window": null,
+          "completed_interpretations": 0,
+          "interpretation_errors": [],
+          "checks": {
+            "combined_final_received": true,
+            "intent_confirmable": true,
+            "monitor_confirmed": true,
+            "target": true
+          },
+          "false_positive_any": false,
+          "false_positive_terminal": false,
+          "semantic_correction_observed": false,
+          "retraction_observed": false,
+          "voice_stop_observed": false,
+          "ambiguity_reasons": {},
+          "asr_text_errors": {
+            "reference_words": 8,
+            "word_edits": 6,
+            "wer_percent": 75.0,
+            "reference_characters": 75,
+            "character_edits": 43,
+            "cer_percent": 57.333333333333336
+          },
+          "metrics": {
+            "pair_wait_ms": 0.03191799987689592,
+            "setup_ms": 13040.804406999996,
+            "connect_ready_ms": 250.56704200005697,
+            "speech_end_to_transcript_ms": null,
+            "speech_end_to_alert_ms": null,
+            "speech_end_to_voice_stop_ms": null,
+            "transcript_to_alert_ms": null,
+            "source_transcript_to_alert_ms": null,
+            "last_cue_to_correction_ms": null,
+            "request_workflow_ms": 12787.154922000354,
+            "speech_end_to_confirmation_ms": null,
+            "sender_lateness_p50_ms": 0.701737999861507,
+            "sender_lateness_p95_ms": 1.1721640001269407,
+            "sender_lateness_max_ms": 1.421293000021251,
+            "intent_ms": 6209.811565000109,
+            "confirm_ms": 1.57831000024089,
+            "speech_end_to_last_final_ms": null,
+            "latest_segment_queue_ms": null,
+            "last_model_end_to_first_alert_ms": null
+          },
+          "transcripts": [
+            "ഫാർമസി ടോക്ക് നാനൂറ്റി നാല്പത്തി രണ്ട്."
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "hi-request",
+          "language": "hi",
+          "kind": "request",
+          "mode": "request",
+          "expected": {
+            "alert": false,
+            "token": "442",
+            "location": null,
+            "voice_stop": false,
+            "correction": false
+          },
+          "client_verdict": "pass",
+          "audited_verdict": "pass",
+          "latest_interpretation_completed_in_window": null,
+          "completed_interpretations": 0,
+          "interpretation_errors": [],
+          "checks": {
+            "combined_final_received": true,
+            "intent_confirmable": true,
+            "monitor_confirmed": true,
+            "target": true
+          },
+          "false_positive_any": false,
+          "false_positive_terminal": false,
+          "semantic_correction_observed": false,
+          "retraction_observed": false,
+          "voice_stop_observed": false,
+          "ambiguity_reasons": {},
+          "asr_text_errors": {
+            "reference_words": 14,
+            "word_edits": 1,
+            "wer_percent": 7.142857142857143,
+            "reference_characters": 55,
+            "character_edits": 1,
+            "cer_percent": 1.8181818181818181
+          },
+          "metrics": {
+            "pair_wait_ms": 0.03673799983516801,
+            "setup_ms": 12615.937073999703,
+            "connect_ready_ms": 275.9993850004321,
+            "speech_end_to_transcript_ms": 2407.1153400000185,
+            "speech_end_to_alert_ms": null,
+            "speech_end_to_voice_stop_ms": null,
+            "transcript_to_alert_ms": null,
+            "source_transcript_to_alert_ms": null,
+            "last_cue_to_correction_ms": null,
+            "request_workflow_ms": 12336.715068000103,
+            "speech_end_to_confirmation_ms": 7184.198950999871,
+            "sender_lateness_p50_ms": 0.7201769999483076,
+            "sender_lateness_p95_ms": 1.2062375999448702,
+            "sender_lateness_max_ms": 1.4057529997444362,
+            "intent_ms": 3713.004806999834,
+            "confirm_ms": 2.259281000078772,
+            "speech_end_to_last_final_ms": 2407.1153400000185,
+            "latest_segment_queue_ms": null,
+            "last_model_end_to_first_alert_ms": null
+          },
+          "transcripts": [
+            "जब फार्मेसी टोकन चार सौ बयालीस बुलाया जाए तो मुझे कंपन से सूचित करो।"
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "ml-request",
+          "language": "ml",
+          "kind": "request",
+          "mode": "request",
+          "expected": {
+            "alert": false,
+            "token": "442",
+            "location": null,
+            "voice_stop": false,
+            "correction": false
+          },
+          "client_verdict": "inconclusive",
+          "audited_verdict": "inconclusive",
+          "latest_interpretation_completed_in_window": null,
+          "completed_interpretations": 0,
+          "interpretation_errors": [],
+          "checks": {
+            "combined_final_received": true,
+            "intent_confirmable": true,
+            "monitor_confirmed": true,
+            "target": true
+          },
+          "false_positive_any": false,
+          "false_positive_terminal": false,
+          "semantic_correction_observed": false,
+          "retraction_observed": false,
+          "voice_stop_observed": false,
+          "ambiguity_reasons": {},
+          "asr_text_errors": {
+            "reference_words": 8,
+            "word_edits": 6,
+            "wer_percent": 75.0,
+            "reference_characters": 75,
+            "character_edits": 43,
+            "cer_percent": 57.333333333333336
+          },
+          "metrics": {
+            "pair_wait_ms": 0.04630600005839369,
+            "setup_ms": 12193.043487000068,
+            "connect_ready_ms": 262.77128399988214,
+            "speech_end_to_transcript_ms": null,
+            "speech_end_to_alert_ms": null,
+            "speech_end_to_voice_stop_ms": null,
+            "transcript_to_alert_ms": null,
+            "source_transcript_to_alert_ms": null,
+            "last_cue_to_correction_ms": null,
+            "request_workflow_ms": 11926.767551000012,
+            "speech_end_to_confirmation_ms": null,
+            "sender_lateness_p50_ms": 0.6810849999965285,
+            "sender_lateness_p95_ms": 1.1984102999576862,
+            "sender_lateness_max_ms": 1.3909670001339691,
+            "intent_ms": 5450.414638999973,
+            "confirm_ms": 1.7482429998381122,
+            "speech_end_to_last_final_ms": null,
+            "latest_segment_queue_ms": null,
+            "last_model_end_to_first_alert_ms": null
+          },
+          "transcripts": [
+            "ഫാർമസി ടോക്ക് നാനൂറ്റി നാല്പത്തി രണ്ട്."
+          ],
+          "errors": []
+        }
+      ]
+    },
+    {
+      "label": "full-v1-baseline",
+      "configuration": {},
+      "case_count": 28,
+      "verdicts": {
+        "pass": 22,
+        "fail": 2,
+        "inconclusive": 4
+      },
+      "client_verdicts": {
+        "pass": 22,
+        "fail": 2,
+        "inconclusive": 4
+      },
+      "false_positive_cases": 0,
+      "terminal_false_positive_cases": 0,
+      "asr_text_errors": {
+        "reference_words": 287,
+        "word_edits": 46,
+        "reference_characters": 1607,
+        "character_edits": 60
+      },
+      "by_kind": {
+        "burst": {
+          "count": 6,
+          "verdicts": {
+            "pass": 3,
+            "fail": 2,
+            "inconclusive": 1
+          },
+          "passing_case_latencies_ms": {
+            "speech_end_to_alert_ms": {
+              "count": 3,
+              "p50": 6892.584,
+              "p95": 7958.564,
+              "max": 8077.006
+            },
+            "speech_end_to_last_final_ms": {
+              "count": 3,
+              "p50": 886.612,
+              "p95": 1058.959,
+              "max": 1078.108
+            },
+            "speech_end_to_voice_stop_ms": {
+              "count": 0
+            },
+            "speech_end_to_confirmation_ms": {
+              "count": 0
+            },
+            "latest_segment_queue_ms": {
+              "count": 3,
+              "p50": 0.514,
+              "p95": 0.706,
+              "max": 0.727
+            },
+            "last_model_end_to_first_alert_ms": {
+              "count": 3,
+              "p50": 81.812,
+              "p95": 137.283,
+              "max": 143.447
+            }
+          }
+        },
+        "cancellation": {
+          "count": 2,
+          "verdicts": {
+            "pass": 1,
+            "inconclusive": 1
+          },
+          "passing_case_latencies_ms": {
+            "speech_end_to_alert_ms": {
+              "count": 0
+            },
+            "speech_end_to_last_final_ms": {
+              "count": 1,
+              "p50": 748.413,
+              "p95": 748.413,
+              "max": 748.413
+            },
+            "speech_end_to_voice_stop_ms": {
+              "count": 0
+            },
+            "speech_end_to_confirmation_ms": {
+              "count": 0
+            },
+            "latest_segment_queue_ms": {
+              "count": 1,
+              "p50": 0.519,
+              "p95": 0.519,
+              "max": 0.519
+            },
+            "last_model_end_to_first_alert_ms": {
+              "count": 0
+            }
+          }
+        },
+        "correction": {
+          "count": 2,
+          "verdicts": {
+            "pass": 1,
+            "inconclusive": 1
+          },
+          "passing_case_latencies_ms": {
+            "speech_end_to_alert_ms": {
+              "count": 0
+            },
+            "speech_end_to_last_final_ms": {
+              "count": 1,
+              "p50": 844.362,
+              "p95": 844.362,
+              "max": 844.362
+            },
+            "speech_end_to_voice_stop_ms": {
+              "count": 0
+            },
+            "speech_end_to_confirmation_ms": {
+              "count": 0
+            },
+            "latest_segment_queue_ms": {
+              "count": 1,
+              "p50": 8427.119,
+              "p95": 8427.119,
+              "max": 8427.119
+            },
+            "last_model_end_to_first_alert_ms": {
+              "count": 0
+            }
+          }
+        },
+        "near-miss": {
+          "count": 6,
+          "verdicts": {
+            "pass": 6
+          },
+          "passing_case_latencies_ms": {
+            "speech_end_to_alert_ms": {
+              "count": 0
+            },
+            "speech_end_to_last_final_ms": {
+              "count": 6,
+              "p50": 746.174,
+              "p95": 771.65,
+              "max": 775.432
+            },
+            "speech_end_to_voice_stop_ms": {
+              "count": 0
+            },
+            "speech_end_to_confirmation_ms": {
+              "count": 0
+            },
+            "latest_segment_queue_ms": {
+              "count": 6,
+              "p50": 0.477,
+              "p95": 0.563,
+              "max": 0.582
+            },
+            "last_model_end_to_first_alert_ms": {
+              "count": 0
+            }
+          }
+        },
+        "positive": {
+          "count": 6,
+          "verdicts": {
+            "pass": 5,
+            "inconclusive": 1
+          },
+          "passing_case_latencies_ms": {
+            "speech_end_to_alert_ms": {
+              "count": 5,
+              "p50": 5488.313,
+              "p95": 7716.89,
+              "max": 8042.226
+            },
+            "speech_end_to_last_final_ms": {
+              "count": 5,
+              "p50": 797.884,
+              "p95": 827.292,
+              "max": 829.021
+            },
+            "speech_end_to_voice_stop_ms": {
+              "count": 0
+            },
+            "speech_end_to_confirmation_ms": {
+              "count": 0
+            },
+            "latest_segment_queue_ms": {
+              "count": 5,
+              "p50": 0.449,
+              "p95": 1239.384,
+              "max": 1305.655
+            },
+            "last_model_end_to_first_alert_ms": {
+              "count": 5,
+              "p50": 112.322,
+              "p95": 119.208,
+              "max": 119.747
+            }
+          }
+        },
+        "voice-stop": {
+          "count": 6,
+          "verdicts": {
+            "pass": 6
+          },
+          "passing_case_latencies_ms": {
+            "speech_end_to_alert_ms": {
+              "count": 0
+            },
+            "speech_end_to_last_final_ms": {
+              "count": 6,
+              "p50": 684.368,
+              "p95": 1157.169,
+              "max": 1177.623
+            },
+            "speech_end_to_voice_stop_ms": {
+              "count": 6,
+              "p50": 3655.65,
+              "p95": 5761.209,
+              "max": 6110.301
+            },
+            "speech_end_to_confirmation_ms": {
+              "count": 0
+            },
+            "latest_segment_queue_ms": {
+              "count": 6,
+              "p50": 0.484,
+              "p95": 1394.322,
+              "max": 1423.246
+            },
+            "last_model_end_to_first_alert_ms": {
+              "count": 0
+            }
+          }
+        }
+      },
+      "provider": {
+        "trace": "/home/mathew/Arrakis/CueBell/docs/benchmarks/2026-11-13/full-v1-baseline-server.jsonl",
+        "settings": {
+          "gnani_language_code": "indic-auto",
+          "openai_model": "gpt-6-luna",
+          "allow_app_sessions": false,
+          "allow_insecure_local": true,
+          "max_sessions": 8,
+          "session_ttl_seconds": 14400,
+          "correction_grace_seconds": 1.2,
+          "request_pause_seconds": 3.5,
+          "request_timeout_seconds": 90.0
+        },
+        "openai_requests_attempted": 69,
+        "openai_responses": 66,
+        "openai_errors": [
+          {
+            "event": "openai_error",
+            "monotonic_s": 2660.092264879,
+            "wall_time": "2026-11-13T16:33:02.679119+00:00",
+            "call_id": "9c81a66e6db8421aa85434ad6ac81ffc",
+            "interpretation_id": "c29138aafc6849e9a8c1fad8bd5c0192",
+            "stage": "observe",
+            "elapsed_ms": 6248.754577999989,
+            "error_type": "APIConnectionError",
+            "error": "Connection error."
+          },
+          {
+            "event": "openai_error",
+            "monotonic_s": 2984.648665955,
+            "wall_time": "2026-11-13T16:38:27.235520+00:00",
+            "call_id": "3a69d032a67a4c79b64cc4e22efdd107",
+            "interpretation_id": "9906869c52ee440faa126498559c0594",
+            "stage": "observe",
+            "elapsed_ms": 12004.502262999722,
+            "error_type": "APITimeoutError",
+            "error": "Request timed out."
+          },
+          {
+            "event": "openai_error",
+            "monotonic_s": 3016.664319063,
+            "wall_time": "2026-11-13T16:38:59.251174+00:00",
+            "call_id": "4f69ee7120614d7e86eeae94034baf4c",
+            "interpretation_id": "3528107d36034f809f038dd14ef6c54e",
+            "stage": "observe",
+            "elapsed_ms": 12004.275237999991,
+            "error_type": "APITimeoutError",
+            "error": "Request timed out."
+          }
+        ],
+        "openai_response_ms": {
+          "count": 66,
+          "p50": 3564.974,
+          "p95": 7923.797,
+          "max": 10242.175
+        },
+        "interpretation_ms": {
+          "intent": {
+            "count": 28,
+            "p50": 3376.858,
+            "p95": 6830.732,
+            "max": 9178.906
+          },
+          "observe": {
+            "count": 38,
+            "p50": 4429.409,
+            "p95": 8221.611,
+            "max": 10242.419
+          }
+        },
+        "returned_service_tiers": {
+          "default": 66
+        },
+        "returned_models": {
+          "gpt-6-luna": 66
+        },
+        "tokens": {
+          "input": 87480,
+          "output": 18823,
+          "cached_input": 78840,
+          "cache_written_input": 8442,
+          "reasoning_output": 10589
+        },
+        "openai_reference_cost_usd": 0.011275,
+        "cost_status": "estimate from published Luna rates, not an invoice; errors may be billable",
+        "gnani_streams": 28,
+        "gnani_audio_seconds": 713.856,
+        "gnani_connection_seconds": 758.078,
+        "gnani_provider_latency_ms": {
+          "count": 43,
+          "p50": 114.0,
+          "p95": 253.0,
+          "max": 312
+        },
+        "gnani_transcripts": 43,
+        "gnani_send_max_ms": 3.137969999897905
+      },
+      "cases": [
+        {
+          "case_id": "hi-positive",
+          "language": "hi",
+          "kind": "positive",
+          "mode": "monitor",
+          "expected": {
+            "alert": true,
+            "token": "442",
+            "location": "counter 2",
+            "location_aliases": [
+              "काउंटर दो",
+              "काउंटर दो पर",
+              "काउंटर 2",
+              "counter two"
+            ],
+            "voice_stop": false,
+            "correction": false
+          },
+          "client_verdict": "pass",
+          "audited_verdict": "pass",
+          "latest_interpretation_completed_in_window": true,
+          "completed_interpretations": 1,
+          "interpretation_errors": [],
+          "checks": {
+            "terminal_alert": true,
+            "voice_stop": true,
+            "correction": true,
+            "final_transcript_received": true,
+            "target": true,
+            "location": true
+          },
+          "false_positive_any": false,
+          "false_positive_terminal": false,
+          "semantic_correction_observed": false,
+          "retraction_observed": false,
+          "voice_stop_observed": false,
+          "ambiguity_reasons": {},
+          "asr_text_errors": {
+            "reference_words": 9,
+            "word_edits": 0,
+            "wer_percent": 0.0,
+            "reference_characters": 34,
+            "character_edits": 0,
+            "cer_percent": 0.0
+          },
+          "metrics": {
+            "pair_wait_ms": 0.004330000137997558,
+            "setup_ms": 3466.3087690000793,
+            "connect_ready_ms": 833.8987520000956,
+            "speech_end_to_transcript_ms": 829.0206219999163,
+            "speech_end_to_alert_ms": 5411.789180000142,
+            "speech_end_to_voice_stop_ms": null,
+            "transcript_to_alert_ms": 4582.768558000225,
+            "source_transcript_to_alert_ms": 4582.768558000225,
+            "last_cue_to_correction_ms": null,
+            "request_workflow_ms": null,
+            "speech_end_to_confirmation_ms": null,
+            "sender_lateness_p50_ms": 0.646331500092856,
+            "sender_lateness_p95_ms": 1.113662749889954,
+            "sender_lateness_max_ms": 1.7237070001101529,
+            "intent_ms": 3443.156530000124,
+            "confirm_ms": 1.689797000381077,
+            "speech_end_to_last_final_ms": 829.0206219999163,
+            "latest_segment_queue_ms": 0.322411000070133,
+            "last_model_end_to_first_alert_ms": 87.0124590001069
+          },
+          "transcripts": [
+            "टोकन चार सौ बयालीस कृपया काउंटर दो पर जाएँ।"
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "hi-near-miss",
+          "language": "hi",
+          "kind": "near-miss",
+          "mode": "monitor",
+          "expected": {
+            "alert": false,
+            "token": null,
+            "location": null,
+            "voice_stop": false,
+            "correction": false
+          },
+          "client_verdict": "pass",
+          "audited_verdict": "pass",
+          "latest_interpretation_completed_in_window": true,
+          "completed_interpretations": 1,
+          "interpretation_errors": [],
+          "checks": {
+            "terminal_alert": true,
+            "voice_stop": true,
+            "correction": true,
+            "final_transcript_received": true,
+            "target": true,
+            "location": true
+          },
+          "false_positive_any": false,
+          "false_positive_terminal": false,
+          "semantic_correction_observed": false,
+          "retraction_observed": false,
+          "voice_stop_observed": false,
+          "ambiguity_reasons": {},
+          "asr_text_errors": {
+            "reference_words": 9,
+            "word_edits": 0,
+            "wer_percent": 0.0,
+            "reference_characters": 37,
+            "character_edits": 0,
+            "cer_percent": 0.0
+          },
+          "metrics": {
+            "pair_wait_ms": 0.025354000172228552,
+            "setup_ms": 9185.008645999915,
+            "connect_ready_ms": 439.9335059997611,
+            "speech_end_to_transcript_ms": 742.4022660002265,
+            "speech_end_to_alert_ms": null,
+            "speech_end_to_voice_stop_ms": null,
+            "transcript_to_alert_ms": null,
+            "source_transcript_to_alert_ms": null,
+            "last_cue_to_correction_ms": null,
+            "request_workflow_ms": null,
+            "speech_end_to_confirmation_ms": null,
+            "sender_lateness_p50_ms": 0.6559880002896534,
+            "sender_lateness_p95_ms": 1.1110796001048584,
+            "sender_lateness_max_ms": 1.984909000384505,
+            "intent_ms": 9180.831261000094,
+            "confirm_ms": 1.6969930002233014,
+            "speech_end_to_last_final_ms": 742.4022660002265,
+            "latest_segment_queue_ms": 0.3996619998360984,
+            "last_model_end_to_first_alert_ms": null
+          },
+          "transcripts": [
+            "टोकन चार सौ तैंतालीस कृपया काउंटर तीन पर जाएँ।"
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "hi-voice-stop",
+          "language": "hi",
+          "kind": "voice-stop",
+          "mode": "monitor",
+          "expected": {
+            "alert": false,
+            "token": null,
+            "location": null,
+            "voice_stop": true,
+            "correction": false
+          },
+          "client_verdict": "pass",
+          "audited_verdict": "pass",
+          "latest_interpretation_completed_in_window": true,
+          "completed_interpretations": 1,
+          "interpretation_errors": [],
+          "checks": {
+            "terminal_alert": true,
+            "voice_stop": true,
+            "correction": true,
+            "final_transcript_received": true,
+            "target": true,
+            "location": true
+          },
+          "false_positive_any": false,
+          "false_positive_terminal": false,
+          "semantic_correction_observed": false,
+          "retraction_observed": false,
+          "voice_stop_observed": true,
+          "ambiguity_reasons": {},
+          "asr_text_errors": {
+            "reference_words": 4,
+            "word_edits": 1,
+            "wer_percent": 25.0,
+            "reference_characters": 18,
+            "character_edits": 1,
+            "cer_percent": 5.555555555555555
+          },
+          "metrics": {
+            "pair_wait_ms": 0.03380600037417025,
+            "setup_ms": 3023.2579079997777,
+            "connect_ready_ms": 341.8095399997583,
+            "speech_end_to_transcript_ms": 31.65338700000575,
+            "speech_end_to_alert_ms": null,
+            "speech_end_to_voice_stop_ms": 2988.039268999728,
+            "transcript_to_alert_ms": null,
+            "source_transcript_to_alert_ms": null,
+            "last_cue_to_correction_ms": null,
+            "request_workflow_ms": null,
+            "speech_end_to_confirmation_ms": null,
+            "sender_lateness_p50_ms": 0.6432295001559396,
+            "sender_lateness_p95_ms": 1.1411410505616006,
+            "sender_lateness_max_ms": 1.2801650000255904,
+            "intent_ms": 3018.9617800001542,
+            "confirm_ms": 1.5577199997096614,
+            "speech_end_to_last_final_ms": 31.65338700000575,
+            "latest_segment_queue_ms": 0.3347050001138996,
+            "last_model_end_to_first_alert_ms": null
+          },
+          "transcripts": [
+            "क्यूबल, सुनना बंद करो"
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "hi-burst",
+          "language": "hi",
+          "kind": "burst",
+          "mode": "monitor",
+          "expected": {
+            "alert": true,
+            "token": "442",
+            "location": "counter 2",
+            "location_aliases": [
+              "काउंटर दो",
+              "काउंटर दो पर",
+              "काउंटर 2",
+              "counter two"
+            ],
+            "voice_stop": false,
+            "correction": false
+          },
+          "client_verdict": "pass",
+          "audited_verdict": "pass",
+          "latest_interpretation_completed_in_window": true,
+          "completed_interpretations": 1,
+          "interpretation_errors": [],
+          "checks": {
+            "terminal_alert": true,
+            "voice_stop": true,
+            "correction": true,
+            "final_transcript_received": true,
+            "target": true,
+            "location": true
+          },
+          "false_positive_any": false,
+          "false_positive_terminal": false,
+          "semantic_correction_observed": false,
+          "retraction_observed": false,
+          "voice_stop_observed": false,
+          "ambiguity_reasons": {},
+          "asr_text_errors": {
+            "reference_words": 18,
+            "word_edits": 0,
+            "wer_percent": 0.0,
+            "reference_characters": 71,
+            "character_edits": 0,
+            "cer_percent": 0.0
+          },
+          "metrics": {
+            "pair_wait_ms": 0.022142000034364173,
+            "setup_ms": 3678.851528999985,
+            "connect_ready_ms": 644.3696569999702,
+            "speech_end_to_transcript_ms": 1078.1084730001567,
+            "speech_end_to_alert_ms": 5321.7420519999905,
+            "speech_end_to_voice_stop_ms": null,
+            "transcript_to_alert_ms": 4243.633578999834,
+            "source_transcript_to_alert_ms": 4243.633578999834,
+            "last_cue_to_correction_ms": null,
+            "request_workflow_ms": null,
+            "speech_end_to_confirmation_ms": null,
+            "sender_lateness_p50_ms": 0.6552770000780583,
+            "sender_lateness_p95_ms": 1.0932109999430395,
+            "sender_lateness_max_ms": 1.7335969996565836,
+            "intent_ms": 3675.401453000177,
+            "confirm_ms": 1.3442679996842344,
+            "speech_end_to_last_final_ms": 1078.1084730001567,
+            "latest_segment_queue_ms": 0.514281000050687,
+            "last_model_end_to_first_alert_ms": 53.295814000193786
+          },
+          "transcripts": [
+            "टोकन चार सौ तैंतालीस कृपया काउंटर तीन पर जाएँ। टोकन चार सौ बयालीस कृपया काउंटर दो पर जाएँ।"
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "ml-positive",
+          "language": "ml",
+          "kind": "positive",
+          "mode": "monitor",
+          "expected": {
+            "alert": true,
+            "token": "442",
+            "location": "counter 2",
+            "location_aliases": [
+              "കൗണ്ടർ രണ്ടിലേക്ക്",
+              "കൗണ്ടർ രണ്ട്",
+              "കൗണ്ടർ 2",
+              "കൗണ്ടർ രണ്ടിൽ"
+            ],
+            "voice_stop": false,
+            "correction": false
+          },
+          "client_verdict": "pass",
+          "audited_verdict": "pass",
+          "latest_interpretation_completed_in_window": true,
+          "completed_interpretations": 1,
+          "interpretation_errors": [],
+          "checks": {
+            "terminal_alert": true,
+            "voice_stop": true,
+            "correction": true,
+            "final_transcript_received": true,
+            "target": true,
+            "location": true
+          },
+          "false_positive_any": false,
+          "false_positive_terminal": false,
+          "semantic_correction_observed": false,
+          "retraction_observed": false,
+          "voice_stop_observed": false,
+          "ambiguity_reasons": {},
+          "asr_text_errors": {
+            "reference_words": 6,
+            "word_edits": 2,
+            "wer_percent": 33.333333333333336,
+            "reference_characters": 49,
+            "character_edits": 2,
+            "cer_percent": 4.081632653061225
+          },
+          "metrics": {
+            "pair_wait_ms": 0.03338599981361767,
+            "setup_ms": 3093.715552000049,
+            "connect_ready_ms": 477.4934350002695,
+            "speech_end_to_transcript_ms": 797.8839299998981,
+            "speech_end_to_alert_ms": 6415.5459660000815,
+            "speech_end_to_voice_stop_ms": null,
+            "transcript_to_alert_ms": 5617.662036000183,
+            "source_transcript_to_alert_ms": 5617.662036000183,
+            "last_cue_to_correction_ms": null,
+            "request_workflow_ms": null,
+            "speech_end_to_confirmation_ms": null,
+            "sender_lateness_p50_ms": 0.6535399998028879,
+            "sender_lateness_p95_ms": 1.097763200141344,
+            "sender_lateness_max_ms": 1.7879429997265106,
+            "intent_ms": 3090.2531810002074,
+            "confirm_ms": 1.476699000249937,
+            "speech_end_to_last_final_ms": 797.8839299998981,
+            "latest_segment_queue_ms": 0.30488100037473487,
+            "last_model_end_to_first_alert_ms": 119.74662300008276
+          },
+          "transcripts": [
+            "ടോക്കൺ നാനൂറ്റി നാല്പത്തി രണ്ട് കൗണ്ടർ രണ്ടിലേക്ക് വരൂ."
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "ml-near-miss",
+          "language": "ml",
+          "kind": "near-miss",
+          "mode": "monitor",
+          "expected": {
+            "alert": false,
+            "token": null,
+            "location": null,
+            "voice_stop": false,
+            "correction": false
+          },
+          "client_verdict": "pass",
+          "audited_verdict": "pass",
+          "latest_interpretation_completed_in_window": true,
+          "completed_interpretations": 1,
+          "interpretation_errors": [],
+          "checks": {
+            "terminal_alert": true,
+            "voice_stop": true,
+            "correction": true,
+            "final_transcript_received": true,
+            "target": true,
+            "location": true
+          },
+          "false_positive_any": false,
+          "false_positive_terminal": false,
+          "semantic_correction_observed": false,
+          "retraction_observed": false,
+          "voice_stop_observed": false,
+          "ambiguity_reasons": {},
+          "asr_text_errors": {
+            "reference_words": 6,
+            "word_edits": 2,
+            "wer_percent": 33.333333333333336,
+            "reference_characters": 51,
+            "character_edits": 4,
+            "cer_percent": 7.8431372549019605
+          },
+          "metrics": {
+            "pair_wait_ms": 0.02123300009770901,
+            "setup_ms": 4460.048122999979,
+            "connect_ready_ms": 241.77564499996151,
+            "speech_end_to_transcript_ms": 775.4320429999098,
+            "speech_end_to_alert_ms": null,
+            "speech_end_to_voice_stop_ms": null,
+            "transcript_to_alert_ms": null,
+            "source_transcript_to_alert_ms": null,
+            "last_cue_to_correction_ms": null,
+            "request_workflow_ms": null,
+            "speech_end_to_confirmation_ms": null,
+            "sender_lateness_p50_ms": 0.677082999573031,
+            "sender_lateness_p95_ms": 1.1371185997859357,
+            "sender_lateness_max_ms": 2.0669589998760785,
+            "intent_ms": 4456.619834999856,
+            "confirm_ms": 1.5454990002581326,
+            "speech_end_to_last_final_ms": 775.4320429999098,
+            "latest_segment_queue_ms": 0.33910599995579105,
+            "last_model_end_to_first_alert_ms": null
+          },
+          "transcripts": [
+            "ചോക്കൻ നാനൂറ്റി നാല്പത്തിമൂന്ന് കൗണ്ടർ മൂന്നിലേക്ക് വരൂ."
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "ml-voice-stop",
+          "language": "ml",
+          "kind": "voice-stop",
+          "mode": "monitor",
+          "expected": {
+            "alert": false,
+            "token": null,
+            "location": null,
+            "voice_stop": true,
+            "correction": false
+          },
+          "client_verdict": "pass",
+          "audited_verdict": "pass",
+          "latest_interpretation_completed_in_window": true,
+          "completed_interpretations": 2,
+          "interpretation_errors": [],
+          "checks": {
+            "terminal_alert": true,
+            "voice_stop": true,
+            "correction": true,
+            "final_transcript_received": true,
+            "target": true,
+            "location": true
+          },
+          "false_positive_any": false,
+          "false_positive_terminal": false,
+          "semantic_correction_observed": false,
+          "retraction_observed": false,
+          "voice_stop_observed": true,
+          "ambiguity_reasons": {},
+          "asr_text_errors": {
+            "reference_words": 3,
+            "word_edits": 1,
+            "wer_percent": 33.333333333333336,
+            "reference_characters": 26,
+            "character_edits": 7,
+            "cer_percent": 26.923076923076923
+          },
+          "metrics": {
+            "pair_wait_ms": 0.019626000266725896,
+            "setup_ms": 3700.9597169999324,
+            "connect_ready_ms": 659.3074610000258,
+            "speech_end_to_transcript_ms": -1305.776356000024,
+            "speech_end_to_alert_ms": null,
+            "speech_end_to_voice_stop_ms": 3935.063983999953,
+            "transcript_to_alert_ms": null,
+            "source_transcript_to_alert_ms": null,
+            "last_cue_to_correction_ms": null,
+            "request_workflow_ms": null,
+            "speech_end_to_confirmation_ms": null,
+            "sender_lateness_p50_ms": 0.6269975003760919,
+            "sender_lateness_p95_ms": 1.1131053500093913,
+            "sender_lateness_max_ms": 1.4350870001180738,
+            "intent_ms": 3697.056887999679,
+            "confirm_ms": 1.786331999937829,
+            "speech_end_to_last_final_ms": 1095.806179000192,
+            "latest_segment_queue_ms": 0.4119560003346123,
+            "last_model_end_to_first_alert_ms": null
+          },
+          "transcripts": [
+            "क्यूबल।",
+            "കേൾക്കുന്നത് നിർത്തൂ."
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "ml-burst",
+          "language": "ml",
+          "kind": "burst",
+          "mode": "monitor",
+          "expected": {
+            "alert": true,
+            "token": "442",
+            "location": "counter 2",
+            "location_aliases": [
+              "കൗണ്ടർ രണ്ടിലേക്ക്",
+              "കൗണ്ടർ രണ്ട്",
+              "കൗണ്ടർ 2",
+              "കൗണ്ടർ രണ്ടിൽ"
+            ],
+            "voice_stop": false,
+            "correction": false
+          },
+          "client_verdict": "pass",
+          "audited_verdict": "pass",
+          "latest_interpretation_completed_in_window": true,
+          "completed_interpretations": 1,
+          "interpretation_errors": [],
+          "checks": {
+            "terminal_alert": true,
+            "voice_stop": true,
+            "correction": true,
+            "final_transcript_received": true,
+            "target": true,
+            "location": true
+          },
+          "false_positive_any": false,
+          "false_positive_terminal": false,
+          "semantic_correction_observed": false,
+          "retraction_observed": false,
+          "voice_stop_observed": false,
+          "ambiguity_reasons": {},
+          "asr_text_errors": {
+            "reference_words": 12,
+            "word_edits": 3,
+            "wer_percent": 25.0,
+            "reference_characters": 100,
+            "character_edits": 4,
+            "cer_percent": 4.0
+          },
+          "metrics": {
+            "pair_wait_ms": 0.024586000108683947,
+            "setup_ms": 3168.719038999825,
+            "connect_ready_ms": 275.29722000008405,
+            "speech_end_to_transcript_ms": 886.6119429999344,
+            "speech_end_to_alert_ms": 6892.5840249999055,
+            "speech_end_to_voice_stop_ms": null,
+            "transcript_to_alert_ms": 6005.972081999971,
+            "source_transcript_to_alert_ms": 6005.972081999971,
+            "last_cue_to_correction_ms": null,
+            "request_workflow_ms": null,
+            "speech_end_to_confirmation_ms": null,
+            "sender_lateness_p50_ms": 0.6631690002905088,
+            "sender_lateness_p95_ms": 1.1176192000675655,
+            "sender_lateness_max_ms": 1.733294000132446,
+            "intent_ms": 3165.017299000283,
+            "confirm_ms": 1.5533219998360437,
+            "speech_end_to_last_final_ms": 886.6119429999344,
+            "latest_segment_queue_ms": 0.31473000035475707,
+            "last_model_end_to_first_alert_ms": 143.44668800004
+          },
+          "transcripts": [
+            "ടോക്കൺ നാനൂറ്റി നാല്പത്തിമൂന്ന് കൗണ്ടർ മൂന്നിലേക്ക് വരൂ ടോക്കൺ നാനൂറ്റി നാല്പത്തി രണ്ട്. കൗണ്ടർ രണ്ടിലേക്ക് വരൂ."
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "ta-positive",
+          "language": "ta",
+          "kind": "positive",
+          "mode": "monitor",
+          "expected": {
+            "alert": true,
+            "token": "442",
+            "location": "counter 2",
+            "location_aliases": [
+              "கவுன்டர் இரண்டிற்கு",
+              "கவுன்டர் இரண்டு",
+              "கவுண்டர் இரண்டிற்கு",
+              "கவுண்டர் இரண்டு",
+              "கவுன்டர் 2",
+              "கவுண்டர் 2"
+            ],
+            "voice_stop": false,
+            "correction": false
+          },
+          "client_verdict": "pass",
+          "audited_verdict": "pass",
+          "latest_interpretation_completed_in_window": true,
+          "completed_interpretations": 2,
+          "interpretation_errors": [],
+          "checks": {
+            "terminal_alert": true,
+            "voice_stop": true,
+            "correction": true,
+            "final_transcript_received": true,
+            "target": true,
+            "location": true
+          },
+          "false_positive_any": false,
+          "false_positive_terminal": false,
+          "semantic_correction_observed": false,
+          "retraction_observed": false,
+          "voice_stop_observed": false,
+          "ambiguity_reasons": {},
+          "asr_text_errors": {
+            "reference_words": 7,
+            "word_edits": 2,
+            "wer_percent": 28.571428571428573,
+            "reference_characters": 54,
+            "character_edits": 2,
+            "cer_percent": 3.7037037037037037
+          },
+          "metrics": {
+            "pair_wait_ms": 0.04308400002628332,
+            "setup_ms": 3480.424612999741,
+            "connect_ready_ms": 316.47110600033557,
+            "speech_end_to_transcript_ms": -1553.9985240002352,
+            "speech_end_to_alert_ms": 8042.225597999732,
+            "speech_end_to_voice_stop_ms": null,
+            "transcript_to_alert_ms": 9596.224121999967,
+            "source_transcript_to_alert_ms": 7369.9910099999215,
+            "last_cue_to_correction_ms": null,
+            "request_workflow_ms": null,
+            "speech_end_to_confirmation_ms": null,
+            "sender_lateness_p50_ms": 0.682471999880363,
+            "sender_lateness_p95_ms": 1.1240474997066483,
+            "sender_lateness_max_ms": 1.6603709996161342,
+            "intent_ms": 3475.689004999822,
+            "confirm_ms": 1.9393409997974231,
+            "speech_end_to_last_final_ms": 672.2345879998102,
+            "latest_segment_queue_ms": 1305.6553579999672,
+            "last_model_end_to_first_alert_ms": 117.0532739997725
+          },
+          "transcripts": [
+            "டோக்கன் நானூற்று நாற்பத்தி இரண்டு.",
+            "கவுண்டர் இரண்டிற்கு வரவும்."
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "ta-near-miss",
+          "language": "ta",
+          "kind": "near-miss",
+          "mode": "monitor",
+          "expected": {
+            "alert": false,
+            "token": null,
+            "location": null,
+            "voice_stop": false,
+            "correction": false
+          },
+          "client_verdict": "pass",
+          "audited_verdict": "pass",
+          "latest_interpretation_completed_in_window": true,
+          "completed_interpretations": 2,
+          "interpretation_errors": [],
+          "checks": {
+            "terminal_alert": true,
+            "voice_stop": true,
+            "correction": true,
+            "final_transcript_received": true,
+            "target": true,
+            "location": true
+          },
+          "false_positive_any": false,
+          "false_positive_terminal": false,
+          "semantic_correction_observed": false,
+          "retraction_observed": false,
+          "voice_stop_observed": false,
+          "ambiguity_reasons": {},
+          "asr_text_errors": {
+            "reference_words": 7,
+            "word_edits": 2,
+            "wer_percent": 28.571428571428573,
+            "reference_characters": 54,
+            "character_edits": 2,
+            "cer_percent": 3.7037037037037037
+          },
+          "metrics": {
+            "pair_wait_ms": 0.022695000097883167,
+            "setup_ms": 3533.9661729999534,
+            "connect_ready_ms": 1273.386992000269,
+            "speech_end_to_transcript_ms": -1678.5185310000088,
+            "speech_end_to_alert_ms": null,
+            "speech_end_to_voice_stop_ms": null,
+            "transcript_to_alert_ms": null,
+            "source_transcript_to_alert_ms": null,
+            "last_cue_to_correction_ms": null,
+            "request_workflow_ms": null,
+            "speech_end_to_confirmation_ms": null,
+            "sender_lateness_p50_ms": 0.6666064998626098,
+            "sender_lateness_p95_ms": 1.1342821001562695,
+            "sender_lateness_max_ms": 1.7136339997705363,
+            "intent_ms": 3530.7277879996946,
+            "confirm_ms": 1.35024200017142,
+            "speech_end_to_last_final_ms": 749.9448059998031,
+            "latest_segment_queue_ms": 0.5059949999122182,
+            "last_model_end_to_first_alert_ms": null
+          },
+          "transcripts": [
+            "டோக்கன் நானூற்றி நாற்பத்து மூன்று.",
+            "கவுண்டர் மூன்றிற்கு வரவும்."
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "ta-voice-stop",
+          "language": "ta",
+          "kind": "voice-stop",
+          "mode": "monitor",
+          "expected": {
+            "alert": false,
+            "token": null,
+            "location": null,
+            "voice_stop": true,
+            "correction": false
+          },
+          "client_verdict": "pass",
+          "audited_verdict": "pass",
+          "latest_interpretation_completed_in_window": true,
+          "completed_interpretations": 2,
+          "interpretation_errors": [],
+          "checks": {
+            "terminal_alert": true,
+            "voice_stop": true,
+            "correction": true,
+            "final_transcript_received": true,
+            "target": true,
+            "location": true
+          },
+          "false_positive_any": false,
+          "false_positive_terminal": false,
+          "semantic_correction_observed": false,
+          "retraction_observed": false,
+          "voice_stop_observed": true,
+          "ambiguity_reasons": {},
+          "asr_text_errors": {
+            "reference_words": 3,
+            "word_edits": 1,
+            "wer_percent": 33.333333333333336,
+            "reference_characters": 23,
+            "character_edits": 8,
+            "cer_percent": 34.78260869565217
+          },
+          "metrics": {
+            "pair_wait_ms": 0.030098000024736393,
+            "setup_ms": 3355.6369689999883,
+            "connect_ready_ms": 297.935709000285,
+            "speech_end_to_transcript_ms": -873.0427890000101,
+            "speech_end_to_alert_ms": null,
+            "speech_end_to_voice_stop_ms": 4713.933666999765,
+            "transcript_to_alert_ms": null,
+            "source_transcript_to_alert_ms": null,
+            "last_cue_to_correction_ms": null,
+            "request_workflow_ms": null,
+            "speech_end_to_confirmation_ms": null,
+            "sender_lateness_p50_ms": 0.7210550002128002,
+            "sender_lateness_p95_ms": 1.2597775998983707,
+            "sender_lateness_max_ms": 2.0699269998658565,
+            "intent_ms": 3347.6803429998654,
+            "confirm_ms": 2.4274459997286613,
+            "speech_end_to_last_final_ms": 676.4305130000139,
+            "latest_segment_queue_ms": 1423.2457520001844,
+            "last_model_end_to_first_alert_ms": null
+          },
+          "transcripts": [
+            "ਕਿਊਬੈਲ।",
+            "கேட்பதை நிறுத்து."
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "ta-burst",
+          "language": "ta",
+          "kind": "burst",
+          "mode": "monitor",
+          "expected": {
+            "alert": true,
+            "token": "442",
+            "location": "counter 2",
+            "location_aliases": [
+              "கவுன்டர் இரண்டிற்கு",
+              "கவுன்டர் இரண்டு",
+              "கவுண்டர் இரண்டிற்கு",
+              "கவுண்டர் இரண்டு",
+              "கவுன்டர் 2",
+              "கவுண்டர் 2"
+            ],
+            "voice_stop": false,
+            "correction": false
+          },
+          "client_verdict": "fail",
+          "audited_verdict": "fail",
+          "latest_interpretation_completed_in_window": true,
+          "completed_interpretations": 3,
+          "interpretation_errors": [],
+          "checks": {
+            "terminal_alert": true,
+            "voice_stop": true,
+            "correction": true,
+            "final_transcript_received": true,
+            "target": true,
+            "location": false
+          },
+          "false_positive_any": false,
+          "false_positive_terminal": false,
+          "semantic_correction_observed": false,
+          "retraction_observed": false,
+          "voice_stop_observed": false,
+          "ambiguity_reasons": {},
+          "asr_text_errors": {
+            "reference_words": 14,
+            "word_edits": 3,
+            "wer_percent": 21.428571428571427,
+            "reference_characters": 108,
+            "character_edits": 3,
+            "cer_percent": 2.7777777777777777
+          },
+          "metrics": {
+            "pair_wait_ms": 0.07150900000851834,
+            "setup_ms": 3312.0922170000995,
+            "connect_ready_ms": 272.1702329999971,
+            "speech_end_to_transcript_ms": -6638.502570000128,
+            "speech_end_to_alert_ms": 9744.89702200026,
+            "speech_end_to_voice_stop_ms": null,
+            "transcript_to_alert_ms": 16383.399592000387,
+            "source_transcript_to_alert_ms": 11222.508543999993,
+            "last_cue_to_correction_ms": null,
+            "request_workflow_ms": null,
+            "speech_end_to_confirmation_ms": null,
+            "sender_lateness_p50_ms": 0.7389140000668704,
+            "sender_lateness_p95_ms": 1.2774496002748492,
+            "sender_lateness_max_ms": 1.914854000460764,
+            "intent_ms": 3257.7394859999913,
+            "confirm_ms": 1.5853499999138876,
+            "speech_end_to_last_final_ms": 653.5824980001053,
+            "latest_segment_queue_ms": 3436.1052730000665,
+            "last_model_end_to_first_alert_ms": 114.4710160001523
+          },
+          "transcripts": [
+            "டோக்கன் நானூற்றி நாற்பத்து மூன்று.",
+            "கவுண்டர் மூன்றிற்கு வரவும், டோக்கன் நானூற்று நாற்பத்து இரண்டு.",
+            "கவுண்டர் இரண்டிற்கு வரவும்."
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "te-positive",
+          "language": "te",
+          "kind": "positive",
+          "mode": "monitor",
+          "expected": {
+            "alert": true,
+            "token": "442",
+            "location": "counter 2",
+            "location_aliases": [
+              "కౌంటర్ రెండుకు",
+              "కౌంటర్ రెండు",
+              "కౌంటర్ 2"
+            ],
+            "voice_stop": false,
+            "correction": false
+          },
+          "client_verdict": "pass",
+          "audited_verdict": "pass",
+          "latest_interpretation_completed_in_window": true,
+          "completed_interpretations": 1,
+          "interpretation_errors": [],
+          "checks": {
+            "terminal_alert": true,
+            "voice_stop": true,
+            "correction": true,
+            "final_transcript_received": true,
+            "target": true,
+            "location": true
+          },
+          "false_positive_any": false,
+          "false_positive_terminal": false,
+          "semantic_correction_observed": false,
+          "retraction_observed": false,
+          "voice_stop_observed": false,
+          "ambiguity_reasons": {},
+          "asr_text_errors": {
+            "reference_words": 8,
+            "word_edits": 2,
+            "wer_percent": 25.0,
+            "reference_characters": 42,
+            "character_edits": 0,
+            "cer_percent": 0.0
+          },
+          "metrics": {
+            "pair_wait_ms": 0.04441500004759291,
+            "setup_ms": 3182.781170999988,
+            "connect_ready_ms": 237.00484599976335,
+            "speech_end_to_transcript_ms": 820.3754129999652,
+            "speech_end_to_alert_ms": 5233.655390999957,
+            "speech_end_to_voice_stop_ms": null,
+            "transcript_to_alert_ms": 4413.279977999991,
+            "source_transcript_to_alert_ms": 4413.279977999991,
+            "last_cue_to_correction_ms": null,
+            "request_workflow_ms": null,
+            "speech_end_to_confirmation_ms": null,
+            "sender_lateness_p50_ms": 0.7407314999454684,
+            "sender_lateness_p95_ms": 1.267303999793511,
+            "sender_lateness_max_ms": 1.465805999487202,
+            "intent_ms": 3177.4794610000754,
+            "confirm_ms": 1.7726169999150443,
+            "speech_end_to_last_final_ms": 820.3754129999652,
+            "latest_segment_queue_ms": 0.44868900022265734,
+            "last_model_end_to_first_alert_ms": 50.38312499982567
+          },
+          "transcripts": [
+            "టోకెన్ నాలుగు వందల నలభై రెండు కౌంటర్ రెండు కు రండి."
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "te-near-miss",
+          "language": "te",
+          "kind": "near-miss",
+          "mode": "monitor",
+          "expected": {
+            "alert": false,
+            "token": null,
+            "location": null,
+            "voice_stop": false,
+            "correction": false
+          },
+          "client_verdict": "pass",
+          "audited_verdict": "pass",
+          "latest_interpretation_completed_in_window": true,
+          "completed_interpretations": 1,
+          "interpretation_errors": [],
+          "checks": {
+            "terminal_alert": true,
+            "voice_stop": true,
+            "correction": true,
+            "final_transcript_received": true,
+            "target": true,
+            "location": true
+          },
+          "false_positive_any": false,
+          "false_positive_terminal": false,
+          "semantic_correction_observed": false,
+          "retraction_observed": false,
+          "voice_stop_observed": false,
+          "ambiguity_reasons": {},
+          "asr_text_errors": {
+            "reference_words": 8,
+            "word_edits": 2,
+            "wer_percent": 25.0,
+            "reference_characters": 40,
+            "character_edits": 0,
+            "cer_percent": 0.0
+          },
+          "metrics": {
+            "pair_wait_ms": 0.037013000110164285,
+            "setup_ms": 3382.544562000021,
+            "connect_ready_ms": 476.1232949999794,
+            "speech_end_to_transcript_ms": 760.3025720000005,
+            "speech_end_to_alert_ms": null,
+            "speech_end_to_voice_stop_ms": null,
+            "transcript_to_alert_ms": null,
+            "source_transcript_to_alert_ms": null,
+            "last_cue_to_correction_ms": null,
+            "request_workflow_ms": null,
+            "speech_end_to_confirmation_ms": null,
+            "sender_lateness_p50_ms": 0.7731829996373563,
+            "sender_lateness_p95_ms": 1.3175929998396896,
+            "sender_lateness_max_ms": 2.3243489999913436,
+            "intent_ms": 3376.605151000149,
+            "confirm_ms": 2.1775579998575267,
+            "speech_end_to_last_final_ms": 760.3025720000005,
+            "latest_segment_queue_ms": 0.5080590003672114,
+            "last_model_end_to_first_alert_ms": null
+          },
+          "transcripts": [
+            "టోకెన్ నాలుగు వందల నలభై మూడు కౌంటర్ మూడు కు రండి."
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "te-voice-stop",
+          "language": "te",
+          "kind": "voice-stop",
+          "mode": "monitor",
+          "expected": {
+            "alert": false,
+            "token": null,
+            "location": null,
+            "voice_stop": true,
+            "correction": false
+          },
+          "client_verdict": "pass",
+          "audited_verdict": "pass",
+          "latest_interpretation_completed_in_window": true,
+          "completed_interpretations": 1,
+          "interpretation_errors": [],
+          "checks": {
+            "terminal_alert": true,
+            "voice_stop": true,
+            "correction": true,
+            "final_transcript_received": true,
+            "target": true,
+            "location": true
+          },
+          "false_positive_any": false,
+          "false_positive_terminal": false,
+          "semantic_correction_observed": false,
+          "retraction_observed": false,
+          "voice_stop_observed": true,
+          "ambiguity_reasons": {},
+          "asr_text_errors": {
+            "reference_words": 3,
+            "word_edits": 0,
+            "wer_percent": 0.0,
+            "reference_characters": 16,
+            "character_edits": 0,
+            "cer_percent": 0.0
+          },
+          "metrics": {
+            "pair_wait_ms": 0.05293699996400392,
+            "setup_ms": 3265.4123120000804,
+            "connect_ready_ms": 884.3693230001008,
+            "speech_end_to_transcript_ms": 1177.6227640002617,
+            "speech_end_to_alert_ms": null,
+            "speech_end_to_voice_stop_ms": 3376.236125000105,
+            "transcript_to_alert_ms": null,
+            "source_transcript_to_alert_ms": null,
+            "last_cue_to_correction_ms": null,
+            "request_workflow_ms": null,
+            "speech_end_to_confirmation_ms": null,
+            "sender_lateness_p50_ms": 0.8006909997675393,
+            "sender_lateness_p95_ms": 1.3080022001304314,
+            "sender_lateness_max_ms": 1.4563130002898106,
+            "intent_ms": 3221.2704979997397,
+            "confirm_ms": 2.8228209998815146,
+            "speech_end_to_last_final_ms": 1177.6227640002617,
+            "latest_segment_queue_ms": 0.5181930000617285,
+            "last_model_end_to_first_alert_ms": null
+          },
+          "transcripts": [
+            "క్యూబెల్ వినడం ఆపు."
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "te-burst",
+          "language": "te",
+          "kind": "burst",
+          "mode": "monitor",
+          "expected": {
+            "alert": true,
+            "token": "442",
+            "location": "counter 2",
+            "location_aliases": [
+              "కౌంటర్ రెండుకు",
+              "కౌంటర్ రెండు",
+              "కౌంటర్ 2"
+            ],
+            "voice_stop": false,
+            "correction": false
+          },
+          "client_verdict": "fail",
+          "audited_verdict": "fail",
+          "latest_interpretation_completed_in_window": true,
+          "completed_interpretations": 1,
+          "interpretation_errors": [],
+          "checks": {
+            "terminal_alert": true,
+            "voice_stop": true,
+            "correction": true,
+            "final_transcript_received": true,
+            "target": true,
+            "location": false
+          },
+          "false_positive_any": false,
+          "false_positive_terminal": false,
+          "semantic_correction_observed": false,
+          "retraction_observed": false,
+          "voice_stop_observed": false,
+          "ambiguity_reasons": {},
+          "asr_text_errors": {
+            "reference_words": 16,
+            "word_edits": 0,
+            "wer_percent": 0.0,
+            "reference_characters": 82,
+            "character_edits": 0,
+            "cer_percent": 0.0
+          },
+          "metrics": {
+            "pair_wait_ms": 0.031984999623091426,
+            "setup_ms": 3567.323032999866,
+            "connect_ready_ms": 234.81181400029527,
+            "speech_end_to_transcript_ms": 903.7973930003318,
+            "speech_end_to_alert_ms": 8064.877348000209,
+            "speech_end_to_voice_stop_ms": null,
+            "transcript_to_alert_ms": 7161.079954999877,
+            "source_transcript_to_alert_ms": 7161.079954999877,
+            "last_cue_to_correction_ms": null,
+            "request_workflow_ms": null,
+            "speech_end_to_confirmation_ms": null,
+            "sender_lateness_p50_ms": 0.760870000021896,
+            "sender_lateness_p95_ms": 1.2890998497368855,
+            "sender_lateness_max_ms": 1.9613019999269454,
+            "intent_ms": 3562.597969000308,
+            "confirm_ms": 1.819057999910001,
+            "speech_end_to_last_final_ms": 903.7973930003318,
+            "latest_segment_queue_ms": 0.4644910000024538,
+            "last_model_end_to_first_alert_ms": 72.15569500021957
+          },
+          "transcripts": [
+            "టోకెన్ నాలుగు వందల నలభై మూడు కౌంటర్ మూడుకు రండి టోకెన్ నాలుగు వందల నలభై రెండు కౌంటర్. రెండుకు రండి"
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "mr-positive",
+          "language": "mr",
+          "kind": "positive",
+          "mode": "monitor",
+          "expected": {
+            "alert": true,
+            "token": "442",
+            "location": "counter 2",
+            "location_aliases": [
+              "काउंटर दोनवर",
+              "काउंटर दोन",
+              "काउंटर 2"
+            ],
+            "voice_stop": false,
+            "correction": false
+          },
+          "client_verdict": "inconclusive",
+          "audited_verdict": "inconclusive",
+          "latest_interpretation_completed_in_window": false,
+          "completed_interpretations": 0,
+          "interpretation_errors": [
+            {
+              "event": "interpretation_error",
+              "monotonic_s": 2660.092414823,
+              "wall_time": "2026-11-13T16:33:02.679266+00:00",
+              "call_id": "c29138aafc6849e9a8c1fad8bd5c0192",
+              "stage": "observe",
+              "elapsed_ms": 6248.97952900028,
+              "error_type": "APIConnectionError",
+              "error": "Connection error."
+            }
+          ],
+          "checks": {
+            "terminal_alert": false,
+            "voice_stop": true,
+            "correction": true,
+            "final_transcript_received": true,
+            "target": false,
+            "location": false
+          },
+          "false_positive_any": false,
+          "false_positive_terminal": false,
+          "semantic_correction_observed": false,
+          "retraction_observed": false,
+          "voice_stop_observed": false,
+          "ambiguity_reasons": {},
+          "asr_text_errors": {
+            "reference_words": 7,
+            "word_edits": 2,
+            "wer_percent": 28.571428571428573,
+            "reference_characters": 34,
+            "character_edits": 0,
+            "cer_percent": 0.0
+          },
+          "metrics": {
+            "pair_wait_ms": 0.06997800028329948,
+            "setup_ms": 3389.5364750001136,
+            "connect_ready_ms": 402.4278889996822,
+            "speech_end_to_transcript_ms": 1208.9874070002224,
+            "speech_end_to_alert_ms": null,
+            "speech_end_to_voice_stop_ms": null,
+            "transcript_to_alert_ms": null,
+            "source_transcript_to_alert_ms": null,
+            "last_cue_to_correction_ms": null,
+            "request_workflow_ms": null,
+            "speech_end_to_confirmation_ms": null,
+            "sender_lateness_p50_ms": 0.7568489995719574,
+            "sender_lateness_p95_ms": 1.271088599878567,
+            "sender_lateness_max_ms": 1.4546699999300472,
+            "intent_ms": 3381.2586559997726,
+            "confirm_ms": 1.7856330000540765,
+            "speech_end_to_last_final_ms": 1208.9874070002224,
+            "latest_segment_queue_ms": 0.4707830003098934,
+            "last_model_end_to_first_alert_ms": null
+          },
+          "transcripts": [
+            "टोकन चारशे बेचाळीस कृपया काउंटर दोन वर या."
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "mr-near-miss",
+          "language": "mr",
+          "kind": "near-miss",
+          "mode": "monitor",
+          "expected": {
+            "alert": false,
+            "token": null,
+            "location": null,
+            "voice_stop": false,
+            "correction": false
+          },
+          "client_verdict": "pass",
+          "audited_verdict": "pass",
+          "latest_interpretation_completed_in_window": true,
+          "completed_interpretations": 1,
+          "interpretation_errors": [],
+          "checks": {
+            "terminal_alert": true,
+            "voice_stop": true,
+            "correction": true,
+            "final_transcript_received": true,
+            "target": true,
+            "location": true
+          },
+          "false_positive_any": false,
+          "false_positive_terminal": false,
+          "semantic_correction_observed": false,
+          "retraction_observed": false,
+          "voice_stop_observed": false,
+          "ambiguity_reasons": {},
+          "asr_text_errors": {
+            "reference_words": 7,
+            "word_edits": 0,
+            "wer_percent": 0.0,
+            "reference_characters": 36,
+            "character_edits": 0,
+            "cer_percent": 0.0
+          },
+          "metrics": {
+            "pair_wait_ms": 0.05251900029179524,
+            "setup_ms": 6194.4160060002105,
+            "connect_ready_ms": 827.7634930000204,
+            "speech_end_to_transcript_ms": 704.3345560000489,
+            "speech_end_to_alert_ms": null,
+            "speech_end_to_voice_stop_ms": null,
+            "transcript_to_alert_ms": null,
+            "source_transcript_to_alert_ms": null,
+            "last_cue_to_correction_ms": null,
+            "request_workflow_ms": null,
+            "speech_end_to_confirmation_ms": null,
+            "sender_lateness_p50_ms": 0.7523525000578957,
+            "sender_lateness_p95_ms": 1.2763759003973971,
+            "sender_lateness_max_ms": 1.4630740001848608,
+            "intent_ms": 6188.535641000271,
+            "confirm_ms": 1.4791210001021682,
+            "speech_end_to_last_final_ms": 704.3345560000489,
+            "latest_segment_queue_ms": 0.5816200000481331,
+            "last_model_end_to_first_alert_ms": null
+          },
+          "transcripts": [
+            "टोकन चारशे त्रेचाळीस कृपया काउंटर तीनवर या."
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "mr-voice-stop",
+          "language": "mr",
+          "kind": "voice-stop",
+          "mode": "monitor",
+          "expected": {
+            "alert": false,
+            "token": null,
+            "location": null,
+            "voice_stop": true,
+            "correction": false
+          },
+          "client_verdict": "pass",
+          "audited_verdict": "pass",
+          "latest_interpretation_completed_in_window": true,
+          "completed_interpretations": 2,
+          "interpretation_errors": [],
+          "checks": {
+            "terminal_alert": true,
+            "voice_stop": true,
+            "correction": true,
+            "final_transcript_received": true,
+            "target": true,
+            "location": true
+          },
+          "false_positive_any": false,
+          "false_positive_terminal": false,
+          "semantic_correction_observed": false,
+          "retraction_observed": false,
+          "voice_stop_observed": true,
+          "ambiguity_reasons": {},
+          "asr_text_errors": {
+            "reference_words": 3,
+            "word_edits": 2,
+            "wer_percent": 66.66666666666667,
+            "reference_characters": 16,
+            "character_edits": 3,
+            "cer_percent": 18.75
+          },
+          "metrics": {
+            "pair_wait_ms": 0.06138900016594562,
+            "setup_ms": 3485.5052430002615,
+            "connect_ready_ms": 256.6935380000359,
+            "speech_end_to_transcript_ms": -957.1696200000588,
+            "speech_end_to_alert_ms": null,
+            "speech_end_to_voice_stop_ms": 6110.301144000005,
+            "transcript_to_alert_ms": null,
+            "source_transcript_to_alert_ms": null,
+            "last_cue_to_correction_ms": null,
+            "request_workflow_ms": null,
+            "speech_end_to_confirmation_ms": null,
+            "sender_lateness_p50_ms": 0.7678530000703176,
+            "sender_lateness_p95_ms": 1.261729800080502,
+            "sender_lateness_max_ms": 1.417569999830448,
+            "intent_ms": 3441.913328999817,
+            "confirm_ms": 1.6529670001546037,
+            "speech_end_to_last_final_ms": 625.3531379998094,
+            "latest_segment_queue_ms": 1307.550240999717,
+            "last_model_end_to_first_alert_ms": null
+          },
+          "transcripts": [
+            "क्यूबल।",
+            "इकडे थांबव"
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "mr-burst",
+          "language": "mr",
+          "kind": "burst",
+          "mode": "monitor",
+          "expected": {
+            "alert": true,
+            "token": "442",
+            "location": "counter 2",
+            "location_aliases": [
+              "काउंटर दोनवर",
+              "काउंटर दोन",
+              "काउंटर 2"
+            ],
+            "voice_stop": false,
+            "correction": false
+          },
+          "client_verdict": "pass",
+          "audited_verdict": "pass",
+          "latest_interpretation_completed_in_window": true,
+          "completed_interpretations": 1,
+          "interpretation_errors": [],
+          "checks": {
+            "terminal_alert": true,
+            "voice_stop": true,
+            "correction": true,
+            "final_transcript_received": true,
+            "target": true,
+            "location": true
+          },
+          "false_positive_any": false,
+          "false_positive_terminal": false,
+          "semantic_correction_observed": false,
+          "retraction_observed": false,
+          "voice_stop_observed": false,
+          "ambiguity_reasons": {},
+          "asr_text_errors": {
+            "reference_words": 14,
+            "word_edits": 4,
+            "wer_percent": 28.571428571428573,
+            "reference_characters": 70,
+            "character_edits": 0,
+            "cer_percent": 0.0
+          },
+          "metrics": {
+            "pair_wait_ms": 0.032405000183644006,
+            "setup_ms": 2911.1858699998265,
+            "connect_ready_ms": 303.05619599994316,
+            "speech_end_to_transcript_ms": 816.8446930003483,
+            "speech_end_to_alert_ms": 8077.005671000279,
+            "speech_end_to_voice_stop_ms": null,
+            "transcript_to_alert_ms": 7260.160977999931,
+            "source_transcript_to_alert_ms": 7260.160977999931,
+            "last_cue_to_correction_ms": null,
+            "request_workflow_ms": null,
+            "speech_end_to_confirmation_ms": null,
+            "sender_lateness_p50_ms": 0.7721140000285232,
+            "sender_lateness_p95_ms": 1.2867315997937108,
+            "sender_lateness_max_ms": 1.7513779998807877,
+            "intent_ms": 2906.624271000055,
+            "confirm_ms": 1.8294589999641175,
+            "speech_end_to_last_final_ms": 816.8446930003483,
+            "latest_segment_queue_ms": 0.7274549998328439,
+            "last_model_end_to_first_alert_ms": 81.81196000032287
+          },
+          "transcripts": [
+            "टोकन चारशे त्रेचाळीस कृपया काउंटर तीन वर या। टोकन चारशे बेचाळीस कृपया काउंटर दोन वर या।"
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "en-positive",
+          "language": "en",
+          "kind": "positive",
+          "mode": "monitor",
+          "expected": {
+            "alert": true,
+            "token": "442",
+            "location": "counter 2",
+            "location_aliases": [
+              "counter two"
+            ],
+            "voice_stop": false,
+            "correction": false
+          },
+          "client_verdict": "pass",
+          "audited_verdict": "pass",
+          "latest_interpretation_completed_in_window": true,
+          "completed_interpretations": 2,
+          "interpretation_errors": [],
+          "checks": {
+            "terminal_alert": true,
+            "voice_stop": true,
+            "correction": true,
+            "final_transcript_received": true,
+            "target": true,
+            "location": true
+          },
+          "false_positive_any": false,
+          "false_positive_terminal": false,
+          "semantic_correction_observed": false,
+          "retraction_observed": false,
+          "voice_stop_observed": false,
+          "ambiguity_reasons": {},
+          "asr_text_errors": {
+            "reference_words": 11,
+            "word_edits": 0,
+            "wer_percent": 0.0,
+            "reference_characters": 47,
+            "character_edits": 0,
+            "cer_percent": 0.0
+          },
+          "metrics": {
+            "pair_wait_ms": 0.04972600027031149,
+            "setup_ms": 7223.072947000219,
+            "connect_ready_ms": 477.3650689999158,
+            "speech_end_to_transcript_ms": -2010.0584610004262,
+            "speech_end_to_alert_ms": 5488.31317999975,
+            "speech_end_to_voice_stop_ms": null,
+            "transcript_to_alert_ms": 7498.371641000176,
+            "source_transcript_to_alert_ms": 4793.342378000034,
+            "last_cue_to_correction_ms": null,
+            "request_workflow_ms": null,
+            "speech_end_to_confirmation_ms": null,
+            "sender_lateness_p50_ms": 0.7579580001220165,
+            "sender_lateness_p95_ms": 1.2888159000794985,
+            "sender_lateness_max_ms": 1.7489430001660367,
+            "intent_ms": 7179.647095999826,
+            "confirm_ms": 2.0819520000259217,
+            "speech_end_to_last_final_ms": 694.9708019997161,
+            "latest_segment_queue_ms": 974.2998259998785,
+            "last_model_end_to_first_alert_ms": 112.32247499992809
+          },
+          "transcripts": [
+            "Token four hundred and forty two.",
+            "Please go to counter two"
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "en-near-miss",
+          "language": "en",
+          "kind": "near-miss",
+          "mode": "monitor",
+          "expected": {
+            "alert": false,
+            "token": null,
+            "location": null,
+            "voice_stop": false,
+            "correction": false
+          },
+          "client_verdict": "pass",
+          "audited_verdict": "pass",
+          "latest_interpretation_completed_in_window": true,
+          "completed_interpretations": 1,
+          "interpretation_errors": [],
+          "checks": {
+            "terminal_alert": true,
+            "voice_stop": true,
+            "correction": true,
+            "final_transcript_received": true,
+            "target": true,
+            "location": true
+          },
+          "false_positive_any": false,
+          "false_positive_terminal": false,
+          "semantic_correction_observed": false,
+          "retraction_observed": false,
+          "voice_stop_observed": false,
+          "ambiguity_reasons": {},
+          "asr_text_errors": {
+            "reference_words": 11,
+            "word_edits": 0,
+            "wer_percent": 0.0,
+            "reference_characters": 51,
+            "character_edits": 0,
+            "cer_percent": 0.0
+          },
+          "metrics": {
+            "pair_wait_ms": 0.061949000155436806,
+            "setup_ms": 3294.0263569998933,
+            "connect_ready_ms": 266.15652500004217,
+            "speech_end_to_transcript_ms": 712.2564209998927,
+            "speech_end_to_alert_ms": null,
+            "speech_end_to_voice_stop_ms": null,
+            "transcript_to_alert_ms": null,
+            "source_transcript_to_alert_ms": null,
+            "last_cue_to_correction_ms": null,
+            "request_workflow_ms": null,
+            "speech_end_to_confirmation_ms": null,
+            "sender_lateness_p50_ms": 0.764439999784372,
+            "sender_lateness_p95_ms": 1.328351299798669,
+            "sender_lateness_max_ms": 2.0696040000984794,
+            "intent_ms": 3250.4426319997037,
+            "confirm_ms": 2.5589840001885023,
+            "speech_end_to_last_final_ms": 712.2564209998927,
+            "latest_segment_queue_ms": 0.4478930000004766,
+            "last_model_end_to_first_alert_ms": null
+          },
+          "transcripts": [
+            "Token four hundred and forty three, please go to counter three."
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "en-voice-stop",
+          "language": "en",
+          "kind": "voice-stop",
+          "mode": "monitor",
+          "expected": {
+            "alert": false,
+            "token": null,
+            "location": null,
+            "voice_stop": true,
+            "correction": false
+          },
+          "client_verdict": "pass",
+          "audited_verdict": "pass",
+          "latest_interpretation_completed_in_window": true,
+          "completed_interpretations": 1,
+          "interpretation_errors": [],
+          "checks": {
+            "terminal_alert": true,
+            "voice_stop": true,
+            "correction": true,
+            "final_transcript_received": true,
+            "target": true,
+            "location": true
+          },
+          "false_positive_any": false,
+          "false_positive_terminal": false,
+          "semantic_correction_observed": false,
+          "retraction_observed": false,
+          "voice_stop_observed": true,
+          "ambiguity_reasons": {},
+          "asr_text_errors": {
+            "reference_words": 3,
+            "word_edits": 2,
+            "wer_percent": 66.66666666666667,
+            "reference_characters": 20,
+            "character_edits": 3,
+            "cer_percent": 15.0
+          },
+          "metrics": {
+            "pair_wait_ms": 0.034223000056954334,
+            "setup_ms": 3229.0686210003514,
+            "connect_ready_ms": 221.95662200010702,
+            "speech_end_to_transcript_ms": 692.3050489999696,
+            "speech_end_to_alert_ms": null,
+            "speech_end_to_voice_stop_ms": 2899.5659659999546,
+            "transcript_to_alert_ms": null,
+            "source_transcript_to_alert_ms": null,
+            "last_cue_to_correction_ms": null,
+            "request_workflow_ms": null,
+            "speech_end_to_confirmation_ms": null,
+            "sender_lateness_p50_ms": 0.7593929999529792,
+            "sender_lateness_p95_ms": 1.2678043996857011,
+            "sender_lateness_max_ms": 1.4174689999890688,
+            "intent_ms": 3224.4895879998694,
+            "confirm_ms": 1.5112350001800223,
+            "speech_end_to_last_final_ms": 692.3050489999696,
+            "latest_segment_queue_ms": 0.4489429998102423,
+            "last_model_end_to_first_alert_ms": null
+          },
+          "transcripts": [
+            "Q bell stop listening"
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "en-burst",
+          "language": "en",
+          "kind": "burst",
+          "mode": "monitor",
+          "expected": {
+            "alert": true,
+            "token": "442",
+            "location": "counter 2",
+            "location_aliases": [
+              "counter two"
+            ],
+            "voice_stop": false,
+            "correction": false
+          },
+          "client_verdict": "inconclusive",
+          "audited_verdict": "inconclusive",
+          "latest_interpretation_completed_in_window": true,
+          "completed_interpretations": 2,
+          "interpretation_errors": [],
+          "checks": {
+            "terminal_alert": true,
+            "voice_stop": true,
+            "correction": true,
+            "final_transcript_received": true,
+            "target": true,
+            "location": null
+          },
+          "false_positive_any": false,
+          "false_positive_terminal": false,
+          "semantic_correction_observed": false,
+          "retraction_observed": false,
+          "voice_stop_observed": false,
+          "ambiguity_reasons": {},
+          "asr_text_errors": {
+            "reference_words": 22,
+            "word_edits": 0,
+            "wer_percent": 0.0,
+            "reference_characters": 98,
+            "character_edits": 0,
+            "cer_percent": 0.0
+          },
+          "metrics": {
+            "pair_wait_ms": 0.053918000048724934,
+            "setup_ms": 3183.215652999934,
+            "connect_ready_ms": 2337.727196000287,
+            "speech_end_to_transcript_ms": -1947.1840850001172,
+            "speech_end_to_alert_ms": 5907.1146999999655,
+            "speech_end_to_voice_stop_ms": null,
+            "transcript_to_alert_ms": 7854.298785000083,
+            "source_transcript_to_alert_ms": 7854.298785000083,
+            "last_cue_to_correction_ms": null,
+            "request_workflow_ms": null,
+            "speech_end_to_confirmation_ms": null,
+            "sender_lateness_p50_ms": 0.7559619998573908,
+            "sender_lateness_p95_ms": 1.298809799936862,
+            "sender_lateness_max_ms": 1.8303119995835004,
+            "intent_ms": 3178.3545219996086,
+            "confirm_ms": 1.8916659996648377,
+            "speech_end_to_last_final_ms": 664.6346590000576,
+            "latest_segment_queue_ms": 1745.9672899999532,
+            "last_model_end_to_first_alert_ms": 102.4655379997057
+          },
+          "transcripts": [
+            "Token four hundred and forty three, please go to counter three. Token four hundred and forty two.",
+            "Please go to counter two"
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "hi-correction",
+          "language": "hi",
+          "kind": "correction",
+          "mode": "monitor",
+          "expected": {
+            "alert": false,
+            "token": null,
+            "location": null,
+            "voice_stop": false,
+            "correction": true
+          },
+          "client_verdict": "pass",
+          "audited_verdict": "pass",
+          "latest_interpretation_completed_in_window": true,
+          "completed_interpretations": 3,
+          "interpretation_errors": [],
+          "checks": {
+            "terminal_alert": true,
+            "voice_stop": true,
+            "correction": true,
+            "final_transcript_received": true,
+            "target": true,
+            "location": true
+          },
+          "false_positive_any": false,
+          "false_positive_terminal": false,
+          "semantic_correction_observed": true,
+          "retraction_observed": false,
+          "voice_stop_observed": false,
+          "ambiguity_reasons": {},
+          "asr_text_errors": {
+            "reference_words": 22,
+            "word_edits": 0,
+            "wer_percent": 0.0,
+            "reference_characters": 85,
+            "character_edits": 0,
+            "cer_percent": 0.0
+          },
+          "metrics": {
+            "pair_wait_ms": 0.05426699999588891,
+            "setup_ms": 4907.50049899998,
+            "connect_ready_ms": 253.25732700002845,
+            "speech_end_to_transcript_ms": -5296.197689999644,
+            "speech_end_to_alert_ms": null,
+            "speech_end_to_voice_stop_ms": null,
+            "transcript_to_alert_ms": null,
+            "source_transcript_to_alert_ms": null,
+            "last_cue_to_correction_ms": 9271.039317000032,
+            "request_workflow_ms": null,
+            "speech_end_to_confirmation_ms": null,
+            "sender_lateness_p50_ms": 0.7339354997384362,
+            "sender_lateness_p95_ms": 1.269936349785894,
+            "sender_lateness_max_ms": 1.996527999835962,
+            "intent_ms": 4863.815556999725,
+            "confirm_ms": 1.6894160003175784,
+            "speech_end_to_last_final_ms": 844.3616580002526,
+            "latest_segment_queue_ms": 8427.119131999916,
+            "last_model_end_to_first_alert_ms": null
+          },
+          "transcripts": [
+            "टोकन चार सौ बयालीस कृपया काउंटर दो पर जाएँ। सुधार",
+            "चार सौ बयालीस नहीं",
+            "टोकन चार सौ तैंतालीस काउंटर तीन पर आएँ।"
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "hi-cancellation",
+          "language": "hi",
+          "kind": "cancellation",
+          "mode": "monitor",
+          "expected": {
+            "alert": false,
+            "token": null,
+            "location": null,
+            "voice_stop": false,
+            "correction": true
+          },
+          "client_verdict": "pass",
+          "audited_verdict": "pass",
+          "latest_interpretation_completed_in_window": true,
+          "completed_interpretations": 1,
+          "interpretation_errors": [],
+          "checks": {
+            "terminal_alert": true,
+            "voice_stop": true,
+            "correction": true,
+            "final_transcript_received": true,
+            "target": true,
+            "location": true
+          },
+          "false_positive_any": false,
+          "false_positive_terminal": false,
+          "semantic_correction_observed": false,
+          "retraction_observed": false,
+          "voice_stop_observed": false,
+          "ambiguity_reasons": {
+            "The speech first directs token 442 to counter 2, then says its previous announcement is canceled and tells listeners not to come now; it is unclear whether the call remains valid.": 1
+          },
+          "asr_text_errors": {
+            "reference_words": 23,
+            "word_edits": 2,
+            "wer_percent": 8.695652173913043,
+            "reference_characters": 82,
+            "character_edits": 2,
+            "cer_percent": 2.4390243902439024
+          },
+          "metrics": {
+            "pair_wait_ms": 0.05440799986899947,
+            "setup_ms": 2838.610009000149,
+            "connect_ready_ms": 396.7166840002392,
+            "speech_end_to_transcript_ms": 748.4133590000965,
+            "speech_end_to_alert_ms": null,
+            "speech_end_to_voice_stop_ms": null,
+            "transcript_to_alert_ms": null,
+            "source_transcript_to_alert_ms": null,
+            "last_cue_to_correction_ms": null,
+            "request_workflow_ms": null,
+            "speech_end_to_confirmation_ms": null,
+            "sender_lateness_p50_ms": 0.7409289999031898,
+            "sender_lateness_p95_ms": 1.2267520997966135,
+            "sender_lateness_max_ms": 1.509290999820223,
+            "intent_ms": 2793.9666380002564,
+            "confirm_ms": 1.759407999998075,
+            "speech_end_to_last_final_ms": 748.4133590000965,
+            "latest_segment_queue_ms": 0.5189319999772124,
+            "last_model_end_to_first_alert_ms": null
+          },
+          "transcripts": [
+            "टोकन चार सौ बयालीस कृपया काउंटर दो पर जाएं। टोकन चार सौ बयालीस की पिछली घोषणा रद्द है। अभी काउंटर पर न आएं।"
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "ml-correction",
+          "language": "ml",
+          "kind": "correction",
+          "mode": "monitor",
+          "expected": {
+            "alert": false,
+            "token": null,
+            "location": null,
+            "voice_stop": false,
+            "correction": true
+          },
+          "client_verdict": "inconclusive",
+          "audited_verdict": "inconclusive",
+          "latest_interpretation_completed_in_window": false,
+          "completed_interpretations": 1,
+          "interpretation_errors": [
+            {
+              "event": "interpretation_error",
+              "monotonic_s": 2984.648793768,
+              "wall_time": "2026-11-13T16:38:27.235645+00:00",
+              "call_id": "9906869c52ee440faa126498559c0594",
+              "stage": "observe",
+              "elapsed_ms": 12004.712421000022,
+              "error_type": "APITimeoutError",
+              "error": "Request timed out."
+            }
+          ],
+          "checks": {
+            "terminal_alert": true,
+            "voice_stop": true,
+            "correction": true,
+            "final_transcript_received": true,
+            "target": true,
+            "location": true
+          },
+          "false_positive_any": false,
+          "false_positive_terminal": false,
+          "semantic_correction_observed": false,
+          "retraction_observed": false,
+          "voice_stop_observed": false,
+          "ambiguity_reasons": {},
+          "asr_text_errors": {
+            "reference_words": 16,
+            "word_edits": 6,
+            "wer_percent": 37.5,
+            "reference_characters": 135,
+            "character_edits": 6,
+            "cer_percent": 4.444444444444445
+          },
+          "metrics": {
+            "pair_wait_ms": 0.06306799969024723,
+            "setup_ms": 3617.168005000167,
+            "connect_ready_ms": 261.5723499998239,
+            "speech_end_to_transcript_ms": -7466.725390999727,
+            "speech_end_to_alert_ms": null,
+            "speech_end_to_voice_stop_ms": null,
+            "transcript_to_alert_ms": null,
+            "source_transcript_to_alert_ms": null,
+            "last_cue_to_correction_ms": null,
+            "request_workflow_ms": null,
+            "speech_end_to_confirmation_ms": null,
+            "sender_lateness_p50_ms": 0.7299660001081065,
+            "sender_lateness_p95_ms": 1.2626411997189273,
+            "sender_lateness_max_ms": 1.6418709997196856,
+            "intent_ms": 3572.010669000065,
+            "confirm_ms": 1.778272999672481,
+            "speech_end_to_last_final_ms": 706.6767930000424,
+            "latest_segment_queue_ms": null,
+            "last_model_end_to_first_alert_ms": null
+          },
+          "transcripts": [
+            "ടോക്കൺ നാനൂറ്റി നാല്പത്തി രണ്ട് കൗണ്ടർ രണ്ടിലേക്ക് വരൂ തിരുത്ത്.",
+            "നാനൂറ്റി നാല്പത്തിരണ്ടല്ല.",
+            "ടോക്കൺ നാനൂറ്റി നാൽപ്പത്തി മൂന്ന്.",
+            "കൗണ്ടർ മൂന്നിലേക്ക് വരൂ."
+          ],
+          "errors": []
+        },
+        {
+          "case_id": "ml-cancellation",
+          "language": "ml",
+          "kind": "cancellation",
+          "mode": "monitor",
+          "expected": {
+            "alert": false,
+            "token": null,
+            "location": null,
+            "voice_stop": false,
+            "correction": true
+          },
+          "client_verdict": "inconclusive",
+          "audited_verdict": "inconclusive",
+          "latest_interpretation_completed_in_window": false,
+          "completed_interpretations": 1,
+          "interpretation_errors": [
+            {
+              "event": "interpretation_error",
+              "monotonic_s": 3016.664450229,
+              "wall_time": "2026-11-13T16:38:59.251300+00:00",
+              "call_id": "3528107d36034f809f038dd14ef6c54e",
+              "stage": "observe",
+              "elapsed_ms": 12004.503347000082,
+              "error_type": "APITimeoutError",
+              "error": "Request timed out."
+            }
+          ],
+          "checks": {
+            "terminal_alert": true,
+            "voice_stop": true,
+            "correction": true,
+            "final_transcript_received": true,
+            "target": true,
+            "location": true
+          },
+          "false_positive_any": false,
+          "false_positive_terminal": false,
+          "semantic_correction_observed": false,
+          "retraction_observed": false,
+          "voice_stop_observed": false,
+          "ambiguity_reasons": {},
+          "asr_text_errors": {
+            "reference_words": 15,
+            "word_edits": 7,
+            "wer_percent": 46.666666666666664,
+            "reference_characters": 128,
+            "character_edits": 13,
+            "cer_percent": 10.15625
+          },
+          "metrics": {
+            "pair_wait_ms": 0.053919000038149534,
+            "setup_ms": 2821.3603330000296,
+            "connect_ready_ms": 244.9320410000837,
+            "speech_end_to_transcript_ms": -1714.7127019998152,
+            "speech_end_to_alert_ms": null,
+            "speech_end_to_voice_stop_ms": null,
+            "transcript_to_alert_ms": null,
+            "source_transcript_to_alert_ms": null,
+            "last_cue_to_correction_ms": null,
+            "request_workflow_ms": null,
+            "speech_end_to_confirmation_ms": null,
+            "sender_lateness_p50_ms": 0.6957944997338927,
+            "sender_lateness_p95_ms": 1.1693159996411848,
+            "sender_lateness_max_ms": 1.6128119996210444,
+            "intent_ms": 2777.187098000013,
+            "confirm_ms": 1.7870779997792852,
+            "speech_end_to_last_final_ms": 690.5086900001152,
+            "latest_segment_queue_ms": 4115.562318999764,
+            "last_model_end_to_first_alert_ms": null
+          },
+          "transcripts": [
+            "ടോക്കൺ നാനൂറ്റി നാല്പത്തി രണ്ട് കൗണ്ടർ രണ്ടിലേക്ക് വരൂ ടോക്കൺ നാനൂറ്റി നാല്പത്തി രണ്ടിന്റെ മുൻ അറിയിപ്പ്. ਰੱਦ ਆ ਕੇ",
+            "ഇപ്പോൾ കൗണ്ടറിലേക്ക് വരേണ്ട."
+          ],
+          "errors": []
+        }
+      ]
+    }
+  ],
+  "method": "Raw replay records are unchanged. Monitor passes additionally require the latest transcript's interpretation to finish before the replay observation window closes. Observed false-alert exposure always fails. Latency cohorts retain their denominators and include only passing cases; do not compare conditional speed without pass rates. Multi-utterance first-final timing is not pooled with single-announcement ASR latency. WER/CER use NFKC, casefold, punctuation removal and whitespace normalization; number words are not converted to digits. CER counts Unicode code points excluding spaces, not grapheme clusters. Task-level target/counter accuracy remains primary."
+}

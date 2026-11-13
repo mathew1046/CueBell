@@ -1,0 +1,45 @@
+{
+  "status": "passed",
+  "network_calls": 0,
+  "fixtures": 24,
+  "cases": 30,
+  "submitted_unicode_characters": 1250,
+  "estimated_cost_usd": 0.375,
+  "cost_status": "estimated",
+  "total_audio_duration_s": 99.44,
+  "http_200_responses": 24,
+  "provider_character_cost_header_count": 24,
+  "provider_character_cost_header_sum": 276,
+  "provider_character_cost_note": "Exact response header values only; distinct from submitted Unicode count and not a USD invoice or remaining-quota measurement",
+  "provider_confirmed_remaining_quota": null,
+  "preserved_baselines": [
+    {
+      "directory": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/baseline-22",
+      "fixtures_unchanged": 22,
+      "cases_unchanged": 28
+    }
+  ],
+  "request_cases": [
+    "hi-request",
+    "ml-request"
+  ],
+  "checks": [
+    "manifest contract and case coverage",
+    "source prompts unchanged",
+    "approval decisions",
+    "hard submission and estimated-cost caps",
+    "no duplicate paid calls",
+    "zero reserved budget",
+    "approved model and voice in every attempt",
+    "one HTTP 200 response per attempt",
+    "WAV PCM format and duration",
+    "SHA-256 audio and alignment integrity",
+    "speech_end equals last non-whitespace aligned character bounded to WAV end within 5ms tolerance",
+    "QA ledger consistency"
+  ],
+  "listening_or_native_speaker_review": "not performed",
+  "audit_script_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/audit_corpus.py",
+  "audit_script_sha256": "70c636fedb6052aeb10f380022b916d8aa7c87bb8bc3206e5d1d0cd80aa74b9f",
+  "manifest_path": "/home/mathew/Arrakis/CueBell/backend/benchmarks/corpus.json",
+  "manifest_sha256": "b5d3d89f55f8a647551b4f4c54d9d0276b9ec5891a97e00b1fcd45517a8bc6ba"
+}

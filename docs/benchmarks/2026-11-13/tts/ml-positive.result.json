@@ -1,0 +1,97 @@
+{
+  "id": "ml-positive",
+  "started_at": "2026-11-13T15:59:57.991564+00:00",
+  "characters": 56,
+  "estimated_cost_usd": 0.0168,
+  "cost_status": "estimated",
+  "cost_entry_id": "8d36ef674b09",
+  "status": "generated",
+  "generator_sha256": "431d55ac1d20b753be8c20d58dd0102e49e3b9d25cfa790b45c9d9f426575c7f",
+  "inputs": {
+    "text": "ടോക്കൺ നാനൂറ്റി നാൽപ്പത്തിരണ്ട്, കൗണ്ടർ രണ്ടിലേക്ക് വരൂ.",
+    "voice_id": "bajNon13EdhNMndG3z05",
+    "model_id": "eleven_v3",
+    "language_code": "ml",
+    "output_format": "pcm_16000",
+    "with_timestamps": true,
+    "stability": 0.5,
+    "similarity_boost": 0.75,
+    "style": 0.0,
+    "speed": 1.0,
+    "use_speaker_boost": true,
+    "output_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/ml-positive.wav"
+  },
+  "finished_at": "2026-11-13T16:00:01.958193+00:00",
+  "generation_duration_s": 3.965749,
+  "http": [
+    {
+      "status_code": 200,
+      "request_id": "x0Ckw44Tdb6OnjqvrZ07",
+      "character-cost": 12
+    }
+  ],
+  "tool_result": {
+    "success": true,
+    "data": {
+      "provider": "elevenlabs",
+      "model": "eleven_v3",
+      "voice_id": "bajNon13EdhNMndG3z05",
+      "voice_settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 1.0,
+        "use_speaker_boost": true
+      },
+      "text_length": 56,
+      "output": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/ml-positive.wav",
+      "format": "pcm_16000",
+      "request_id": "x0Ckw44Tdb6OnjqvrZ07",
+      "word_timestamps": [
+        {
+          "word": "ടോക്കൺ",
+          "start": 0.0,
+          "end": 0.64
+        },
+        {
+          "word": "നാനൂറ്റി",
+          "start": 0.72,
+          "end": 1.12
+        },
+        {
+          "word": "നാൽപ്പത്തിരണ്ട്,",
+          "start": 1.2,
+          "end": 2.4
+        },
+        {
+          "word": "കൗണ്ടർ",
+          "start": 2.48,
+          "end": 2.8
+        },
+        {
+          "word": "രണ്ടിലേക്ക്",
+          "start": 3.12,
+          "end": 3.648
+        },
+        {
+          "word": "വരൂ.",
+          "start": 3.68,
+          "end": 3.92
+        }
+      ],
+      "alignment_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/ml-positive.wav.alignment.json",
+      "alignment_matches_text": true,
+      "cost_status": "estimated"
+    },
+    "artifacts": [
+      "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/ml-positive.wav",
+      "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/ml-positive.wav.alignment.json"
+    ],
+    "error": null,
+    "cost_usd": 0.0168,
+    "duration_seconds": 3.96,
+    "seed": null,
+    "model": "eleven_v3",
+    "from_cache": false
+  }
+}

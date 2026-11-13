@@ -1,0 +1,102 @@
+{
+  "id": "mr-near-miss",
+  "started_at": "2026-11-13T16:03:19.005864+00:00",
+  "characters": 44,
+  "estimated_cost_usd": 0.0132,
+  "cost_status": "estimated",
+  "cost_entry_id": "8beb27ed5c86",
+  "status": "generated",
+  "generator_sha256": "1c1aacf53fea76885a7f6182e2546985ca5cf72813942d5f69adf0f5e395bacf",
+  "inputs": {
+    "text": "टोकन चारशे त्रेचाळीस, कृपया काउंटर तीनवर या.",
+    "voice_id": "bajNon13EdhNMndG3z05",
+    "model_id": "eleven_v3",
+    "language_code": "mr",
+    "output_format": "pcm_16000",
+    "with_timestamps": true,
+    "stability": 0.5,
+    "similarity_boost": 0.75,
+    "style": 0.0,
+    "speed": 1.0,
+    "use_speaker_boost": true,
+    "output_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/mr-near-miss.wav"
+  },
+  "finished_at": "2026-11-13T16:03:21.166929+00:00",
+  "generation_duration_s": 2.160068,
+  "http": [
+    {
+      "status_code": 200,
+      "request_id": "AFfiZRqYNaO5glvqPDmj",
+      "character-cost": 10
+    }
+  ],
+  "tool_result": {
+    "success": true,
+    "data": {
+      "provider": "elevenlabs",
+      "model": "eleven_v3",
+      "voice_id": "bajNon13EdhNMndG3z05",
+      "voice_settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 1.0,
+        "use_speaker_boost": true
+      },
+      "text_length": 44,
+      "output": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/mr-near-miss.wav",
+      "format": "pcm_16000",
+      "request_id": "AFfiZRqYNaO5glvqPDmj",
+      "word_timestamps": [
+        {
+          "word": "टोकन",
+          "start": 0.0,
+          "end": 0.32
+        },
+        {
+          "word": "चारशे",
+          "start": 0.4,
+          "end": 0.747
+        },
+        {
+          "word": "त्रेचाळीस,",
+          "start": 0.773,
+          "end": 1.68
+        },
+        {
+          "word": "कृपया",
+          "start": 1.72,
+          "end": 2.0
+        },
+        {
+          "word": "काउंटर",
+          "start": 2.08,
+          "end": 2.56
+        },
+        {
+          "word": "तीनवर",
+          "start": 2.6,
+          "end": 2.88
+        },
+        {
+          "word": "या.",
+          "start": 2.92,
+          "end": 3.2
+        }
+      ],
+      "alignment_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/mr-near-miss.wav.alignment.json",
+      "alignment_matches_text": true,
+      "cost_status": "estimated"
+    },
+    "artifacts": [
+      "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/mr-near-miss.wav",
+      "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/mr-near-miss.wav.alignment.json"
+    ],
+    "error": null,
+    "cost_usd": 0.0132,
+    "duration_seconds": 2.16,
+    "seed": null,
+    "model": "eleven_v3",
+    "from_cache": false
+  }
+}

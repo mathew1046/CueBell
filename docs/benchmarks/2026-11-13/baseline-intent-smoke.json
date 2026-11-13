@@ -1,0 +1,33 @@
+{
+  "test": "baseline_intent_smoke",
+  "elapsed_ms": 6791.132,
+  "status_code": 200,
+  "body": {
+    "status": "confirm",
+    "proposal_id": "614e537d0e3c48d180fca80cc08da9c1",
+    "intent": {
+      "intent": "monitor_event",
+      "context": null,
+      "token": null,
+      "alert_preferences": [
+        "visual",
+        "vibration",
+        "sound"
+      ],
+      "clarification": null,
+      "target_evidence": null,
+      "task": {
+        "subject": "pharmacy token 442",
+        "condition": "A spoken announcement calls token 442.",
+        "summary": "Pharmacy token 442 called",
+        "request_evidence": "pharmacy token 442 is called",
+        "identifiers": [
+          {
+            "value": "442",
+            "evidence_text": "442"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "python": "3.12.14 (main, Sep  2 2026, 23:27:36) [GCC 15.3.0]",
+  "platform": "Linux-7.3.1-1-cachyos-x86_64-with-glibc2.44",
+  "machine": "x86_64",
+  "cpu": "AMD Ryzen 7 4800H with Radeon Graphics",
+  "packages": {
+    "openai": "2.54.0",
+    "fastapi": "0.162.0",
+    "uvicorn": "0.54.0",
+    "websockets": "16.1.1",
+    "httpx": "0.28.1",
+    "pydantic": "2.14.3"
+  },
+  "clock": "CLOCK_MONOTONIC on one Linux host",
+  "clock_resolution_seconds": 1e-09,
+  "physical_android_device": false,
+  "audio_format": "PCM16LE mono 16000 Hz, 512 samples/1024 bytes per 32 ms frame",
+  "noise_processing": false,
+  "openai_endpoint_host_from_environment": "api.openai.com",
+  "openai_base_url_override_present": false
+}

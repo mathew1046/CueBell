@@ -1,0 +1,8 @@
+{
+  "tier": "payg",
+  "character_count": 8037,
+  "character_limit": 10000,
+  "can_extend_character_limit": false,
+  "next_character_count_reset_unix": 1796660125,
+  "remaining_characters": 1963
+}

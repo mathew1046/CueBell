@@ -1,0 +1,2771 @@
+{
+  "variants": [
+    {
+      "trace": "/home/mathew/Arrakis/CueBell/docs/benchmarks/2026-11-13/baseline-intent-smoke-server.jsonl",
+      "settings": {
+        "gnani_language_code": "indic-auto",
+        "openai_model": "gpt-6-luna",
+        "allow_app_sessions": false,
+        "allow_insecure_local": true,
+        "max_sessions": 8,
+        "session_ttl_seconds": 14400,
+        "correction_grace_seconds": 1.2,
+        "request_pause_seconds": 3.5,
+        "request_timeout_seconds": 90.0
+      },
+      "openai_requests_attempted": 1,
+      "openai_responses": 1,
+      "openai_errors": [],
+      "openai_error_types": {},
+      "openai_unfinished_requests": [],
+      "openai_response_ms": {
+        "count": 1,
+        "p50": 6488.722,
+        "p95": 6488.722,
+        "max": 6488.722
+      },
+      "openai_terminated_attempt_ms": {
+        "count": 1,
+        "p50": 6488.722,
+        "p95": 6488.722,
+        "max": 6488.722
+      },
+      "openai_error_ms": {
+        "count": 0
+      },
+      "openai_response_statuses": {
+        "completed": 1
+      },
+      "latency_population_note": "Response latency includes returned SDK responses only, not failed or cancelled calls. Terminated-attempt latency includes recorded error durations. Unfinished calls are counted separately; no zero duration or successful outcome is imputed to them. A returned response does not by itself establish a valid task decision.",
+      "interpretation_ms": {
+        "intent": {
+          "count": 1,
+          "p50": 6788.939,
+          "p95": 6788.939,
+          "max": 6788.939
+        }
+      },
+      "interpretation_terminated_attempt_ms": {
+        "intent": {
+          "count": 1,
+          "p50": 6788.939,
+          "p95": 6788.939,
+          "max": 6788.939
+        }
+      },
+      "returned_service_tiers": {
+        "default": 1
+      },
+      "returned_models": {
+        "gpt-6-luna": 1
+      },
+      "tokens": {
+        "input": 1258,
+        "output": 215,
+        "cached_input": 0,
+        "cache_written_input": 1255,
+        "reasoning_output": 68
+      },
+      "cached_input_share_of_recorded_responses": 0.0,
+      "openai_reference_cost_usd": 0.000265,
+      "cost_status": "Estimate from published Luna rates and returned token usage, not an invoice; failed and cancelled calls may be billable without recorded usage. Cache shares describe these responses, not an isolated cold-cache experiment.",
+      "gnani_streams": 0,
+      "gnani_audio_seconds": 0,
+      "gnani_connection_seconds": 0.0,
+      "gnani_provider_latency_ms": {
+        "count": 0
+      },
+      "gnani_transcripts": 0,
+      "gnani_send_max_ms": null
+    },
+    {
+      "trace": "/home/mathew/Arrakis/CueBell/docs/benchmarks/2026-11-13/baseline-server.jsonl",
+      "settings": {
+        "gnani_language_code": "indic-auto",
+        "openai_model": "gpt-6-luna",
+        "allow_app_sessions": false,
+        "allow_insecure_local": true,
+        "max_sessions": 8,
+        "session_ttl_seconds": 14400,
+        "correction_grace_seconds": 1.2,
+        "request_pause_seconds": 3.5,
+        "request_timeout_seconds": 90.0
+      },
+      "openai_requests_attempted": 8,
+      "openai_responses": 7,
+      "openai_errors": [],
+      "openai_error_types": {},
+      "openai_unfinished_requests": [
+        {
+          "event": "openai_request",
+          "monotonic_s": 1465.734837567,
+          "wall_time": "2026-11-13T16:13:08.321688+00:00",
+          "call_id": "b02e77cf5fca47488a31d4170e2d5c7c",
+          "interpretation_id": "cb1eee74cda942feb5c20610ee2e1db7",
+          "stage": "observe",
+          "model": "gpt-6-luna",
+          "reasoning": null,
+          "service_tier": null,
+          "max_output_tokens": 2000,
+          "text_options": null,
+          "prompt_cache_options": null,
+          "input_chars": 4676,
+          "input_sha256": "f421ef80658b8ed98205e13a71bdaea322812a7478c483e5dfa797123f7cb942"
+        }
+      ],
+      "openai_response_ms": {
+        "count": 7,
+        "p50": 4742.422,
+        "p95": 7902.874,
+        "max": 8098.402
+      },
+      "openai_terminated_attempt_ms": {
+        "count": 7,
+        "p50": 4742.422,
+        "p95": 7902.874,
+        "max": 8098.402
+      },
+      "openai_error_ms": {
+        "count": 0
+      },
+      "openai_response_statuses": {
+        "completed": 7
+      },
+      "latency_population_note": "Response latency includes returned SDK responses only, not failed or cancelled calls. Terminated-attempt latency includes recorded error durations. Unfinished calls are counted separately; no zero duration or successful outcome is imputed to them. A returned response does not by itself establish a valid task decision.",
+      "interpretation_ms": {
+        "intent": {
+          "count": 3,
+          "p50": 3590.968,
+          "p95": 3711.575,
+          "max": 3724.976
+        },
+        "observe": {
+          "count": 4,
+          "p50": 6571.784,
+          "p95": 8000.829,
+          "max": 8098.592
+        }
+      },
+      "interpretation_terminated_attempt_ms": {
+        "intent": {
+          "count": 3,
+          "p50": 3590.968,
+          "p95": 3711.575,
+          "max": 3724.976
+        },
+        "observe": {
+          "count": 4,
+          "p50": 6571.784,
+          "p95": 8000.829,
+          "max": 8098.592
+        }
+      },
+      "returned_service_tiers": {
+        "default": 7
+      },
+      "returned_models": {
+        "gpt-6-luna": 7
+      },
+      "tokens": {
+        "input": 9208,
+        "output": 2916,
+        "cached_input": 7215,
+        "cache_written_input": 1972,
+        "reasoning_output": 1659
+      },
+      "cached_input_share_of_recorded_responses": 0.783558,
+      "openai_reference_cost_usd": 0.001779,
+      "cost_status": "Estimate from published Luna rates and returned token usage, not an invoice; failed and cancelled calls may be billable without recorded usage. Cache shares describe these responses, not an isolated cold-cache experiment.",
+      "gnani_streams": 3,
+      "gnani_audio_seconds": 72.8,
+      "gnani_connection_seconds": 78.118,
+      "gnani_provider_latency_ms": {
+        "count": 5,
+        "p50": 126.0,
+        "p95": 176.8,
+        "max": 185
+      },
+      "gnani_transcripts": 5,
+      "gnani_send_max_ms": 0.6045939999239636
+    },
+    {
+      "trace": "/home/mathew/Arrakis/CueBell/docs/benchmarks/2026-11-13/contract-probes-server.jsonl",
+      "settings": null,
+      "openai_requests_attempted": 4,
+      "openai_responses": 4,
+      "openai_errors": [],
+      "openai_error_types": {},
+      "openai_unfinished_requests": [],
+      "openai_response_ms": {
+        "count": 4,
+        "p50": 2193.166,
+        "p95": 6118.255,
+        "max": 6781.401
+      },
+      "openai_terminated_attempt_ms": {
+        "count": 4,
+        "p50": 2193.166,
+        "p95": 6118.255,
+        "max": 6781.401
+      },
+      "openai_error_ms": {
+        "count": 0
+      },
+      "openai_response_statuses": {
+        "completed": 4
+      },
+      "latency_population_note": "Response latency includes returned SDK responses only, not failed or cancelled calls. Terminated-attempt latency includes recorded error durations. Unfinished calls are counted separately; no zero duration or successful outcome is imputed to them. A returned response does not by itself establish a valid task decision.",
+      "interpretation_ms": {
+        "intent": {
+          "count": 4,
+          "p50": 2193.344,
+          "p95": 6118.65,
+          "max": 6781.839
+        }
+      },
+      "interpretation_terminated_attempt_ms": {
+        "intent": {
+          "count": 4,
+          "p50": 2193.344,
+          "p95": 6118.65,
+          "max": 6781.839
+        }
+      },
+      "returned_service_tiers": {
+        "default": 2,
+        "fast": 2
+      },
+      "returned_models": {
+        "gpt-6-luna": 4
+      },
+      "tokens": {
+        "input": 5032,
+        "output": 615,
+        "cached_input": 0,
+        "cache_written_input": 5020,
+        "reasoning_output": 198
+      },
+      "cached_input_share_of_recorded_responses": 0.0,
+      "openai_reference_cost_usd": 0.001425,
+      "cost_status": "Estimate from published Luna rates and returned token usage, not an invoice; failed and cancelled calls may be billable without recorded usage. Cache shares describe these responses, not an isolated cold-cache experiment.",
+      "gnani_streams": 0,
+      "gnani_audio_seconds": 0,
+      "gnani_connection_seconds": 0.0,
+      "gnani_provider_latency_ms": {
+        "count": 0
+      },
+      "gnani_transcripts": 0,
+      "gnani_send_max_ms": null
+    },
+    {
+      "trace": "/home/mathew/Arrakis/CueBell/docs/benchmarks/2026-11-13/full-v1-baseline-server.jsonl",
+      "settings": {
+        "gnani_language_code": "indic-auto",
+        "openai_model": "gpt-6-luna",
+        "allow_app_sessions": false,
+        "allow_insecure_local": true,
+        "max_sessions": 8,
+        "session_ttl_seconds": 14400,
+        "correction_grace_seconds": 1.2,
+        "request_pause_seconds": 3.5,
+        "request_timeout_seconds": 90.0
+      },
+      "openai_requests_attempted": 69,
+      "openai_responses": 66,
+      "openai_errors": [
+        {
+          "event": "openai_error",
+          "monotonic_s": 2660.092264879,
+          "wall_time": "2026-11-13T16:33:02.679119+00:00",
+          "call_id": "9c81a66e6db8421aa85434ad6ac81ffc",
+          "interpretation_id": "c29138aafc6849e9a8c1fad8bd5c0192",
+          "stage": "observe",
+          "elapsed_ms": 6248.754577999989,
+          "error_type": "APIConnectionError",
+          "error": "Connection error."
+        },
+        {
+          "event": "openai_error",
+          "monotonic_s": 2984.648665955,
+          "wall_time": "2026-11-13T16:38:27.235520+00:00",
+          "call_id": "3a69d032a67a4c79b64cc4e22efdd107",
+          "interpretation_id": "9906869c52ee440faa126498559c0594",
+          "stage": "observe",
+          "elapsed_ms": 12004.502262999722,
+          "error_type": "APITimeoutError",
+          "error": "Request timed out."
+        },
+        {
+          "event": "openai_error",
+          "monotonic_s": 3016.664319063,
+          "wall_time": "2026-11-13T16:38:59.251174+00:00",
+          "call_id": "4f69ee7120614d7e86eeae94034baf4c",
+          "interpretation_id": "3528107d36034f809f038dd14ef6c54e",
+          "stage": "observe",
+          "elapsed_ms": 12004.275237999991,
+          "error_type": "APITimeoutError",
+          "error": "Request timed out."
+        }
+      ],
+      "openai_error_types": {
+        "APIConnectionError": 1,
+        "APITimeoutError": 2
+      },
+      "openai_unfinished_requests": [],
+      "openai_response_ms": {
+        "count": 66,
+        "p50": 3564.974,
+        "p95": 7923.797,
+        "max": 10242.175
+      },
+      "openai_terminated_attempt_ms": {
+        "count": 69,
+        "p50": 3673.715,
+        "p95": 8906.845,
+        "max": 12004.502
+      },
+      "openai_error_ms": {
+        "count": 3,
+        "p50": 12004.275,
+        "p95": 12004.48,
+        "max": 12004.502
+      },
+      "openai_response_statuses": {
+        "completed": 66
+      },
+      "latency_population_note": "Response latency includes returned SDK responses only, not failed or cancelled calls. Terminated-attempt latency includes recorded error durations. Unfinished calls are counted separately; no zero duration or successful outcome is imputed to them. A returned response does not by itself establish a valid task decision.",
+      "interpretation_ms": {
+        "intent": {
+          "count": 28,
+          "p50": 3376.858,
+          "p95": 6830.732,
+          "max": 9178.906
+        },
+        "observe": {
+          "count": 38,
+          "p50": 4429.409,
+          "p95": 8221.611,
+          "max": 10242.419
+        }
+      },
+      "interpretation_terminated_attempt_ms": {
+        "intent": {
+          "count": 28,
+          "p50": 3376.858,
+          "p95": 6830.732,
+          "max": 9178.906
+        },
+        "observe": {
+          "count": 41,
+          "p50": 4718.111,
+          "p95": 10242.419,
+          "max": 12004.712
+        }
+      },
+      "returned_service_tiers": {
+        "default": 66
+      },
+      "returned_models": {
+        "gpt-6-luna": 66
+      },
+      "tokens": {
+        "input": 87480,
+        "output": 18823,
+        "cached_input": 78840,
+        "cache_written_input": 8442,
+        "reasoning_output": 10589
+      },
+      "cached_input_share_of_recorded_responses": 0.901235,
+      "openai_reference_cost_usd": 0.011275,
+      "cost_status": "Estimate from published Luna rates and returned token usage, not an invoice; failed and cancelled calls may be billable without recorded usage. Cache shares describe these responses, not an isolated cold-cache experiment.",
+      "gnani_streams": 28,
+      "gnani_audio_seconds": 713.856,
+      "gnani_connection_seconds": 758.078,
+      "gnani_provider_latency_ms": {
+        "count": 43,
+        "p50": 114.0,
+        "p95": 253.0,
+        "max": 312
+      },
+      "gnani_transcripts": 43,
+      "gnani_send_max_ms": 3.137969999897905
+    },
+    {
+      "trace": "/home/mathew/Arrakis/CueBell/docs/benchmarks/2026-11-13/paired-v2-baseline-server.jsonl",
+      "settings": {
+        "gnani_language_code": "indic-auto",
+        "openai_model": "gpt-6-luna",
+        "allow_app_sessions": false,
+        "allow_insecure_local": true,
+        "max_sessions": 8,
+        "session_ttl_seconds": 14400,
+        "correction_grace_seconds": 1.2,
+        "request_pause_seconds": 3.5,
+        "request_timeout_seconds": 90.0
+      },
+      "openai_requests_attempted": 14,
+      "openai_responses": 14,
+      "openai_errors": [],
+      "openai_error_types": {},
+      "openai_unfinished_requests": [],
+      "openai_response_ms": {
+        "count": 14,
+        "p50": 4023.393,
+        "p95": 7207.469,
+        "max": 8117.831
+      },
+      "openai_terminated_attempt_ms": {
+        "count": 14,
+        "p50": 4023.393,
+        "p95": 7207.469,
+        "max": 8117.831
+      },
+      "openai_error_ms": {
+        "count": 0
+      },
+      "openai_response_statuses": {
+        "completed": 14
+      },
+      "latency_population_note": "Response latency includes returned SDK responses only, not failed or cancelled calls. Terminated-attempt latency includes recorded error durations. Unfinished calls are counted separately; no zero duration or successful outcome is imputed to them. A returned response does not by itself establish a valid task decision.",
+      "interpretation_ms": {
+        "intent": {
+          "count": 5,
+          "p50": 3653.11,
+          "p95": 4543.005,
+          "max": 4656.001
+        },
+        "observe": {
+          "count": 9,
+          "p50": 4597.283,
+          "p95": 7557.81,
+          "max": 8118.0
+        }
+      },
+      "interpretation_terminated_attempt_ms": {
+        "intent": {
+          "count": 5,
+          "p50": 3653.11,
+          "p95": 4543.005,
+          "max": 4656.001
+        },
+        "observe": {
+          "count": 9,
+          "p50": 4597.283,
+          "p95": 7557.81,
+          "max": 8118.0
+        }
+      },
+      "returned_service_tiers": {
+        "default": 14
+      },
+      "returned_models": {
+        "gpt-6-luna": 14
+      },
+      "tokens": {
+        "input": 19149,
+        "output": 4028,
+        "cached_input": 16625,
+        "cache_written_input": 2482,
+        "reasoning_output": 2327
+      },
+      "cached_input_share_of_recorded_responses": 0.868192,
+      "openai_reference_cost_usd": 0.002495,
+      "cost_status": "Estimate from published Luna rates and returned token usage, not an invoice; failed and cancelled calls may be billable without recorded usage. Cache shares describe these responses, not an isolated cold-cache experiment.",
+      "gnani_streams": 5,
+      "gnani_audio_seconds": 136.928,
+      "gnani_connection_seconds": 144.517,
+      "gnani_provider_latency_ms": {
+        "count": 9,
+        "p50": 86.0,
+        "p95": 174.8,
+        "max": 202
+      },
+      "gnani_transcripts": 9,
+      "gnani_send_max_ms": 1.349735999610857
+    },
+    {
+      "trace": "/home/mathew/Arrakis/CueBell/docs/benchmarks/2026-11-13/paired-v2-fast-orchestrated-server.jsonl",
+      "settings": {
+        "gnani_language_code": "indic-auto",
+        "gnani_min_silence_ms": null,
+        "gnani_vad_threshold": null,
+        "gnani_min_speech_ms": null,
+        "gnani_min_segment_ms": null,
+        "gnani_max_speech_s": null,
+        "openai_model": "gpt-6-luna",
+        "openai_reasoning_effort": null,
+        "openai_service_tier": "fast",
+        "openai_verbosity": null,
+        "openai_prompt_cache_mode": null,
+        "openai_prompt_cache_ttl": null,
+        "openai_compact_input": false,
+        "openai_verbatim_location_hint": false,
+        "openai_max_output_tokens": 2000,
+        "optimized_scheduling": true,
+        "outbound_writer": true,
+        "outbound_queue_size": 64,
+        "allow_app_sessions": false,
+        "allow_insecure_local": true,
+        "max_sessions": 8,
+        "session_ttl_seconds": 14400,
+        "correction_grace_seconds": 1.2,
+        "request_pause_seconds": 1.5,
+        "request_speech_aware_completion": true,
+        "request_timeout_seconds": 90.0
+      },
+      "openai_requests_attempted": 14,
+      "openai_responses": 14,
+      "openai_errors": [],
+      "openai_error_types": {},
+      "openai_unfinished_requests": [],
+      "openai_response_ms": {
+        "count": 14,
+        "p50": 2343.581,
+        "p95": 5241.446,
+        "max": 5329.723
+      },
+      "openai_terminated_attempt_ms": {
+        "count": 14,
+        "p50": 2343.581,
+        "p95": 5241.446,
+        "max": 5329.723
+      },
+      "openai_error_ms": {
+        "count": 0
+      },
+      "openai_response_statuses": {
+        "completed": 14
+      },
+      "latency_population_note": "Response latency includes returned SDK responses only, not failed or cancelled calls. Terminated-attempt latency includes recorded error durations. Unfinished calls are counted separately; no zero duration or successful outcome is imputed to them. A returned response does not by itself establish a valid task decision.",
+      "interpretation_ms": {
+        "intent": {
+          "count": 5,
+          "p50": 2874.052,
+          "p95": 5012.789,
+          "max": 5330.08
+        },
+        "observe": {
+          "count": 9,
+          "p50": 2294.476,
+          "p95": 5163.175,
+          "max": 5194.083
+        }
+      },
+      "interpretation_terminated_attempt_ms": {
+        "intent": {
+          "count": 5,
+          "p50": 2874.052,
+          "p95": 5012.789,
+          "max": 5330.08
+        },
+        "observe": {
+          "count": 9,
+          "p50": 2294.476,
+          "p95": 5163.175,
+          "max": 5194.083
+        }
+      },
+      "returned_service_tiers": {
+        "fast": 14
+      },
+      "returned_models": {
+        "gpt-6-luna": 14
+      },
+      "tokens": {
+        "input": 18963,
+        "output": 4592,
+        "cached_input": 16625,
+        "cache_written_input": 2296,
+        "reasoning_output": 2891
+      },
+      "cached_input_share_of_recorded_responses": 0.876707,
+      "openai_reference_cost_usd": 0.005507,
+      "cost_status": "Estimate from published Luna rates and returned token usage, not an invoice; failed and cancelled calls may be billable without recorded usage. Cache shares describe these responses, not an isolated cold-cache experiment.",
+      "gnani_streams": 5,
+      "gnani_audio_seconds": 133.024,
+      "gnani_connection_seconds": 141.852,
+      "gnani_provider_latency_ms": {
+        "count": 9,
+        "p50": 92.0,
+        "p95": 160.0,
+        "max": 168
+      },
+      "gnani_transcripts": 9,
+      "gnani_send_max_ms": 3.356915000040317
+    },
+    {
+      "trace": "/home/mathew/Arrakis/CueBell/docs/benchmarks/2026-11-13/screen-v1-baseline-server.jsonl",
+      "settings": {
+        "gnani_language_code": "indic-auto",
+        "openai_model": "gpt-6-luna",
+        "allow_app_sessions": false,
+        "allow_insecure_local": true,
+        "max_sessions": 8,
+        "session_ttl_seconds": 14400,
+        "correction_grace_seconds": 1.2,
+        "request_pause_seconds": 3.5,
+        "request_timeout_seconds": 90.0
+      },
+      "openai_requests_attempted": 16,
+      "openai_responses": 16,
+      "openai_errors": [],
+      "openai_error_types": {},
+      "openai_unfinished_requests": [],
+      "openai_response_ms": {
+        "count": 16,
+        "p50": 3800.719,
+        "p95": 7237.478,
+        "max": 7238.377
+      },
+      "openai_terminated_attempt_ms": {
+        "count": 16,
+        "p50": 3800.719,
+        "p95": 7237.478,
+        "max": 7238.377
+      },
+      "openai_error_ms": {
+        "count": 0
+      },
+      "openai_response_statuses": {
+        "completed": 16
+      },
+      "latency_population_note": "Response latency includes returned SDK responses only, not failed or cancelled calls. Terminated-attempt latency includes recorded error durations. Unfinished calls are counted separately; no zero duration or successful outcome is imputed to them. A returned response does not by itself establish a valid task decision.",
+      "interpretation_ms": {
+        "intent": {
+          "count": 6,
+          "p50": 3687.974,
+          "p95": 3829.86,
+          "max": 3858.749
+        },
+        "observe": {
+          "count": 10,
+          "p50": 4496.972,
+          "p95": 7238.062,
+          "max": 7238.584
+        }
+      },
+      "interpretation_terminated_attempt_ms": {
+        "intent": {
+          "count": 6,
+          "p50": 3687.974,
+          "p95": 3829.86,
+          "max": 3858.749
+        },
+        "observe": {
+          "count": 10,
+          "p50": 4496.972,
+          "p95": 7238.062,
+          "max": 7238.584
+        }
+      },
+      "returned_service_tiers": {
+        "default": 16
+      },
+      "returned_models": {
+        "gpt-6-luna": 16
+      },
+      "tokens": {
+        "input": 21614,
+        "output": 5116,
+        "cached_input": 19030,
+        "cache_written_input": 2536,
+        "reasoning_output": 2886
+      },
+      "cached_input_share_of_recorded_responses": 0.880448,
+      "openai_reference_cost_usd": 0.00307,
+      "cost_status": "Estimate from published Luna rates and returned token usage, not an invoice; failed and cancelled calls may be billable without recorded usage. Cache shares describe these responses, not an isolated cold-cache experiment.",
+      "gnani_streams": 6,
+      "gnani_audio_seconds": 152.544,
+      "gnani_connection_seconds": 161.662,
+      "gnani_provider_latency_ms": {
+        "count": 10,
+        "p50": 111.5,
+        "p95": 166.35,
+        "max": 183
+      },
+      "gnani_transcripts": 10,
+      "gnani_send_max_ms": 0.8522309999534627
+    },
+    {
+      "trace": "/home/mathew/Arrakis/CueBell/docs/benchmarks/2026-11-13/screen-v1-compact-server.jsonl",
+      "settings": {
+        "gnani_language_code": "indic-auto",
+        "gnani_min_silence_ms": null,
+        "gnani_vad_threshold": null,
+        "gnani_min_speech_ms": null,
+        "gnani_min_segment_ms": null,
+        "gnani_max_speech_s": null,
+        "openai_model": "gpt-6-luna",
+        "openai_reasoning_effort": null,
+        "openai_service_tier": null,
+        "openai_verbosity": null,
+        "openai_prompt_cache_mode": null,
+        "openai_prompt_cache_ttl": null,
+        "openai_compact_input": true,
+        "openai_verbatim_location_hint": false,
+        "openai_max_output_tokens": 2000,
+        "optimized_scheduling": false,
+        "outbound_writer": false,
+        "outbound_queue_size": 64,
+        "allow_app_sessions": false,
+        "allow_insecure_local": true,
+        "max_sessions": 8,
+        "session_ttl_seconds": 14400,
+        "correction_grace_seconds": 1.2,
+        "request_pause_seconds": 3.5,
+        "request_timeout_seconds": 90.0
+      },
+      "openai_requests_attempted": 16,
+      "openai_responses": 16,
+      "openai_errors": [],
+      "openai_error_types": {},
+      "openai_unfinished_requests": [],
+      "openai_response_ms": {
+        "count": 16,
+        "p50": 3927.598,
+        "p95": 8396.868,
+        "max": 11707.633
+      },
+      "openai_terminated_attempt_ms": {
+        "count": 16,
+        "p50": 3927.598,
+        "p95": 8396.868,
+        "max": 11707.633
+      },
+      "openai_error_ms": {
+        "count": 0
+      },
+      "openai_response_statuses": {
+        "completed": 16
+      },
+      "latency_population_note": "Response latency includes returned SDK responses only, not failed or cancelled calls. Terminated-attempt latency includes recorded error durations. Unfinished calls are counted separately; no zero duration or successful outcome is imputed to them. A returned response does not by itself establish a valid task decision.",
+      "interpretation_ms": {
+        "intent": {
+          "count": 6,
+          "p50": 3469.649,
+          "p95": 9859.48,
+          "max": 11707.892
+        },
+        "observe": {
+          "count": 10,
+          "p50": 4063.183,
+          "p95": 7176.053,
+          "max": 7293.524
+        }
+      },
+      "interpretation_terminated_attempt_ms": {
+        "intent": {
+          "count": 6,
+          "p50": 3469.649,
+          "p95": 9859.48,
+          "max": 11707.892
+        },
+        "observe": {
+          "count": 10,
+          "p50": 4063.183,
+          "p95": 7176.053,
+          "max": 7293.524
+        }
+      },
+      "returned_service_tiers": {
+        "default": 16
+      },
+      "returned_models": {
+        "gpt-6-luna": 16
+      },
+      "tokens": {
+        "input": 20313,
+        "output": 4213,
+        "cached_input": 19003,
+        "cache_written_input": 1262,
+        "reasoning_output": 2651
+      },
+      "cached_input_share_of_recorded_responses": 0.935509,
+      "openai_reference_cost_usd": 0.002459,
+      "cost_status": "Estimate from published Luna rates and returned token usage, not an invoice; failed and cancelled calls may be billable without recorded usage. Cache shares describe these responses, not an isolated cold-cache experiment.",
+      "gnani_streams": 6,
+      "gnani_audio_seconds": 166.208,
+      "gnani_connection_seconds": 176.502,
+      "gnani_provider_latency_ms": {
+        "count": 10,
+        "p50": 104.5,
+        "p95": 165.65,
+        "max": 176
+      },
+      "gnani_transcripts": 10,
+      "gnani_send_max_ms": 1.1502399997880275
+    },
+    {
+      "trace": "/home/mathew/Arrakis/CueBell/docs/benchmarks/2026-11-13/screen-v1-endpoint-300-server.jsonl",
+      "settings": {
+        "gnani_language_code": "indic-auto",
+        "gnani_min_silence_ms": 300,
+        "gnani_vad_threshold": null,
+        "gnani_min_speech_ms": null,
+        "gnani_min_segment_ms": null,
+        "gnani_max_speech_s": null,
+        "openai_model": "gpt-6-luna",
+        "openai_reasoning_effort": null,
+        "openai_service_tier": null,
+        "openai_verbosity": null,
+        "openai_prompt_cache_mode": null,
+        "openai_prompt_cache_ttl": null,
+        "openai_compact_input": false,
+        "openai_verbatim_location_hint": false,
+        "openai_max_output_tokens": 2000,
+        "optimized_scheduling": false,
+        "outbound_writer": false,
+        "outbound_queue_size": 64,
+        "allow_app_sessions": false,
+        "allow_insecure_local": true,
+        "max_sessions": 8,
+        "session_ttl_seconds": 14400,
+        "correction_grace_seconds": 1.2,
+        "request_pause_seconds": 3.5,
+        "request_timeout_seconds": 90.0
+      },
+      "openai_requests_attempted": 10,
+      "openai_responses": 6,
+      "openai_errors": [
+        {
+          "event": "openai_error",
+          "monotonic_s": 3146.3568621,
+          "wall_time": "2026-11-13T16:41:08.943717+00:00",
+          "call_id": "bacdc06747bd441f81966a9a9eab5563",
+          "interpretation_id": "02b087d4b6d04ddf9beadc196de67c01",
+          "stage": "observe",
+          "elapsed_ms": 12004.53312899981,
+          "error_type": "APITimeoutError",
+          "error": "Request timed out."
+        },
+        {
+          "event": "openai_error",
+          "monotonic_s": 3159.692076166,
+          "wall_time": "2026-11-13T16:41:22.278930+00:00",
+          "call_id": "38a93f48862348bcb19bc9f2e01a9117",
+          "interpretation_id": "8dd8134aeba649c5b9c47dd262c7c4cc",
+          "stage": "intent",
+          "elapsed_ms": 12152.298777999931,
+          "error_type": "APITimeoutError",
+          "error": "Request timed out."
+        },
+        {
+          "event": "openai_error",
+          "monotonic_s": 3171.904257997,
+          "wall_time": "2026-11-13T16:41:34.491112+00:00",
+          "call_id": "bd1999f7525e4d16a1a534d236258428",
+          "interpretation_id": "b6cda6c8100644ce94280fdfa7c45b30",
+          "stage": "intent",
+          "elapsed_ms": 12204.987757000254,
+          "error_type": "APITimeoutError",
+          "error": "Request timed out."
+        },
+        {
+          "event": "openai_error",
+          "monotonic_s": 3175.513016035,
+          "wall_time": "2026-11-13T16:41:38.099870+00:00",
+          "call_id": "9219b154091341259b89baae19a6ff21",
+          "interpretation_id": "70ecd643917b40f0b2b1bd9b236a6ddc",
+          "stage": "intent",
+          "elapsed_ms": 3601.043832000414,
+          "error_type": "InternalServerError",
+          "error": "Error code: 520 - {'type': 'https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-520/', 'title': 'Error 520: Web server is returning an unknown error', 'status': 520, 'detail': 'The origin web server sent a response that Cloudflare could not parse. This may indicate the origin returned an empty response, malformed HTTP headers, or an otherwise invalid response.', 'instance': 'a59f398749261194', 'error_code': 520, 'error_name': 'unknown_origin_error', 'error_category': 'origin', 'ray_id': 'a59f398749261194', 'timestamp': '2026-11-13T16:41:37Z', 'zone': 'api.openai.com', 'cloudflare_error': True, 'retryable': True, 'retry_after': 60, 'owner_action_required': True, 'what_you_should_do': '**Wait and retry.** Back off for at least 60 seconds. If the error persists, the website operator should check the origin server error logs and submit them to Cloudflare support.', 'footer': 'This error was generated by Cloudflare on behalf of the website owner.'}"
+        }
+      ],
+      "openai_error_types": {
+        "APITimeoutError": 3,
+        "InternalServerError": 1
+      },
+      "openai_unfinished_requests": [],
+      "openai_response_ms": {
+        "count": 6,
+        "p50": 3452.015,
+        "p95": 5855.518,
+        "max": 6567.371
+      },
+      "openai_terminated_attempt_ms": {
+        "count": 10,
+        "p50": 3660.501,
+        "p95": 12181.278,
+        "max": 12204.988
+      },
+      "openai_error_ms": {
+        "count": 4,
+        "p50": 12078.416,
+        "p95": 12197.084,
+        "max": 12204.988
+      },
+      "openai_response_statuses": {
+        "completed": 6
+      },
+      "latency_population_note": "Response latency includes returned SDK responses only, not failed or cancelled calls. Terminated-attempt latency includes recorded error durations. Unfinished calls are counted separately; no zero duration or successful outcome is imputed to them. A returned response does not by itself establish a valid task decision.",
+      "interpretation_ms": {
+        "intent": {
+          "count": 3,
+          "p50": 3332.612,
+          "p95": 3901.679,
+          "max": 3964.908
+        },
+        "observe": {
+          "count": 3,
+          "p50": 3571.959,
+          "p95": 6268.029,
+          "max": 6567.593
+        }
+      },
+      "interpretation_terminated_attempt_ms": {
+        "intent": {
+          "count": 6,
+          "p50": 3783.107,
+          "p95": 12192.052,
+          "max": 12205.218
+        },
+        "observe": {
+          "count": 4,
+          "p50": 5069.776,
+          "p95": 11189.189,
+          "max": 12004.765
+        }
+      },
+      "returned_service_tiers": {
+        "default": 6
+      },
+      "returned_models": {
+        "gpt-6-luna": 6
+      },
+      "tokens": {
+        "input": 7830,
+        "output": 1516,
+        "cached_input": 7215,
+        "cache_written_input": 597,
+        "reasoning_output": 757
+      },
+      "cached_input_share_of_recorded_responses": 0.921456,
+      "openai_reference_cost_usd": 0.000907,
+      "cost_status": "Estimate from published Luna rates and returned token usage, not an invoice; failed and cancelled calls may be billable without recorded usage. Cache shares describe these responses, not an isolated cold-cache experiment.",
+      "gnani_streams": 3,
+      "gnani_audio_seconds": 74.528,
+      "gnani_connection_seconds": 79.486,
+      "gnani_provider_latency_ms": {
+        "count": 5,
+        "p50": 106.0,
+        "p95": 116.8,
+        "max": 118
+      },
+      "gnani_transcripts": 5,
+      "gnani_send_max_ms": 0.9209589998135925
+    },
+    {
+      "trace": "/home/mathew/Arrakis/CueBell/docs/benchmarks/2026-11-13/screen-v1-endpoint-350-server.jsonl",
+      "settings": {
+        "gnani_language_code": "indic-auto",
+        "gnani_min_silence_ms": 350,
+        "gnani_vad_threshold": null,
+        "gnani_min_speech_ms": null,
+        "gnani_min_segment_ms": null,
+        "gnani_max_speech_s": null,
+        "openai_model": "gpt-6-luna",
+        "openai_reasoning_effort": null,
+        "openai_service_tier": null,
+        "openai_verbosity": null,
+        "openai_prompt_cache_mode": null,
+        "openai_prompt_cache_ttl": null,
+        "openai_compact_input": false,
+        "openai_verbatim_location_hint": false,
+        "openai_max_output_tokens": 2000,
+        "optimized_scheduling": false,
+        "outbound_writer": false,
+        "outbound_queue_size": 64,
+        "allow_app_sessions": false,
+        "allow_insecure_local": true,
+        "max_sessions": 8,
+        "session_ttl_seconds": 14400,
+        "correction_grace_seconds": 1.2,
+        "request_pause_seconds": 3.5,
+        "request_timeout_seconds": 90.0
+      },
+      "openai_requests_attempted": 18,
+      "openai_responses": 18,
+      "openai_errors": [],
+      "openai_error_types": {},
+      "openai_unfinished_requests": [],
+      "openai_response_ms": {
+        "count": 18,
+        "p50": 3341.214,
+        "p95": 7427.148,
+        "max": 7592.87
+      },
+      "openai_terminated_attempt_ms": {
+        "count": 18,
+        "p50": 3341.214,
+        "p95": 7427.148,
+        "max": 7592.87
+      },
+      "openai_error_ms": {
+        "count": 0
+      },
+      "openai_response_statuses": {
+        "completed": 18
+      },
+      "latency_population_note": "Response latency includes returned SDK responses only, not failed or cancelled calls. Terminated-attempt latency includes recorded error durations. Unfinished calls are counted separately; no zero duration or successful outcome is imputed to them. A returned response does not by itself establish a valid task decision.",
+      "interpretation_ms": {
+        "intent": {
+          "count": 6,
+          "p50": 3151.953,
+          "p95": 3799.944,
+          "max": 3853.762
+        },
+        "observe": {
+          "count": 12,
+          "p50": 3874.792,
+          "p95": 7485.896,
+          "max": 7593.157
+        }
+      },
+      "interpretation_terminated_attempt_ms": {
+        "intent": {
+          "count": 6,
+          "p50": 3151.953,
+          "p95": 3799.944,
+          "max": 3853.762
+        },
+        "observe": {
+          "count": 12,
+          "p50": 3874.792,
+          "p95": 7485.896,
+          "max": 7593.157
+        }
+      },
+      "returned_service_tiers": {
+        "default": 18
+      },
+      "returned_models": {
+        "gpt-6-luna": 18
+      },
+      "tokens": {
+        "input": 24677,
+        "output": 4568,
+        "cached_input": 21330,
+        "cache_written_input": 3293,
+        "reasoning_output": 2757
+      },
+      "cached_input_share_of_recorded_responses": 0.864368,
+      "openai_reference_cost_usd": 0.002914,
+      "cost_status": "Estimate from published Luna rates and returned token usage, not an invoice; failed and cancelled calls may be billable without recorded usage. Cache shares describe these responses, not an isolated cold-cache experiment.",
+      "gnani_streams": 6,
+      "gnani_audio_seconds": 151.328,
+      "gnani_connection_seconds": 161.869,
+      "gnani_provider_latency_ms": {
+        "count": 13,
+        "p50": 83.0,
+        "p95": 140.6,
+        "max": 143
+      },
+      "gnani_transcripts": 13,
+      "gnani_send_max_ms": 0.8647429999655287
+    },
+    {
+      "trace": "/home/mathew/Arrakis/CueBell/docs/benchmarks/2026-11-13/screen-v1-endpoint-400-server.jsonl",
+      "settings": {
+        "gnani_language_code": "indic-auto",
+        "gnani_min_silence_ms": 400,
+        "gnani_vad_threshold": null,
+        "gnani_min_speech_ms": null,
+        "gnani_min_segment_ms": null,
+        "gnani_max_speech_s": null,
+        "openai_model": "gpt-6-luna",
+        "openai_reasoning_effort": null,
+        "openai_service_tier": null,
+        "openai_verbosity": null,
+        "openai_prompt_cache_mode": null,
+        "openai_prompt_cache_ttl": null,
+        "openai_compact_input": false,
+        "openai_verbatim_location_hint": false,
+        "openai_max_output_tokens": 2000,
+        "optimized_scheduling": false,
+        "outbound_writer": false,
+        "outbound_queue_size": 64,
+        "allow_app_sessions": false,
+        "allow_insecure_local": true,
+        "max_sessions": 8,
+        "session_ttl_seconds": 14400,
+        "correction_grace_seconds": 1.2,
+        "request_pause_seconds": 3.5,
+        "request_timeout_seconds": 90.0
+      },
+      "openai_requests_attempted": 17,
+      "openai_responses": 17,
+      "openai_errors": [],
+      "openai_error_types": {},
+      "openai_unfinished_requests": [],
+      "openai_response_ms": {
+        "count": 17,
+        "p50": 3521.379,
+        "p95": 7259.9,
+        "max": 9779.728
+      },
+      "openai_terminated_attempt_ms": {
+        "count": 17,
+        "p50": 3521.379,
+        "p95": 7259.9,
+        "max": 9779.728
+      },
+      "openai_error_ms": {
+        "count": 0
+      },
+      "openai_response_statuses": {
+        "completed": 17
+      },
+      "latency_population_note": "Response latency includes returned SDK responses only, not failed or cancelled calls. Terminated-attempt latency includes recorded error durations. Unfinished calls are counted separately; no zero duration or successful outcome is imputed to them. A returned response does not by itself establish a valid task decision.",
+      "interpretation_ms": {
+        "intent": {
+          "count": 6,
+          "p50": 3434.704,
+          "p95": 3984.332,
+          "max": 4138.556
+        },
+        "observe": {
+          "count": 11,
+          "p50": 4599.873,
+          "p95": 8205.147,
+          "max": 9779.979
+        }
+      },
+      "interpretation_terminated_attempt_ms": {
+        "intent": {
+          "count": 6,
+          "p50": 3434.704,
+          "p95": 3984.332,
+          "max": 4138.556
+        },
+        "observe": {
+          "count": 11,
+          "p50": 4599.873,
+          "p95": 8205.147,
+          "max": 9779.979
+        }
+      },
+      "returned_service_tiers": {
+        "default": 17
+      },
+      "returned_models": {
+        "gpt-6-luna": 17
+      },
+      "tokens": {
+        "input": 23277,
+        "output": 5043,
+        "cached_input": 20180,
+        "cache_written_input": 3046,
+        "reasoning_output": 3070
+      },
+      "cached_input_share_of_recorded_responses": 0.86695,
+      "openai_reference_cost_usd": 0.003109,
+      "cost_status": "Estimate from published Luna rates and returned token usage, not an invoice; failed and cancelled calls may be billable without recorded usage. Cache shares describe these responses, not an isolated cold-cache experiment.",
+      "gnani_streams": 6,
+      "gnani_audio_seconds": 163.68,
+      "gnani_connection_seconds": 173.502,
+      "gnani_provider_latency_ms": {
+        "count": 11,
+        "p50": 90.0,
+        "p95": 134.5,
+        "max": 146
+      },
+      "gnani_transcripts": 11,
+      "gnani_send_max_ms": 0.7949700002427562
+    },
+    {
+      "trace": "/home/mathew/Arrakis/CueBell/docs/benchmarks/2026-11-13/screen-v1-explicit-cache-server.jsonl",
+      "settings": {
+        "gnani_language_code": "indic-auto",
+        "gnani_min_silence_ms": null,
+        "gnani_vad_threshold": null,
+        "gnani_min_speech_ms": null,
+        "gnani_min_segment_ms": null,
+        "gnani_max_speech_s": null,
+        "openai_model": "gpt-6-luna",
+        "openai_reasoning_effort": null,
+        "openai_service_tier": null,
+        "openai_verbosity": null,
+        "openai_prompt_cache_mode": "explicit",
+        "openai_prompt_cache_ttl": "30m",
+        "openai_compact_input": false,
+        "openai_verbatim_location_hint": false,
+        "openai_max_output_tokens": 2000,
+        "optimized_scheduling": false,
+        "outbound_writer": false,
+        "outbound_queue_size": 64,
+        "allow_app_sessions": false,
+        "allow_insecure_local": true,
+        "max_sessions": 8,
+        "session_ttl_seconds": 14400,
+        "correction_grace_seconds": 1.2,
+        "request_pause_seconds": 3.5,
+        "request_timeout_seconds": 90.0
+      },
+      "openai_requests_attempted": 16,
+      "openai_responses": 16,
+      "openai_errors": [],
+      "openai_error_types": {},
+      "openai_unfinished_requests": [],
+      "openai_response_ms": {
+        "count": 16,
+        "p50": 3955.648,
+        "p95": 8157.751,
+        "max": 11607.458
+      },
+      "openai_terminated_attempt_ms": {
+        "count": 16,
+        "p50": 3955.648,
+        "p95": 8157.751,
+        "max": 11607.458
+      },
+      "openai_error_ms": {
+        "count": 0
+      },
+      "openai_response_statuses": {
+        "completed": 16
+      },
+      "latency_population_note": "Response latency includes returned SDK responses only, not failed or cancelled calls. Terminated-attempt latency includes recorded error durations. Unfinished calls are counted separately; no zero duration or successful outcome is imputed to them. A returned response does not by itself establish a valid task decision.",
+      "interpretation_ms": {
+        "intent": {
+          "count": 6,
+          "p50": 3409.057,
+          "p95": 3986.812,
+          "max": 4017.677
+        },
+        "observe": {
+          "count": 10,
+          "p50": 5812.181,
+          "p95": 9537.869,
+          "max": 11607.69
+        }
+      },
+      "interpretation_terminated_attempt_ms": {
+        "intent": {
+          "count": 6,
+          "p50": 3409.057,
+          "p95": 3986.812,
+          "max": 4017.677
+        },
+        "observe": {
+          "count": 10,
+          "p50": 5812.181,
+          "p95": 9537.869,
+          "max": 11607.69
+        }
+      },
+      "returned_service_tiers": {
+        "default": 16
+      },
+      "returned_models": {
+        "gpt-6-luna": 16
+      },
+      "tokens": {
+        "input": 21770,
+        "output": 5494,
+        "cached_input": 19285,
+        "cache_written_input": 387,
+        "reasoning_output": 3061
+      },
+      "cached_input_share_of_recorded_responses": 0.885852,
+      "openai_reference_cost_usd": 0.003198,
+      "cost_status": "Estimate from published Luna rates and returned token usage, not an invoice; failed and cancelled calls may be billable without recorded usage. Cache shares describe these responses, not an isolated cold-cache experiment.",
+      "gnani_streams": 6,
+      "gnani_audio_seconds": 159.04,
+      "gnani_connection_seconds": 167.479,
+      "gnani_provider_latency_ms": {
+        "count": 10,
+        "p50": 101.0,
+        "p95": 167.25,
+        "max": 183
+      },
+      "gnani_transcripts": 10,
+      "gnani_send_max_ms": 1.663069999722211
+    },
+    {
+      "trace": "/home/mathew/Arrakis/CueBell/docs/benchmarks/2026-11-13/screen-v1-fast-server.jsonl",
+      "settings": {
+        "gnani_language_code": "indic-auto",
+        "gnani_min_silence_ms": null,
+        "gnani_vad_threshold": null,
+        "gnani_min_speech_ms": null,
+        "gnani_min_segment_ms": null,
+        "gnani_max_speech_s": null,
+        "openai_model": "gpt-6-luna",
+        "openai_reasoning_effort": null,
+        "openai_service_tier": "fast",
+        "openai_verbosity": null,
+        "openai_prompt_cache_mode": null,
+        "openai_prompt_cache_ttl": null,
+        "openai_compact_input": false,
+        "openai_verbatim_location_hint": false,
+        "openai_max_output_tokens": 2000,
+        "optimized_scheduling": false,
+        "outbound_writer": false,
+        "outbound_queue_size": 64,
+        "allow_app_sessions": false,
+        "allow_insecure_local": true,
+        "max_sessions": 8,
+        "session_ttl_seconds": 14400,
+        "correction_grace_seconds": 1.2,
+        "request_pause_seconds": 3.5,
+        "request_timeout_seconds": 90.0
+      },
+      "openai_requests_attempted": 16,
+      "openai_responses": 16,
+      "openai_errors": [],
+      "openai_error_types": {},
+      "openai_unfinished_requests": [],
+      "openai_response_ms": {
+        "count": 16,
+        "p50": 2066.907,
+        "p95": 5655.451,
+        "max": 8018.799
+      },
+      "openai_terminated_attempt_ms": {
+        "count": 16,
+        "p50": 2066.907,
+        "p95": 5655.451,
+        "max": 8018.799
+      },
+      "openai_error_ms": {
+        "count": 0
+      },
+      "openai_response_statuses": {
+        "completed": 16
+      },
+      "latency_population_note": "Response latency includes returned SDK responses only, not failed or cancelled calls. Terminated-attempt latency includes recorded error durations. Unfinished calls are counted separately; no zero duration or successful outcome is imputed to them. A returned response does not by itself establish a valid task decision.",
+      "interpretation_ms": {
+        "intent": {
+          "count": 6,
+          "p50": 1859.422,
+          "p95": 2329.514,
+          "max": 2467.865
+        },
+        "observe": {
+          "count": 10,
+          "p50": 2760.33,
+          "p95": 6601.018,
+          "max": 8019.028
+        }
+      },
+      "interpretation_terminated_attempt_ms": {
+        "intent": {
+          "count": 6,
+          "p50": 1859.422,
+          "p95": 2329.514,
+          "max": 2467.865
+        },
+        "observe": {
+          "count": 10,
+          "p50": 2760.33,
+          "p95": 6601.018,
+          "max": 8019.028
+        }
+      },
+      "returned_service_tiers": {
+        "fast": 16
+      },
+      "returned_models": {
+        "gpt-6-luna": 16
+      },
+      "tokens": {
+        "input": 21664,
+        "output": 6252,
+        "cached_input": 16625,
+        "cache_written_input": 4991,
+        "reasoning_output": 3942
+      },
+      "cached_input_share_of_recorded_responses": 0.767402,
+      "openai_reference_cost_usd": 0.007842,
+      "cost_status": "Estimate from published Luna rates and returned token usage, not an invoice; failed and cancelled calls may be billable without recorded usage. Cache shares describe these responses, not an isolated cold-cache experiment.",
+      "gnani_streams": 6,
+      "gnani_audio_seconds": 163.712,
+      "gnani_connection_seconds": 173.692,
+      "gnani_provider_latency_ms": {
+        "count": 10,
+        "p50": 103.0,
+        "p95": 165.45,
+        "max": 183
+      },
+      "gnani_transcripts": 10,
+      "gnani_send_max_ms": 0.840889999835781
+    },
+    {
+      "trace": "/home/mathew/Arrakis/CueBell/docs/benchmarks/2026-11-13/screen-v1-grace-600-server.jsonl",
+      "settings": {
+        "gnani_language_code": "indic-auto",
+        "gnani_min_silence_ms": null,
+        "gnani_vad_threshold": null,
+        "gnani_min_speech_ms": null,
+        "gnani_min_segment_ms": null,
+        "gnani_max_speech_s": null,
+        "openai_model": "gpt-6-luna",
+        "openai_reasoning_effort": null,
+        "openai_service_tier": null,
+        "openai_verbosity": null,
+        "openai_prompt_cache_mode": null,
+        "openai_prompt_cache_ttl": null,
+        "openai_compact_input": false,
+        "openai_verbatim_location_hint": false,
+        "openai_max_output_tokens": 2000,
+        "optimized_scheduling": false,
+        "outbound_writer": false,
+        "outbound_queue_size": 64,
+        "allow_app_sessions": false,
+        "allow_insecure_local": true,
+        "max_sessions": 8,
+        "session_ttl_seconds": 14400,
+        "correction_grace_seconds": 0.6,
+        "request_pause_seconds": 3.5,
+        "request_timeout_seconds": 90.0
+      },
+      "openai_requests_attempted": 16,
+      "openai_responses": 16,
+      "openai_errors": [],
+      "openai_error_types": {},
+      "openai_unfinished_requests": [],
+      "openai_response_ms": {
+        "count": 16,
+        "p50": 3590.047,
+        "p95": 7588.691,
+        "max": 8038.443
+      },
+      "openai_terminated_attempt_ms": {
+        "count": 16,
+        "p50": 3590.047,
+        "p95": 7588.691,
+        "max": 8038.443
+      },
+      "openai_error_ms": {
+        "count": 0
+      },
+      "openai_response_statuses": {
+        "completed": 16
+      },
+      "latency_population_note": "Response latency includes returned SDK responses only, not failed or cancelled calls. Terminated-attempt latency includes recorded error durations. Unfinished calls are counted separately; no zero duration or successful outcome is imputed to them. A returned response does not by itself establish a valid task decision.",
+      "interpretation_ms": {
+        "intent": {
+          "count": 6,
+          "p50": 3107.24,
+          "p95": 3755.476,
+          "max": 3790.696
+        },
+        "observe": {
+          "count": 10,
+          "p50": 5062.414,
+          "p95": 7768.823,
+          "max": 8038.668
+        }
+      },
+      "interpretation_terminated_attempt_ms": {
+        "intent": {
+          "count": 6,
+          "p50": 3107.24,
+          "p95": 3755.476,
+          "max": 3790.696
+        },
+        "observe": {
+          "count": 10,
+          "p50": 5062.414,
+          "p95": 7768.823,
+          "max": 8038.668
+        }
+      },
+      "returned_service_tiers": {
+        "default": 16
+      },
+      "returned_models": {
+        "gpt-6-luna": 16
+      },
+      "tokens": {
+        "input": 21683,
+        "output": 4969,
+        "cached_input": 19030,
+        "cache_written_input": 2605,
+        "reasoning_output": 2847
+      },
+      "cached_input_share_of_recorded_responses": 0.877646,
+      "openai_reference_cost_usd": 0.003005,
+      "cost_status": "Estimate from published Luna rates and returned token usage, not an invoice; failed and cancelled calls may be billable without recorded usage. Cache shares describe these responses, not an isolated cold-cache experiment.",
+      "gnani_streams": 6,
+      "gnani_audio_seconds": 152.672,
+      "gnani_connection_seconds": 161.887,
+      "gnani_provider_latency_ms": {
+        "count": 10,
+        "p50": 96.5,
+        "p95": 164.15,
+        "max": 179
+      },
+      "gnani_transcripts": 10,
+      "gnani_send_max_ms": 0.863334000314353
+    },
+    {
+      "trace": "/home/mathew/Arrakis/CueBell/docs/benchmarks/2026-11-13/screen-v1-orchestration-server.jsonl",
+      "settings": {
+        "gnani_language_code": "indic-auto",
+        "gnani_min_silence_ms": null,
+        "gnani_vad_threshold": null,
+        "gnani_min_speech_ms": null,
+        "gnani_min_segment_ms": null,
+        "gnani_max_speech_s": null,
+        "openai_model": "gpt-6-luna",
+        "openai_reasoning_effort": null,
+        "openai_service_tier": null,
+        "openai_verbosity": null,
+        "openai_prompt_cache_mode": null,
+        "openai_prompt_cache_ttl": null,
+        "openai_compact_input": false,
+        "openai_verbatim_location_hint": false,
+        "openai_max_output_tokens": 2000,
+        "optimized_scheduling": true,
+        "outbound_writer": true,
+        "outbound_queue_size": 64,
+        "allow_app_sessions": false,
+        "allow_insecure_local": true,
+        "max_sessions": 8,
+        "session_ttl_seconds": 14400,
+        "correction_grace_seconds": 1.2,
+        "request_pause_seconds": 3.5,
+        "request_timeout_seconds": 90.0
+      },
+      "openai_requests_attempted": 16,
+      "openai_responses": 16,
+      "openai_errors": [],
+      "openai_error_types": {},
+      "openai_unfinished_requests": [],
+      "openai_response_ms": {
+        "count": 16,
+        "p50": 3835.692,
+        "p95": 8837.151,
+        "max": 9896.449
+      },
+      "openai_terminated_attempt_ms": {
+        "count": 16,
+        "p50": 3835.692,
+        "p95": 8837.151,
+        "max": 9896.449
+      },
+      "openai_error_ms": {
+        "count": 0
+      },
+      "openai_response_statuses": {
+        "completed": 16
+      },
+      "latency_population_note": "Response latency includes returned SDK responses only, not failed or cancelled calls. Terminated-attempt latency includes recorded error durations. Unfinished calls are counted separately; no zero duration or successful outcome is imputed to them. A returned response does not by itself establish a valid task decision.",
+      "interpretation_ms": {
+        "intent": {
+          "count": 6,
+          "p50": 3261.164,
+          "p95": 4044.436,
+          "max": 4108.687
+        },
+        "observe": {
+          "count": 10,
+          "p50": 4832.849,
+          "p95": 9261.123,
+          "max": 9896.72
+        }
+      },
+      "interpretation_terminated_attempt_ms": {
+        "intent": {
+          "count": 6,
+          "p50": 3261.164,
+          "p95": 4044.436,
+          "max": 4108.687
+        },
+        "observe": {
+          "count": 10,
+          "p50": 4832.849,
+          "p95": 9261.123,
+          "max": 9896.72
+        }
+      },
+      "returned_service_tiers": {
+        "default": 16
+      },
+      "returned_models": {
+        "gpt-6-luna": 16
+      },
+      "tokens": {
+        "input": 21486,
+        "output": 5783,
+        "cached_input": 19030,
+        "cache_written_input": 2408,
+        "reasoning_output": 3238
+      },
+      "cached_input_share_of_recorded_responses": 0.885693,
+      "openai_reference_cost_usd": 0.003388,
+      "cost_status": "Estimate from published Luna rates and returned token usage, not an invoice; failed and cancelled calls may be billable without recorded usage. Cache shares describe these responses, not an isolated cold-cache experiment.",
+      "gnani_streams": 6,
+      "gnani_audio_seconds": 154.272,
+      "gnani_connection_seconds": 162.358,
+      "gnani_provider_latency_ms": {
+        "count": 10,
+        "p50": 102.0,
+        "p95": 167.95,
+        "max": 181
+      },
+      "gnani_transcripts": 10,
+      "gnani_send_max_ms": 1.3280260000101407
+    },
+    {
+      "trace": "/home/mathew/Arrakis/CueBell/docs/benchmarks/2026-11-13/screen-v1-output-cap-1024-server.jsonl",
+      "settings": {
+        "gnani_language_code": "indic-auto",
+        "gnani_min_silence_ms": null,
+        "gnani_vad_threshold": null,
+        "gnani_min_speech_ms": null,
+        "gnani_min_segment_ms": null,
+        "gnani_max_speech_s": null,
+        "openai_model": "gpt-6-luna",
+        "openai_reasoning_effort": null,
+        "openai_service_tier": null,
+        "openai_verbosity": null,
+        "openai_prompt_cache_mode": null,
+        "openai_prompt_cache_ttl": null,
+        "openai_compact_input": false,
+        "openai_verbatim_location_hint": false,
+        "openai_max_output_tokens": 1024,
+        "optimized_scheduling": false,
+        "outbound_writer": false,
+        "outbound_queue_size": 64,
+        "allow_app_sessions": false,
+        "allow_insecure_local": true,
+        "max_sessions": 8,
+        "session_ttl_seconds": 14400,
+        "correction_grace_seconds": 1.2,
+        "request_pause_seconds": 3.5,
+        "request_timeout_seconds": 90.0
+      },
+      "openai_requests_attempted": 16,
+      "openai_responses": 15,
+      "openai_errors": [
+        {
+          "event": "openai_error",
+          "monotonic_s": 3785.775721496,
+          "wall_time": "2026-11-13T16:51:48.362575+00:00",
+          "call_id": "34a268418aab4149a946431a170ffd3e",
+          "interpretation_id": "06f44faa003342e8860c06020d8e31b0",
+          "stage": "observe",
+          "elapsed_ms": 10776.110109000001,
+          "error_type": "ValidationError",
+          "error": "1 validation error for EventExtraction\n  Invalid JSON: EOF while parsing a string at line 1 column 950 [type=json_invalid, input_value='{\"events\":[{\"type\":\"CORR...a232b19d7021fd8b:01a1d5', input_type=str]\n    For further information visit https://errors.pydantic.dev/2.14/v/json_invalid"
+        }
+      ],
+      "openai_error_types": {
+        "ValidationError": 1
+      },
+      "openai_unfinished_requests": [],
+      "openai_response_ms": {
+        "count": 15,
+        "p50": 4243.501,
+        "p95": 8419.616,
+        "max": 9734.751
+      },
+      "openai_terminated_attempt_ms": {
+        "count": 16,
+        "p50": 4270.293,
+        "p95": 9995.091,
+        "max": 10776.11
+      },
+      "openai_error_ms": {
+        "count": 1,
+        "p50": 10776.11,
+        "p95": 10776.11,
+        "max": 10776.11
+      },
+      "openai_response_statuses": {
+        "completed": 15
+      },
+      "latency_population_note": "Response latency includes returned SDK responses only, not failed or cancelled calls. Terminated-attempt latency includes recorded error durations. Unfinished calls are counted separately; no zero duration or successful outcome is imputed to them. A returned response does not by itself establish a valid task decision.",
+      "interpretation_ms": {
+        "intent": {
+          "count": 6,
+          "p50": 3211.179,
+          "p95": 4485.99,
+          "max": 4503.669
+        },
+        "observe": {
+          "count": 9,
+          "p50": 4918.095,
+          "p95": 8983.519,
+          "max": 9734.988
+        }
+      },
+      "interpretation_terminated_attempt_ms": {
+        "intent": {
+          "count": 6,
+          "p50": 3211.179,
+          "p95": 4485.99,
+          "max": 4503.669
+        },
+        "observe": {
+          "count": 10,
+          "p50": 4934.301,
+          "p95": 10307.754,
+          "max": 10776.38
+        }
+      },
+      "returned_service_tiers": {
+        "default": 15
+      },
+      "returned_models": {
+        "gpt-6-luna": 15
+      },
+      "tokens": {
+        "input": 19866,
+        "output": 4610,
+        "cached_input": 17880,
+        "cache_written_input": 1941,
+        "reasoning_output": 2601
+      },
+      "cached_input_share_of_recorded_responses": 0.90003,
+      "openai_reference_cost_usd": 0.002731,
+      "cost_status": "Estimate from published Luna rates and returned token usage, not an invoice; failed and cancelled calls may be billable without recorded usage. Cache shares describe these responses, not an isolated cold-cache experiment.",
+      "gnani_streams": 6,
+      "gnani_audio_seconds": 159.104,
+      "gnani_connection_seconds": 169.699,
+      "gnani_provider_latency_ms": {
+        "count": 10,
+        "p50": 106.5,
+        "p95": 161.25,
+        "max": 177
+      },
+      "gnani_transcripts": 10,
+      "gnani_send_max_ms": 1.2556930000755528
+    },
+    {
+      "trace": "/home/mathew/Arrakis/CueBell/docs/benchmarks/2026-11-13/screen-v1-reasoning-low-server.jsonl",
+      "settings": {
+        "gnani_language_code": "indic-auto",
+        "gnani_min_silence_ms": null,
+        "gnani_vad_threshold": null,
+        "gnani_min_speech_ms": null,
+        "gnani_min_segment_ms": null,
+        "gnani_max_speech_s": null,
+        "openai_model": "gpt-6-luna",
+        "openai_reasoning_effort": "low",
+        "openai_service_tier": null,
+        "openai_verbosity": null,
+        "openai_prompt_cache_mode": null,
+        "openai_prompt_cache_ttl": null,
+        "openai_compact_input": false,
+        "openai_verbatim_location_hint": false,
+        "openai_max_output_tokens": 2000,
+        "optimized_scheduling": false,
+        "outbound_writer": false,
+        "outbound_queue_size": 64,
+        "allow_app_sessions": false,
+        "allow_insecure_local": true,
+        "max_sessions": 8,
+        "session_ttl_seconds": 14400,
+        "correction_grace_seconds": 1.2,
+        "request_pause_seconds": 3.5,
+        "request_timeout_seconds": 90.0
+      },
+      "openai_requests_attempted": 16,
+      "openai_responses": 16,
+      "openai_errors": [],
+      "openai_error_types": {},
+      "openai_unfinished_requests": [],
+      "openai_response_ms": {
+        "count": 16,
+        "p50": 3251.427,
+        "p95": 7209.324,
+        "max": 8428.79
+      },
+      "openai_terminated_attempt_ms": {
+        "count": 16,
+        "p50": 3251.427,
+        "p95": 7209.324,
+        "max": 8428.79
+      },
+      "openai_error_ms": {
+        "count": 0
+      },
+      "openai_response_statuses": {
+        "completed": 16
+      },
+      "latency_population_note": "Response latency includes returned SDK responses only, not failed or cancelled calls. Terminated-attempt latency includes recorded error durations. Unfinished calls are counted separately; no zero duration or successful outcome is imputed to them. A returned response does not by itself establish a valid task decision.",
+      "interpretation_ms": {
+        "intent": {
+          "count": 6,
+          "p50": 2794.425,
+          "p95": 3382.07,
+          "max": 3488.043
+        },
+        "observe": {
+          "count": 10,
+          "p50": 4179.744,
+          "p95": 7697.351,
+          "max": 8429.029
+        }
+      },
+      "interpretation_terminated_attempt_ms": {
+        "intent": {
+          "count": 6,
+          "p50": 2794.425,
+          "p95": 3382.07,
+          "max": 3488.043
+        },
+        "observe": {
+          "count": 10,
+          "p50": 4179.744,
+          "p95": 7697.351,
+          "max": 8429.029
+        }
+      },
+      "returned_service_tiers": {
+        "default": 16
+      },
+      "returned_models": {
+        "gpt-6-luna": 16
+      },
+      "tokens": {
+        "input": 21748,
+        "output": 3810,
+        "cached_input": 16625,
+        "cache_written_input": 5075,
+        "reasoning_output": 1746
+      },
+      "cached_input_share_of_recorded_responses": 0.764438,
+      "openai_reference_cost_usd": 0.00271,
+      "cost_status": "Estimate from published Luna rates and returned token usage, not an invoice; failed and cancelled calls may be billable without recorded usage. Cache shares describe these responses, not an isolated cold-cache experiment.",
+      "gnani_streams": 6,
+      "gnani_audio_seconds": 166.272,
+      "gnani_connection_seconds": 176.459,
+      "gnani_provider_latency_ms": {
+        "count": 10,
+        "p50": 108.5,
+        "p95": 165.3,
+        "max": 186
+      },
+      "gnani_transcripts": 10,
+      "gnani_send_max_ms": 0.9719390000100248
+    },
+    {
+      "trace": "/home/mathew/Arrakis/CueBell/docs/benchmarks/2026-11-13/screen-v1-reasoning-none-server.jsonl",
+      "settings": {
+        "gnani_language_code": "indic-auto",
+        "gnani_min_silence_ms": null,
+        "gnani_vad_threshold": null,
+        "gnani_min_speech_ms": null,
+        "gnani_min_segment_ms": null,
+        "gnani_max_speech_s": null,
+        "openai_model": "gpt-6-luna",
+        "openai_reasoning_effort": "none",
+        "openai_service_tier": null,
+        "openai_verbosity": null,
+        "openai_prompt_cache_mode": null,
+        "openai_prompt_cache_ttl": null,
+        "openai_compact_input": false,
+        "openai_verbatim_location_hint": false,
+        "openai_max_output_tokens": 2000,
+        "optimized_scheduling": false,
+        "outbound_writer": false,
+        "outbound_queue_size": 64,
+        "allow_app_sessions": false,
+        "allow_insecure_local": true,
+        "max_sessions": 8,
+        "session_ttl_seconds": 14400,
+        "correction_grace_seconds": 1.2,
+        "request_pause_seconds": 3.5,
+        "request_timeout_seconds": 90.0
+      },
+      "openai_requests_attempted": 16,
+      "openai_responses": 16,
+      "openai_errors": [],
+      "openai_error_types": {},
+      "openai_unfinished_requests": [],
+      "openai_response_ms": {
+        "count": 16,
+        "p50": 2165.883,
+        "p95": 3444.081,
+        "max": 3629.18
+      },
+      "openai_terminated_attempt_ms": {
+        "count": 16,
+        "p50": 2165.883,
+        "p95": 3444.081,
+        "max": 3629.18
+      },
+      "openai_error_ms": {
+        "count": 0
+      },
+      "openai_response_statuses": {
+        "completed": 16
+      },
+      "latency_population_note": "Response latency includes returned SDK responses only, not failed or cancelled calls. Terminated-attempt latency includes recorded error durations. Unfinished calls are counted separately; no zero duration or successful outcome is imputed to them. A returned response does not by itself establish a valid task decision.",
+      "interpretation_ms": {
+        "intent": {
+          "count": 6,
+          "p50": 2242.353,
+          "p95": 3344.374,
+          "max": 3644.127
+        },
+        "observe": {
+          "count": 10,
+          "p50": 2029.262,
+          "p95": 3446.347,
+          "max": 3629.412
+        }
+      },
+      "interpretation_terminated_attempt_ms": {
+        "intent": {
+          "count": 6,
+          "p50": 2242.353,
+          "p95": 3344.374,
+          "max": 3644.127
+        },
+        "observe": {
+          "count": 10,
+          "p50": 2029.262,
+          "p95": 3446.347,
+          "max": 3629.412
+        }
+      },
+      "returned_service_tiers": {
+        "default": 16
+      },
+      "returned_models": {
+        "gpt-6-luna": 16
+      },
+      "tokens": {
+        "input": 21336,
+        "output": 1807,
+        "cached_input": 16625,
+        "cache_written_input": 4663,
+        "reasoning_output": 0
+      },
+      "cached_input_share_of_recorded_responses": 0.779199,
+      "openai_reference_cost_usd": 0.001657,
+      "cost_status": "Estimate from published Luna rates and returned token usage, not an invoice; failed and cancelled calls may be billable without recorded usage. Cache shares describe these responses, not an isolated cold-cache experiment.",
+      "gnani_streams": 6,
+      "gnani_audio_seconds": 164.064,
+      "gnani_connection_seconds": 173.676,
+      "gnani_provider_latency_ms": {
+        "count": 10,
+        "p50": 102.5,
+        "p95": 151.85,
+        "max": 164
+      },
+      "gnani_transcripts": 10,
+      "gnani_send_max_ms": 0.9594279999873834
+    },
+    {
+      "trace": "/home/mathew/Arrakis/CueBell/docs/benchmarks/2026-11-13/screen-v1-verbatim-location-server.jsonl",
+      "settings": {
+        "gnani_language_code": "indic-auto",
+        "gnani_min_silence_ms": null,
+        "gnani_vad_threshold": null,
+        "gnani_min_speech_ms": null,
+        "gnani_min_segment_ms": null,
+        "gnani_max_speech_s": null,
+        "openai_model": "gpt-6-luna",
+        "openai_reasoning_effort": null,
+        "openai_service_tier": null,
+        "openai_verbosity": null,
+        "openai_prompt_cache_mode": null,
+        "openai_prompt_cache_ttl": null,
+        "openai_compact_input": false,
+        "openai_verbatim_location_hint": true,
+        "openai_max_output_tokens": 2000,
+        "optimized_scheduling": false,
+        "outbound_writer": false,
+        "outbound_queue_size": 64,
+        "allow_app_sessions": false,
+        "allow_insecure_local": true,
+        "max_sessions": 8,
+        "session_ttl_seconds": 14400,
+        "correction_grace_seconds": 1.2,
+        "request_pause_seconds": 3.5,
+        "request_timeout_seconds": 90.0
+      },
+      "openai_requests_attempted": 13,
+      "openai_responses": 12,
+      "openai_errors": [
+        {
+          "event": "openai_error",
+          "monotonic_s": 3952.379443781,
+          "wall_time": "2026-11-13T16:54:34.966298+00:00",
+          "call_id": "62e424cef1b64b0e9cdc1f2bd29a92ee",
+          "interpretation_id": "5baf4651ee7a4ba38c9967ade8d22494",
+          "stage": "intent",
+          "elapsed_ms": 12027.825376000237,
+          "error_type": "APITimeoutError",
+          "error": "Request timed out."
+        }
+      ],
+      "openai_error_types": {
+        "APITimeoutError": 1
+      },
+      "openai_unfinished_requests": [],
+      "openai_response_ms": {
+        "count": 12,
+        "p50": 3485.539,
+        "p95": 4995.283,
+        "max": 5252.363
+      },
+      "openai_terminated_attempt_ms": {
+        "count": 13,
+        "p50": 3544.778,
+        "p95": 7962.548,
+        "max": 12027.825
+      },
+      "openai_error_ms": {
+        "count": 1,
+        "p50": 12027.825,
+        "p95": 12027.825,
+        "max": 12027.825
+      },
+      "openai_response_statuses": {
+        "completed": 12
+      },
+      "latency_population_note": "Response latency includes returned SDK responses only, not failed or cancelled calls. Terminated-attempt latency includes recorded error durations. Unfinished calls are counted separately; no zero duration or successful outcome is imputed to them. A returned response does not by itself establish a valid task decision.",
+      "interpretation_ms": {
+        "intent": {
+          "count": 5,
+          "p50": 3545.18,
+          "p95": 3880.645,
+          "max": 3926.701
+        },
+        "observe": {
+          "count": 7,
+          "p50": 3717.851,
+          "p95": 5112.411,
+          "max": 5252.653
+        }
+      },
+      "interpretation_terminated_attempt_ms": {
+        "intent": {
+          "count": 6,
+          "p50": 3620.801,
+          "p95": 10002.715,
+          "max": 12028.053
+        },
+        "observe": {
+          "count": 7,
+          "p50": 3717.851,
+          "p95": 5112.411,
+          "max": 5252.653
+        }
+      },
+      "returned_service_tiers": {
+        "default": 12
+      },
+      "returned_models": {
+        "gpt-6-luna": 12
+      },
+      "tokens": {
+        "input": 16203,
+        "output": 2579,
+        "cached_input": 13481,
+        "cache_written_input": 2686,
+        "reasoning_output": 1342
+      },
+      "cached_input_share_of_recorded_responses": 0.832006,
+      "openai_reference_cost_usd": 0.001764,
+      "cost_status": "Estimate from published Luna rates and returned token usage, not an invoice; failed and cancelled calls may be billable without recorded usage. Cache shares describe these responses, not an isolated cold-cache experiment.",
+      "gnani_streams": 5,
+      "gnani_audio_seconds": 127.328,
+      "gnani_connection_seconds": 134.486,
+      "gnani_provider_latency_ms": {
+        "count": 7,
+        "p50": 92.0,
+        "p95": 170.7,
+        "max": 183
+      },
+      "gnani_transcripts": 7,
+      "gnani_send_max_ms": 0.9285609999096778
+    },
+    {
+      "trace": "/home/mathew/Arrakis/CueBell/docs/benchmarks/2026-11-13/screen-v1-verbosity-low-server.jsonl",
+      "settings": {
+        "gnani_language_code": "indic-auto",
+        "gnani_min_silence_ms": null,
+        "gnani_vad_threshold": null,
+        "gnani_min_speech_ms": null,
+        "gnani_min_segment_ms": null,
+        "gnani_max_speech_s": null,
+        "openai_model": "gpt-6-luna",
+        "openai_reasoning_effort": null,
+        "openai_service_tier": null,
+        "openai_verbosity": "low",
+        "openai_prompt_cache_mode": null,
+        "openai_prompt_cache_ttl": null,
+        "openai_compact_input": false,
+        "openai_verbatim_location_hint": false,
+        "openai_max_output_tokens": 2000,
+        "optimized_scheduling": false,
+        "outbound_writer": false,
+        "outbound_queue_size": 64,
+        "allow_app_sessions": false,
+        "allow_insecure_local": true,
+        "max_sessions": 8,
+        "session_ttl_seconds": 14400,
+        "correction_grace_seconds": 1.2,
+        "request_pause_seconds": 3.5,
+        "request_timeout_seconds": 90.0
+      },
+      "openai_requests_attempted": 12,
+      "openai_responses": 9,
+      "openai_errors": [
+        {
+          "event": "openai_error",
+          "monotonic_s": 3150.204973695,
+          "wall_time": "2026-11-13T16:41:12.791827+00:00",
+          "call_id": "3259fa38075f4430bfdabd57d4df9b29",
+          "interpretation_id": "1308d3c885594c34b217fcea0d365403",
+          "stage": "observe",
+          "elapsed_ms": 12027.699310000116,
+          "error_type": "APITimeoutError",
+          "error": "Request timed out."
+        },
+        {
+          "event": "openai_error",
+          "monotonic_s": 3163.322135011,
+          "wall_time": "2026-11-13T16:41:25.908988+00:00",
+          "call_id": "e075976e75f34ea8a61551e78fa37982",
+          "interpretation_id": "a4c766da13dd459f8ae42e1a68848ddc",
+          "stage": "intent",
+          "elapsed_ms": 12027.489492999848,
+          "error_type": "APITimeoutError",
+          "error": "Request timed out."
+        },
+        {
+          "event": "openai_error",
+          "monotonic_s": 3175.237549331,
+          "wall_time": "2026-11-13T16:41:37.824402+00:00",
+          "call_id": "f82020b420034e10afe74574fee6f081",
+          "interpretation_id": "f5347a8e49264486b28cb387e8fc1ad1",
+          "stage": "intent",
+          "elapsed_ms": 11908.100671999819,
+          "error_type": "InternalServerError",
+          "error": "Error code: 520 - {'type': 'https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-5xx-errors/error-520/', 'title': 'Error 520: Web server is returning an unknown error', 'status': 520, 'detail': 'The origin web server sent a response that Cloudflare could not parse. This may indicate the origin returned an empty response, malformed HTTP headers, or an otherwise invalid response.', 'instance': 'a59f39512a8e1194', 'error_code': 520, 'error_name': 'unknown_origin_error', 'error_category': 'origin', 'ray_id': 'a59f39512a8e1194', 'timestamp': '2026-11-13T16:41:37Z', 'zone': 'api.openai.com', 'cloudflare_error': True, 'retryable': True, 'retry_after': 60, 'owner_action_required': True, 'what_you_should_do': '**Wait and retry.** Back off for at least 60 seconds. If the error persists, the website operator should check the origin server error logs and submit them to Cloudflare support.', 'footer': 'This error was generated by Cloudflare on behalf of the website owner.'}"
+        }
+      ],
+      "openai_error_types": {
+        "APITimeoutError": 2,
+        "InternalServerError": 1
+      },
+      "openai_unfinished_requests": [],
+      "openai_response_ms": {
+        "count": 9,
+        "p50": 4962.75,
+        "p95": 10364.289,
+        "max": 10671.443
+      },
+      "openai_terminated_attempt_ms": {
+        "count": 12,
+        "p50": 6316.14,
+        "p95": 12027.584,
+        "max": 12027.699
+      },
+      "openai_error_ms": {
+        "count": 3,
+        "p50": 12027.489,
+        "p95": 12027.678,
+        "max": 12027.699
+      },
+      "openai_response_statuses": {
+        "completed": 9
+      },
+      "latency_population_note": "Response latency includes returned SDK responses only, not failed or cancelled calls. Terminated-attempt latency includes recorded error durations. Unfinished calls are counted separately; no zero duration or successful outcome is imputed to them. A returned response does not by itself establish a valid task decision.",
+      "interpretation_ms": {
+        "intent": {
+          "count": 4,
+          "p50": 3903.336,
+          "p95": 4850.391,
+          "max": 4962.991
+        },
+        "observe": {
+          "count": 5,
+          "p50": 6543.841,
+          "p95": 10518.117,
+          "max": 10671.696
+        }
+      },
+      "interpretation_terminated_attempt_ms": {
+        "intent": {
+          "count": 6,
+          "p50": 4587.659,
+          "p95": 11997.915,
+          "max": 12027.775
+        },
+        "observe": {
+          "count": 6,
+          "p50": 8223.821,
+          "p95": 11688.887,
+          "max": 12027.95
+        }
+      },
+      "returned_service_tiers": {
+        "default": 9
+      },
+      "returned_models": {
+        "gpt-6-luna": 9
+      },
+      "tokens": {
+        "input": 12293,
+        "output": 3520,
+        "cached_input": 8365,
+        "cache_written_input": 3901,
+        "reasoning_output": 2054
+      },
+      "cached_input_share_of_recorded_responses": 0.680469,
+      "openai_reference_cost_usd": 0.002334,
+      "cost_status": "Estimate from published Luna rates and returned token usage, not an invoice; failed and cancelled calls may be billable without recorded usage. Cache shares describe these responses, not an isolated cold-cache experiment.",
+      "gnani_streams": 4,
+      "gnani_audio_seconds": 108.704,
+      "gnani_connection_seconds": 114.439,
+      "gnani_provider_latency_ms": {
+        "count": 6,
+        "p50": 134.0,
+        "p95": 164.75,
+        "max": 170
+      },
+      "gnani_transcripts": 6,
+      "gnani_send_max_ms": 1.2238749995958642
+    },
+    {
+      "trace": "/home/mathew/Arrakis/CueBell/docs/benchmarks/2026-11-13/setup-aware-v2-request-aware-1500-server.jsonl",
+      "settings": {
+        "gnani_language_code": "indic-auto",
+        "gnani_min_silence_ms": null,
+        "gnani_vad_threshold": null,
+        "gnani_min_speech_ms": null,
+        "gnani_min_segment_ms": null,
+        "gnani_max_speech_s": null,
+        "openai_model": "gpt-6-luna",
+        "openai_reasoning_effort": null,
+        "openai_service_tier": null,
+        "openai_verbosity": null,
+        "openai_prompt_cache_mode": null,
+        "openai_prompt_cache_ttl": null,
+        "openai_compact_input": false,
+        "openai_verbatim_location_hint": false,
+        "openai_max_output_tokens": 2000,
+        "optimized_scheduling": false,
+        "outbound_writer": false,
+        "outbound_queue_size": 64,
+        "allow_app_sessions": false,
+        "allow_insecure_local": true,
+        "max_sessions": 8,
+        "session_ttl_seconds": 14400,
+        "correction_grace_seconds": 1.2,
+        "request_pause_seconds": 1.5,
+        "request_speech_aware_completion": true,
+        "request_timeout_seconds": 90.0
+      },
+      "openai_requests_attempted": 6,
+      "openai_responses": 4,
+      "openai_errors": [
+        {
+          "event": "openai_error",
+          "monotonic_s": 3946.310820904,
+          "wall_time": "2026-11-13T16:54:28.897675+00:00",
+          "call_id": "6f7d643fbdc146e392992c680f823313",
+          "interpretation_id": "7a7f5cc496b84dc7bf726035b2e55cb7",
+          "stage": "intent",
+          "elapsed_ms": 12045.856450999963,
+          "error_type": "APITimeoutError",
+          "error": "Request timed out."
+        },
+        {
+          "event": "openai_error",
+          "monotonic_s": 3968.031944771,
+          "wall_time": "2026-11-13T16:54:50.618799+00:00",
+          "call_id": "1f91b03eeef14c489c11a644df05ccdc",
+          "interpretation_id": "cb38b8bd0df94bb29325ea1eb9545ea7",
+          "stage": "intent",
+          "elapsed_ms": 12069.844660999934,
+          "error_type": "APITimeoutError",
+          "error": "Request timed out."
+        }
+      ],
+      "openai_error_types": {
+        "APITimeoutError": 2
+      },
+      "openai_unfinished_requests": [],
+      "openai_response_ms": {
+        "count": 4,
+        "p50": 4898.538,
+        "p95": 6030.154,
+        "max": 6142.69
+      },
+      "openai_terminated_attempt_ms": {
+        "count": 6,
+        "p50": 5767.568,
+        "p95": 12063.848,
+        "max": 12069.845
+      },
+      "openai_error_ms": {
+        "count": 2,
+        "p50": 12057.851,
+        "p95": 12068.645,
+        "max": 12069.845
+      },
+      "openai_response_statuses": {
+        "completed": 4
+      },
+      "latency_population_note": "Response latency includes returned SDK responses only, not failed or cancelled calls. Terminated-attempt latency includes recorded error durations. Unfinished calls are counted separately; no zero duration or successful outcome is imputed to them. A returned response does not by itself establish a valid task decision.",
+      "interpretation_ms": {
+        "intent": {
+          "count": 4,
+          "p50": 4907.219,
+          "p95": 6030.418,
+          "max": 6142.94
+        }
+      },
+      "interpretation_terminated_attempt_ms": {
+        "intent": {
+          "count": 6,
+          "p50": 5767.867,
+          "p95": 12064.144,
+          "max": 12070.155
+        }
+      },
+      "returned_service_tiers": {
+        "default": 4
+      },
+      "returned_models": {
+        "gpt-6-luna": 4
+      },
+      "tokens": {
+        "input": 5094,
+        "output": 1537,
+        "cached_input": 5082,
+        "cache_written_input": 0,
+        "reasoning_output": 868
+      },
+      "cached_input_share_of_recorded_responses": 0.997644,
+      "openai_reference_cost_usd": 0.000821,
+      "cost_status": "Estimate from published Luna rates and returned token usage, not an invoice; failed and cancelled calls may be billable without recorded usage. Cache shares describe these responses, not an isolated cold-cache experiment.",
+      "gnani_streams": 6,
+      "gnani_audio_seconds": 47.872,
+      "gnani_connection_seconds": 56.93,
+      "gnani_provider_latency_ms": {
+        "count": 9,
+        "p50": 149.0,
+        "p95": 173.0,
+        "max": 177
+      },
+      "gnani_transcripts": 9,
+      "gnani_send_max_ms": 0.9301669997512363
+    },
+    {
+      "trace": "/home/mathew/Arrakis/CueBell/docs/benchmarks/2026-11-13/setup-fast-v2-fast-orchestrated-server.jsonl",
+      "settings": {
+        "gnani_language_code": "indic-auto",
+        "gnani_min_silence_ms": null,
+        "gnani_vad_threshold": null,
+        "gnani_min_speech_ms": null,
+        "gnani_min_segment_ms": null,
+        "gnani_max_speech_s": null,
+        "openai_model": "gpt-6-luna",
+        "openai_reasoning_effort": null,
+        "openai_service_tier": "fast",
+        "openai_verbosity": null,
+        "openai_prompt_cache_mode": null,
+        "openai_prompt_cache_ttl": null,
+        "openai_compact_input": false,
+        "openai_verbatim_location_hint": false,
+        "openai_max_output_tokens": 2000,
+        "optimized_scheduling": true,
+        "outbound_writer": true,
+        "outbound_queue_size": 64,
+        "allow_app_sessions": false,
+        "allow_insecure_local": true,
+        "max_sessions": 8,
+        "session_ttl_seconds": 14400,
+        "correction_grace_seconds": 1.2,
+        "request_pause_seconds": 1.5,
+        "request_speech_aware_completion": true,
+        "request_timeout_seconds": 90.0
+      },
+      "openai_requests_attempted": 6,
+      "openai_responses": 6,
+      "openai_errors": [],
+      "openai_error_types": {},
+      "openai_unfinished_requests": [],
+      "openai_response_ms": {
+        "count": 6,
+        "p50": 2578.175,
+        "p95": 3877.264,
+        "max": 4078.372
+      },
+      "openai_terminated_attempt_ms": {
+        "count": 6,
+        "p50": 2578.175,
+        "p95": 3877.264,
+        "max": 4078.372
+      },
+      "openai_error_ms": {
+        "count": 0
+      },
+      "openai_response_statuses": {
+        "completed": 6
+      },
+      "latency_population_note": "Response latency includes returned SDK responses only, not failed or cancelled calls. Terminated-attempt latency includes recorded error durations. Unfinished calls are counted separately; no zero duration or successful outcome is imputed to them. A returned response does not by itself establish a valid task decision.",
+      "interpretation_ms": {
+        "intent": {
+          "count": 6,
+          "p50": 2842.12,
+          "p95": 3931.204,
+          "max": 4078.593
+        }
+      },
+      "interpretation_terminated_attempt_ms": {
+        "intent": {
+          "count": 6,
+          "p50": 2842.12,
+          "p95": 3931.204,
+          "max": 4078.593
+        }
+      },
+      "returned_service_tiers": {
+        "fast": 6
+      },
+      "returned_models": {
+        "gpt-6-luna": 6
+      },
+      "tokens": {
+        "input": 7641,
+        "output": 2375,
+        "cached_input": 7548,
+        "cache_written_input": 75,
+        "reasoning_output": 1418
+      },
+      "cached_input_share_of_recorded_responses": 0.987829,
+      "openai_reference_cost_usd": 0.002548,
+      "cost_status": "Estimate from published Luna rates and returned token usage, not an invoice; failed and cancelled calls may be billable without recorded usage. Cache shares describe these responses, not an isolated cold-cache experiment.",
+      "gnani_streams": 6,
+      "gnani_audio_seconds": 47.68,
+      "gnani_connection_seconds": 57.801,
+      "gnani_provider_latency_ms": {
+        "count": 9,
+        "p50": 148.0,
+        "p95": 177.8,
+        "max": 179
+      },
+      "gnani_transcripts": 9,
+      "gnani_send_max_ms": 0.6104379999669618
+    },
+    {
+      "trace": "/home/mathew/Arrakis/CueBell/docs/benchmarks/2026-11-13/setup-pause-v1-request-pause-1500-server.jsonl",
+      "settings": {
+        "gnani_language_code": "indic-auto",
+        "gnani_min_silence_ms": null,
+        "gnani_vad_threshold": null,
+        "gnani_min_speech_ms": null,
+        "gnani_min_segment_ms": null,
+        "gnani_max_speech_s": null,
+        "openai_model": "gpt-6-luna",
+        "openai_reasoning_effort": null,
+        "openai_service_tier": null,
+        "openai_verbosity": null,
+        "openai_prompt_cache_mode": null,
+        "openai_prompt_cache_ttl": null,
+        "openai_compact_input": false,
+        "openai_verbatim_location_hint": false,
+        "openai_max_output_tokens": 2000,
+        "optimized_scheduling": false,
+        "outbound_writer": false,
+        "outbound_queue_size": 64,
+        "allow_app_sessions": false,
+        "allow_insecure_local": true,
+        "max_sessions": 8,
+        "session_ttl_seconds": 14400,
+        "correction_grace_seconds": 1.2,
+        "request_pause_seconds": 1.5,
+        "request_timeout_seconds": 90.0
+      },
+      "openai_requests_attempted": 6,
+      "openai_responses": 6,
+      "openai_errors": [],
+      "openai_error_types": {},
+      "openai_unfinished_requests": [],
+      "openai_response_ms": {
+        "count": 6,
+        "p50": 4783.545,
+        "p95": 6017.839,
+        "max": 6207.795
+      },
+      "openai_terminated_attempt_ms": {
+        "count": 6,
+        "p50": 4783.545,
+        "p95": 6017.839,
+        "max": 6207.795
+      },
+      "openai_error_ms": {
+        "count": 0
+      },
+      "openai_response_statuses": {
+        "completed": 6
+      },
+      "latency_population_note": "Response latency includes returned SDK responses only, not failed or cancelled calls. Terminated-attempt latency includes recorded error durations. Unfinished calls are counted separately; no zero duration or successful outcome is imputed to them. A returned response does not by itself establish a valid task decision.",
+      "interpretation_ms": {
+        "intent": {
+          "count": 6,
+          "p50": 4907.623,
+          "p95": 6018.092,
+          "max": 6208.034
+        }
+      },
+      "interpretation_terminated_attempt_ms": {
+        "intent": {
+          "count": 6,
+          "p50": 4907.623,
+          "p95": 6018.092,
+          "max": 6208.034
+        }
+      },
+      "returned_service_tiers": {
+        "default": 6
+      },
+      "returned_models": {
+        "gpt-6-luna": 6
+      },
+      "tokens": {
+        "input": 7596,
+        "output": 1825,
+        "cached_input": 7552,
+        "cache_written_input": 26,
+        "reasoning_output": 977
+      },
+      "cached_input_share_of_recorded_responses": 0.994207,
+      "openai_reference_cost_usd": 0.000993,
+      "cost_status": "Estimate from published Luna rates and returned token usage, not an invoice; failed and cancelled calls may be billable without recorded usage. Cache shares describe these responses, not an isolated cold-cache experiment.",
+      "gnani_streams": 6,
+      "gnani_audio_seconds": 39.04,
+      "gnani_connection_seconds": 46.84,
+      "gnani_provider_latency_ms": {
+        "count": 6,
+        "p50": 149.5,
+        "p95": 174.75,
+        "max": 175
+      },
+      "gnani_transcripts": 6,
+      "gnani_send_max_ms": 0.8805749998828105
+    },
+    {
+      "trace": "/home/mathew/Arrakis/CueBell/docs/benchmarks/2026-11-13/setup-v1-baseline-server.jsonl",
+      "settings": {
+        "gnani_language_code": "indic-auto",
+        "openai_model": "gpt-6-luna",
+        "allow_app_sessions": false,
+        "allow_insecure_local": true,
+        "max_sessions": 8,
+        "session_ttl_seconds": 14400,
+        "correction_grace_seconds": 1.2,
+        "request_pause_seconds": 3.5,
+        "request_timeout_seconds": 90.0
+      },
+      "openai_requests_attempted": 6,
+      "openai_responses": 6,
+      "openai_errors": [],
+      "openai_error_types": {},
+      "openai_unfinished_requests": [],
+      "openai_response_ms": {
+        "count": 6,
+        "p50": 5056.156,
+        "p95": 5703.11,
+        "max": 5785.105
+      },
+      "openai_terminated_attempt_ms": {
+        "count": 6,
+        "p50": 5056.156,
+        "p95": 5703.11,
+        "max": 5785.105
+      },
+      "openai_error_ms": {
+        "count": 0
+      },
+      "openai_response_statuses": {
+        "completed": 6
+      },
+      "latency_population_note": "Response latency includes returned SDK responses only, not failed or cancelled calls. Terminated-attempt latency includes recorded error durations. Unfinished calls are counted separately; no zero duration or successful outcome is imputed to them. A returned response does not by itself establish a valid task decision.",
+      "interpretation_ms": {
+        "intent": {
+          "count": 6,
+          "p50": 5213.975,
+          "p95": 5703.39,
+          "max": 5785.394
+        }
+      },
+      "interpretation_terminated_attempt_ms": {
+        "intent": {
+          "count": 6,
+          "p50": 5213.975,
+          "p95": 5703.39,
+          "max": 5785.394
+        }
+      },
+      "returned_service_tiers": {
+        "default": 6
+      },
+      "returned_models": {
+        "gpt-6-luna": 6
+      },
+      "tokens": {
+        "input": 7641,
+        "output": 1984,
+        "cached_input": 7548,
+        "cache_written_input": 75,
+        "reasoning_output": 1092
+      },
+      "cached_input_share_of_recorded_responses": 0.987829,
+      "openai_reference_cost_usd": 0.001079,
+      "cost_status": "Estimate from published Luna rates and returned token usage, not an invoice; failed and cancelled calls may be billable without recorded usage. Cache shares describe these responses, not an isolated cold-cache experiment.",
+      "gnani_streams": 6,
+      "gnani_audio_seconds": 60.064,
+      "gnani_connection_seconds": 68.526,
+      "gnani_provider_latency_ms": {
+        "count": 9,
+        "p50": 144.0,
+        "p95": 165.2,
+        "max": 168
+      },
+      "gnani_transcripts": 9,
+      "gnani_send_max_ms": 1.5172220000749803
+    },
+    {
+      "trace": "/home/mathew/Arrakis/CueBell/docs/benchmarks/2026-11-13/validation-v2-fast-orchestrated-server.jsonl",
+      "settings": {
+        "gnani_language_code": "indic-auto",
+        "gnani_min_silence_ms": null,
+        "gnani_vad_threshold": null,
+        "gnani_min_speech_ms": null,
+        "gnani_min_segment_ms": null,
+        "gnani_max_speech_s": null,
+        "openai_model": "gpt-6-luna",
+        "openai_reasoning_effort": null,
+        "openai_service_tier": "fast",
+        "openai_verbosity": null,
+        "openai_prompt_cache_mode": null,
+        "openai_prompt_cache_ttl": null,
+        "openai_compact_input": false,
+        "openai_verbatim_location_hint": false,
+        "openai_max_output_tokens": 2000,
+        "optimized_scheduling": true,
+        "outbound_writer": true,
+        "outbound_queue_size": 64,
+        "allow_app_sessions": false,
+        "allow_insecure_local": true,
+        "max_sessions": 8,
+        "session_ttl_seconds": 14400,
+        "correction_grace_seconds": 1.2,
+        "request_pause_seconds": 1.5,
+        "request_speech_aware_completion": true,
+        "request_timeout_seconds": 90.0
+      },
+      "openai_requests_attempted": 71,
+      "openai_responses": 70,
+      "openai_errors": [
+        {
+          "event": "openai_error",
+          "monotonic_s": 5518.308277689,
+          "wall_time": "2026-11-13T17:20:40.895130+00:00",
+          "call_id": "5e171e59ba3a46659023e7980a11e46a",
+          "interpretation_id": "1ac58cf5060c4618aa01ec09746c2b16",
+          "stage": "observe",
+          "elapsed_ms": 12005.310311000358,
+          "error_type": "APITimeoutError",
+          "error": "Request timed out."
+        }
+      ],
+      "openai_error_types": {
+        "APITimeoutError": 1
+      },
+      "openai_unfinished_requests": [],
+      "openai_response_ms": {
+        "count": 70,
+        "p50": 2103.571,
+        "p95": 4394.511,
+        "max": 5859.762
+      },
+      "openai_terminated_attempt_ms": {
+        "count": 71,
+        "p50": 2107.986,
+        "p95": 4813.161,
+        "max": 12005.31
+      },
+      "openai_error_ms": {
+        "count": 1,
+        "p50": 12005.31,
+        "p95": 12005.31,
+        "max": 12005.31
+      },
+      "openai_response_statuses": {
+        "completed": 70
+      },
+      "latency_population_note": "Response latency includes returned SDK responses only, not failed or cancelled calls. Terminated-attempt latency includes recorded error durations. Unfinished calls are counted separately; no zero duration or successful outcome is imputed to them. A returned response does not by itself establish a valid task decision.",
+      "interpretation_ms": {
+        "intent": {
+          "count": 28,
+          "p50": 1864.841,
+          "p95": 2978.048,
+          "max": 3440.555
+        },
+        "observe": {
+          "count": 42,
+          "p50": 2525.442,
+          "p95": 4967.25,
+          "max": 5860.137
+        }
+      },
+      "interpretation_terminated_attempt_ms": {
+        "intent": {
+          "count": 28,
+          "p50": 1864.841,
+          "p95": 2978.048,
+          "max": 3440.555
+        },
+        "observe": {
+          "count": 43,
+          "p50": 2649.463,
+          "p95": 5509.174,
+          "max": 12005.485
+        }
+      },
+      "returned_service_tiers": {
+        "fast": 70
+      },
+      "returned_models": {
+        "gpt-6-luna": 70
+      },
+      "tokens": {
+        "input": 93692,
+        "output": 21278,
+        "cached_input": 83440,
+        "cache_written_input": 10042,
+        "reasoning_output": 12262
+      },
+      "cached_input_share_of_recorded_responses": 0.890578,
+      "openai_reference_cost_usd": 0.025499,
+      "cost_status": "Estimate from published Luna rates and returned token usage, not an invoice; failed and cancelled calls may be billable without recorded usage. Cache shares describe these responses, not an isolated cold-cache experiment.",
+      "gnani_streams": 28,
+      "gnani_audio_seconds": 737.856,
+      "gnani_connection_seconds": 784.967,
+      "gnani_provider_latency_ms": {
+        "count": 43,
+        "p50": 117.0,
+        "p95": 265.8,
+        "max": 296
+      },
+      "gnani_transcripts": 43,
+      "gnani_send_max_ms": 4.665932000534667
+    }
+  ],
+  "total_openai_requests_attempted": 419,
+  "total_openai_error_count": 15,
+  "total_openai_unfinished_count": 1,
+  "total_gnani_connection_minutes": 72.08,
+  "total_openai_reference_cost_usd": 0.094774,
+  "limits": {
+    "openai_requests": 600,
+    "gnani_connection_minutes": 120
+  },
+  "quantile_method": "linear interpolation; small-sample p95 is descriptive only"
+}

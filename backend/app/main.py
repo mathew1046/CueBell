@@ -33,6 +33,70 @@ APP_SESSION_IP_WINDOW_SECONDS = 600
 APP_SESSION_IP_BUCKETS = 1024
 
 
+class OutboundCoverageGap(RuntimeError):
+    pass
+
+
+class OutboundWriter:
+    """One bounded, ordered socket writer; producers never await network delivery."""
+
+    def __init__(self, socket: WebSocket, capacity: int):
+        self.socket = socket
+        self.queue: asyncio.Queue[str] = asyncio.Queue(maxsize=capacity)
+        self.closing = False
+        self.closed = False
+        self.overflow = False
+        self.close_lock = asyncio.Lock()
+        self.task = asyncio.create_task(self.run())
+
+    def send(self, payload: dict) -> None:
+        if self.closing or self.task.done():
+            raise OutboundCoverageGap("Outbound delivery stopped; audio coverage lost.")
+        try:
+            # Snapshot mutable engine dictionaries before releasing the session lock.
+            self.queue.put_nowait(json.dumps(payload, ensure_ascii=False, separators=(",", ":")))
+        except asyncio.QueueFull as error:
+            self.overflow = True
+            raise OutboundCoverageGap("Outbound queue full; audio coverage lost.") from error
+
+    async def run(self) -> None:
+        while True:
+            payload = await self.queue.get()
+            try:
+                await asyncio.wait_for(self.socket.send_text(payload), timeout=1)
+            finally:
+                self.queue.task_done()
+
+    async def close(self, code: int = 1000, reason: str = "") -> None:
+        async with self.close_lock:
+            if self.closed:
+                return
+            self.closing = True
+            failed = self.overflow or self.task.done()
+            try:
+                # Successful final controls/readiness/errors must reach the client.
+                # A stalled client gets an explicit coverage-gap close, never coalescing.
+                if not self.task.done():
+                    await asyncio.wait_for(self.queue.join(), timeout=1)
+            except TimeoutError:
+                failed = True
+            except asyncio.CancelledError:
+                failed = True
+                raise
+            finally:
+                if self.task.done() and not self.task.cancelled():
+                    failed |= self.task.exception() is not None
+                self.task.cancel()
+                await asyncio.gather(self.task, return_exceptions=True)
+                if failed:
+                    code, reason = 1013, "Outbound delivery failed; audio coverage lost. Reconnect."
+                try:
+                    with suppress(RuntimeError, WebSocketDisconnect, OSError, TimeoutError):
+                        await asyncio.wait_for(self.socket.close(code, reason), timeout=0.5)
+                finally:
+                    self.closed = True
+
+
 @dataclass
 class Session:
     expires: float
@@ -41,6 +105,7 @@ class Session:
     busy: bool = False
     extracting: bool = False
     socket: WebSocket | None = None
+    writer: OutboundWriter | None = None
     lock: asyncio.Lock = field(default_factory=asyncio.Lock)
     requests: deque = field(default_factory=lambda: deque(maxlen=30))
 
@@ -53,7 +118,9 @@ def create_app(settings: Settings | None = None, intelligence=None) -> FastAPI:
     fallback: OpenAIFallback | None = None
 
     async def close_stream(session: Session, code: int, reason: str):
-        if session.socket:
+        if session.writer:
+            await session.writer.close(code, reason)
+        elif session.socket:
             with suppress(RuntimeError, WebSocketDisconnect, OSError):
                 await session.socket.close(code, reason)
 
@@ -226,12 +293,21 @@ def create_app(settings: Settings | None = None, intelligence=None) -> FastAPI:
 
     @app.post("/v1/control")
     async def control(body: ControlRequest, session: Session = Depends(authenticate)):
+        writer = None
+        close_requested = body.action in {"pause", "stop"}
         async with session.lock:
             try:
                 event = session.engine.control(body.action, body.alert_id)
             except ValueError as error:
                 raise HTTPException(409, str(error))
-            if body.action in {"pause", "stop"}:
+            if session.writer is not None:
+                writer = session.writer
+                try:
+                    writer.send(event)
+                except OutboundCoverageGap:
+                    session.engine.gap()
+                    close_requested = True
+            elif close_requested:
                 await close_stream(session, 1000, "Monitor paused or stopped.")
             if body.action == "stop":
                 session.engine.observations.clear()
@@ -239,7 +315,9 @@ def create_app(settings: Settings | None = None, intelligence=None) -> FastAPI:
                 session.engine.alerts.clear()
                 session.engine.seen.clear()
                 session.proposal = None
-            return event
+        if writer is not None and close_requested:
+            await writer.close(1000, "Monitor paused or stopped.")
+        return event
 
     @app.delete("/v1/session")
     async def delete_session(authorization: str | None = Header(default=None)):
@@ -283,20 +361,33 @@ def create_app(settings: Settings | None = None, intelligence=None) -> FastAPI:
         window: deque[Segment] = deque(maxlen=6)
         queue: asyncio.Queue[Segment] = asyncio.Queue(maxsize=8)
         send_lock = asyncio.Lock()
+        writer = (
+            OutboundWriter(socket, settings.outbound_queue_size)
+            if settings.outbound_writer
+            else None
+        )
+        session.writer = writer
+        flush_requested = asyncio.Event()
         ready = asyncio.Event()
         started = time.monotonic()
         last_audio = started
         frames = 0
         interpreting = False
+        stopping = False
         seen_provider_ids: set[str] = set()
         connection_id = uuid.uuid4().hex
         request_segments: list[Segment] = []
         request_activity = started
         request_partial = False
+        request_utterances: set[str] = set()
+        request_unidentified_speech = False
 
         async def send(payload):
-            async with send_lock:
-                await socket.send_json(payload)
+            if writer is not None:
+                writer.send(payload)
+            else:
+                async with send_lock:
+                    await socket.send_json(payload)
 
         async def status(state, message):
             await send({"type": "status", "state": state, "message": message})
@@ -316,6 +407,8 @@ def create_app(settings: Settings | None = None, intelligence=None) -> FastAPI:
                     if frames > (now - started) * 40 + 50:
                         raise ValueError("Audio must be paced in real time.")
                     last_audio = now
+                    if settings.optimized_scheduling and frames == 1:
+                        flush_requested.set()
                     await asyncio.wait_for(provider.send(data), timeout=1)
                 elif packet.get("text"):
                     if len(packet["text"]) > 1024:
@@ -334,7 +427,7 @@ def create_app(settings: Settings | None = None, intelligence=None) -> FastAPI:
                         await send({"type": "pong"})
 
         async def receive_transcripts(provider):
-            nonlocal request_activity, request_partial
+            nonlocal request_activity, request_partial, request_unidentified_speech
             async for raw in provider:
                 message = parse_message(raw)
                 kind = message.get("type")
@@ -346,11 +439,39 @@ def create_app(settings: Settings | None = None, intelligence=None) -> FastAPI:
                     await status("READY", "Speech stream ready; starting microphone.")
                 elif kind == "error":
                     raise ValueError("Provider reported an error.")
+                elif kind == "speech_start":
+                    if mode == "request" and settings.request_speech_aware_completion:
+                        request_activity = time.monotonic()
+                        utterance_id = message.get("utterance_id")
+                        if isinstance(utterance_id, str) and utterance_id.strip():
+                            request_utterances.add(utterance_id)
+                        else:
+                            # Without an ID no later final can be safely correlated.
+                            # Keep capture conservative, bounded by the request timeout.
+                            request_unidentified_speech = True
                 elif kind == "transcript":
                     text = message.get("text", "")
+                    if (
+                        mode == "request"
+                        and settings.request_speech_aware_completion
+                        and isinstance(text, str)
+                    ):
+                        request_activity = time.monotonic()
+                        utterance_id = message.get("utterance_id")
+                        is_final = message.get("is_final") is True
+                        if isinstance(utterance_id, str) and utterance_id.strip():
+                            # Finals can lag a newer speech_start. Retire only their own ID,
+                            # including empty finals, before filtering transcript content.
+                            if is_final:
+                                request_utterances.discard(utterance_id)
+                            else:
+                                request_utterances.add(utterance_id)
+                        elif text.strip():
+                            # Transcript-only streams retain the existing partial fallback.
+                            request_partial = not is_final
                     if not isinstance(text, str) or not text.strip():
                         continue
-                    if mode == "request":
+                    if mode == "request" and not settings.request_speech_aware_completion:
                         request_activity = time.monotonic()
                         request_partial = message.get("is_final") is not True
                     if message.get("is_final") is not True:
@@ -367,10 +488,14 @@ def create_app(settings: Settings | None = None, intelligence=None) -> FastAPI:
                         id=f"{connection_id}:{provider_id}", text=text, received_at=time.time()
                     )
                     if mode == "monitor":
+                        queue_first = settings.optimized_scheduling or writer is not None
+                        if queue_first:
+                            queue.put_nowait(segment)
                         await send(
                             {"type": "transcript", "mode": mode, "segment": segment.model_dump()}
                         )
-                        queue.put_nowait(segment)
+                        if not queue_first:
+                            queue.put_nowait(segment)
                     else:
                         request_segments.append(segment)
                         if len(" ".join(s.text for s in request_segments)) > 1500:
@@ -378,8 +503,10 @@ def create_app(settings: Settings | None = None, intelligence=None) -> FastAPI:
 
         async def process_segments():
             nonlocal interpreting
-            while True:
+            while not stopping:
                 segment = await queue.get()
+                if stopping or (session.engine.rule or {}).get("status") != "ACTIVE":
+                    return
                 interpreting = True
                 window.append(segment)
                 while window and segment.received_at - window[0].received_at > 15:
@@ -395,6 +522,8 @@ def create_app(settings: Settings | None = None, intelligence=None) -> FastAPI:
                     extraction = await model.extract(list(window), recent)
                 async with session.lock:
                     interpreting = False
+                    if settings.optimized_scheduling:
+                        flush_requested.set()
                     if generation != session.engine.generation:
                         continue
                     if time.time() - segment.received_at > 15:
@@ -425,6 +554,36 @@ def create_app(settings: Settings | None = None, intelligence=None) -> FastAPI:
                         ingest = session.engine.ingest_match if task else session.engine.ingest
                         for event in ingest(proposal, list(window), segment.received_at):
                             await send(event)
+                    if settings.optimized_scheduling and frames > 0 and queue.empty():
+                        # Check the entire batch and every queued correction before releasing.
+                        for event in session.engine.flush(time.time()):
+                            await send(event)
+
+        async def flush_loop():
+            while True:
+                flush_requested.clear()
+                async with session.lock:
+                    due = None
+                    if not interpreting and queue.empty() and frames > 0:
+                        for event in session.engine.flush(time.time()):
+                            await send(event)
+                        due = session.engine.next_pending_due()
+                if due is None:
+                    await flush_requested.wait()
+                else:
+                    with suppress(TimeoutError):
+                        await asyncio.wait_for(
+                            flush_requested.wait(), timeout=max(0, due - time.time())
+                        )
+
+        async def heartbeat_loop():
+            deadline = started + 5
+            while True:
+                await asyncio.sleep(max(0, deadline - time.monotonic()))
+                now = time.monotonic()
+                await send({"type": "heartbeat", "audio_age_ms": int((now - last_audio) * 1000)})
+                # Monotonic independent cadence, including while interpreting corrections.
+                deadline += 5 * max(1, int((time.monotonic() - deadline) // 5) + 1)
 
         async def health_loop():
             listening = False
@@ -437,6 +596,10 @@ def create_app(settings: Settings | None = None, intelligence=None) -> FastAPI:
                     mode == "request"
                     and request_segments
                     and not request_partial
+                    and (
+                        not settings.request_speech_aware_completion
+                        or (not request_utterances and not request_unidentified_speech)
+                    )
                     and (now - request_activity >= settings.request_pause_seconds)
                 ):
                     # Provider sentence finals are not the end of a user's request.
@@ -459,33 +622,61 @@ def create_app(settings: Settings | None = None, intelligence=None) -> FastAPI:
                 if frames > 0 and not listening:
                     listening = True
                     await status("LISTENING", "Microphone audio is reaching Gnani.")
-                if listening and mode == "monitor":
+                if listening and mode == "monitor" and not settings.optimized_scheduling:
                     async with session.lock:
                         # Don't release a pending call while a correction is being interpreted.
                         if interpreting or not queue.empty():
                             continue
                         for event in session.engine.flush(time.time()):
                             await send(event)
-                if int(now * 5) % 25 == 0:
+                if not settings.optimized_scheduling and int(now * 5) % 25 == 0:
                     await send(
                         {"type": "heartbeat", "audio_age_ms": int((now - last_audio) * 1000)}
                     )
 
         tasks = []
         close_code = 1000
+
+        async def stop_workers():
+            nonlocal stopping
+            if not stopping:
+                stopping = True
+                # Invalidate in-flight model results before cancelling or awaiting anything.
+                session.engine.gap()
+            for task in tasks:
+                task.cancel()
+            # Keep the independent writer alive for final controls and error statuses.
+            with move_on_after(2, shield=True):
+                await asyncio.gather(*tasks, return_exceptions=True)
+
         try:
             await status("STARTING", "Connecting to Gnani Prisma…")
             async with prisma(settings) as provider:
-                tasks = [
-                    asyncio.create_task(receive_audio(provider)),
-                    asyncio.create_task(receive_transcripts(provider)),
-                    asyncio.create_task(health_loop()),
-                ]
-                if mode == "monitor":
-                    tasks.append(asyncio.create_task(process_segments()))
-                done, _ = await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
-                for task in done:
-                    task.result()
+                try:
+                    tasks = [
+                        asyncio.create_task(receive_audio(provider)),
+                        asyncio.create_task(receive_transcripts(provider)),
+                        asyncio.create_task(health_loop()),
+                    ]
+                    if mode == "monitor":
+                        tasks.append(asyncio.create_task(process_segments()))
+                        if settings.optimized_scheduling:
+                            tasks.append(asyncio.create_task(flush_loop()))
+                    if settings.optimized_scheduling:
+                        tasks.append(asyncio.create_task(heartbeat_loop()))
+                    watched = [*tasks, writer.task] if writer is not None else tasks
+                    done, _ = await asyncio.wait(watched, return_when=asyncio.FIRST_COMPLETED)
+                    for task in done:
+                        if writer is not None and task is writer.task and writer.closing:
+                            continue
+                        task.result()
+                finally:
+                    # Provider __aexit__ can await a slow close handshake. No worker may
+                    # interpret or flush pending announcements during that coverage gap.
+                    await stop_workers()
+        except OutboundCoverageGap:
+            session.engine.gap()
+            close_code = 1013
         except (
             WebSocketDisconnect,
             RuntimeError,
@@ -522,19 +713,22 @@ def create_app(settings: Settings | None = None, intelligence=None) -> FastAPI:
             except Exception:
                 pass
         finally:
-            for task in tasks:
-                task.cancel()
             try:
-                # ASGI servers may cancel the handler immediately after a peer closes.
-                # Finish bounded child-task cleanup even under AnyIO cancellation scopes.
-                with move_on_after(2, shield=True):
-                    await asyncio.gather(*tasks, return_exceptions=True)
-                    with suppress(RuntimeError, WebSocketDisconnect, OSError):
-                        await socket.close(code=close_code)
+                await stop_workers()
             finally:
-                session.engine.gap()
-                window.clear()
-                session.busy, session.socket = False, None
+                try:
+                    # ASGI servers may cancel the handler immediately after a peer closes.
+                    # Give final queued notifications their own bounded drain budget.
+                    with move_on_after(2, shield=True):
+                        if writer is not None:
+                            await writer.close(code=close_code)
+                        else:
+                            with suppress(RuntimeError, WebSocketDisconnect, OSError):
+                                await socket.close(code=close_code)
+                finally:
+                    window.clear()
+                    session.busy, session.socket = False, None
+                    session.writer = None
 
     return app
 

@@ -3,9 +3,12 @@
 Python 3.12+ FastAPI relay for the separately installed native Android app. This
 directory is independently installable; it does not serve or build the APK.
 The Android preview uses a separately hosted deployment. Automated tests use dummy
-credentials and mocked providers; separate historical text-model smoke checks and
-Gnani streaming connection/PCM checks passed. Spoken-audio recognition remains
-unverified; see the evidence record:
+credentials and mocked providers. A separate local synthetic-audio campaign exercised
+real Gnani and GPT-6 Luna in six languages; physical PA/Android performance remains
+unmeasured. The local experiment report and opt-in latency settings are documented at:
+/home/mathew/Arrakis/CueBell/docs/LATENCY_BENCHMARK_2026-11-13.md
+
+Historical release evidence:
 https://github.com/mathew1046/CueBell/blob/main/docs/VERIFICATION.md
 
 ## Install and test
@@ -48,6 +51,10 @@ provider keys or the operator pairing code in source control or the APK.
 | `CORRECTION_GRACE_SECONDS` | `1.2`; allowed range 0.2–10. Longer grace adds alert latency. |
 | `REQUEST_PAUSE_SECONDS` | `3.5`; allowed range 1–15. Quiet interval after finalized setup speech; interim speech keeps capture open. |
 | `REQUEST_TIMEOUT_SECONDS` | `90`; allowed range 20–180. Maximum spoken setup duration. |
+
+Additional opt-in latency controls are documented in `.env.example` and the local
+benchmark report above. They preserve baseline defaults: the faster experimental
+profile improved setup latency but did not pass the full monitoring quality gate.
 
 Generate a pairing code, for example, with
 `.venv/bin/python -c 'import secrets; print(secrets.token_urlsafe(32))'`.

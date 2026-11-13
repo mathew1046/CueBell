@@ -1,0 +1,76 @@
+{
+  "created_at": "2026-11-13T16:13:17.477969+00:00",
+  "extension_id": "spoken-requests-hi-ml",
+  "user_approved": true,
+  "approval_provenance": "Parent's explicit two-fixture request extension under the original full-round approval: same tool/model/voice, cumulative 2000 Unicode characters and estimated USD 0.60 cap, no regeneration of baseline fixtures",
+  "tool": "elevenlabs_tts",
+  "tool_version": "0.1.0",
+  "provider": "elevenlabs",
+  "model": "eleven_v3",
+  "voice_id": "bajNon13EdhNMndG3z05",
+  "script_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/request_extension_script.json",
+  "script_sha256": "cebe61a517e5623d88803fe323892b43cc7dc264c8515a97b568d4b849cd400a",
+  "baseline_directory": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/baseline-22",
+  "baseline_manifest_sha256": "5710381e37a021852cbe2d7b4d59c85711d58aa140698681b668ca0a9e83c6c5",
+  "prior_submitted_characters": 1097,
+  "prior_estimated_cost_usd": 0.3291,
+  "planned_characters": 153,
+  "planned_cost_usd": 0.0459,
+  "cumulative_planned_characters": 1250,
+  "cumulative_planned_cost_usd": 0.375,
+  "cost_status": "estimated",
+  "max_submitted_characters_including_failures": 2000,
+  "max_estimated_cost_usd": 0.6,
+  "quota_preflight": {
+    "used": 8037,
+    "limit": 10000,
+    "remaining": 1963,
+    "provenance": "Parent-confirmed read-only subscription count after the original 22 calls; not re-fetched here",
+    "extension_approved": false
+  },
+  "billing_note": "Baseline provider character-cost headers sum to 243, distinct from 1097 submitted Unicode code points and USD estimate",
+  "case_selection": "hi-request and ml-request have mode=request; parent selects these explicitly for request-mode and excludes them from monitor runs",
+  "quality_scope": "Synthetic stock voice, PCM/format/alignment/hash checks; native pronunciation not independently verified",
+  "generator_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/append_request_fixtures.py",
+  "generator_sha256": "6214e1d5ae57c9a41c60961dc5b441083f081af01343be3e9141b6e48f6b505f",
+  "fixtures": [
+    {
+      "id": "hi-request",
+      "characters": 70,
+      "estimated_cost_usd": 0.021,
+      "inputs": {
+        "text": "जब फ़ार्मेसी टोकन चार सौ बयालीस बुलाया जाए, तो मुझे कंपन से सूचित करो।",
+        "voice_id": "bajNon13EdhNMndG3z05",
+        "model_id": "eleven_v3",
+        "language_code": "hi",
+        "output_format": "pcm_16000",
+        "with_timestamps": true,
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 1.0,
+        "use_speaker_boost": true,
+        "output_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/hi-request.wav"
+      }
+    },
+    {
+      "id": "ml-request",
+      "characters": 83,
+      "estimated_cost_usd": 0.0249,
+      "inputs": {
+        "text": "ഫാർമസി ടോക്കൺ നാനൂറ്റി നാൽപ്പത്തിരണ്ട് വിളിക്കുമ്പോൾ വൈബ്രേഷനിലൂടെ എന്നെ അറിയിക്കൂ.",
+        "voice_id": "bajNon13EdhNMndG3z05",
+        "model_id": "eleven_v3",
+        "language_code": "ml",
+        "output_format": "pcm_16000",
+        "with_timestamps": true,
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 1.0,
+        "use_speaker_boost": true,
+        "output_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/ml-request.wav"
+      }
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+{
+  "request_pause_seconds": 1.5,
+  "request_speech_aware_completion": true
+}

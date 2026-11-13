@@ -1,0 +1,137 @@
+{
+  "id": "hi-cancellation",
+  "started_at": "2026-11-13T16:03:47.830867+00:00",
+  "characters": 63,
+  "estimated_cost_usd": 0.0189,
+  "cost_status": "estimated",
+  "cost_entry_id": "3de2ca83609d",
+  "status": "generated",
+  "generator_sha256": "1c1aacf53fea76885a7f6182e2546985ca5cf72813942d5f69adf0f5e395bacf",
+  "inputs": {
+    "text": "टोकन चार सौ बयालीस की पिछली घोषणा रद्द है। अभी काउंटर पर न आएँ।",
+    "voice_id": "bajNon13EdhNMndG3z05",
+    "model_id": "eleven_v3",
+    "language_code": "hi",
+    "output_format": "pcm_16000",
+    "with_timestamps": true,
+    "stability": 0.5,
+    "similarity_boost": 0.75,
+    "style": 0.0,
+    "speed": 1.0,
+    "use_speaker_boost": true,
+    "output_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/hi-cancellation.wav"
+  },
+  "finished_at": "2026-11-13T16:03:50.969156+00:00",
+  "generation_duration_s": 3.136388,
+  "http": [
+    {
+      "status_code": 200,
+      "request_id": "NpLvm8NARsswzBde2cVM",
+      "character-cost": 14
+    }
+  ],
+  "tool_result": {
+    "success": true,
+    "data": {
+      "provider": "elevenlabs",
+      "model": "eleven_v3",
+      "voice_id": "bajNon13EdhNMndG3z05",
+      "voice_settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 1.0,
+        "use_speaker_boost": true
+      },
+      "text_length": 63,
+      "output": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/hi-cancellation.wav",
+      "format": "pcm_16000",
+      "request_id": "NpLvm8NARsswzBde2cVM",
+      "word_timestamps": [
+        {
+          "word": "टोकन",
+          "start": 0.0,
+          "end": 0.4
+        },
+        {
+          "word": "चार",
+          "start": 0.48,
+          "end": 0.64
+        },
+        {
+          "word": "सौ",
+          "start": 0.72,
+          "end": 0.92
+        },
+        {
+          "word": "बयालीस",
+          "start": 0.96,
+          "end": 1.28
+        },
+        {
+          "word": "की",
+          "start": 1.36,
+          "end": 1.52
+        },
+        {
+          "word": "पिछली",
+          "start": 1.6,
+          "end": 2.0
+        },
+        {
+          "word": "घोषणा",
+          "start": 2.04,
+          "end": 2.52
+        },
+        {
+          "word": "रद्द",
+          "start": 2.58,
+          "end": 2.801
+        },
+        {
+          "word": "है।",
+          "start": 2.88,
+          "end": 3.04
+        },
+        {
+          "word": "अभी",
+          "start": 3.253,
+          "end": 3.76
+        },
+        {
+          "word": "काउंटर",
+          "start": 3.84,
+          "end": 4.24
+        },
+        {
+          "word": "पर",
+          "start": 4.32,
+          "end": 4.48
+        },
+        {
+          "word": "न",
+          "start": 4.6,
+          "end": 4.72
+        },
+        {
+          "word": "आएँ।",
+          "start": 4.8,
+          "end": 5.04
+        }
+      ],
+      "alignment_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/hi-cancellation.wav.alignment.json",
+      "alignment_matches_text": true,
+      "cost_status": "estimated"
+    },
+    "artifacts": [
+      "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/hi-cancellation.wav",
+      "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/hi-cancellation.wav.alignment.json"
+    ],
+    "error": null,
+    "cost_usd": 0.0189,
+    "duration_seconds": 3.14,
+    "seed": null,
+    "model": "eleven_v3",
+    "from_cache": false
+  }
+}

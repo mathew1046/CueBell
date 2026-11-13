@@ -1,0 +1,112 @@
+{
+  "id": "ml-cancellation",
+  "started_at": "2026-11-13T16:03:51.038206+00:00",
+  "characters": 89,
+  "estimated_cost_usd": 0.0267,
+  "cost_status": "estimated",
+  "cost_entry_id": "572e693f246f",
+  "status": "generated",
+  "generator_sha256": "1c1aacf53fea76885a7f6182e2546985ca5cf72813942d5f69adf0f5e395bacf",
+  "inputs": {
+    "text": "ടോക്കൺ നാനൂറ്റി നാൽപ്പത്തിരണ്ടിന്റെ മുൻ അറിയിപ്പ് റദ്ദാക്കി. ഇപ്പോൾ കൗണ്ടറിലേക്ക് വരേണ്ട.",
+    "voice_id": "bajNon13EdhNMndG3z05",
+    "model_id": "eleven_v3",
+    "language_code": "ml",
+    "output_format": "pcm_16000",
+    "with_timestamps": true,
+    "stability": 0.5,
+    "similarity_boost": 0.75,
+    "style": 0.0,
+    "speed": 1.0,
+    "use_speaker_boost": true,
+    "output_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/ml-cancellation.wav"
+  },
+  "finished_at": "2026-11-13T16:03:56.360351+00:00",
+  "generation_duration_s": 5.319755,
+  "http": [
+    {
+      "status_code": 200,
+      "request_id": "FuJgWtlIC7bMH0O1n6TF",
+      "character-cost": 20
+    }
+  ],
+  "tool_result": {
+    "success": true,
+    "data": {
+      "provider": "elevenlabs",
+      "model": "eleven_v3",
+      "voice_id": "bajNon13EdhNMndG3z05",
+      "voice_settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 1.0,
+        "use_speaker_boost": true
+      },
+      "text_length": 89,
+      "output": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/ml-cancellation.wav",
+      "format": "pcm_16000",
+      "request_id": "FuJgWtlIC7bMH0O1n6TF",
+      "word_timestamps": [
+        {
+          "word": "ടോക്കൺ",
+          "start": 0.0,
+          "end": 0.68
+        },
+        {
+          "word": "നാനൂറ്റി",
+          "start": 0.88,
+          "end": 1.32
+        },
+        {
+          "word": "നാൽപ്പത്തിരണ്ടിന്റെ",
+          "start": 1.36,
+          "end": 2.32
+        },
+        {
+          "word": "മുൻ",
+          "start": 2.4,
+          "end": 2.52
+        },
+        {
+          "word": "അറിയിപ്പ്",
+          "start": 2.56,
+          "end": 3.12
+        },
+        {
+          "word": "റദ്ദാക്കി.",
+          "start": 3.44,
+          "end": 4.56
+        },
+        {
+          "word": "ഇപ്പോൾ",
+          "start": 4.88,
+          "end": 5.4
+        },
+        {
+          "word": "കൗണ്ടറിലേക്ക്",
+          "start": 5.68,
+          "end": 6.16
+        },
+        {
+          "word": "വരേണ്ട.",
+          "start": 6.24,
+          "end": 6.72
+        }
+      ],
+      "alignment_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/ml-cancellation.wav.alignment.json",
+      "alignment_matches_text": true,
+      "cost_status": "estimated"
+    },
+    "artifacts": [
+      "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/ml-cancellation.wav",
+      "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/ml-cancellation.wav.alignment.json"
+    ],
+    "error": null,
+    "cost_usd": 0.0267,
+    "duration_seconds": 5.32,
+    "seed": null,
+    "model": "eleven_v3",
+    "from_cache": false
+  }
+}

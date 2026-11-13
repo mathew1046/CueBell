@@ -1,0 +1,10 @@
+{
+  "timestamp": "2026-11-13T16:00:06.963486+00:00",
+  "error": "Last nonspace character ends outside the WAV",
+  "status": "resolved",
+  "resolution": "Tamil positive provider alignment ended at 4.641s for a 4.640s WAV. Raw timestamps were retained; speech_end_s was bounded to WAV end within a documented 5ms tolerance. Existing audio passed local revalidation, and all 22 fixtures passed the completed offline audit. No paid retry or media processing occurred.",
+  "resolution_artifact": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/local_revalidation.json",
+  "audit_report": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/audit_report.json",
+  "automatic_retry": false,
+  "substitution_performed": false
+}

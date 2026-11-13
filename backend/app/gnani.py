@@ -10,16 +10,26 @@ from .config import Settings
 async def prisma(settings: Settings):
     if not settings.gnani_api_key:
         raise RuntimeError("Speech recognition is not configured on the backend.")
+    headers = {
+        "x-api-key-id": settings.gnani_api_key,
+        "model": "prisma-v3.0",
+        "language_code": settings.gnani_language_code,
+        "x-sample-rate": "16000",
+        "format": "verbatim",
+        "x-idle-timeout-sec": "900",
+    }
+    for header, value in (
+        ("x-min-silence-ms", settings.gnani_min_silence_ms),
+        ("x-vad-threshold", settings.gnani_vad_threshold),
+        ("x-min-speech-ms", settings.gnani_min_speech_ms),
+        ("x-min-segment-ms", settings.gnani_min_segment_ms),
+        ("x-max-speech-s", settings.gnani_max_speech_s),
+    ):
+        if value is not None:
+            headers[header] = str(value)
     async with connect(
         "wss://api.vachana.ai/stt/v3/stream",
-        additional_headers={
-            "x-api-key-id": settings.gnani_api_key,
-            "model": "prisma-v3.0",
-            "language_code": settings.gnani_language_code,
-            "x-sample-rate": "16000",
-            "format": "verbatim",
-            "x-idle-timeout-sec": "900",
-        },
+        additional_headers=headers,
         open_timeout=12,
         close_timeout=5,
         max_size=65536,

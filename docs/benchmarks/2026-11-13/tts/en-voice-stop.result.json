@@ -1,0 +1,82 @@
+{
+  "id": "en-voice-stop",
+  "started_at": "2026-11-13T16:03:35.892374+00:00",
+  "characters": 24,
+  "estimated_cost_usd": 0.0072,
+  "cost_status": "estimated",
+  "cost_entry_id": "25ae7d660125",
+  "status": "generated",
+  "generator_sha256": "1c1aacf53fea76885a7f6182e2546985ca5cf72813942d5f69adf0f5e395bacf",
+  "inputs": {
+    "text": "CueBell, stop listening.",
+    "voice_id": "bajNon13EdhNMndG3z05",
+    "model_id": "eleven_v3",
+    "language_code": "en",
+    "output_format": "pcm_16000",
+    "with_timestamps": true,
+    "stability": 0.5,
+    "similarity_boost": 0.75,
+    "style": 0.0,
+    "speed": 1.0,
+    "use_speaker_boost": true,
+    "output_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/en-voice-stop.wav"
+  },
+  "finished_at": "2026-11-13T16:03:37.682810+00:00",
+  "generation_duration_s": 1.788844,
+  "http": [
+    {
+      "status_code": 200,
+      "request_id": "AeaGRmjXuMHkoNwUNPQp",
+      "character-cost": 5
+    }
+  ],
+  "tool_result": {
+    "success": true,
+    "data": {
+      "provider": "elevenlabs",
+      "model": "eleven_v3",
+      "voice_id": "bajNon13EdhNMndG3z05",
+      "voice_settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 1.0,
+        "use_speaker_boost": true
+      },
+      "text_length": 24,
+      "output": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/en-voice-stop.wav",
+      "format": "pcm_16000",
+      "request_id": "AeaGRmjXuMHkoNwUNPQp",
+      "word_timestamps": [
+        {
+          "word": "CueBell,",
+          "start": 0.0,
+          "end": 0.84
+        },
+        {
+          "word": "stop",
+          "start": 0.912,
+          "end": 1.2
+        },
+        {
+          "word": "listening.",
+          "start": 1.248,
+          "end": 1.84
+        }
+      ],
+      "alignment_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/en-voice-stop.wav.alignment.json",
+      "alignment_matches_text": true,
+      "cost_status": "estimated"
+    },
+    "artifacts": [
+      "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/en-voice-stop.wav",
+      "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/en-voice-stop.wav.alignment.json"
+    ],
+    "error": null,
+    "cost_usd": 0.0072,
+    "duration_seconds": 1.79,
+    "seed": null,
+    "model": "eleven_v3",
+    "from_cache": false
+  }
+}

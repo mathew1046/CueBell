@@ -1,0 +1,13 @@
+{
+  "policy": "Secondary, explicit fixture-label review. Preserve original client results and apply the same additions to every configuration. This is not a production parser or native-speaker validation.",
+  "cases": {
+    "te-positive": {
+      "location_aliases_add": ["కౌంటర్. రెండుకు"],
+      "reason": "The only difference from the existing fixture label కౌంటర్ రెండుకు is an ASR-inserted period; the verbatim source still identifies counter two."
+    },
+    "te-burst": {
+      "location_aliases_add": ["కౌంటర్. రెండుకు"],
+      "reason": "The only difference from the existing fixture label కౌంటర్ రెండుకు is an ASR-inserted period; the verbatim source still identifies counter two."
+    }
+  }
+}

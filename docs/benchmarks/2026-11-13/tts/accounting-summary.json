@@ -1,0 +1,13 @@
+{
+  "tts_calls": 24,
+  "submitted_unicode_characters": 1250,
+  "estimated_usd_not_invoice": 0.375,
+  "provider_character_cost_header_total": 276,
+  "http_statuses": {
+    "200": 24
+  },
+  "approved_submitted_character_limit": 2000,
+  "model": "eleven_v3",
+  "voice_id": "bajNon13EdhNMndG3z05",
+  "note": "Provider character-cost units differ from Python Unicode text lengths; USD is the OpenMontage reference estimate, not an invoice."
+}

@@ -1,0 +1,132 @@
+{
+  "id": "hi-correction",
+  "started_at": "2026-11-13T16:03:37.745162+00:00",
+  "characters": 66,
+  "estimated_cost_usd": 0.0198,
+  "cost_status": "estimated",
+  "cost_entry_id": "026a8aa6ee88",
+  "status": "generated",
+  "generator_sha256": "1c1aacf53fea76885a7f6182e2546985ca5cf72813942d5f69adf0f5e395bacf",
+  "inputs": {
+    "text": "सुधार: चार सौ बयालीस नहीं, टोकन चार सौ तैंतालीस काउंटर तीन पर आएँ।",
+    "voice_id": "bajNon13EdhNMndG3z05",
+    "model_id": "eleven_v3",
+    "language_code": "hi",
+    "output_format": "pcm_16000",
+    "with_timestamps": true,
+    "stability": 0.5,
+    "similarity_boost": 0.75,
+    "style": 0.0,
+    "speed": 1.0,
+    "use_speaker_boost": true,
+    "output_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/hi-correction.wav"
+  },
+  "finished_at": "2026-11-13T16:03:40.871872+00:00",
+  "generation_duration_s": 3.125028,
+  "http": [
+    {
+      "status_code": 200,
+      "request_id": "WP7cGu0tQFhjNOfB8M2J",
+      "character-cost": 15
+    }
+  ],
+  "tool_result": {
+    "success": true,
+    "data": {
+      "provider": "elevenlabs",
+      "model": "eleven_v3",
+      "voice_id": "bajNon13EdhNMndG3z05",
+      "voice_settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 1.0,
+        "use_speaker_boost": true
+      },
+      "text_length": 66,
+      "output": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/hi-correction.wav",
+      "format": "pcm_16000",
+      "request_id": "WP7cGu0tQFhjNOfB8M2J",
+      "word_timestamps": [
+        {
+          "word": "सुधार:",
+          "start": 0.0,
+          "end": 0.56
+        },
+        {
+          "word": "चार",
+          "start": 0.96,
+          "end": 1.44
+        },
+        {
+          "word": "सौ",
+          "start": 1.52,
+          "end": 1.72
+        },
+        {
+          "word": "बयालीस",
+          "start": 1.76,
+          "end": 2.16
+        },
+        {
+          "word": "नहीं,",
+          "start": 2.213,
+          "end": 3.04
+        },
+        {
+          "word": "टोकन",
+          "start": 3.08,
+          "end": 3.44
+        },
+        {
+          "word": "चार",
+          "start": 3.52,
+          "end": 3.68
+        },
+        {
+          "word": "सौ",
+          "start": 3.72,
+          "end": 3.84
+        },
+        {
+          "word": "तैंतालीस",
+          "start": 3.92,
+          "end": 4.48
+        },
+        {
+          "word": "काउंटर",
+          "start": 4.8,
+          "end": 5.52
+        },
+        {
+          "word": "तीन",
+          "start": 5.68,
+          "end": 6.0
+        },
+        {
+          "word": "पर",
+          "start": 6.08,
+          "end": 6.24
+        },
+        {
+          "word": "आएँ।",
+          "start": 6.293,
+          "end": 6.56
+        }
+      ],
+      "alignment_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/hi-correction.wav.alignment.json",
+      "alignment_matches_text": true,
+      "cost_status": "estimated"
+    },
+    "artifacts": [
+      "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/hi-correction.wav",
+      "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/hi-correction.wav.alignment.json"
+    ],
+    "error": null,
+    "cost_usd": 0.0198,
+    "duration_seconds": 3.12,
+    "seed": null,
+    "model": "eleven_v3",
+    "from_cache": false
+  }
+}

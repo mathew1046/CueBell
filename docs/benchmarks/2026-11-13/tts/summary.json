@@ -1,0 +1,37 @@
+{
+  "finished_at": "2026-11-13T16:14:38.128056+00:00",
+  "status": "completed",
+  "fixtures": 24,
+  "cases": 30,
+  "languages": [
+    "hi",
+    "ml",
+    "ta",
+    "te",
+    "mr",
+    "en"
+  ],
+  "submitted_characters": 1250,
+  "estimated_cost_usd": 0.375,
+  "cost_status": "estimated",
+  "generation_duration_s": 77.678408,
+  "total_audio_duration_s": 99.44,
+  "min_audio_duration_s": 1.6,
+  "max_audio_duration_s": 8.96,
+  "failed_submissions": 0,
+  "automatic_retries": 0,
+  "manifest_path": "/home/mathew/Arrakis/CueBell/backend/benchmarks/corpus.json",
+  "manifest_sha256": "b5d3d89f55f8a647551b4f4c54d9d0276b9ec5891a97e00b1fcd45517a8bc6ba",
+  "audio_directory": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio",
+  "evidence_directory": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio",
+  "provider_confirmed_remaining_quota": null,
+  "quota_note": "Post-run remaining quota is unavailable in ToolResult/observed response metadata; do not present arithmetic remainder as provider-confirmed.",
+  "approved_submitted_character_budget_remaining": 750,
+  "script_extension_plans": [
+    "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/request_extension_plan.json"
+  ],
+  "request_cases": [
+    "hi-request",
+    "ml-request"
+  ]
+}

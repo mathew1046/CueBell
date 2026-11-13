@@ -1,0 +1,22 @@
+{
+  "profile": "fast-orchestrated",
+  "status": "candidate selected for full-corpus and paired validation; not a production accuracy guarantee",
+  "basis": [
+    "Fast tier and no-reasoning were the clearest speed candidates in screening; Fast retains the existing reasoning behavior and prompt.",
+    "Use immediate guarded flush, an independent heartbeat, and the ordered bounded writer, including the failed-stream cancellation fix.",
+    "Keep Gnani's original 500 ms endpoint behavior: shorter values split Malayalam token and counter evidence across finals.",
+    "Keep the 1.2-second correction grace; screening did not establish a meaningful benefit from reducing it.",
+    "Keep the original output ceiling, prompt formatting, verbosity, reasoning default, and implicit cache behavior.",
+    "Spoken setup uses the separately tested outstanding-utterance tracker with a 1.5-second quiet period; its capture completed in all six tests, with two subsequent OpenAI timeouts."
+  ],
+  "screening_limitations": "Six cases per arm, routing variation, provider failures, and no independent acoustic samples. Missing counters and incomplete decisions remain non-passes.",
+  "planned_monitor_validation": "All 28 monitoring cases plus concurrent matched five-case baseline/candidate replay, same recordings and 24-second tail.",
+  "usage_before_validation": {
+    "openai_attempts": 314,
+    "gnani_connection_minutes": 53.261
+  },
+  "approved_limits": {
+    "openai_attempts": 600,
+    "gnani_connection_minutes": 120
+  }
+}

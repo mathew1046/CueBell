@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+  "translation_provenance": "Agent-authored native-script benchmark prompts and English glosses, established before synthesis; not derived from Gnani or Luna outputs; not reviewed by native speakers.",
+  "fixtures": [
+    {"id": "hi-positive", "language": "hi", "kind": "positive", "text": "टोकन चार सौ बयालीस, कृपया काउंटर दो पर जाएँ।", "english_gloss": "Token four hundred forty two, please go to counter two."},
+    {"id": "ml-positive", "language": "ml", "kind": "positive", "text": "ടോക്കൺ നാനൂറ്റി നാൽപ്പത്തിരണ്ട്, കൗണ്ടർ രണ്ടിലേക്ക് വരൂ.", "english_gloss": "Token four hundred forty two, come to counter two."},
+    {"id": "ta-positive", "language": "ta", "kind": "positive", "text": "டோக்கன் நானூற்று நாற்பத்து இரண்டு, கவுன்டர் இரண்டிற்கு வரவும்.", "english_gloss": "Token four hundred forty two, please come to counter two."},
+    {"id": "te-positive", "language": "te", "kind": "positive", "text": "టోకెన్ నాలుగు వందల నలభై రెండు, కౌంటర్ రెండుకు రండి.", "english_gloss": "Token four hundred forty two, please come to counter two."},
+    {"id": "mr-positive", "language": "mr", "kind": "positive", "text": "टोकन चारशे बेचाळीस, कृपया काउंटर दोनवर या.", "english_gloss": "Token four hundred forty two, please come to counter two."},
+    {"id": "en-positive", "language": "en", "kind": "positive", "text": "Token four hundred and forty two, please go to counter two.", "english_gloss": "Token four hundred forty two, please go to counter two."},
+    {"id": "hi-near-miss", "language": "hi", "kind": "near-miss", "text": "टोकन चार सौ तैंतालीस, कृपया काउंटर तीन पर जाएँ।", "english_gloss": "Token four hundred forty three, please go to counter three."},
+    {"id": "ml-near-miss", "language": "ml", "kind": "near-miss", "text": "ടോക്കൺ നാനൂറ്റി നാൽപ്പത്തിമൂന്ന്, കൗണ്ടർ മൂന്നിലേക്ക് വരൂ.", "english_gloss": "Token four hundred forty three, come to counter three."},
+    {"id": "ta-near-miss", "language": "ta", "kind": "near-miss", "text": "டோக்கன் நானூற்று நாற்பத்து மூன்று, கவுன்டர் மூன்றிற்கு வரவும்.", "english_gloss": "Token four hundred forty three, please come to counter three."},
+    {"id": "te-near-miss", "language": "te", "kind": "near-miss", "text": "టోకెన్ నాలుగు వందల నలభై మూడు, కౌంటర్ మూడుకు రండి.", "english_gloss": "Token four hundred forty three, please come to counter three."},
+    {"id": "mr-near-miss", "language": "mr", "kind": "near-miss", "text": "टोकन चारशे त्रेचाळीस, कृपया काउंटर तीनवर या.", "english_gloss": "Token four hundred forty three, please come to counter three."},
+    {"id": "en-near-miss", "language": "en", "kind": "near-miss", "text": "Token four hundred and forty three, please go to counter three.", "english_gloss": "Token four hundred forty three, please go to counter three."},
+    {"id": "hi-voice-stop", "language": "hi", "kind": "voice-stop", "text": "क्यूबेल, सुनना बंद करो।", "english_gloss": "CueBell, stop listening."},
+    {"id": "ml-voice-stop", "language": "ml", "kind": "voice-stop", "text": "ക്യൂബെൽ, കേൾക്കുന്നത് നിർത്തൂ.", "english_gloss": "CueBell, stop listening."},
+    {"id": "ta-voice-stop", "language": "ta", "kind": "voice-stop", "text": "கியூபெல், கேட்பதை நிறுத்து.", "english_gloss": "CueBell, stop listening."},
+    {"id": "te-voice-stop", "language": "te", "kind": "voice-stop", "text": "క్యూబెల్, వినడం ఆపు.", "english_gloss": "CueBell, stop listening."},
+    {"id": "mr-voice-stop", "language": "mr", "kind": "voice-stop", "text": "क्यूबेल, ऐकणे थांबव.", "english_gloss": "CueBell, stop listening."},
+    {"id": "en-voice-stop", "language": "en", "kind": "voice-stop", "text": "CueBell, stop listening.", "english_gloss": "CueBell, stop listening."},
+    {"id": "hi-correction", "language": "hi", "kind": "correction", "text": "सुधार: चार सौ बयालीस नहीं, टोकन चार सौ तैंतालीस काउंटर तीन पर आएँ।", "english_gloss": "Correction: not four hundred forty two; token four hundred forty three, come to counter three."},
+    {"id": "ml-correction", "language": "ml", "kind": "correction", "text": "തിരുത്ത്: നാനൂറ്റി നാൽപ്പത്തിരണ്ട് അല്ല, ടോക്കൺ നാനൂറ്റി നാൽപ്പത്തിമൂന്ന് കൗണ്ടർ മൂന്നിലേക്ക് വരൂ.", "english_gloss": "Correction: not four hundred forty two; token four hundred forty three, come to counter three."},
+    {"id": "hi-cancellation", "language": "hi", "kind": "cancellation", "text": "टोकन चार सौ बयालीस की पिछली घोषणा रद्द है। अभी काउंटर पर न आएँ।", "english_gloss": "The previous announcement for token four hundred forty two is cancelled. Do not come to the counter now."},
+    {"id": "ml-cancellation", "language": "ml", "kind": "cancellation", "text": "ടോക്കൺ നാനൂറ്റി നാൽപ്പത്തിരണ്ടിന്റെ മുൻ അറിയിപ്പ് റദ്ദാക്കി. ഇപ്പോൾ കൗണ്ടറിലേക്ക് വരേണ്ട.", "english_gloss": "The previous announcement for token four hundred forty two is cancelled. Do not come to the counter now."}
+  ]
+}

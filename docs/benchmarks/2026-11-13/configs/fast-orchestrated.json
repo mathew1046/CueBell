@@ -1,0 +1,7 @@
+{
+  "optimized_scheduling": true,
+  "outbound_writer": true,
+  "openai_service_tier": "fast",
+  "request_speech_aware_completion": true,
+  "request_pause_seconds": 1.5
+}

@@ -1,0 +1,449 @@
+{
+  "schema_version": 1,
+  "run_id": "201056c0919545dfb4f692afba1bcdc6",
+  "label": "paired-v2-baseline",
+  "mode": "monitor",
+  "base_url": "http://127.0.0.1:8091",
+  "manifest": "/home/mathew/Arrakis/CueBell/backend/benchmarks/corpus.json",
+  "manifest_sha256": "0475b1692d8e93ee79404aa64ef652a43a02c44882a5ce4cbcfefea82c542832",
+  "output": "/home/mathew/Arrakis/CueBell/docs/benchmarks/2026-11-13/paired-v2-baseline.jsonl",
+  "options": {
+    "base_url": "http://127.0.0.1:8091",
+    "mode": "monitor",
+    "label": "paired-v2-baseline",
+    "leading_silence": 0.3,
+    "tail_silence": 24.0,
+    "max_stream_seconds": 90.0,
+    "ready_timeout": 30.0,
+    "http_timeout": 45.0,
+    "close_timeout": 3.0
+  },
+  "repeat": 1,
+  "selected_cases": [
+    "hi-positive",
+    "ml-positive",
+    "ml-voice-stop",
+    "en-positive",
+    "hi-correction"
+  ],
+  "max_cases": null,
+  "counts": {
+    "attempts": 5,
+    "pass": 4,
+    "fail": 0,
+    "inconclusive": 1,
+    "statuses": {
+      "completed": 5
+    },
+    "with_errors": 0,
+    "false_positive_any": 0,
+    "false_positive_terminal": 0,
+    "voice_stops": 1,
+    "corrections": 1
+  },
+  "usage_proxy": {
+    "audio_stream_seconds": 136.928,
+    "connection_open_seconds": 144.57144709800014,
+    "intent_attempt_count": 5,
+    "successful_intent_count": 5,
+    "confirmed_intent_count": 5,
+    "observed_transcript_count": 9
+  },
+  "per_language": {
+    "en": {
+      "cases": 1,
+      "verdicts": {
+        "inconclusive": 1
+      },
+      "metrics": {
+        "setup_ms": {
+          "n": 1,
+          "median": 4106.9504440001765,
+          "p95": 4106.9504440001765,
+          "min": 4106.9504440001765,
+          "max": 4106.9504440001765,
+          "small_n": true
+        },
+        "connect_ready_ms": {
+          "n": 1,
+          "median": 985.406943000271,
+          "p95": 985.406943000271,
+          "min": 985.406943000271,
+          "max": 985.406943000271,
+          "small_n": true
+        },
+        "intent_ms": {
+          "n": 1,
+          "median": 4093.334405999485,
+          "p95": 4093.334405999485,
+          "min": 4093.334405999485,
+          "max": 4093.334405999485,
+          "small_n": true
+        },
+        "confirm_ms": {
+          "n": 1,
+          "median": 1.3747419998253463,
+          "p95": 1.3747419998253463,
+          "min": 1.3747419998253463,
+          "max": 1.3747419998253463,
+          "small_n": true
+        },
+        "speech_end_to_transcript_ms": {
+          "n": 1,
+          "median": -2033.1493349995071,
+          "p95": -2033.1493349995071,
+          "min": -2033.1493349995071,
+          "max": -2033.1493349995071,
+          "small_n": true
+        },
+        "speech_end_to_alert_ms": {
+          "n": 1,
+          "median": 6784.666541000661,
+          "p95": 6784.666541000661,
+          "min": 6784.666541000661,
+          "max": 6784.666541000661,
+          "small_n": true
+        },
+        "speech_end_to_voice_stop_ms": {
+          "n": 0,
+          "median": null,
+          "p95": null,
+          "min": null,
+          "max": null,
+          "small_n": true
+        },
+        "transcript_to_alert_ms": {
+          "n": 1,
+          "median": 8817.815876000168,
+          "p95": 8817.815876000168,
+          "min": 8817.815876000168,
+          "max": 8817.815876000168,
+          "small_n": true
+        },
+        "source_transcript_to_alert_ms": {
+          "n": 1,
+          "median": 8817.815876000168,
+          "p95": 8817.815876000168,
+          "min": 8817.815876000168,
+          "max": 8817.815876000168,
+          "small_n": true
+        },
+        "last_cue_to_correction_ms": {
+          "n": 0,
+          "median": null,
+          "p95": null,
+          "min": null,
+          "max": null,
+          "small_n": true
+        },
+        "request_workflow_ms": {
+          "n": 0,
+          "median": null,
+          "p95": null,
+          "min": null,
+          "max": null,
+          "small_n": true
+        },
+        "speech_end_to_confirmation_ms": {
+          "n": 0,
+          "median": null,
+          "p95": null,
+          "min": null,
+          "max": null,
+          "small_n": true
+        },
+        "sender_lateness_p50_ms": {
+          "n": 1,
+          "median": 0.621725999735645,
+          "p95": 0.621725999735645,
+          "min": 0.621725999735645,
+          "max": 0.621725999735645,
+          "small_n": true
+        },
+        "sender_lateness_p95_ms": {
+          "n": 1,
+          "median": 1.089357400087465,
+          "p95": 1.089357400087465,
+          "min": 1.089357400087465,
+          "max": 1.089357400087465,
+          "small_n": true
+        },
+        "sender_lateness_max_ms": {
+          "n": 1,
+          "median": 1.4570199991794652,
+          "p95": 1.4570199991794652,
+          "min": 1.4570199991794652,
+          "max": 1.4570199991794652,
+          "small_n": true
+        }
+      }
+    },
+    "hi": {
+      "cases": 2,
+      "verdicts": {
+        "pass": 2
+      },
+      "metrics": {
+        "setup_ms": {
+          "n": 2,
+          "median": 3969.6016689995304,
+          "p95": 4621.929586299666,
+          "min": 3244.7928719993797,
+          "max": 4694.410465999681,
+          "small_n": true
+        },
+        "connect_ready_ms": {
+          "n": 2,
+          "median": 254.304289999709,
+          "p95": 279.573518899997,
+          "min": 226.227368999389,
+          "max": 282.381211000029,
+          "small_n": true
+        },
+        "intent_ms": {
+          "n": 2,
+          "median": 3893.291110499831,
+          "p95": 4582.620031649958,
+          "min": 3127.37008699969,
+          "max": 4659.212133999972,
+          "small_n": true
+        },
+        "confirm_ms": {
+          "n": 2,
+          "median": 1.772608000010223,
+          "p95": 2.112834999888946,
+          "min": 1.3945780001449748,
+          "max": 2.150637999875471,
+          "small_n": true
+        },
+        "speech_end_to_transcript_ms": {
+          "n": 2,
+          "median": -2279.757840500224,
+          "p95": 425.75401825010886,
+          "min": -5285.882128000594,
+          "max": 726.3664470001459,
+          "small_n": true
+        },
+        "speech_end_to_alert_ms": {
+          "n": 1,
+          "median": 5568.062094999732,
+          "p95": 5568.062094999732,
+          "min": 5568.062094999732,
+          "max": 5568.062094999732,
+          "small_n": true
+        },
+        "speech_end_to_voice_stop_ms": {
+          "n": 0,
+          "median": null,
+          "p95": null,
+          "min": null,
+          "max": null,
+          "small_n": true
+        },
+        "transcript_to_alert_ms": {
+          "n": 1,
+          "median": 4841.695647999586,
+          "p95": 4841.695647999586,
+          "min": 4841.695647999586,
+          "max": 4841.695647999586,
+          "small_n": true
+        },
+        "source_transcript_to_alert_ms": {
+          "n": 1,
+          "median": 4841.695647999586,
+          "p95": 4841.695647999586,
+          "min": 4841.695647999586,
+          "max": 4841.695647999586,
+          "small_n": true
+        },
+        "last_cue_to_correction_ms": {
+          "n": 1,
+          "median": 9550.325049999628,
+          "p95": 9550.325049999628,
+          "min": 9550.325049999628,
+          "max": 9550.325049999628,
+          "small_n": true
+        },
+        "request_workflow_ms": {
+          "n": 0,
+          "median": null,
+          "p95": null,
+          "min": null,
+          "max": null,
+          "small_n": true
+        },
+        "speech_end_to_confirmation_ms": {
+          "n": 0,
+          "median": null,
+          "p95": null,
+          "min": null,
+          "max": null,
+          "small_n": true
+        },
+        "sender_lateness_p50_ms": {
+          "n": 2,
+          "median": 0.6686659996830713,
+          "p95": 0.6811633995084776,
+          "min": 0.6547799998770643,
+          "max": 0.6825519994890783,
+          "small_n": true
+        },
+        "sender_lateness_p95_ms": {
+          "n": 2,
+          "median": 1.1338240751911144,
+          "p95": 1.176318407790404,
+          "min": 1.0866081500807923,
+          "max": 1.1810400003014363,
+          "small_n": true
+        },
+        "sender_lateness_max_ms": {
+          "n": 2,
+          "median": 1.9718824996743933,
+          "p95": 2.0256003498616337,
+          "min": 1.9121959994663484,
+          "max": 2.031568999882438,
+          "small_n": true
+        }
+      }
+    },
+    "ml": {
+      "cases": 2,
+      "verdicts": {
+        "pass": 2
+      },
+      "metrics": {
+        "setup_ms": {
+          "n": 2,
+          "median": 3569.3469839998215,
+          "p95": 3650.818693799647,
+          "min": 3478.8228620000154,
+          "max": 3659.8711059996276,
+          "small_n": true
+        },
+        "connect_ready_ms": {
+          "n": 2,
+          "median": 350.9340604996396,
+          "p95": 430.5808128492572,
+          "min": 262.4376690000645,
+          "max": 439.4304519992147,
+          "small_n": true
+        },
+        "intent_ms": {
+          "n": 2,
+          "median": 3564.407401000153,
+          "p95": 3645.8675439999297,
+          "min": 3473.8961310004015,
+          "max": 3654.918670999905,
+          "small_n": true
+        },
+        "confirm_ms": {
+          "n": 2,
+          "median": 2.3027249994811427,
+          "p95": 2.603162999412234,
+          "min": 1.968904999557708,
+          "max": 2.6365449994045775,
+          "small_n": true
+        },
+        "speech_end_to_transcript_ms": {
+          "n": 2,
+          "median": -185.38572899979044,
+          "p95": 857.8024989004007,
+          "min": -1344.4837600000028,
+          "max": 973.7123020004219,
+          "small_n": true
+        },
+        "speech_end_to_alert_ms": {
+          "n": 1,
+          "median": 5757.528473000093,
+          "p95": 5757.528473000093,
+          "min": 5757.528473000093,
+          "max": 5757.528473000093,
+          "small_n": true
+        },
+        "speech_end_to_voice_stop_ms": {
+          "n": 1,
+          "median": 6248.682086000372,
+          "p95": 6248.682086000372,
+          "min": 6248.682086000372,
+          "max": 6248.682086000372,
+          "small_n": true
+        },
+        "transcript_to_alert_ms": {
+          "n": 1,
+          "median": 4783.816170999671,
+          "p95": 4783.816170999671,
+          "min": 4783.816170999671,
+          "max": 4783.816170999671,
+          "small_n": true
+        },
+        "source_transcript_to_alert_ms": {
+          "n": 1,
+          "median": 4783.816170999671,
+          "p95": 4783.816170999671,
+          "min": 4783.816170999671,
+          "max": 4783.816170999671,
+          "small_n": true
+        },
+        "last_cue_to_correction_ms": {
+          "n": 0,
+          "median": null,
+          "p95": null,
+          "min": null,
+          "max": null,
+          "small_n": true
+        },
+        "request_workflow_ms": {
+          "n": 0,
+          "median": null,
+          "p95": null,
+          "min": null,
+          "max": null,
+          "small_n": true
+        },
+        "speech_end_to_confirmation_ms": {
+          "n": 0,
+          "median": null,
+          "p95": null,
+          "min": null,
+          "max": null,
+          "small_n": true
+        },
+        "sender_lateness_p50_ms": {
+          "n": 2,
+          "median": 0.6366985003296577,
+          "p95": 0.6718520503909531,
+          "min": 0.5976390002615517,
+          "max": 0.6757580003977637,
+          "small_n": true
+        },
+        "sender_lateness_p95_ms": {
+          "n": 2,
+          "median": 1.0907569003848039,
+          "p95": 1.1077885904296636,
+          "min": 1.0718328003349598,
+          "max": 1.109681000434648,
+          "small_n": true
+        },
+        "sender_lateness_max_ms": {
+          "n": 2,
+          "median": 1.8142359999728797,
+          "p95": 1.9900374997178005,
+          "min": 1.618901000256301,
+          "max": 2.0095709996894584,
+          "small_n": true
+        }
+      }
+    }
+  },
+  "notes": [
+    "Medians/p95 use only observed values, including failed cases; missing values stay null.",
+    "p95 uses linear interpolation. n<20 is flagged; small samples are descriptive only.",
+    "Times are monotonic client arrivals and manifest speech boundaries at 32 ms packet submission granularity, not physical microphone or separately measured STT/model delays.",
+    "t_speech_end is the LAST cue speech endpoint, distinct from the full sequence end. First-event offsets can be negative for multi-cue/correction sequences.",
+    "Request workflow is first audio frame through confirmation; setup includes pairing. No TTS generation time is included.",
+    "Usage is a proxy, not provider billing: submitted PCM seconds, websocket-open seconds, HTTP-2xx intent responses (including clarify), and observed final transcripts. Unobserved upstream calls/retries and request-mode intermediate finals are unknown.",
+    "Exact structured identifiers are scored. Location aliases, if supplied, are explicit verbatim ground truth; raw literal location checks remain recorded. References and all websocket events remain in JSONL for manual review.",
+    "Monitor coverage requires a final transcript and the full window (or expected voice stop). This cannot prove all model calls or the latest interpretation completed; negative outcomes require an offline server-trace cross-check.",
+    "Expected correction scores absence of surviving wrong alerts. Safe suppression does not imply a semantic correction or retraction was observed; those are separate."
+  ]
+}

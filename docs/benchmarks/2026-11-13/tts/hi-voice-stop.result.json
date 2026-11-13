@@ -1,0 +1,87 @@
+{
+  "id": "hi-voice-stop",
+  "started_at": "2026-11-13T16:03:23.725102+00:00",
+  "characters": 23,
+  "estimated_cost_usd": 0.0069,
+  "cost_status": "estimated",
+  "cost_entry_id": "43e870406775",
+  "status": "generated",
+  "generator_sha256": "1c1aacf53fea76885a7f6182e2546985ca5cf72813942d5f69adf0f5e395bacf",
+  "inputs": {
+    "text": "क्यूबेल, सुनना बंद करो।",
+    "voice_id": "bajNon13EdhNMndG3z05",
+    "model_id": "eleven_v3",
+    "language_code": "hi",
+    "output_format": "pcm_16000",
+    "with_timestamps": true,
+    "stability": 0.5,
+    "similarity_boost": 0.75,
+    "style": 0.0,
+    "speed": 1.0,
+    "use_speaker_boost": true,
+    "output_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/hi-voice-stop.wav"
+  },
+  "finished_at": "2026-11-13T16:03:25.251269+00:00",
+  "generation_duration_s": 1.525004,
+  "http": [
+    {
+      "status_code": 200,
+      "request_id": "ekzw7Xx1ei5F1kY8qnPf",
+      "character-cost": 5
+    }
+  ],
+  "tool_result": {
+    "success": true,
+    "data": {
+      "provider": "elevenlabs",
+      "model": "eleven_v3",
+      "voice_id": "bajNon13EdhNMndG3z05",
+      "voice_settings": {
+        "stability": 0.5,
+        "similarity_boost": 0.75,
+        "style": 0.0,
+        "speed": 1.0,
+        "use_speaker_boost": true
+      },
+      "text_length": 23,
+      "output": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/hi-voice-stop.wav",
+      "format": "pcm_16000",
+      "request_id": "ekzw7Xx1ei5F1kY8qnPf",
+      "word_timestamps": [
+        {
+          "word": "क्यूबेल,",
+          "start": 0.0,
+          "end": 0.88
+        },
+        {
+          "word": "सुनना",
+          "start": 0.92,
+          "end": 1.16
+        },
+        {
+          "word": "बंद",
+          "start": 1.18,
+          "end": 1.28
+        },
+        {
+          "word": "करो।",
+          "start": 1.333,
+          "end": 2.4
+        }
+      ],
+      "alignment_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/hi-voice-stop.wav.alignment.json",
+      "alignment_matches_text": true,
+      "cost_status": "estimated"
+    },
+    "artifacts": [
+      "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/hi-voice-stop.wav",
+      "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/assets/audio/hi-voice-stop.wav.alignment.json"
+    ],
+    "error": null,
+    "cost_usd": 0.0069,
+    "duration_seconds": 1.52,
+    "seed": null,
+    "model": "eleven_v3",
+    "from_cache": false
+  }
+}
