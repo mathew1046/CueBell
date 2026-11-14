@@ -1,7 +1,7 @@
 import { useIsFocused, useRouter } from 'expo-router';
 import { useState } from 'react';
-import { ActivityIndicator, Image, Platform, Pressable, ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
-import { Button, Icon, Text } from 'react-native-paper';
+import { ActivityIndicator, Image, Pressable, ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
+import { Icon, Text } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ConsentCard, ErrorBanner } from '../components/app';
 import { ListeningWaveform, LiveTranscription } from '../components/listening';
@@ -23,7 +23,7 @@ export default function Home() {
   const focused = useIsFocused();
   const { width, fontScale } = useWindowDimensions();
   const [consentRequested, setConsentRequested] = useState(false);
-  const [captionsOpen, setCaptionsOpen] = useState(Platform.OS === 'web');
+  const [captionsOpen, setCaptionsOpen] = useState(false);
   const app = useCueBell();
   const { activeRule, proposal, native, listening, capturing, captureMode, consent, busy, phase } = app;
   const token = (proposal?.intent ?? activeRule)?.token;
@@ -112,10 +112,12 @@ export default function Home() {
               </View>
             </View>
           </Pressable>
-          {captureInProgress && !showRequest && <Button mode="text"
-            icon={captionsOpen ? 'chevron-up' : 'chevron-down'}
-            accessibilityState={{ expanded: captionsOpen }} contentStyle={{ minHeight: 48 }}
-            onPress={() => setCaptionsOpen(!captionsOpen)}>{t('Live captions')}</Button>}
+          {captureInProgress && !showRequest && <Pressable accessibilityRole="button"
+            accessibilityLabel={t('Live captions')} accessibilityState={{ expanded: captionsOpen }} aria-expanded={captionsOpen}
+            style={styles.captionsToggle} onPress={() => setCaptionsOpen(!captionsOpen)}>
+            <Icon source={captionsOpen ? 'chevron-up' : 'chevron-down'} size={24} color={theme.colors.primary} />
+            <Text variant="labelLarge" style={{ color: theme.colors.primary, flexShrink: 1 }}>{t('Live captions')}</Text>
+          </Pressable>}
           {showTranscript && <LiveTranscription events={app.events}
             mode={showRequest ? 'request' : 'monitor'} listening={listening} />}
           {!!app.statusDetail && <Text variant="bodyMedium" style={{ color: theme.colors.onSurfaceVariant }}>{app.statusDetail}</Text>}
@@ -123,7 +125,7 @@ export default function Home() {
           <ErrorBanner />
           {!captureInProgress && !!app.clarification &&
             <Notice tone="warn" icon="help-circle" live="polite">{app.clarification}</Notice>}
-          {showTranscript && !showRequest && app.latestUnclear &&
+          {!showRequest && app.latestUnclear &&
             <Notice tone="warn" icon="help-circle">{t('Unclear announcement. Check the display.')}</Notice>}
         </View>
 
@@ -174,6 +176,7 @@ const styles = StyleSheet.create({
   shortcut: { width: 48, height: 48, borderRadius: 16 },
   restoring: { marginTop: 48 },
   heroGroup: { gap: 14 },
+  captionsToggle: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8, minHeight: 48, padding: 8 },
   hero: { alignSelf: 'center', paddingHorizontal: 18, paddingVertical: 24, justifyContent: 'center' },
   heroContent: { alignItems: 'center', gap: 11 },
   heroTitle: { width: '100%', fontSize: 26, lineHeight: 36, fontWeight: '700', textAlign: 'center' },

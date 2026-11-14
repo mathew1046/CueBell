@@ -68,6 +68,8 @@ function useCueBellState() {
     if (event.alert) {
       const alert = event.alert;
       setAlerts(old => [alert, ...old.filter(a => a.id !== alert.id)].slice(0, 20));
+      // A deferred alert's old instructions must not hide a later correction.
+      if (event.type === 'alert.corrected') setLaterAlerts(old => old.filter(id => id !== alert.id));
       if (event.type === 'alert' || event.type === 'alert.corrected') {
         announce(event.type === 'alert.corrected' ?
           translator.current('The previous alert was corrected or cancelled. Check the official source.') :

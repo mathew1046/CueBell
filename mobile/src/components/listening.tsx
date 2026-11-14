@@ -26,8 +26,8 @@ export function LiveTranscription({ events, listening, mode }: {
   };
 
   return <View style={styles.section}>
-    <Text variant="titleLarge" accessibilityRole="header" style={{ color: theme.colors.onSurface }}>{t('Live Transcription')}</Text>
-    <View style={[styles.panel, { backgroundColor: theme.colors.surface, borderColor: theme.colors.outlineVariant }]}>
+    <View accessibilityLabel={t('Live Transcription')}
+      style={[styles.panel, { backgroundColor: theme.colors.surface, borderColor: theme.colors.outlineVariant }]}>
       {transcripts.length ? <ScrollView ref={viewport} nestedScrollEnabled style={styles.viewport}
         contentContainerStyle={styles.lines} onScroll={onScroll} scrollEventThrottle={32}
         onContentSizeChange={() => { if (follow.current) viewport.current?.scrollToEnd({ animated: false }); }}>

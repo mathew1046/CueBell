@@ -1,4 +1,5 @@
 import { expect, test, type Page, type WebSocketRoute } from '@playwright/test';
+import catalogs from '../src/lib/i18n/catalogs.json';
 
 const service = 'https://cuebell.mathewjoseph.xyz';
 const intent = { intent: 'monitor_announcement', context: 'hospital_pharmacy', token: '42',
@@ -53,9 +54,9 @@ async function relay(page: Page) {
 async function typedTask(page: Page) {
   await page.goto('/token');
   await page.getByRole('checkbox', { name: 'Allow audio & text processing' }).click();
-  await page.getByLabel('What should I listen for?').fill('Tell me when token 42 is called with vibration and sound.');
-  await page.getByRole('button', { name: 'Start Listening', exact: true }).click();
-  await expect(page.getByTestId('listening-control')).toHaveAccessibleName('Stop Listening');
+  await page.getByLabel('Listen for…').fill('Tell me when token 42 is called with vibration and sound.');
+  await page.getByRole('button', { name: 'Start', exact: true }).click();
+  await expect(page.getByTestId('listening-control')).toHaveAccessibleName('Stop');
 }
 
 test('initial Home is accessible, installable, and never asks for the microphone', async ({ page }) => {
@@ -68,7 +69,7 @@ test('initial Home is accessible, installable, and never asks for the microphone
     };
   });
   await page.goto('/');
-  await expect(page.getByTestId('listening-control')).toHaveAccessibleName('Start Listening');
+  await expect(page.getByTestId('listening-control')).toHaveAccessibleName('Start');
   expect(await page.evaluate(() => (window as unknown as { captureRequests: unknown[] }).captureRequests)).toEqual([]);
   await expect(page.getByText('Listening in your browser')).toBeVisible();
   expect((await (await page.request.get('/manifest.webmanifest')).json()).display).toBe('standalone');
@@ -96,12 +97,14 @@ test('typed request streams real PCM, renders captions and alerts, and stops on 
   const transcript = { type: 'transcript', mode: 'monitor', segment: { id: 'english-42', text: 'Token forty-two, counter three.', received_at: Date.now() / 1000 } };
   socket.send(JSON.stringify(transcript));
   socket.send(JSON.stringify(transcript));
+  await expect(page.getByText(transcript.segment.text, { exact: true })).toHaveCount(0);
+  await page.getByRole('button', { name: 'Captions', exact: true }).click();
   await expect(page.getByText(transcript.segment.text, { exact: true })).toHaveCount(1);
   socket.send(JSON.stringify({ type: 'alert', sequence: 100, alert: { id: 'alert-42', token: '42', counter: '3', state: 'unacknowledged', alert_preferences: ['visual'] } }));
   await expect(page.getByText("It's your turn!", { exact: true }).first()).toBeVisible();
-  await page.getByRole('dialog').getByRole('button', { name: 'I’ve seen this', exact: true }).click();
+  await page.getByRole('dialog').getByRole('button', { name: 'Seen', exact: true }).click();
   await page.getByTestId('listening-control').click();
-  await expect(page.getByTestId('listening-control')).toHaveAccessibleName('Start Listening');
+  await expect(page.getByTestId('listening-control')).toHaveAccessibleName('Start');
   const stoppedFrames = mock.frames.length;
   await page.waitForTimeout(250);
   expect(mock.frames.length).toBe(stoppedFrames);
@@ -122,18 +125,20 @@ test('spoken setup hands off to monitoring, preserves Malayalam captions, and ob
     id: 'request-42', text: 'Listen for token 42', received_at: Date.now() / 1000,
   } }));
   await expect.poll(() => mock.sockets.length).toBe(2);
-  await expect(page.getByTestId('listening-control')).toHaveAccessibleName('Stop Listening');
+  await expect(page.getByTestId('listening-control')).toHaveAccessibleName('Stop');
+  await page.getByRole('button', { name: 'Captions', exact: true }).click();
   mock.sockets[1].send(JSON.stringify({ type: 'transcript', mode: 'monitor', segment: {
     id: 'malayalam-42', text: 'ടോക്കൺ നാല്പത്തിരണ്ട് കൗണ്ടർ മൂന്നിലേക്ക് വരിക.', received_at: Date.now() / 1000,
   } }));
   await expect(page.getByText('ടോക്കൺ നാല്പത്തിരണ്ട് കൗണ്ടർ മൂന്നിലേക്ക് വരിക.', { exact: true })).toBeVisible();
   mock.sockets[1].send(JSON.stringify({ type: 'monitor.pause', rule: { ...rule, status: 'PAUSED' } }));
-  await expect(page.getByTestId('listening-control')).toHaveAccessibleName('Start Listening');
+  await expect(page.getByTestId('listening-control')).toHaveAccessibleName('Start');
 });
 
 test('network reconnection retains completed captions and resumes PCM', async ({ page }) => {
   const mock = await relay(page);
   await typedTask(page);
+  await page.getByRole('button', { name: 'Captions', exact: true }).click();
   await expect.poll(() => mock.frames.length).toBeGreaterThan(1);
   mock.sockets[0].send(JSON.stringify({ type: 'transcript', mode: 'monitor', segment: {
     id: 'before-gap', text: 'Please wait for your token.', received_at: Date.now() / 1000,
@@ -153,8 +158,8 @@ test('denied microphone produces browser guidance and no audio stream', async ({
     navigator.mediaDevices.getUserMedia = async () => { throw new DOMException('Denied', 'NotAllowedError'); };
   });
   await page.getByRole('checkbox', { name: 'Allow audio & text processing' }).click();
-  await page.getByLabel('What should I listen for?').fill('Listen for token 42');
-  await page.getByRole('button', { name: 'Start Listening', exact: true }).click();
+  await page.getByLabel('Listen for…').fill('Listen for token 42');
+  await page.getByRole('button', { name: 'Start', exact: true }).click();
   await expect(page.getByText(/Microphone permission was denied/)).toBeVisible();
   await expect(page.getByText(/Open the site controls beside the address bar/)).toBeVisible();
   expect(mock.frames).toEqual([]);
@@ -169,7 +174,7 @@ test('hiding the page releases microphone tracks and requires an explicit restar
     Object.defineProperty(document, 'visibilityState', { configurable: true, value: 'hidden' });
     document.dispatchEvent(new Event('visibilitychange'));
   });
-  await expect(page.getByTestId('listening-control')).toHaveAccessibleName('Start Listening');
+  await expect(page.getByTestId('listening-control')).toHaveAccessibleName('Start');
   expect(await page.evaluate(() => (window as unknown as { cuebellTestStreams: MediaStream[] })
     .cuebellTestStreams.every(stream => stream.getTracks().every(track => track.readyState === 'ended')))).toBe(true);
   const count = mock.sockets.length;
@@ -189,7 +194,7 @@ test('cancelling a pending permission cannot start a microphone after the user s
     });
   });
   await page.getByTestId('listening-control').click();
-  await expect(page.getByText('Waiting for permission', { exact: true })).toBeVisible();
+  await expect(page.getByTestId('listening-control').getByText('Waiting for permission', { exact: true })).toBeVisible();
   await page.getByTestId('listening-control').click();
   await page.evaluate(() => (window as unknown as { grantTestMicrophone: () => Promise<void> }).grantTestMicrophone());
   expect(await page.evaluate(() => (window as unknown as { cuebellTestStreams: MediaStream[] }).cuebellTestStreams.length)).toBe(1);
@@ -197,7 +202,7 @@ test('cancelling a pending permission cannot start a microphone after the user s
     .cuebellTestStreams.every(stream => stream.getTracks().every(track => track.readyState === 'ended')))).toBe(true);
   expect(mock.sockets).toEqual([]);
   expect(mock.frames).toEqual([]);
-  await expect(page.getByTestId('listening-control')).toHaveAccessibleName('Start Listening');
+  await expect(page.getByTestId('listening-control')).toHaveAccessibleName('Start');
   await expect(page.getByText('Listening cancelled.', { exact: true })).toHaveCount(0);
   await expect(page.getByRole('alert')).toHaveCount(0);
 });
@@ -212,10 +217,10 @@ test('blocked browser storage still permits task activation and microphone captu
   await typedTask(page);
   await expect.poll(() => mock.frames.length).toBeGreaterThan(1);
   await page.getByTestId('listening-control').click();
-  await expect(page.getByTestId('listening-control')).toHaveAccessibleName('Start Listening');
+  await expect(page.getByTestId('listening-control')).toHaveAccessibleName('Start');
   await page.getByTestId('listening-control').click();
   await expect.poll(() => mock.sockets.length).toBe(2);
-  await expect(page.getByTestId('listening-control')).toHaveAccessibleName('Stop Listening');
+  await expect(page.getByTestId('listening-control')).toHaveAccessibleName('Stop');
 });
 
 test('alert preferences independently control sound and vibration and suppress repeated delivery', async ({ page }) => {
@@ -239,7 +244,7 @@ test('alert preferences independently control sound and vibration and suppress r
   const vibration = await page.evaluate(() => (window as unknown as { testAlerts: { vibrations: unknown[] } }).testAlerts.vibrations);
   expect(vibration).toEqual([[400, 200, 400, 200, 700]]);
   mock.sockets[0].send(JSON.stringify({ ...alert, sequence: 202, alert: { ...alert.alert, id: 'silent', alert_preferences: ['visual'] } }));
-  await expect(page.getByText('Additional alerts waiting: 1', { exact: true })).toBeVisible();
+  await expect(page.getByLabel('Additional alerts waiting: 1', { exact: true })).toHaveText('+1');
   expect(await page.evaluate(() => (window as unknown as { testAlerts: { tones: number } }).testAlerts.tones)).toBe(3);
 });
 
@@ -252,5 +257,85 @@ test('mobile layout supports large text, dark theme and reduced motion', async (
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   await page.screenshot({ path: 'test-results/home-mobile.png', fullPage: true });
   await page.getByRole('button', { name: 'Help', exact: true }).click();
-  await expect(page.getByText('Keep CueBell visible', { exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Keep CueBell visible', exact: true })).toBeVisible();
 });
+
+test('event details are optional and a deferred correction replaces the old directions', async ({ page }) => {
+  const mock = await relay(page);
+  await typedTask(page);
+  const alert = { id: 'alert-42', token: null, counter: null, summary: 'Train 014922 arrived · Platform 03',
+    location: 'Platform 03', evidence_text: 'Attention passengers. Train 014922 has arrived at Platform 03.',
+    state: 'unacknowledged', alert_preferences: ['visual'] };
+  mock.sockets[0].send(JSON.stringify({ type: 'alert', sequence: 100, alert }));
+  const dialog = page.getByRole('dialog');
+  await expect(dialog.getByText(alert.summary, { exact: true })).toBeVisible();
+  await expect(dialog.getByText(alert.location, { exact: true })).toHaveCount(0);
+  await expect(dialog.getByText(alert.evidence_text, { exact: true })).toHaveCount(0);
+  const details = dialog.getByRole('button', { name: 'Details', exact: true });
+  await expect(details).toHaveAttribute('aria-expanded', 'false');
+  await details.focus();
+  await page.keyboard.press('Enter');
+  await expect(details).toHaveAttribute('aria-expanded', 'true');
+  await expect(dialog.getByText(alert.evidence_text, { exact: true })).toBeVisible();
+  await dialog.getByRole('button', { name: 'Back to app', exact: true }).click();
+  await expect(dialog).toHaveCount(0);
+  mock.sockets[0].send(JSON.stringify({ type: 'alert.corrected', sequence: 102, alert: { ...alert, state: 'corrected' } }));
+  await expect(dialog.getByText('Alert changed', { exact: true })).toBeVisible();
+  await expect(dialog.getByText('Check the official source.', { exact: true })).toBeVisible();
+  await expect(dialog.getByText(alert.summary, { exact: true })).toHaveCount(0);
+  await expect(details).toHaveAttribute('aria-expanded', 'false');
+  await details.click();
+  await expect(dialog.getByText('Previous alert', { exact: true })).toBeVisible();
+  await expect(dialog.getByText(alert.summary, { exact: true })).toBeVisible();
+});
+
+test('uncertainty stays visible with captions collapsed', async ({ page }) => {
+  const mock = await relay(page);
+  await typedTask(page);
+  mock.sockets[0].send(JSON.stringify({ type: 'observation', sequence: 100, observation: {
+    id: 'unclear-42', type: 'UNCERTAIN', token_normalized: '42', counter: null,
+    evidence_text: 'Token forty…', ambiguity_reason: 'Incomplete token',
+  } }));
+  await expect(page.getByRole('button', { name: 'Captions', exact: true })).toHaveAttribute('aria-expanded', 'false');
+  await expect(page.getByText('Unclear announcement. Check the display.', { exact: true })).toBeVisible();
+});
+
+for (const [language, messages] of Object.entries(catalogs)) {
+  test(`compact alerts and disclosures fit a small screen in ${language}`, async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 740 });
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    const mock = await relay(page);
+    await page.addInitScript(locale => localStorage.setItem('cuebell.language.v1', locale), language);
+    await page.goto('/token');
+    await expect(page.locator('html')).toHaveAttribute('dir', ['ur', 'sd'].includes(language) ? 'rtl' : 'ltr');
+    await page.getByRole('checkbox', { name: messages['Allow audio & text processing'] }).click();
+    await page.getByLabel(messages['What should I listen for?']).fill('Listen for A-001234');
+    await page.getByRole('button', { name: messages['Start Listening'], exact: true }).click();
+    await expect(page.getByTestId('listening-control')).toHaveAccessibleName(messages['Stop Listening']);
+    await expect(page.getByRole('button', { name: messages['Live captions'], exact: true })).toHaveAttribute('aria-expanded', 'false');
+    mock.sockets[0].send(JSON.stringify({ type: 'alert', sequence: 100, alert: {
+      id: 'alert-42', token: 'A-001234', counter: '03', state: 'unacknowledged',
+      evidence_text: 'A-001234, counter 03.', alert_preferences: ['visual'],
+    } }));
+    const dialog = page.getByRole('dialog');
+    const seen = dialog.getByRole('button', { name: messages['I’ve seen this'], exact: true });
+    await expect(seen).toBeInViewport();
+    await expect(dialog.getByTestId('alert-token')).toHaveText('A-001234');
+    await expect(dialog.getByTestId('alert-token')).toHaveCSS('direction', 'ltr');
+    // Check descendant bounds, not just document overflow (the modal can scroll independently).
+    expect(await dialog.evaluate(root => Array.from(root.querySelectorAll<HTMLElement>('[role="button"], [dir="auto"]')).every(node => {
+      const box = node.getBoundingClientRect();
+      return box.left >= 0 && box.right <= innerWidth + 1;
+    }))).toBe(true);
+    if (['en', 'ml', 'ur', 'mni-Mtei'].includes(language)) {
+      await page.screenshot({ path: `test-results/alert-${language}.png`, fullPage: true });
+    }
+    const details = dialog.getByRole('button', { name: messages.Details, exact: true });
+    await details.click();
+    await expect(dialog.getByText('A-001234, counter 03.', { exact: true })).toBeVisible();
+    await details.click();
+    await seen.click();
+    await page.getByTestId('listening-control').click();
+    await expect(page.getByTestId('listening-control')).toHaveAccessibleName(messages['Start Listening']);
+  });
+}

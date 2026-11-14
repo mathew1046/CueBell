@@ -5,7 +5,7 @@ import { Button, Icon, Switch, Text } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Listener from '../../modules/queue-listener';
 import { ConsentCard, ErrorBanner } from '../components/app';
-import { actionStyles, ScreenHeader, SoftCard } from '../components/ui';
+import { actionStyles, Disclosure, ScreenHeader, SoftCard } from '../components/ui';
 import { spell } from '../lib/a11y';
 import { useCueBell } from '../lib/cuebell';
 import { useAppTheme } from '../lib/theme';
@@ -46,7 +46,6 @@ export default function Settings() {
       <ErrorBanner />
       {section === 'accessibility' && accessibility}
 
-      {heading('Processing')}
       <ConsentCard />
 
       {heading('Appearance')}
@@ -85,19 +84,18 @@ export default function Settings() {
           style={{ color: theme.colors.error }}>{app.noiseReductionStorageError}</Text>}
         {app.activeRule ? <>
           <Text variant="bodyLarge" style={{ color: theme.colors.onSurface }}
-            accessibilityLabel={t('Listening for: {task}', { task: app.activeRule.task?.summary ?? spell(app.activeRule.token ?? '') })}>{t('Listening for: {task}', { task: app.activeRule.task?.summary ?? app.activeRule.token ?? '' })}</Text>
+            accessibilityLabel={t('Listening for: {task}', { task: app.activeRule.task?.summary ?? spell(app.activeRule.token ?? '') })}>{app.activeRule.task?.summary ?? app.activeRule.token}</Text>
           {app.native.running ? <Button mode="contained-tonal" icon="pause" contentStyle={actionStyles.big} disabled={app.busy}
             onPress={app.pause}>{t('Pause')}</Button> :
             <Button mode="contained" icon="microphone" contentStyle={actionStyles.big} disabled={app.busy || !app.consent}
               onPress={app.resume}>{t('Start Listening')}</Button>}
-          <Button mode="outlined" icon="stop" textColor={theme.colors.error} style={{ borderColor: theme.colors.error, borderWidth: 2 }}
+          <Button mode="outlined" icon="delete-outline" textColor={theme.colors.error} style={{ borderColor: theme.colors.error, borderWidth: 2 }}
             contentStyle={actionStyles.action} disabled={app.busy} onPress={app.stop}
-            accessibilityHint={t('Stops the microphone and clears your listening task and history from this phone')}>{t('Stop')}</Button>
+            accessibilityHint={t('Stops the microphone and clears your listening task and history from this phone')}>{t('Clear task')}</Button>
         </> : <Text variant="bodyLarge" style={{ color: theme.colors.onSurfaceVariant }}>{t('No listening task is active.')}</Text>}
       </SoftCard>
 
-      {heading('Phone')}
-      <PermissionHelp />
+      <Disclosure label={t('Permissions')} icon="shield-lock-outline"><PermissionHelp /></Disclosure>
     </ScrollView>
   </View>;
 }

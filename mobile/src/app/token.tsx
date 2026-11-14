@@ -52,18 +52,12 @@ export default function TokenScreen() {
           accessibilityHint={t('For example: alert me when train 14922 arrives. Short pauses are OK.')}
           accessibilityState={{ disabled: app.busy }}
           style={({ pressed }) => [styles.speak, { backgroundColor: theme.colors.primary, boxShadow: theme.shadow.hero,
-            transform: [{ scale: pressed ? 0.98 : 1 }] }]}>
+            transform: [{ scale: pressed && !reduceMotion ? 0.98 : 1 }] }]}>
           <Icon source="microphone" size={40} color={theme.colors.onPrimary} />
           <Text style={[styles.speakLabel, { color: theme.colors.onPrimary }]}>{t('Speak')}</Text>
         </Pressable>}
       {(app.capturing || app.busy) && <Button mode="outlined" icon="stop" contentStyle={actionStyles.big} textColor={theme.colors.onSurface}
         style={{ borderColor: theme.colors.onSurface, borderWidth: 2 }} onPress={app.cancelCapture}>{t('Cancel')}</Button>}
-
-      <View style={styles.dividerRow} importantForAccessibility="no-hide-descendants">
-        <View style={[styles.rule, { backgroundColor: theme.colors.outlineVariant }]} />
-        <Text variant="labelLarge" style={{ color: theme.colors.onSurfaceVariant }}>{t('or type')}</Text>
-        <View style={[styles.rule, { backgroundColor: theme.colors.outlineVariant }]} />
-      </View>
 
       <TextInput mode="outlined" label={t('What should I listen for?')} multiline value={app.request} onChangeText={app.editRequest}
         accessibilityLabel={t('What should I listen for?')}
@@ -89,7 +83,6 @@ const styles = StyleSheet.create({
   micWrap: { width: 168, height: 168, alignItems: 'center', justifyContent: 'center' },
   micHalo: { position: 'absolute', width: 168, height: 168, borderRadius: 84 },
   mic: { width: 112, height: 112, borderRadius: 40, alignItems: 'center', justifyContent: 'center' },
-  dividerRow: { flexDirection: 'row', alignItems: 'center', gap: 12 }, rule: { flex: 1, height: 1 },
   input: { minHeight: 120, fontSize: 20 }, outline: { borderRadius: 20, borderWidth: 2 },
   reverse: { flexDirection: 'row-reverse' }, radius: { borderRadius: 20 },
 });

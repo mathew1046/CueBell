@@ -1,7 +1,7 @@
 import { Platform, ScrollView, StyleSheet, View } from 'react-native';
 import { Icon, Text } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { ScreenHeader, SoftCard } from '../components/ui';
+import { Disclosure, ScreenHeader } from '../components/ui';
 import { useAppTheme } from '../lib/theme';
 import { useLanguage } from '../lib/i18n';
 
@@ -35,24 +35,16 @@ export default function Help() {
     <ScreenHeader title={t('Help')} />
     <ScrollView contentContainerStyle={[styles.content, { paddingBottom: Math.max(insets.bottom, 24) + 24 }]}>
       <Text variant="titleMedium" accessibilityRole="header" style={muted}>{t('How it works')}</Text>
-      {steps.map((step, index) => <SoftCard key={step.title} style={styles.step}>
-        <View style={[styles.number, { backgroundColor: theme.colors.primary }]}>
-          <Text style={[styles.numberText, { color: theme.colors.onPrimary }]}>{index + 1}</Text>
-        </View>
-        <View style={styles.flex}>
-          <Text variant="titleMedium" style={ink}>{t(step.title)}</Text>
-          <Text variant="bodyMedium" style={muted}>{t(step.body)}</Text>
-        </View>
-        <Icon source={step.icon} size={28} color={theme.colors.onSurface} />
-      </SoftCard>)}
+      {steps.map(step => <Disclosure key={step.title} label={t(step.title)} icon={step.icon}>
+        <Text variant="bodyMedium" style={muted}>{t(step.body)}</Text>
+      </Disclosure>)}
 
-      <Text variant="titleMedium" accessibilityRole="header" style={[muted, styles.gap]}>{t('About & privacy')}</Text>
-      <SoftCard style={styles.about}>
+      <Disclosure label={t('About & privacy')} icon="shield-lock-outline">
         {about.map(item => <View key={item.icon} style={styles.row}>
           <Icon source={item.icon} size={24} color={theme.colors.onSurface} />
           <Text variant="bodyLarge" style={[styles.flex, ink]}>{t(item.text)}</Text>
         </View>)}
-      </SoftCard>
+      </Disclosure>
 
       <View style={styles.row}>
         <Icon source="monitor-eye" size={22} color={theme.colors.onSurfaceVariant} />
@@ -63,11 +55,7 @@ export default function Help() {
 }
 
 const styles = StyleSheet.create({
-  root: { flex: 1 }, flex: { flex: 1, gap: 2 }, gap: { marginTop: 8 },
+  root: { flex: 1 }, flex: { flex: 1, gap: 2 },
   content: { paddingHorizontal: 24, paddingTop: 8, gap: 16, maxWidth: 560, width: '100%', alignSelf: 'center' },
-  step: { flexDirection: 'row', alignItems: 'center', gap: 14 },
-  number: { width: 40, height: 40, borderRadius: 14, alignItems: 'center', justifyContent: 'center' },
-  numberText: { fontSize: 20, fontWeight: '800' },
-  about: { gap: 18 },
   row: { flexDirection: 'row', alignItems: 'flex-start', gap: 12 },
 });
