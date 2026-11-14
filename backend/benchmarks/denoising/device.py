@@ -101,7 +101,7 @@ def main() -> None:
     command("push", str(args.apk), root + "/benchmark.apk")
     command("push", str(args.fixtures), root + "/inputs")
     command("push", str(args.model), root + "/gtcrn_simple.onnx")
-    with tempfile.TemporaryDirectory(prefix="cuebell-jni-", dir="/tmp/opencode") as local:
+    with tempfile.TemporaryDirectory(prefix="cuebell-jni-", dir=args.output) as local:
         with zipfile.ZipFile(args.apk) as archive:
             members = [
                 name

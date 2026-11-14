@@ -534,7 +534,7 @@ def _run(args: argparse.Namespace, signals: dict) -> dict:
             "create-private-root")
         remote = home + "/" + relative
         metadata["device_root"] = remote
-        with tempfile.TemporaryDirectory(prefix="cuebell-instrument-", dir="/tmp/opencode") as temp:
+        with tempfile.TemporaryDirectory(prefix="cuebell-instrument-", dir=args.output) as temp:
             payload = Path(temp) / "inputs.tar"
             write_payload(payload, files)
             own(["tar", "-xf", "-", "-C", remote], "deploy-inputs", stdin=payload)
@@ -596,7 +596,7 @@ def _run(args: argparse.Namespace, signals: dict) -> dict:
                         "cancel-instrumentation")
 
         def collect_results() -> None:
-            with tempfile.TemporaryDirectory(prefix="cuebell-result-", dir="/tmp/opencode") as temp:
+            with tempfile.TemporaryDirectory(prefix="cuebell-result-", dir=args.output) as temp:
                 archive = Path(temp) / "results.tar"
                 command(["exec-out", shlex.join(["run-as", package, "tar", "-cf", "-",
                                                 "-C", remote + "/results", "."])],

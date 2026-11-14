@@ -248,6 +248,15 @@ class FakeAdb:
 
 @pytest.fixture
 def simulated_run(tmp_path, fixture_tree, monkeypatch):
+    temporary_directory = instrument.tempfile.TemporaryDirectory
+
+    def without_workspace_temp(*args, **kwargs):
+        # Reproduce a clean CI host even when this workstation has the directory.
+        if str(kwargs.get("dir")) == "/tmp/opencode":
+            raise FileNotFoundError("No harness-specific temporary directory")
+        return temporary_directory(*args, **kwargs)
+
+    monkeypatch.setattr(instrument.tempfile, "TemporaryDirectory", without_workspace_temp)
     apk, model = tmp_path / "test.apk", tmp_path / "model.onnx"
     apk.write_bytes(b"test-only APK identity")
     model.write_bytes(b"test-only model payload")
