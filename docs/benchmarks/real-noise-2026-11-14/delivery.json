@@ -1,0 +1,12 @@
+{
+  "archive": "/home/mathew/Arrakis/CueBell/artifacts/CueBell-real-noise-before-after-2026-11-14.zip",
+  "sha256": "82a6409278afc83bcc642c5436e70ac6209dc6085079b0e43ea6b02a7f567fd8",
+  "bytes": 8393381,
+  "recording_pairs": 16,
+  "wav_files": 32,
+  "wav_format": "mono PCM16, 16000 Hz, 160000 samples per file",
+  "archive_crc_and_content_sha256_verified": true,
+  "secret_matches": 0,
+  "app_release_created": false,
+  "reason": "Recognition preservation failed: 4/11 eligible pairs worsened; 2 repeated regressions confirmed."
+}

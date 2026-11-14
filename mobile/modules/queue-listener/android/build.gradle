@@ -4,11 +4,120 @@ plugins {
 }
 group = 'expo.modules.queuelistener'
 version = '0.1.0'
+
+abstract class PrepareSherpaOnnx extends DefaultTask {
+  @OutputDirectory abstract DirectoryProperty getJniDirectory()
+  @OutputDirectory abstract DirectoryProperty getAssetsDirectory()
+}
+
+// GitHub publishes an AAR, not a Maven module. Verify it before exposing either
+// its Kotlin classes or JNI libraries; avoid a local-AAR dependency in this library.
+def sherpaVersion = '2.0.1'
+def sherpaName = "sherpa-onnx-static-link-onnxruntime-${sherpaVersion}.aar"
+def sherpaUrl = "https://github.com/k2-fsa/sherpa-onnx/releases/download/v${sherpaVersion}/${sherpaName}"
+def sherpaSha256 = '07e042d97f3a6bd5b7fe74d4eef0513dc01a714b16c15a903250095aba43a575'
+def sherpaDirectory = layout.buildDirectory.dir('generated/sherpa-onnx')
+// Explicit experiment only. Ordinary builds still use the official, pinned AAR.
+// This directory must contain the separately built arm64 JNI and provenance.
+def fftDist = providers.gradleProperty('cuebellSherpaFftDir').orNull
+def prepareSherpa = tasks.register('prepareSherpaOnnx', PrepareSherpaOnnx) {
+  jniDirectory.set(sherpaDirectory.map { it.dir('jni') })
+  assetsDirectory.set(sherpaDirectory.map { it.dir('assets') })
+  inputs.property('url', sherpaUrl)
+  inputs.property('sha256', sherpaSha256)
+  inputs.property('fftEnabled', fftDist != null)
+  if (fftDist != null) {
+    inputs.files(file("${fftDist}/arm64-v8a/libsherpa-onnx-jni.so"), file("${fftDist}/provenance.json"),
+      file('native/sherpa-fft/artifact-lock.json'), file('native/sherpa-fft/upstream.patch'),
+      file('native/sherpa-fft/streaming-dft.h'), file('native/sherpa-fft/build.py'))
+  }
+  outputs.dir(sherpaDirectory)
+  doLast {
+    def archive = new File(gradle.gradleUserHomeDir, "caches/cuebell-denoising/${sherpaName}")
+    def sha256 = { File input ->
+      def digest = java.security.MessageDigest.getInstance('SHA-256')
+      input.withInputStream { stream ->
+        byte[] buffer = new byte[65536]
+        int count
+        while ((count = stream.read(buffer)) != -1) digest.update(buffer, 0, count)
+      }
+      digest.digest().encodeHex().toString()
+    }
+    if (!archive.exists()) {
+      if (gradle.startParameter.offline) throw new GradleException("Offline: seed ${archive} with ${sherpaUrl}")
+      archive.parentFile.mkdirs()
+      def partial = new File(archive.path + '.partial')
+      try {
+        def connection = new URI(sherpaUrl).toURL().openConnection()
+        connection.connectTimeout = 30000
+        connection.readTimeout = 60000
+        connection.getInputStream().withCloseable { input -> partial.withOutputStream { it << input } }
+        if (sha256(partial) != sherpaSha256) throw new GradleException('sherpa-onnx download checksum mismatch')
+        java.nio.file.Files.move(partial.toPath(), archive.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING)
+      } finally { partial.delete() }
+    }
+    if (sha256(archive) != sherpaSha256) throw new GradleException("sherpa-onnx checksum mismatch: ${archive}")
+    copy {
+      from zipTree(archive)
+      include 'classes.jar', 'jni/**/*.so'
+      into sherpaDirectory
+    }
+    def provenance = [variant: 'official-sherpa-onnx-2.0.1', officialBinary: true,
+      originalAarSha256: sherpaSha256, patchedAbis: []]
+    if (fftDist != null) {
+      def json = new groovy.json.JsonSlurper()
+      def lock = json.parse(file('native/sherpa-fft/artifact-lock.json'))
+      def manifest = json.parse(file("${fftDist}/provenance.json"))
+      def library = file("${fftDist}/arm64-v8a/libsherpa-onnx-jni.so")
+      def required = ['variant', 'upstreamCommit', 'sourceSha256', 'originalStftSha256', 'modelSha256',
+        'onnxruntimeVersion', 'onnxruntimeArchiveSha256', 'originalAarSha256', 'librarySha256', 'libraryBytes',
+        'fftHeaderSha256', 'patchSha256', 'buildScriptSha256', 'ndkVersion', 'cmakeVersion']
+      if (required.any { manifest[it] != lock[it] } || manifest.officialBinary != false ||
+          sha256(library) != lock.librarySha256 || library.length() != lock.libraryBytes ||
+          sha256(file('native/sherpa-fft/streaming-dft.h')) != lock.fftHeaderSha256 ||
+          sha256(file('native/sherpa-fft/upstream.patch')) != lock.patchSha256 ||
+          sha256(file('native/sherpa-fft/build.py')) != lock.buildScriptSha256) {
+        throw new GradleException('CueBell FFT artifact/provenance mismatch; rebuild and review the explicit lock')
+      }
+      copy {
+        from library
+        into jniDirectory.dir('arm64-v8a')
+      }
+      provenance = manifest + [patchedAbis: ['arm64-v8a'], otherAbis: 'official pinned AAR']
+    }
+    def provenanceFile = assetsDirectory.file('noise-reduction/runtime-provenance.json').get().asFile
+    provenanceFile.parentFile.mkdirs()
+    provenanceFile.text = groovy.json.JsonOutput.prettyPrint(groovy.json.JsonOutput.toJson(provenance)) + '\n'
+  }
+}
+def verifyGtcrn = tasks.register('verifyGtcrnModel') {
+  def model = file('src/main/assets/noise-reduction/gtcrn_simple.onnx')
+  inputs.file(model)
+  doLast {
+    def actual = java.security.MessageDigest.getInstance('SHA-256').digest(model.bytes).encodeHex().toString()
+    if (actual != 'e77603ac0c23dac3227dd2d7135b3a585cbee2679048aecfa886657d3ae1b534') {
+      throw new GradleException('GTCRN model checksum mismatch')
+    }
+  }
+}
 android {
   namespace 'expo.modules.queuelistener'
-  defaultConfig { versionCode 1; versionName '0.1.0' }
+  defaultConfig {
+    versionCode 1
+    versionName '0.1.0'
+    testInstrumentationRunner 'expo.modules.queuelistener.DenoisingBenchmarkInstrumentation'
+    consumerProguardFiles 'consumer-rules.pro'
+  }
 }
+androidComponents {
+  onVariants(selector().all()) { variant ->
+    variant.sources.jniLibs.addGeneratedSourceDirectory(prepareSherpa, { it.jniDirectory })
+    variant.sources.assets.addGeneratedSourceDirectory(prepareSherpa, { it.assetsDirectory })
+  }
+}
+tasks.named('preBuild').configure { dependsOn prepareSherpa, verifyGtcrn }
 dependencies {
+  implementation files(sherpaDirectory.map { it.file('classes.jar') }).builtBy(prepareSherpa)
   testImplementation 'junit:junit:4.13.2'
   implementation 'com.squareup.okhttp3:okhttp:4.12.0'
   implementation 'androidx.core:core-ktx:1.17.0'

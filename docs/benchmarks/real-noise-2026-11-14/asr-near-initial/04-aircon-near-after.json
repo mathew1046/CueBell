@@ -1,0 +1,70 @@
+{
+  "id": "04-aircon-near",
+  "arm": "after",
+  "reference": "Naturally, curly hair runs in my family. More often these officers are restricted.",
+  "input_sha256": "8cf66900fc534a4f2dc5fdafc2cd76315a4c53bf3ba17fe56e777b83594d9e17",
+  "source_audio_seconds": 10.0,
+  "status": "completed",
+  "sent_frames": 376,
+  "schedule_rebases": 0,
+  "maximum_send_lateness_ms": 2.114421999976912,
+  "unfinished_utterance_ids": [],
+  "connection_seconds": 23.054467419000048,
+  "attempt_seconds": 24.386850564999804,
+  "transcript": "நேச்சுரலி கர்லி ஹேர்ஸ் ரன்ஸ் இன் மை ஃபேமிலி, மோர் ஆஃப்டன் திஸ் ஆஃபீஸர்ஸ் ஆர். Restricted.",
+  "events": [
+    {
+      "elapsed_s": 0.07935711700019965,
+      "message": {
+        "type": "connected",
+        "message": "STT service ready — VAD service connected",
+        "request_id": "01a1d88d-5d48-7efc-8c37-141cd9f94ed4",
+        "config": {
+          "sample_rate": 16000,
+          "chunk_size": 512,
+          "partials_enabled": false,
+          "partial_interval_ms": 450,
+          "partial_max_window_s": 15.0,
+          "language_code": "indic-auto",
+          "format": "verbatim"
+        },
+        "timestamp": "2026-11-14T05:35:05.635289+00:00"
+      }
+    },
+    {
+      "elapsed_s": 1.9236354929998924,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "u7031c5ba",
+        "t_ms": 1588,
+        "timestamp": "2026-11-14T05:35:07.475076+00:00"
+      }
+    },
+    {
+      "elapsed_s": 10.880001600000014,
+      "message": {
+        "type": "transcript",
+        "text": "நேச்சுரலி கர்லி ஹேர்ஸ் ரன்ஸ் இன் மை ஃபேமிலி, மோர் ஆஃப்டன் திஸ் ஆஃபீஸர்ஸ் ஆர். Restricted.",
+        "audio_duration_ms": 9268.0,
+        "segment_id": "01a1d88d-5d48-7efc-8c37-141cd9f94ed4-seg-1",
+        "segment_index": 1,
+        "utterance_id": "u7031c5ba",
+        "is_final": true,
+        "latency": 301,
+        "prefetched": false,
+        "timestamp": "2026-11-14T05:35:16.432409+00:00",
+        "detected_language_code": "ta-IN"
+      }
+    }
+  ],
+  "reference_score_eligible": true,
+  "score": {
+    "reference_words": 13,
+    "hypothesis_words": 27,
+    "errors": 26,
+    "substitutions": 12,
+    "insertions": 14,
+    "deletions": 0,
+    "wer": 2.0
+  }
+}

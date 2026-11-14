@@ -1,0 +1,370 @@
+{
+  "schema_version": 1,
+  "status": "running",
+  "started_utc": "2026-11-14T03:05:38.722030+00:00",
+  "user_id": 0,
+  "entry_point": "installed platform instrumentation",
+  "serial": "10BG2C197Q00ARD",
+  "test_apk": {
+    "package": "expo.modules.queuelistener.test",
+    "runner": "expo.modules.queuelistener.DenoisingBenchmarkInstrumentation",
+    "target_package": "expo.modules.queuelistener.test",
+    "debuggable": true,
+    "native_sha256": {
+      "lib/arm64-v8a/libc++_shared.so": "3e852764502d06e0cf1080d532ae7c608b7649d946a3a9d7e84e3d4b7d683214",
+      "lib/arm64-v8a/libexpo-modules-core.so": "11f93d7b6926a8ad64e227f701fb1fa47da35fb0e684656e28163c73a5691c2b",
+      "lib/arm64-v8a/libexpo-modules-jsi.so": "d1edc1d9900de77b0a8aaace2fd61c40ae36b801687a8adeabd21cbaad616603",
+      "lib/arm64-v8a/libexpo-modules-v2.so": "d644e4202b81c4b454d8bcca4db1a8428d4e666722541465d1960c4ea4f66696",
+      "lib/arm64-v8a/libexpo-modules-worklets.so": "0c459e72c5afc42126fb160a0afc7a8c11bfcb4fada937613225e84d05105d0f",
+      "lib/arm64-v8a/libfbjni.so": "a9e35ba55d3f956920281f519385f8a72475ee24819799cb08375fdd4cce2b22",
+      "lib/arm64-v8a/libhermestooling.so": "833a4e65483eed5b59b222568027bbfd5694eca89ddf30d5137630b664d87e04",
+      "lib/arm64-v8a/libhermesvm.so": "3746fede16adc7b214d95a378563ac76dc60912bc20e47aaf311925b0a185cb4",
+      "lib/arm64-v8a/libimagepipeline.so": "1b377992e4256fa9398ec057722f84a359c7d588e570c8a41f51d930c19ece7d",
+      "lib/arm64-v8a/libjsi.so": "4cde940e3bb4ca6f9e82585ee50339d7570074210fd5439ce85a6303af653b85",
+      "lib/arm64-v8a/libnative-filters.so": "bb82aec5ab2a8ac4e1968f41c6477824f1f3fff90c0eeb2c90cdeb1923d69833",
+      "lib/arm64-v8a/libnative-imagetranscoder.so": "2aed28298a25afd52ac670cf9682398c6c7ba42a57195c01efd565e7ddfe17ca",
+      "lib/arm64-v8a/libreactnative.so": "64ad838aeb7c731eeabb836a6bc4a6d00a5e0089788f95c6f2f1a6e467344a8b",
+      "lib/arm64-v8a/libsherpa-onnx-jni.so": "491b1b6e287fdfe5e0e1ffa918f5e5556299cb14bea7b7b8a0c19468f4156193",
+      "lib/arm64-v8a/libworklets.so": "499bfb897773b13744843eb54239c82d7472d1e22b278bf143df6870761fbf4e",
+      "lib/armeabi-v7a/libc++_shared.so": "84e7d99b7b6df960b37c28e43808cc5c2c62d1bb9449e27683fc53309dea5b6c",
+      "lib/armeabi-v7a/libexpo-modules-core.so": "8b4012d9f1cc4940061e1adb0e96a91b9752b8df3b69cc92a1c9916e432034bd",
+      "lib/armeabi-v7a/libexpo-modules-jsi.so": "120d95c325f23f76beaa1b8529638c68f690405f9e25889d15aed618fd150b53",
+      "lib/armeabi-v7a/libfbjni.so": "6739b4db111283fe0a86a3a5fdd80efe5d963355dd161b95ec179f01cc9685d5",
+      "lib/armeabi-v7a/libhermestooling.so": "beb1e32e501b670600f2a946a44f474faf0a692207c35e8ee6d6a9ffe20759aa",
+      "lib/armeabi-v7a/libhermesvm.so": "bb9723d9eaeea09ea8fb20ff6c8516b0688b9c6e2e752075c7fd15bbcf8241f3",
+      "lib/armeabi-v7a/libimagepipeline.so": "0fb5021bcf1cbb6c10630732560bb80bad7187c8b8391e6c001b3f892fa613d5",
+      "lib/armeabi-v7a/libjsi.so": "ac16d0b45ecd2007a6feac36daa00c18962546a6993fa5fc5eedfcdef5bbe4ca",
+      "lib/armeabi-v7a/libnative-filters.so": "fb86dd825eba911eba8f31683052a8ff6904808be09f90184c18f5dcdb7a642b",
+      "lib/armeabi-v7a/libnative-imagetranscoder.so": "40905f1c50315f66362a8e10e2ac19d1df62c3f1800bc2ee639047d09c9f1bd9",
+      "lib/armeabi-v7a/libreactnative.so": "e71c8f6494cefeddde8c174a3382e9cfb0f347309eba0216c791fc8dbf36fdb0",
+      "lib/armeabi-v7a/libsherpa-onnx-jni.so": "fd2ab3cac78d88c89e8240900ac00c0548a538d225b44de4d083c13c8b1c792d",
+      "lib/x86/libc++_shared.so": "3bd6a3c5d1baa1fac3bdd8452ccc403fd1b464b3f80eb9fa207df5ec2d565129",
+      "lib/x86/libexpo-modules-core.so": "3987381bd9c731db52d97d9ad278b92c798dbe5529179ad0c5e1a5c69ebc3d87",
+      "lib/x86/libexpo-modules-jsi.so": "eafa811b00cb11413529f048c292754e2178043e8196f6ae21458269cd5f56f9",
+      "lib/x86/libfbjni.so": "735533ea082fe331b293a947f5ac32556ea433c7db1d2fe76e4ac9a440917c65",
+      "lib/x86/libhermestooling.so": "3371ca18a3f86042057a26fcd62180d42d79ff7d2918bf847e9466f846b9e08e",
+      "lib/x86/libhermesvm.so": "70e210fdb8f33be0935f74b248e8e1b772938f2aa4b44e424b0ae396ffe4992b",
+      "lib/x86/libimagepipeline.so": "afd22bf7e62e5d08c0ec17ff6c0a273bfc580052c89363c0cb5d72e98d3b4cf4",
+      "lib/x86/libjsi.so": "bec51eb3cbaae3b2e6b565f85f60abec4bda24184dc89be3942210114d047576",
+      "lib/x86/libnative-filters.so": "7e3ef5c42b127d87882132b497f36b10cf6ffc31538eece9a2b7c6ae60bd0bf1",
+      "lib/x86/libnative-imagetranscoder.so": "943c8757e57f59556027d460c0e86738d5969794db905febbe4926fd1d3fa663",
+      "lib/x86/libonnxruntime.so": "4c7ef5286642e51f66d5c6c42ffc2e0afc61c66b620b88182edaec60bde6149d",
+      "lib/x86/libreactnative.so": "a9d1a63dcf1080fd2a04b181fb3832b67377556e1eca116c31c8eb51b80b5f96",
+      "lib/x86/libsherpa-onnx-jni.so": "eb1903190814c65027edea5f9c46179b3d7cebf8cbf94c710381c9795e56f9db",
+      "lib/x86_64/libc++_shared.so": "0a2c7afa35b183fdd5a3cb20e2080ad54cbea06c2a4f0bc8f122cb7d1e9e0b9f",
+      "lib/x86_64/libexpo-modules-core.so": "e43a4518655722cda50b5d44f67acd95d34639856d4b12296d19305e26c00c10",
+      "lib/x86_64/libexpo-modules-jsi.so": "657a5a22a74675eccfa3abe910841204e1def6939e06e6e5a172f1dcdb70d330",
+      "lib/x86_64/libfbjni.so": "a51410366a0394e05bc04052cfb237c70dcf7d4d53a56e1d00a041436cb0b653",
+      "lib/x86_64/libhermestooling.so": "5a758ae677aed6f5b3b63742e72ae71742d1c5ba8177883c1098087749a6db3c",
+      "lib/x86_64/libhermesvm.so": "a7491769ad95caabb0e1a932dcdebf72a7d2c1ed4e610e648868778a71e57753",
+      "lib/x86_64/libimagepipeline.so": "2e596f4955f65abaa93c891b49eb58b5416581806a04bde0097cc369ae4dbfb3",
+      "lib/x86_64/libjsi.so": "0ccce3665022d88236060ed37b0311f9ff0e6b177841ba9e5af962b654017c85",
+      "lib/x86_64/libnative-filters.so": "9bbab21c6c696d06b0e1da6347e871152cb7e26e0c111a6aaf8805cfac58762f",
+      "lib/x86_64/libnative-imagetranscoder.so": "f6b92ad7f1c30973f40704c46987504757c3d079c7f4ace6efc8b318dd9c22f3",
+      "lib/x86_64/libreactnative.so": "f523d2089c68a2edf6c9b8b05c3980ce259c6d517ba7e4b239c55609787ae19d",
+      "lib/x86_64/libsherpa-onnx-jni.so": "9cd971c6a7fc3ec3ea5c22c516ca346c7e395d665cde794e2319e596ec25719b"
+    },
+    "path": "/home/mathew/Arrakis/CueBell/artifacts/CueBell-denoising-benchmark-v1.apk"
+  },
+  "apk_sha256": "77d648eefa38ed66c78f95684a1cafb7f142a8622caac5c58ccb807ce79c79e4",
+  "model_sha256": "e77603ac0c23dac3227dd2d7135b3a585cbee2679048aecfa886657d3ae1b534",
+  "input_manifest_sha256": "e7e3618b51831182ca8a9e7216c2eab960df7ad3bc48b7ba611fc1e7f04c705d",
+  "files": {
+    "inputs/device-inputs.json": {
+      "path": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/fixtures/device-inputs.json",
+      "sha256": "e7e3618b51831182ca8a9e7216c2eab960df7ad3bc48b7ba611fc1e7f04c705d"
+    },
+    "inputs/audio/clean/hi-positive.wav": {
+      "path": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/fixtures/audio/clean/hi-positive.wav",
+      "sha256": "0b28b8a9881735a86f142cef942156c9ee2a343e0e203a917bddcee499168722"
+    },
+    "inputs/audio/colored-snr-p10/hi-positive.wav": {
+      "path": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/fixtures/audio/colored-snr-p10/hi-positive.wav",
+      "sha256": "c898a65eb4c965e5f42a2ae35fc50a3e4bd0dbf6cbb30073a8b03f5b82e5fa64"
+    },
+    "inputs/audio/clean/hi-near-miss.wav": {
+      "path": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/fixtures/audio/clean/hi-near-miss.wav",
+      "sha256": "918947198c723e2d71f3717982d0dd2c690e79362b0ab7921eb390c984b23403"
+    },
+    "inputs/audio/colored-snr-p10/hi-near-miss.wav": {
+      "path": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/fixtures/audio/colored-snr-p10/hi-near-miss.wav",
+      "sha256": "6e84d27b33df78bad2f0a37a899b1e001e5d85798f38073b443ea26132352685"
+    },
+    "inputs/audio/clean/ml-positive.wav": {
+      "path": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/fixtures/audio/clean/ml-positive.wav",
+      "sha256": "10444eff6830480e91026af37055356b41b65835a6d980f1020b6cf2818f0e60"
+    },
+    "inputs/audio/colored-snr-p10/ml-positive.wav": {
+      "path": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/fixtures/audio/colored-snr-p10/ml-positive.wav",
+      "sha256": "ee410b6cd815aa0bdf355740dfdddd8a89400d2a95aa86f206115e4583591ffc"
+    },
+    "inputs/audio/clean/ml-voice-stop.wav": {
+      "path": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/fixtures/audio/clean/ml-voice-stop.wav",
+      "sha256": "f96156f40ae3fa9936f4c666721367fb359fd98c24e33e6a29f3f094e47651dc"
+    },
+    "inputs/audio/colored-snr-p10/ml-voice-stop.wav": {
+      "path": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/fixtures/audio/colored-snr-p10/ml-voice-stop.wav",
+      "sha256": "baebd714f9adf2e357628f0d79e2683d581c17b4b1dab21bcaffec7b126477b3"
+    },
+    "inputs/audio/clean/ta-positive.wav": {
+      "path": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/fixtures/audio/clean/ta-positive.wav",
+      "sha256": "b7d4b957919b7e13d3ac8f9f5fb7168fb443001c7db2a36c17bbab88aa00ad2d"
+    },
+    "inputs/audio/colored-snr-p10/ta-positive.wav": {
+      "path": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/fixtures/audio/colored-snr-p10/ta-positive.wav",
+      "sha256": "76bd90e35b338de84dc672b5e1b654f87564b2ad2f4f803bf9327699d4184899"
+    },
+    "inputs/audio/clean/ta-burst.wav": {
+      "path": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/fixtures/audio/clean/ta-burst.wav",
+      "sha256": "73b05f0f85ab871c076439cb4a232b8daf7ce4463c73329332a8feb0992e2deb"
+    },
+    "inputs/audio/colored-snr-p10/ta-burst.wav": {
+      "path": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/fixtures/audio/colored-snr-p10/ta-burst.wav",
+      "sha256": "0b5e66c30ca43daa23d1c7344921178f22bee4b000fff4d5cde73e775cae50c0"
+    },
+    "inputs/audio/clean/te-positive.wav": {
+      "path": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/fixtures/audio/clean/te-positive.wav",
+      "sha256": "020928226bd4056747719f6368524a92dea1d89985189fea576638b7ae060b96"
+    },
+    "inputs/audio/colored-snr-p10/te-positive.wav": {
+      "path": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/fixtures/audio/colored-snr-p10/te-positive.wav",
+      "sha256": "d234d26c01d20f8544af9399504c1e14ea7adcfd799cfb0dc6cbe994cbdda75b"
+    },
+    "inputs/audio/clean/mr-positive.wav": {
+      "path": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/fixtures/audio/clean/mr-positive.wav",
+      "sha256": "990379b0d414cf4e692f6c957c97fc33397e607a85b5d6096679088759d8eaef"
+    },
+    "inputs/audio/colored-snr-p10/mr-positive.wav": {
+      "path": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/fixtures/audio/colored-snr-p10/mr-positive.wav",
+      "sha256": "a17600604a438a8af757de1bf1ca40f21dec351e85ca6ac5a6ab52dc743c624b"
+    },
+    "inputs/audio/clean/en-positive.wav": {
+      "path": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/fixtures/audio/clean/en-positive.wav",
+      "sha256": "d2786609ebac9efe0ebb42abb12b9e4a6a637756b71391b19b41f43598cc1d54"
+    },
+    "inputs/audio/colored-snr-p10/en-positive.wav": {
+      "path": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/fixtures/audio/colored-snr-p10/en-positive.wav",
+      "sha256": "4dfdb2cbf994eaa873ebe3ca27d2906315fbfbc5ae33e1460931d77287089165"
+    },
+    "inputs/audio/clean/hi-correction.wav": {
+      "path": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/fixtures/audio/clean/hi-correction.wav",
+      "sha256": "04bcd099594fa46eeb7a0fccb92b9a49f4423aca2944115a3f420aa6d0335a18"
+    },
+    "inputs/audio/colored-snr-p10/hi-correction.wav": {
+      "path": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/fixtures/audio/colored-snr-p10/hi-correction.wav",
+      "sha256": "b34125c523a83add6d6d3ebd359bd6e4d3c0d8b5ea4046a522ea0d9797ae9f03"
+    },
+    "gtcrn_simple.onnx": {
+      "path": "/home/mathew/Arrakis/CueBell/mobile/modules/queue-listener/android/src/main/assets/noise-reduction/gtcrn_simple.onnx",
+      "sha256": "e77603ac0c23dac3227dd2d7135b3a585cbee2679048aecfa886657d3ae1b534"
+    }
+  },
+  "installation_requested": false,
+  "security_settings_changed": false,
+  "host_python": "3.12.14",
+  "commands": [
+    {
+      "argv": [
+        "/home/mathew/Android/Sdk/platform-tools/adb",
+        "-s",
+        "10BG2C197Q00ARD",
+        "version"
+      ],
+      "started_utc": "2026-11-14T03:05:38.725883+00:00",
+      "timeout_s": 120,
+      "stdout": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/instrument-smoke-v1/deployment/commands/000-adb-version.stdout",
+      "stderr": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/instrument-smoke-v1/deployment/commands/000-adb-version.stderr",
+      "exit_code": 0,
+      "ended_utc": "2026-11-14T03:05:38.890028+00:00"
+    },
+    {
+      "argv": [
+        "/home/mathew/Android/Sdk/platform-tools/adb",
+        "-s",
+        "10BG2C197Q00ARD",
+        "shell",
+        "-T",
+        "pm path --user 0 expo.modules.queuelistener.test"
+      ],
+      "started_utc": "2026-11-14T03:05:38.890119+00:00",
+      "timeout_s": 120,
+      "stdout": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/instrument-smoke-v1/deployment/commands/001-installed-apk.stdout",
+      "stderr": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/instrument-smoke-v1/deployment/commands/001-installed-apk.stderr",
+      "exit_code": 0,
+      "ended_utc": "2026-11-14T03:05:38.953980+00:00"
+    },
+    {
+      "argv": [
+        "/home/mathew/Android/Sdk/platform-tools/adb",
+        "-s",
+        "10BG2C197Q00ARD",
+        "shell",
+        "-T",
+        "run-as expo.modules.queuelistener.test sha256sum '/data/app/~~aFXMV_nAEdyLKdJEMxMz3A==/expo.modules.queuelistener.test-Z_j0iTUAqhrn8_zY78w9Nw==/base.apk'"
+      ],
+      "started_utc": "2026-11-14T03:05:38.954059+00:00",
+      "timeout_s": 120,
+      "stdout": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/instrument-smoke-v1/deployment/commands/002-installed-apk-hash.stdout",
+      "stderr": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/instrument-smoke-v1/deployment/commands/002-installed-apk-hash.stderr",
+      "exit_code": 0,
+      "ended_utc": "2026-11-14T03:05:39.368354+00:00"
+    },
+    {
+      "argv": [
+        "/home/mathew/Android/Sdk/platform-tools/adb",
+        "-s",
+        "10BG2C197Q00ARD",
+        "shell",
+        "-T",
+        "dumpsys package expo.modules.queuelistener.test"
+      ],
+      "started_utc": "2026-11-14T03:05:39.368610+00:00",
+      "timeout_s": 120,
+      "stdout": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/instrument-smoke-v1/deployment/commands/003-installed-package.stdout",
+      "stderr": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/instrument-smoke-v1/deployment/commands/003-installed-package.stderr",
+      "exit_code": 0,
+      "ended_utc": "2026-11-14T03:05:39.482751+00:00"
+    },
+    {
+      "argv": [
+        "/home/mathew/Android/Sdk/platform-tools/adb",
+        "-s",
+        "10BG2C197Q00ARD",
+        "shell",
+        "-T",
+        "run-as expo.modules.queuelistener.test pwd"
+      ],
+      "started_utc": "2026-11-14T03:05:39.482821+00:00",
+      "timeout_s": 120,
+      "stdout": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/instrument-smoke-v1/deployment/commands/004-package-home.stdout",
+      "stderr": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/instrument-smoke-v1/deployment/commands/004-package-home.stderr",
+      "exit_code": 0,
+      "ended_utc": "2026-11-14T03:05:39.546610+00:00"
+    },
+    {
+      "argv": [
+        "/home/mathew/Android/Sdk/platform-tools/adb",
+        "-s",
+        "10BG2C197Q00ARD",
+        "shell",
+        "-T",
+        "run-as expo.modules.queuelistener.test id -u"
+      ],
+      "started_utc": "2026-11-14T03:05:39.546719+00:00",
+      "timeout_s": 120,
+      "stdout": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/instrument-smoke-v1/deployment/commands/005-package-uid.stdout",
+      "stderr": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/instrument-smoke-v1/deployment/commands/005-package-uid.stderr",
+      "exit_code": 0,
+      "ended_utc": "2026-11-14T03:05:39.610686+00:00"
+    },
+    {
+      "argv": [
+        "/home/mathew/Android/Sdk/platform-tools/adb",
+        "-s",
+        "10BG2C197Q00ARD",
+        "shell",
+        "-T",
+        "run-as expo.modules.queuelistener.test sh -c 'set -eu; test ! -L files; mkdir -p files; test ! -L files/denoising; mkdir -p files/denoising; mkdir files/denoising/instrument-smoke-v1'"
+      ],
+      "started_utc": "2026-11-14T03:05:39.610890+00:00",
+      "timeout_s": 120,
+      "stdout": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/instrument-smoke-v1/deployment/commands/006-create-private-root.stdout",
+      "stderr": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/instrument-smoke-v1/deployment/commands/006-create-private-root.stderr",
+      "exit_code": 0,
+      "ended_utc": "2026-11-14T03:05:39.725167+00:00"
+    },
+    {
+      "argv": [
+        "/home/mathew/Android/Sdk/platform-tools/adb",
+        "-s",
+        "10BG2C197Q00ARD",
+        "shell",
+        "-T",
+        "run-as expo.modules.queuelistener.test tar -xf - -C /data/user/0/expo.modules.queuelistener.test/files/denoising/instrument-smoke-v1"
+      ],
+      "started_utc": "2026-11-14T03:05:39.804379+00:00",
+      "timeout_s": 120,
+      "stdout": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/instrument-smoke-v1/deployment/commands/007-deploy-inputs.stdout",
+      "stderr": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/instrument-smoke-v1/deployment/commands/007-deploy-inputs.stderr",
+      "stdin_sha256": "f01dbd514d8f0304b057f0e2a8077e25b41010b280865b9d97e58d2703db4531",
+      "exit_code": 0,
+      "ended_utc": "2026-11-14T03:05:40.383683+00:00"
+    },
+    {
+      "argv": [
+        "/home/mathew/Android/Sdk/platform-tools/adb",
+        "-s",
+        "10BG2C197Q00ARD",
+        "shell",
+        "-T",
+        "run-as expo.modules.queuelistener.test sha256sum /data/user/0/expo.modules.queuelistener.test/files/denoising/instrument-smoke-v1/inputs/device-inputs.json /data/user/0/expo.modules.queuelistener.test/files/denoising/instrument-smoke-v1/inputs/audio/clean/hi-positive.wav /data/user/0/expo.modules.queuelistener.test/files/denoising/instrument-smoke-v1/inputs/audio/colored-snr-p10/hi-positive.wav /data/user/0/expo.modules.queuelistener.test/files/denoising/instrument-smoke-v1/inputs/audio/clean/hi-near-miss.wav /data/user/0/expo.modules.queuelistener.test/files/denoising/instrument-smoke-v1/inputs/audio/colored-snr-p10/hi-near-miss.wav /data/user/0/expo.modules.queuelistener.test/files/denoising/instrument-smoke-v1/inputs/audio/clean/ml-positive.wav /data/user/0/expo.modules.queuelistener.test/files/denoising/instrument-smoke-v1/inputs/audio/colored-snr-p10/ml-positive.wav /data/user/0/expo.modules.queuelistener.test/files/denoising/instrument-smoke-v1/inputs/audio/clean/ml-voice-stop.wav /data/user/0/expo.modules.queuelistener.test/files/denoising/instrument-smoke-v1/inputs/audio/colored-snr-p10/ml-voice-stop.wav /data/user/0/expo.modules.queuelistener.test/files/denoising/instrument-smoke-v1/inputs/audio/clean/ta-positive.wav /data/user/0/expo.modules.queuelistener.test/files/denoising/instrument-smoke-v1/inputs/audio/colored-snr-p10/ta-positive.wav /data/user/0/expo.modules.queuelistener.test/files/denoising/instrument-smoke-v1/inputs/audio/clean/ta-burst.wav /data/user/0/expo.modules.queuelistener.test/files/denoising/instrument-smoke-v1/inputs/audio/colored-snr-p10/ta-burst.wav /data/user/0/expo.modules.queuelistener.test/files/denoising/instrument-smoke-v1/inputs/audio/clean/te-positive.wav /data/user/0/expo.modules.queuelistener.test/files/denoising/instrument-smoke-v1/inputs/audio/colored-snr-p10/te-positive.wav /data/user/0/expo.modules.queuelistener.test/files/denoising/instrument-smoke-v1/inputs/audio/clean/mr-positive.wav /data/user/0/expo.modules.queuelistener.test/files/denoising/instrument-smoke-v1/inputs/audio/colored-snr-p10/mr-positive.wav /data/user/0/expo.modules.queuelistener.test/files/denoising/instrument-smoke-v1/inputs/audio/clean/en-positive.wav /data/user/0/expo.modules.queuelistener.test/files/denoising/instrument-smoke-v1/inputs/audio/colored-snr-p10/en-positive.wav /data/user/0/expo.modules.queuelistener.test/files/denoising/instrument-smoke-v1/inputs/audio/clean/hi-correction.wav /data/user/0/expo.modules.queuelistener.test/files/denoising/instrument-smoke-v1/inputs/audio/colored-snr-p10/hi-correction.wav /data/user/0/expo.modules.queuelistener.test/files/denoising/instrument-smoke-v1/gtcrn_simple.onnx"
+      ],
+      "started_utc": "2026-11-14T03:05:40.386175+00:00",
+      "timeout_s": 120,
+      "stdout": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/instrument-smoke-v1/deployment/commands/008-input-hashes-before.stdout",
+      "stderr": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/instrument-smoke-v1/deployment/commands/008-input-hashes-before.stderr",
+      "exit_code": 0,
+      "ended_utc": "2026-11-14T03:05:40.450110+00:00"
+    }
+  ],
+  "sources": [
+    {
+      "path": "/home/mathew/Arrakis/CueBell/backend/benchmarks/denoising/instrument.py",
+      "sha256": "ccba49a3febf5badda2462beba28924736ccd63d1ac5d803a09a844fb390056f",
+      "snapshot": "deployment/source/backend/benchmarks/denoising/instrument.py"
+    },
+    {
+      "path": "/home/mathew/Arrakis/CueBell/backend/benchmarks/denoising/audio.py",
+      "sha256": "61417ab32213bfd8f1688222a2f8be9dae1687e38f90d22f419cd5b76e4a6bdb",
+      "snapshot": "deployment/source/backend/benchmarks/denoising/audio.py"
+    },
+    {
+      "path": "/home/mathew/Arrakis/CueBell/mobile/modules/queue-listener/android/build.gradle",
+      "sha256": "3b7c09c476bc428fdc3785fc2446e84e606875a2ac6dda534ed21f047ab56d63",
+      "snapshot": "deployment/source/mobile/modules/queue-listener/android/build.gradle"
+    },
+    {
+      "path": "/home/mathew/Arrakis/CueBell/mobile/modules/queue-listener/android/src/androidTest/java/expo/modules/queuelistener/DenoisingBenchmarkInstrumentation.kt",
+      "sha256": "0af76b6917817acd114fa8b8e09c3f6cafc8d41838d70246617ce6f0d6512563",
+      "snapshot": "deployment/source/mobile/modules/queue-listener/android/src/androidTest/java/expo/modules/queuelistener/DenoisingBenchmarkInstrumentation.kt"
+    },
+    {
+      "path": "/home/mathew/Arrakis/CueBell/mobile/modules/queue-listener/android/src/main/java/expo/modules/queuelistener/PcmNoiseReducer.kt",
+      "sha256": "5ed48e474ce0f85aa3701978c68d9c3f867963415c01de63b800d966d3ba5bf2",
+      "snapshot": "deployment/source/mobile/modules/queue-listener/android/src/main/java/expo/modules/queuelistener/PcmNoiseReducer.kt"
+    },
+    {
+      "path": "/home/mathew/Arrakis/CueBell/mobile/modules/queue-listener/android/src/main/java/expo/modules/queuelistener/NoiseReductionDiagnostics.kt",
+      "sha256": "c6e3903767d103289a449c15c993910ba66873ddc4b5646db5079425f143e208",
+      "snapshot": "deployment/source/mobile/modules/queue-listener/android/src/main/java/expo/modules/queuelistener/NoiseReductionDiagnostics.kt"
+    },
+    {
+      "path": "/home/mathew/Arrakis/CueBell/mobile/modules/queue-listener/android/src/main/java/expo/modules/queuelistener/StreamingNoiseReducer.kt",
+      "sha256": "376a80c3211d465c163cf85ea1ba1574fa1f0dacd500c994217b88a1a55a636a",
+      "snapshot": "deployment/source/mobile/modules/queue-listener/android/src/main/java/expo/modules/queuelistener/StreamingNoiseReducer.kt"
+    },
+    {
+      "path": "/home/mathew/Arrakis/CueBell/mobile/modules/queue-listener/android/src/main/java/expo/modules/queuelistener/GtcrnNoiseReducer.kt",
+      "sha256": "3c77603a8b5d4b851fe495958d8e35b8ea9639a47aa89f3f574e50f973ee6ccf",
+      "snapshot": "deployment/source/mobile/modules/queue-listener/android/src/main/java/expo/modules/queuelistener/GtcrnNoiseReducer.kt"
+    }
+  ],
+  "source_snapshot_scope": "working tree at launch; APK hash is build identity; source snapshots alone do not establish APK build provenance",
+  "installed_apk_path": "/data/app/~~aFXMV_nAEdyLKdJEMxMz3A==/expo.modules.queuelistener.test-Z_j0iTUAqhrn8_zY78w9Nw==/base.apk",
+  "package_uid": 10392,
+  "device_root": "/data/user/0/expo.modules.queuelistener.test/files/denoising/instrument-smoke-v1",
+  "input_hashes_verified_before": true,
+  "options": {
+    "inputDir": "/data/user/0/expo.modules.queuelistener.test/files/denoising/instrument-smoke-v1/inputs",
+    "outputDir": "/data/user/0/expo.modules.queuelistener.test/files/denoising/instrument-smoke-v1/results",
+    "modelPath": "/data/user/0/expo.modules.queuelistener.test/files/denoising/instrument-smoke-v1/gtcrn_simple.onnx",
+    "label": "instrument-smoke-v1",
+    "durationSeconds": "30",
+    "warmupSeconds": "5",
+    "modes": "engine,bypass",
+    "stress": "true",
+    "replay": "false",
+    "apkSha256": "77d648eefa38ed66c78f95684a1cafb7f142a8622caac5c58ccb807ce79c79e4",
+    "ids": "colored-snr-p10__hi-positive"
+  }
+}

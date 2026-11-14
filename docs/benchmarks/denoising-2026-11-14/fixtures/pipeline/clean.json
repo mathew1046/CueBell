@@ -1,0 +1,548 @@
+{
+  "version": 1,
+  "sample_rate": 16000,
+  "fixtures": [
+    {
+      "id": "hi-positive",
+      "language": "hi",
+      "text": "टोकन चार सौ बयालीस, कृपया काउंटर दो पर जाएँ।",
+      "audio_path": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/fixtures/audio/clean/hi-positive.wav",
+      "sha256": "0b28b8a9881735a86f142cef942156c9ee2a343e0e203a917bddcee499168722",
+      "speech_end_s": 3.42,
+      "duration_s": 29.44,
+      "source_scripts": [
+        {
+          "fixture_id": "hi-positive",
+          "text": "टोकन चार सौ बयालीस, कृपया काउंटर दो पर जाएँ।",
+          "english_gloss": "Token four hundred forty two, please go to counter two.",
+          "source_wav_sha256": "0861ca2815cadfda5e65d14904610437f50501d09e73886aa2d643e8af238746",
+          "start_sample": 4800,
+          "source_end_sample": 54720,
+          "speech_end_sample": 54720,
+          "source_sample_count": 49920,
+          "silence_after_s": 2.0
+        }
+      ]
+    },
+    {
+      "id": "hi-near-miss",
+      "language": "hi",
+      "text": "टोकन चार सौ तैंतालीस, कृपया काउंटर तीन पर जाएँ।",
+      "audio_path": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/fixtures/audio/clean/hi-near-miss.wav",
+      "sha256": "918947198c723e2d71f3717982d0dd2c690e79362b0ab7921eb390c984b23403",
+      "speech_end_s": 4.22,
+      "duration_s": 30.24,
+      "source_scripts": [
+        {
+          "fixture_id": "hi-near-miss",
+          "text": "टोकन चार सौ तैंतालीस, कृपया काउंटर तीन पर जाएँ।",
+          "english_gloss": "Token four hundred forty three, please go to counter three.",
+          "source_wav_sha256": "4f11aa2e3dd49493266ab85e0f42c7d1f3a466d8ef04e4a052f119a4ab5ea31f",
+          "start_sample": 4800,
+          "source_end_sample": 67520,
+          "speech_end_sample": 67520,
+          "source_sample_count": 62720,
+          "silence_after_s": 2.0
+        }
+      ]
+    },
+    {
+      "id": "ml-positive",
+      "language": "ml",
+      "text": "ടോക്കൺ നാനൂറ്റി നാൽപ്പത്തിരണ്ട്, കൗണ്ടർ രണ്ടിലേക്ക് വരൂ.",
+      "audio_path": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/fixtures/audio/clean/ml-positive.wav",
+      "sha256": "10444eff6830480e91026af37055356b41b65835a6d980f1020b6cf2818f0e60",
+      "speech_end_s": 4.22,
+      "duration_s": 30.24,
+      "source_scripts": [
+        {
+          "fixture_id": "ml-positive",
+          "text": "ടോക്കൺ നാനൂറ്റി നാൽപ്പത്തിരണ്ട്, കൗണ്ടർ രണ്ടിലേക്ക് വരൂ.",
+          "english_gloss": "Token four hundred forty two, come to counter two.",
+          "source_wav_sha256": "b4fc0be4a1ffd5cbd7fc42bc678e603ec517d9fd67344e4a23ca4f141204bd46",
+          "start_sample": 4800,
+          "source_end_sample": 67520,
+          "speech_end_sample": 67520,
+          "source_sample_count": 62720,
+          "silence_after_s": 2.0
+        }
+      ]
+    },
+    {
+      "id": "ml-voice-stop",
+      "language": "ml",
+      "text": "ക്യൂബെൽ, കേൾക്കുന്നത് നിർത്തൂ.",
+      "audio_path": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/fixtures/audio/clean/ml-voice-stop.wav",
+      "sha256": "f96156f40ae3fa9936f4c666721367fb359fd98c24e33e6a29f3f094e47651dc",
+      "speech_end_s": 2.94,
+      "duration_s": 28.96,
+      "source_scripts": [
+        {
+          "fixture_id": "ml-voice-stop",
+          "text": "ക്യൂബെൽ, കേൾക്കുന്നത് നിർത്തൂ.",
+          "english_gloss": "CueBell, stop listening.",
+          "source_wav_sha256": "4fa3295b93c8902068de6e7c4460160778ac7393f8150e67f144781e6c92b885",
+          "start_sample": 4800,
+          "source_end_sample": 47040,
+          "speech_end_sample": 47040,
+          "source_sample_count": 42240,
+          "silence_after_s": 2.0
+        }
+      ]
+    },
+    {
+      "id": "ta-positive",
+      "language": "ta",
+      "text": "டோக்கன் நானூற்று நாற்பத்து இரண்டு, கவுன்டர் இரண்டிற்கு வரவும்.",
+      "audio_path": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/fixtures/audio/clean/ta-positive.wav",
+      "sha256": "b7d4b957919b7e13d3ac8f9f5fb7168fb443001c7db2a36c17bbab88aa00ad2d",
+      "speech_end_s": 4.94,
+      "duration_s": 30.944,
+      "source_scripts": [
+        {
+          "fixture_id": "ta-positive",
+          "text": "டோக்கன் நானூற்று நாற்பத்து இரண்டு, கவுன்டர் இரண்டிற்கு வரவும்.",
+          "english_gloss": "Token four hundred forty two, please come to counter two.",
+          "source_wav_sha256": "1d4a3963a5aa97e2d36acbf228a2e5d0a04ca3330101ce827d7f39c1e1b53fa0",
+          "start_sample": 4800,
+          "source_end_sample": 79040,
+          "speech_end_sample": 79040,
+          "source_sample_count": 74240,
+          "silence_after_s": 2.0
+        }
+      ]
+    },
+    {
+      "id": "ta-burst",
+      "language": "ta",
+      "text": "டோக்கன் நானூற்று நாற்பத்து மூன்று, கவுன்டர் மூன்றிற்கு வரவும். டோக்கன் நானூற்று நாற்பத்து இரண்டு, கவுன்டர் இரண்டிற்கு வரவும்.",
+      "audio_path": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/fixtures/audio/clean/ta-burst.wav",
+      "sha256": "73b05f0f85ab871c076439cb4a232b8daf7ce4463c73329332a8feb0992e2deb",
+      "speech_end_s": 10.45,
+      "duration_s": 36.48,
+      "source_scripts": [
+        {
+          "fixture_id": "ta-near-miss",
+          "text": "டோக்கன் நானூற்று நாற்பத்து மூன்று, கவுன்டர் மூன்றிற்கு வரவும்.",
+          "english_gloss": "Token four hundred forty three, please come to counter three.",
+          "source_wav_sha256": "fba688f81dce9c07af9181b37e48b8055d11d4c5051eb20534d0f20d730b7f4e",
+          "start_sample": 4800,
+          "source_end_sample": 90560,
+          "speech_end_sample": 90560,
+          "source_sample_count": 85760,
+          "silence_after_s": 0.15
+        },
+        {
+          "fixture_id": "ta-positive",
+          "text": "டோக்கன் நானூற்று நாற்பத்து இரண்டு, கவுன்டர் இரண்டிற்கு வரவும்.",
+          "english_gloss": "Token four hundred forty two, please come to counter two.",
+          "source_wav_sha256": "1d4a3963a5aa97e2d36acbf228a2e5d0a04ca3330101ce827d7f39c1e1b53fa0",
+          "start_sample": 92960,
+          "source_end_sample": 167200,
+          "speech_end_sample": 167200,
+          "source_sample_count": 74240,
+          "silence_after_s": 2.0
+        }
+      ]
+    },
+    {
+      "id": "te-positive",
+      "language": "te",
+      "text": "టోకెన్ నాలుగు వందల నలభై రెండు, కౌంటర్ రెండుకు రండి.",
+      "audio_path": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/fixtures/audio/clean/te-positive.wav",
+      "sha256": "020928226bd4056747719f6368524a92dea1d89985189fea576638b7ae060b96",
+      "speech_end_s": 4.14,
+      "duration_s": 30.144,
+      "source_scripts": [
+        {
+          "fixture_id": "te-positive",
+          "text": "టోకెన్ నాలుగు వందల నలభై రెండు, కౌంటర్ రెండుకు రండి.",
+          "english_gloss": "Token four hundred forty two, please come to counter two.",
+          "source_wav_sha256": "c63d716741f023ecffc2d9673f76ed1ff06ad06fc019e5079a1313e2c0d462d0",
+          "start_sample": 4800,
+          "source_end_sample": 66240,
+          "speech_end_sample": 66240,
+          "source_sample_count": 61440,
+          "silence_after_s": 2.0
+        }
+      ]
+    },
+    {
+      "id": "mr-positive",
+      "language": "mr",
+      "text": "टोकन चारशे बेचाळीस, कृपया काउंटर दोनवर या.",
+      "audio_path": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/fixtures/audio/clean/mr-positive.wav",
+      "sha256": "990379b0d414cf4e692f6c957c97fc33397e607a85b5d6096679088759d8eaef",
+      "speech_end_s": 3.42,
+      "duration_s": 29.44,
+      "source_scripts": [
+        {
+          "fixture_id": "mr-positive",
+          "text": "टोकन चारशे बेचाळीस, कृपया काउंटर दोनवर या.",
+          "english_gloss": "Token four hundred forty two, please come to counter two.",
+          "source_wav_sha256": "e4fd430024e050ef2b96e02dbf78c66847feb6a9770b7a21097c37a197e6a1a1",
+          "start_sample": 4800,
+          "source_end_sample": 54720,
+          "speech_end_sample": 54720,
+          "source_sample_count": 49920,
+          "silence_after_s": 2.0
+        }
+      ]
+    },
+    {
+      "id": "en-positive",
+      "language": "en",
+      "text": "Token four hundred and forty two, please go to counter two.",
+      "audio_path": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/fixtures/audio/clean/en-positive.wav",
+      "sha256": "d2786609ebac9efe0ebb42abb12b9e4a6a637756b71391b19b41f43598cc1d54",
+      "speech_end_s": 4.94,
+      "duration_s": 30.944,
+      "source_scripts": [
+        {
+          "fixture_id": "en-positive",
+          "text": "Token four hundred and forty two, please go to counter two.",
+          "english_gloss": "Token four hundred forty two, please go to counter two.",
+          "source_wav_sha256": "64feede2485f2d76eebf4ea42d63e7d936ea5212b9dc9d2b3ab313833a60cdc5",
+          "start_sample": 4800,
+          "source_end_sample": 79040,
+          "speech_end_sample": 79040,
+          "source_sample_count": 74240,
+          "silence_after_s": 2.0
+        }
+      ]
+    },
+    {
+      "id": "hi-correction",
+      "language": "hi",
+      "text": "टोकन चार सौ बयालीस, कृपया काउंटर दो पर जाएँ। सुधार: चार सौ बयालीस नहीं, टोकन चार सौ तैंतालीस काउंटर तीन पर आएँ।",
+      "audio_path": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/fixtures/audio/clean/hi-correction.wav",
+      "sha256": "04bcd099594fa46eeb7a0fccb92b9a49f4423aca2944115a3f420aa6d0335a18",
+      "speech_end_s": 10.13,
+      "duration_s": 37.12,
+      "source_scripts": [
+        {
+          "fixture_id": "hi-positive",
+          "text": "टोकन चार सौ बयालीस, कृपया काउंटर दो पर जाएँ।",
+          "english_gloss": "Token four hundred forty two, please go to counter two.",
+          "source_wav_sha256": "0861ca2815cadfda5e65d14904610437f50501d09e73886aa2d643e8af238746",
+          "start_sample": 4800,
+          "source_end_sample": 54720,
+          "speech_end_sample": 54720,
+          "source_sample_count": 49920,
+          "silence_after_s": 0.15
+        },
+        {
+          "fixture_id": "hi-correction",
+          "text": "सुधार: चार सौ बयालीस नहीं, टोकन चार सौ तैंतालीस काउंटर तीन पर आएँ।",
+          "english_gloss": "Correction: not four hundred forty two; token four hundred forty three, come to counter three.",
+          "source_wav_sha256": "d95a4d8960b672db04a065f5e7fdd5c6ea92f4dbaa0426f9d59f323e371a7397",
+          "start_sample": 57120,
+          "source_end_sample": 177440,
+          "speech_end_sample": 162080,
+          "source_sample_count": 120320,
+          "silence_after_s": 2.0
+        }
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "id": "hi-positive",
+      "language": "hi",
+      "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+      "kind": "positive",
+      "sequence": [
+        {
+          "fixture_id": "hi-positive",
+          "silence_after_s": 0
+        }
+      ],
+      "expected": {
+        "alert": true,
+        "token": "442",
+        "location": "counter 2",
+        "location_aliases": [
+          "काउंटर दो",
+          "काउंटर दो पर",
+          "काउंटर 2",
+          "counter two"
+        ],
+        "voice_stop": false,
+        "correction": false
+      }
+    },
+    {
+      "id": "hi-near-miss",
+      "language": "hi",
+      "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+      "kind": "near-miss",
+      "sequence": [
+        {
+          "fixture_id": "hi-near-miss",
+          "silence_after_s": 0
+        }
+      ],
+      "expected": {
+        "alert": false,
+        "token": null,
+        "location": null,
+        "voice_stop": false,
+        "correction": false
+      }
+    },
+    {
+      "id": "ml-positive",
+      "language": "ml",
+      "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+      "kind": "positive",
+      "sequence": [
+        {
+          "fixture_id": "ml-positive",
+          "silence_after_s": 0
+        }
+      ],
+      "expected": {
+        "alert": true,
+        "token": "442",
+        "location": "counter 2",
+        "location_aliases": [
+          "കൗണ്ടർ രണ്ടിലേക്ക്",
+          "കൗണ്ടർ രണ്ട്",
+          "കൗണ്ടർ 2",
+          "കൗണ്ടർ രണ്ടിൽ"
+        ],
+        "voice_stop": false,
+        "correction": false
+      }
+    },
+    {
+      "id": "ml-voice-stop",
+      "language": "ml",
+      "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+      "kind": "voice-stop",
+      "sequence": [
+        {
+          "fixture_id": "ml-voice-stop",
+          "silence_after_s": 0
+        }
+      ],
+      "expected": {
+        "alert": false,
+        "token": null,
+        "location": null,
+        "voice_stop": true,
+        "correction": false
+      }
+    },
+    {
+      "id": "ta-positive",
+      "language": "ta",
+      "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+      "kind": "positive",
+      "sequence": [
+        {
+          "fixture_id": "ta-positive",
+          "silence_after_s": 0
+        }
+      ],
+      "expected": {
+        "alert": true,
+        "token": "442",
+        "location": "counter 2",
+        "location_aliases": [
+          "கவுன்டர் இரண்டிற்கு",
+          "கவுன்டர் இரண்டு",
+          "கவுண்டர் இரண்டிற்கு",
+          "கவுண்டர் இரண்டு",
+          "கவுன்டர் 2",
+          "கவுண்டர் 2"
+        ],
+        "voice_stop": false,
+        "correction": false
+      }
+    },
+    {
+      "id": "ta-burst",
+      "language": "ta",
+      "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+      "kind": "burst",
+      "sequence": [
+        {
+          "fixture_id": "ta-burst",
+          "silence_after_s": 0
+        }
+      ],
+      "expected": {
+        "alert": true,
+        "token": "442",
+        "location": "counter 2",
+        "location_aliases": [
+          "கவுன்டர் இரண்டிற்கு",
+          "கவுன்டர் இரண்டு",
+          "கவுண்டர் இரண்டிற்கு",
+          "கவுண்டர் இரண்டு",
+          "கவுன்டர் 2",
+          "கவுண்டர் 2"
+        ],
+        "voice_stop": false,
+        "correction": false
+      }
+    },
+    {
+      "id": "te-positive",
+      "language": "te",
+      "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+      "kind": "positive",
+      "sequence": [
+        {
+          "fixture_id": "te-positive",
+          "silence_after_s": 0
+        }
+      ],
+      "expected": {
+        "alert": true,
+        "token": "442",
+        "location": "counter 2",
+        "location_aliases": [
+          "కౌంటర్ రెండుకు",
+          "కౌంటర్ రెండు",
+          "కౌంటర్ 2"
+        ],
+        "voice_stop": false,
+        "correction": false
+      }
+    },
+    {
+      "id": "mr-positive",
+      "language": "mr",
+      "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+      "kind": "positive",
+      "sequence": [
+        {
+          "fixture_id": "mr-positive",
+          "silence_after_s": 0
+        }
+      ],
+      "expected": {
+        "alert": true,
+        "token": "442",
+        "location": "counter 2",
+        "location_aliases": [
+          "काउंटर दोनवर",
+          "काउंटर दोन",
+          "काउंटर 2"
+        ],
+        "voice_stop": false,
+        "correction": false
+      }
+    },
+    {
+      "id": "en-positive",
+      "language": "en",
+      "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+      "kind": "positive",
+      "sequence": [
+        {
+          "fixture_id": "en-positive",
+          "silence_after_s": 0
+        }
+      ],
+      "expected": {
+        "alert": true,
+        "token": "442",
+        "location": "counter 2",
+        "location_aliases": [
+          "counter two"
+        ],
+        "voice_stop": false,
+        "correction": false
+      }
+    },
+    {
+      "id": "hi-correction",
+      "language": "hi",
+      "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+      "kind": "correction",
+      "sequence": [
+        {
+          "fixture_id": "hi-correction",
+          "silence_after_s": 0
+        }
+      ],
+      "expected": {
+        "alert": false,
+        "token": null,
+        "location": null,
+        "voice_stop": false,
+        "correction": true
+      }
+    }
+  ],
+  "metadata": {
+    "project_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113",
+    "generation_plan_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/generation_plan.json",
+    "provider": "elevenlabs",
+    "tool": "elevenlabs_tts",
+    "model": "eleven_v3",
+    "voice_id": "bajNon13EdhNMndG3z05",
+    "voice_name": "Viraj",
+    "corpus_type": "synthetic-stock-voice-continuous-case-stream",
+    "translation_provenance": "Agent-authored native-script benchmark prompts and English glosses, established before synthesis; not derived from Gnani or Luna outputs; not reviewed by native speakers.",
+    "quality_scope": "Automated file/PCM/alignment validation; manual listening and native-speaker evaluation not performed",
+    "audio_processing": "clean",
+    "expected_location_semantics": "counter 2 is a canonical English ground-truth label for native-script counter two; returned evidence locations may be verbatim native text",
+    "correction_semantics": "Expected final alert is false once the initial 442 call is explicitly replaced by 443 or cancelled; transient earlier alerts must be separately recorded. correction=true includes explicit cancellation.",
+    "sequence_gap_note": "silence_after_s adds silence after the complete untrimmed WAV; intrinsic provider trailing silence also contributes to the effective gap",
+    "cost_status": "estimated",
+    "estimated_cost_usd": 0.375,
+    "submitted_characters_including_failures": 1250,
+    "script_extensions": [
+      {
+        "extension_id": "spoken-requests-hi-ml",
+        "script_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/request_extension_script.json",
+        "script_sha256": "cebe61a517e5623d88803fe323892b43cc7dc264c8515a97b568d4b849cd400a",
+        "plan_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/request_extension_plan.json",
+        "user_approved": true
+      }
+    ],
+    "request_case_selection": "Select hi-request and ml-request explicitly with --mode request; exclude kind=request cases from monitor-mode runs",
+    "request_translation_provenance": "Parent-supplied Hindi and Malayalam requests, fixed before synthesis; native pronunciation not independently verified",
+    "source_metadata": {
+      "project_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113",
+      "generation_plan_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/generation_plan.json",
+      "provider": "elevenlabs",
+      "tool": "elevenlabs_tts",
+      "model": "eleven_v3",
+      "voice_id": "bajNon13EdhNMndG3z05",
+      "voice_name": "Viraj",
+      "corpus_type": "synthetic-stock-voice",
+      "translation_provenance": "Agent-authored native-script benchmark prompts and English glosses, established before synthesis; not derived from Gnani or Luna outputs; not reviewed by native speakers.",
+      "quality_scope": "Automated file/PCM/alignment validation; manual listening and native-speaker evaluation not performed",
+      "audio_processing": "Provider PCM wrapped in WAV only; no denoising or DSP",
+      "expected_location_semantics": "counter 2 is a canonical English ground-truth label for native-script counter two; returned evidence locations may be verbatim native text",
+      "correction_semantics": "Expected final alert is false once the initial 442 call is explicitly replaced by 443 or cancelled; transient earlier alerts must be separately recorded. correction=true includes explicit cancellation.",
+      "sequence_gap_note": "silence_after_s adds silence after the complete untrimmed WAV; intrinsic provider trailing silence also contributes to the effective gap",
+      "cost_status": "estimated",
+      "estimated_cost_usd": 0.375,
+      "submitted_characters_including_failures": 1250,
+      "script_extensions": [
+        {
+          "extension_id": "spoken-requests-hi-ml",
+          "script_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/request_extension_script.json",
+          "script_sha256": "cebe61a517e5623d88803fe323892b43cc7dc264c8515a97b568d4b849cd400a",
+          "plan_path": "/home/mathew/.config/opencode/skills/openmontage/projects/cuebell-latency-20261113/artifacts/audio/request_extension_plan.json",
+          "user_approved": true
+        }
+      ],
+      "request_case_selection": "Select hi-request and ml-request explicitly with --mode request; exclude kind=request cases from monitor-mode runs",
+      "request_translation_provenance": "Parent-supplied Hindi and Malayalam requests, fixed before synthesis; native pronunciation not independently verified"
+    },
+    "source_corpus_sha256": "0475b1692d8e93ee79404aa64ef652a43a02c44882a5ce4cbcfefea82c542832",
+    "continuous_case_stream": true,
+    "required_replay_flags": {
+      "leading_silence": 0,
+      "tail_silence": 0
+    },
+    "ground_truth": "Source scripts and expected labels unchanged; source speech endpoints remain the latency origin, including for causal denoised output."
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "runs": [
+    {
+      "run": "asr-near-initial",
+      "attempts": 10,
+      "completed": 10,
+      "connection_seconds": 230.66668434600024
+    },
+    {
+      "run": "asr-far-initial",
+      "attempts": 4,
+      "completed": 4,
+      "connection_seconds": 92.69488813699991
+    },
+    {
+      "run": "asr-near-confirmation",
+      "attempts": 2,
+      "completed": 2,
+      "connection_seconds": 46.30215410400024
+    },
+    {
+      "run": "asr-far-confirmation",
+      "attempts": 2,
+      "completed": 2,
+      "connection_seconds": 46.47853364900038
+    }
+  ],
+  "new_gnani_attempts": 18,
+  "new_gnani_connection_seconds": 416.14226023600077,
+  "prior_gnani_connection_seconds": 4324.824,
+  "combined_gnani_connection_minutes": 79.01610433726667,
+  "authorized_gnani_connection_minutes": 120,
+  "new_luna_calls": 0,
+  "prior_luna_attempts": 419,
+  "authorized_luna_attempts": 600,
+  "new_generated_audio_characters": 0
+}

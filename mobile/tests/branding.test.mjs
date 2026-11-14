@@ -16,8 +16,8 @@ test('CueBell identity is consistent across app and package metadata', () => {
   assert.equal(app.slug, 'cuebell');
   assert.equal(app.scheme, 'cuebell');
   assert.equal(app.android.package, 'app.cuebell.mobile');
-  assert.equal(app.version, '1.3.1');
-  assert.equal(app.android.versionCode, 6);
+  assert.equal(app.version, '1.4.0');
+  assert.equal(app.android.versionCode, 7);
   assert.equal(pkg.name, 'cuebell-mobile');
   assert.equal(pkg.version, app.version);
   assert.equal(lock.name, pkg.name);

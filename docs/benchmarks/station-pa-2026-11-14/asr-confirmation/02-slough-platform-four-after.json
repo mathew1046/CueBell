@@ -1,0 +1,112 @@
+{
+  "id": "02-slough-platform-four",
+  "arm": "after",
+  "reference": "<UNVERIFIED_TRANSCRIPT/>",
+  "input_sha256": "8df2bac99f57b30671d950d26d5d3902cda044ebf785d5e1258771ba43a99900",
+  "source_audio_seconds": 23.214125,
+  "status": "completed",
+  "scoring_version": "unicode-marks-v2",
+  "sent_frames": 789,
+  "schedule_rebases": 0,
+  "maximum_send_lateness_ms": 2.53325699850393,
+  "unfinished_utterance_ids": [],
+  "connection_seconds": 36.30173672800083,
+  "attempt_seconds": 36.5564423779997,
+  "transcript": "Four four for the eight seven hundred hours first grade Western Service to Freddy.  For the eight seven hundred hours, first break Western service to breeding.",
+  "events": [
+    {
+      "elapsed_s": 0.061900960999992094,
+      "message": {
+        "type": "connected",
+        "message": "STT service ready — VAD service connected",
+        "request_id": "01a1d99f-fb78-7609-9edd-1d99b1c4cc12",
+        "config": {
+          "sample_rate": 16000,
+          "chunk_size": 512,
+          "partials_enabled": false,
+          "partial_interval_ms": 450,
+          "partial_max_window_s": 15.0,
+          "language_code": "indic-auto",
+          "format": "verbatim"
+        },
+        "timestamp": "2026-11-14T10:35:02.970492+00:00"
+      }
+    },
+    {
+      "elapsed_s": 4.584442643999864,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "u0d4888f1",
+        "t_ms": 4244,
+        "timestamp": "2026-11-14T10:35:07.503573+00:00"
+      }
+    },
+    {
+      "elapsed_s": 10.56463547400017,
+      "message": {
+        "type": "transcript",
+        "text": "Four four for the eight seven hundred hours first grade Western Service to Freddy.",
+        "audio_duration_ms": 6452.0,
+        "segment_id": "01a1d99f-fb78-7609-9edd-1d99b1c4cc12-seg-1",
+        "segment_index": 1,
+        "utterance_id": "u0d4888f1",
+        "is_final": true,
+        "latency": 152,
+        "prefetched": false,
+        "timestamp": "2026-11-14T10:35:13.485855+00:00",
+        "detected_language_code": "en-IN"
+      }
+    },
+    {
+      "elapsed_s": 10.649278030999994,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "ud901522b",
+        "t_ms": 10292,
+        "timestamp": "2026-11-14T10:35:13.570251+00:00"
+      }
+    },
+    {
+      "elapsed_s": 14.552669373000754,
+      "message": {
+        "type": "transcript",
+        "text": "",
+        "audio_duration_ms": 4032.0,
+        "segment_id": "01a1d99f-fb78-7609-9edd-1d99b1c4cc12-seg-2",
+        "segment_index": 2,
+        "utterance_id": "ud901522b",
+        "is_final": true,
+        "latency": 91,
+        "prefetched": false,
+        "timestamp": "2026-11-14T10:35:17.474052+00:00"
+      }
+    },
+    {
+      "elapsed_s": 14.684800027000165,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "u5e22dd8d",
+        "t_ms": 14324,
+        "timestamp": "2026-11-14T10:35:17.606138+00:00"
+      }
+    },
+    {
+      "elapsed_s": 20.981392027000766,
+      "message": {
+        "type": "transcript",
+        "text": "For the eight seven hundred hours, first break Western service to breeding.",
+        "audio_duration_ms": 6368.0,
+        "segment_id": "01a1d99f-fb78-7609-9edd-1d99b1c4cc12-seg-3",
+        "segment_index": 3,
+        "utterance_id": "u5e22dd8d",
+        "is_final": true,
+        "latency": 141,
+        "prefetched": false,
+        "timestamp": "2026-11-14T10:35:23.890709+00:00",
+        "detected_language_code": "en-IN"
+      }
+    }
+  ],
+  "reference_score_eligible": false,
+  "score": null
+}

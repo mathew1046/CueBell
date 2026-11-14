@@ -1,9 +1,15 @@
 import { NativeModule, requireNativeModule } from 'expo';
 
+export type NoiseReductionMode = 'off' | 'gtcrn';
+
+export type QueueListenerStartOptions = {
+  noiseReductionMode?: NoiseReductionMode;
+};
+
 declare class QueueListenerModule extends NativeModule<{
   onEvent: (event: { json: string }) => void;
 }> {
-  start(url: string, token: string, mode: 'request' | 'monitor'): Promise<void>;
+  start(url: string, token: string, mode: 'request' | 'monitor', options?: QueueListenerStartOptions): Promise<void>;
   stop(): Promise<void>;
   snapshot(): string;
   clear(): void;

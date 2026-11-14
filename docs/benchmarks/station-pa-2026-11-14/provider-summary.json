@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "source": "Five complete actual station field recordings; full-reference WER unavailable",
+  "initial_asr_attempts": 10,
+  "initial_nonempty_transcripts": 6,
+  "confirmation_attempts": 6,
+  "confirmation": [
+    {
+      "id": "03-slough-through-train",
+      "arm": "before",
+      "status": "inconclusive",
+      "status_identical": true,
+      "input_hash_identical": true,
+      "transcript_identical": true,
+      "transcript": ""
+    },
+    {
+      "id": "03-slough-through-train",
+      "arm": "after",
+      "status": "completed",
+      "status_identical": true,
+      "input_hash_identical": true,
+      "transcript_identical": true,
+      "transcript": ""
+    },
+    {
+      "id": "04-slough-distant-pa",
+      "arm": "after",
+      "status": "inconclusive",
+      "status_identical": true,
+      "input_hash_identical": true,
+      "transcript_identical": true,
+      "transcript": ""
+    },
+    {
+      "id": "04-slough-distant-pa",
+      "arm": "before",
+      "status": "inconclusive",
+      "status_identical": true,
+      "input_hash_identical": true,
+      "transcript_identical": true,
+      "transcript": ""
+    },
+    {
+      "id": "02-slough-platform-four",
+      "arm": "before",
+      "status": "completed",
+      "status_identical": true,
+      "input_hash_identical": true,
+      "transcript_identical": true,
+      "transcript": "हो, देईल। That is to breeding.  Platform four for the O Seven Hundred Hours: First Great Western Service to Breeding."
+    },
+    {
+      "id": "02-slough-platform-four",
+      "arm": "after",
+      "status": "completed",
+      "status_identical": true,
+      "input_hash_identical": true,
+      "transcript_identical": true,
+      "transcript": "Four four for the eight seven hundred hours first grade Western Service to Freddy.  For the eight seven hundred hours, first break Western service to breeding."
+    }
+  ],
+  "new_gnani_connection_seconds": 792.245955067001,
+  "prior_gnani_connection_seconds": 4925.599719883,
+  "combined_gnani_connection_seconds": 5717.845674950001,
+  "authorized_gnani_connection_seconds": 7200,
+  "remaining_gnani_connection_seconds": 1482.154325049999,
+  "new_luna_attempts": 7,
+  "new_luna_completed": 5,
+  "new_luna_errors": 2,
+  "combined_luna_attempts": 426,
+  "authorized_luna_attempts": 600,
+  "remaining_luna_attempts": 174,
+  "new_tts_characters": 0,
+  "all_asr_input_hashes_verified": true,
+  "source_audio_generated": false,
+  "live_alert_latency_measured": false
+}

@@ -13,12 +13,27 @@ https://cuebell.mathewjoseph.xyz
 
 For local builds, set the same `EXPO_PUBLIC_API_URL` in `.env` or the shell. No provider secrets belong in this file. The EAS post-install hook rejects missing/placeholder routing configuration.
 
-The v1.3.1 ARM64 preview APK and checksum are published at:
-https://github.com/mathew1046/CueBell/releases/tag/v1.3.1-preview
+The v1.4.0 ARM64 preview APK and checksum are published at:
+https://github.com/mathew1046/CueBell/releases/tag/v1.4.0-preview
 
-Version 1.3.1 / Android version code 6 accompanies the backend latency controls, stream-shutdown fix and real-provider benchmark evidence. Experimental latency settings remain opt-in because full monitoring validation did not meet the target-and-counter quality gate. It retains general listening tasks, automatic activation, spoken-request service handoff, 21 app-language catalogs, the bundled alarm, captions, waveform and semantic voice stop. Submit a fresh request after updating. The hosted backend supports `speech-event-v1`. Provider-key changes remain server-only and do not require an APK rebuild. Source checks include 43 mobile workflow/session/branding tests. Device installation and backend audio replays do not establish real-venue or locked-screen reliability.
+Version 1.4.0 / Android version code 7 adds experimental on-device noise reduction
+under Settings → Listening, off by default. Stop listening before changing it.
+The published ARM64 preview selects the tested FFT runtime. The station-PA study
+found recognition regressions, so this release is for hands-on comparison.
+Experimental backend latency settings also remain opt-in. Submit a fresh request
+after updating. Provider-key changes remain server-only.
 
-The signing certificate matches the 1.3.0 preview for in-place updates. Versioned APK and device checks are recorded at:
+For the same native runtime, add the following property to the local Gradle
+release build, using the verified distribution described in the native guide:
+
+```sh
+-PcuebellSherpaFftDir=/home/mathew/.cache/cuebell/sherpa-fft-v1-storage/dist
+```
+
+Native runtime source, pinned hashes and rebuild instructions:
+/home/mathew/Arrakis/CueBell/mobile/modules/queue-listener/android/native/sherpa-fft/README.md
+
+The signing certificate matches the 1.3.1 preview for in-place updates. Versioned APK and device checks are recorded at:
 https://github.com/mathew1046/CueBell/blob/main/docs/VERIFICATION.md
 
 ```sh

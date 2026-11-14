@@ -1,0 +1,452 @@
+{
+  "schema_version": 1,
+  "status": "completed",
+  "label": "device-smoke-v1",
+  "engine_class": "expo.modules.queuelistener.GtcrnNoiseReducer",
+  "sample_rate": 16000,
+  "frame_samples": 512,
+  "clock_policy": "absolute System.nanoTime deadlines; no rebasing or dropped frames",
+  "stages": [
+    {
+      "id": "stress-engine",
+      "mode": "engine",
+      "kind": "stress",
+      "input_id": "colored-snr-p10__hi-positive",
+      "input_sha256": "c898a65eb4c965e5f42a2ae35fc50a3e4bd0dbf6cbb30073a8b03f5b82e5fa64",
+      "frame_count": 1095,
+      "warmup_frames": 157,
+      "sustained_frames": 938,
+      "audio_duration_s": 35.04,
+      "elapsed_ms": 35008.972925,
+      "process_cpu_ms": 198,
+      "process_cpu_percent_one_core": 0.5655692911190996,
+      "frames_file": "stress-engine.frames.csv",
+      "frames_sha256": "08083a6040f78b7c5ed528be9d340b7362fba850175671c23caad52aab0fad97",
+      "initialization_wall_ms": 97.417924,
+      "resources_before_initialization": {
+        "monotonic_ns": 317569538167082,
+        "process_cpu_ms": 1695,
+        "thread_cpu_ns": 1649733802,
+        "rss_kb": 189680,
+        "rss_high_water_kb": 195576,
+        "native_heap_allocated_bytes": 8169040,
+        "java_heap_used_bytes": 3996744
+      },
+      "resources_after_initialization": {
+        "monotonic_ns": 317569636064005,
+        "process_cpu_ms": 1792,
+        "thread_cpu_ns": 1743085879,
+        "rss_kb": 194776,
+        "rss_high_water_kb": 195576,
+        "native_heap_allocated_bytes": 16820336,
+        "java_heap_used_bytes": 4066376
+      },
+      "resources_sustained_start": {
+        "monotonic_ns": 317574662062390,
+        "process_cpu_ms": 1907,
+        "thread_cpu_ns": 1857651872,
+        "rss_kb": 194880,
+        "rss_high_water_kb": 195576,
+        "native_heap_allocated_bytes": 16746320,
+        "java_heap_used_bytes": 4209736
+      },
+      "resources_sustained_end": {
+        "monotonic_ns": 317604677620622,
+        "process_cpu_ms": 1991,
+        "thread_cpu_ns": 1941376844,
+        "rss_kb": 194116,
+        "rss_high_water_kb": 195576,
+        "native_heap_allocated_bytes": 16750032,
+        "java_heap_used_bytes": 4504648
+      },
+      "resource_samples": [
+        {
+          "monotonic_ns": 317569673585159,
+          "process_cpu_ms": 1797,
+          "thread_cpu_ns": 1748528341,
+          "rss_kb": 194800,
+          "rss_high_water_kb": 195576,
+          "native_heap_allocated_bytes": 16745488,
+          "java_heap_used_bytes": 4103240,
+          "frame": 0,
+          "phase": "warmup"
+        },
+        {
+          "monotonic_ns": 317574661327082,
+          "process_cpu_ms": 1906,
+          "thread_cpu_ns": 1856926565,
+          "rss_kb": 194880,
+          "rss_high_water_kb": 195576,
+          "native_heap_allocated_bytes": 16745856,
+          "java_heap_used_bytes": 4172872,
+          "frame": 156,
+          "phase": "warmup"
+        },
+        {
+          "monotonic_ns": 317579653019698,
+          "process_cpu_ms": 1921,
+          "thread_cpu_ns": 1871809019,
+          "rss_kb": 194880,
+          "rss_high_water_kb": 195576,
+          "native_heap_allocated_bytes": 16746784,
+          "java_heap_used_bytes": 4246600,
+          "frame": 312,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 317584645113544,
+          "process_cpu_ms": 1933,
+          "thread_cpu_ns": 1883680794,
+          "rss_kb": 194872,
+          "rss_high_water_kb": 195576,
+          "native_heap_allocated_bytes": 16747248,
+          "java_heap_used_bytes": 4283464,
+          "frame": 468,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 317589637145237,
+          "process_cpu_ms": 1947,
+          "thread_cpu_ns": 1897348259,
+          "rss_kb": 194872,
+          "rss_high_water_kb": 195576,
+          "native_heap_allocated_bytes": 16747712,
+          "java_heap_used_bytes": 4320328,
+          "frame": 624,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 317594629191314,
+          "process_cpu_ms": 1962,
+          "thread_cpu_ns": 1912646715,
+          "rss_kb": 194872,
+          "rss_high_water_kb": 195576,
+          "native_heap_allocated_bytes": 16748176,
+          "java_heap_used_bytes": 4357192,
+          "frame": 780,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 317599620605545,
+          "process_cpu_ms": 1977,
+          "thread_cpu_ns": 1927597320,
+          "rss_kb": 194444,
+          "rss_high_water_kb": 195576,
+          "native_heap_allocated_bytes": 16748640,
+          "java_heap_used_bytes": 4394056,
+          "frame": 936,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 317604613207391,
+          "process_cpu_ms": 1989,
+          "thread_cpu_ns": 1939755153,
+          "rss_kb": 194116,
+          "rss_high_water_kb": 195576,
+          "native_heap_allocated_bytes": 16749104,
+          "java_heap_used_bytes": 4430920,
+          "frame": 1092,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 317604676943084,
+          "process_cpu_ms": 1990,
+          "thread_cpu_ns": 1940712536,
+          "rss_kb": 194116,
+          "rss_high_water_kb": 195576,
+          "native_heap_allocated_bytes": 16749568,
+          "java_heap_used_bytes": 4467784,
+          "frame": 1094,
+          "phase": "sustained"
+        }
+      ],
+      "diagnostics": {
+        "active_mode": "off",
+        "requested_mode": "gtcrn",
+        "algorithmic_delay_samples": 0,
+        "startup_padding_samples": 256,
+        "initialization_ns": 97392231,
+        "processed_frames": 14,
+        "max_process_ns": 38352923,
+        "overload_count": 1,
+        "fallback_reason": "processing_deadline_exceeded",
+        "close_wall_ms": 6.980923,
+        "resources_after_close": {
+          "monotonic_ns": 317604692677776,
+          "process_cpu_ms": 2005,
+          "thread_cpu_ns": 1955781227,
+          "rss_kb": 188436,
+          "rss_high_water_kb": 195576,
+          "native_heap_allocated_bytes": 8171120,
+          "java_heap_used_bytes": 4942920
+        }
+      },
+      "first_fallback_frame": 13,
+      "fallback_reason": "processing_deadline_exceeded",
+      "state_policy": "fresh-engine; retained state across warmup and repeated input loops",
+      "input_loop_count": 1,
+      "dropped_frames": 0,
+      "schedule_rebases": 0
+    },
+    {
+      "id": "stress-bypass",
+      "mode": "bypass",
+      "kind": "stress",
+      "input_id": "colored-snr-p10__hi-positive",
+      "input_sha256": "c898a65eb4c965e5f42a2ae35fc50a3e4bd0dbf6cbb30073a8b03f5b82e5fa64",
+      "frame_count": 1095,
+      "warmup_frames": 157,
+      "sustained_frames": 938,
+      "audio_duration_s": 35.04,
+      "elapsed_ms": 35009.118771,
+      "process_cpu_ms": 96,
+      "process_cpu_percent_one_core": 0.2742142715100905,
+      "frames_file": "stress-bypass.frames.csv",
+      "frames_sha256": "9731c709071ad7939324fb472f00132e72d51604ab4356c9494f7e42806e6bd1",
+      "initialization_wall_ms": 0.001538,
+      "resources_before_initialization": {
+        "monotonic_ns": 317604698301468,
+        "process_cpu_ms": 2011,
+        "thread_cpu_ns": 1961375690,
+        "rss_kb": 190280,
+        "rss_high_water_kb": 195576,
+        "native_heap_allocated_bytes": 8171584,
+        "java_heap_used_bytes": 6990920
+      },
+      "resources_after_initialization": {
+        "monotonic_ns": 317604698539391,
+        "process_cpu_ms": 2011,
+        "thread_cpu_ns": 1961603767,
+        "rss_kb": 190280,
+        "rss_high_water_kb": 195576,
+        "native_heap_allocated_bytes": 8172048,
+        "java_heap_used_bytes": 7027784
+      },
+      "resources_sustained_start": {
+        "monotonic_ns": 317609724325469,
+        "process_cpu_ms": 2025,
+        "thread_cpu_ns": 1976146763,
+        "rss_kb": 190196,
+        "rss_high_water_kb": 195576,
+        "native_heap_allocated_bytes": 8173440,
+        "java_heap_used_bytes": 7121992
+      },
+      "resources_sustained_end": {
+        "monotonic_ns": 317639740513547,
+        "process_cpu_ms": 2107,
+        "thread_cpu_ns": 2057882074,
+        "rss_kb": 168632,
+        "rss_high_water_kb": 195576,
+        "native_heap_allocated_bytes": 8177152,
+        "java_heap_used_bytes": 7416904
+      },
+      "resource_samples": [
+        {
+          "monotonic_ns": 317604731002776,
+          "process_cpu_ms": 2011,
+          "thread_cpu_ns": 1962014536,
+          "rss_kb": 190280,
+          "rss_high_water_kb": 195576,
+          "native_heap_allocated_bytes": 8172512,
+          "java_heap_used_bytes": 7048264,
+          "frame": 0,
+          "phase": "warmup"
+        },
+        {
+          "monotonic_ns": 317609723626776,
+          "process_cpu_ms": 2025,
+          "thread_cpu_ns": 1975508917,
+          "rss_kb": 190196,
+          "rss_high_water_kb": 195576,
+          "native_heap_allocated_bytes": 8172976,
+          "java_heap_used_bytes": 7085128,
+          "frame": 156,
+          "phase": "warmup"
+        },
+        {
+          "monotonic_ns": 317614715630777,
+          "process_cpu_ms": 2038,
+          "thread_cpu_ns": 1988474772,
+          "rss_kb": 190052,
+          "rss_high_water_kb": 195576,
+          "native_heap_allocated_bytes": 8173904,
+          "java_heap_used_bytes": 7158856,
+          "frame": 312,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 317619707493238,
+          "process_cpu_ms": 2050,
+          "thread_cpu_ns": 2000847933,
+          "rss_kb": 190052,
+          "rss_high_water_kb": 195576,
+          "native_heap_allocated_bytes": 8174368,
+          "java_heap_used_bytes": 7195720,
+          "frame": 468,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 317624699526700,
+          "process_cpu_ms": 2063,
+          "thread_cpu_ns": 2013373621,
+          "rss_kb": 180576,
+          "rss_high_water_kb": 195576,
+          "native_heap_allocated_bytes": 8174832,
+          "java_heap_used_bytes": 7232584,
+          "frame": 624,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 317629691823931,
+          "process_cpu_ms": 2075,
+          "thread_cpu_ns": 2025625466,
+          "rss_kb": 169136,
+          "rss_high_water_kb": 195576,
+          "native_heap_allocated_bytes": 8175296,
+          "java_heap_used_bytes": 7269448,
+          "frame": 780,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 317634683694470,
+          "process_cpu_ms": 2089,
+          "thread_cpu_ns": 2040044533,
+          "rss_kb": 168976,
+          "rss_high_water_kb": 195576,
+          "native_heap_allocated_bytes": 8175760,
+          "java_heap_used_bytes": 7306312,
+          "frame": 936,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 317639675910701,
+          "process_cpu_ms": 2105,
+          "thread_cpu_ns": 2055926226,
+          "rss_kb": 168632,
+          "rss_high_water_kb": 195576,
+          "native_heap_allocated_bytes": 8176224,
+          "java_heap_used_bytes": 7343176,
+          "frame": 1092,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 317639739520932,
+          "process_cpu_ms": 2106,
+          "thread_cpu_ns": 2057087920,
+          "rss_kb": 168632,
+          "rss_high_water_kb": 195576,
+          "native_heap_allocated_bytes": 8176688,
+          "java_heap_used_bytes": 7380040,
+          "frame": 1094,
+          "phase": "sustained"
+        }
+      ],
+      "diagnostics": {
+        "active_mode": "bypass",
+        "close_wall_ms": 3.08E-4,
+        "resources_after_close": {
+          "monotonic_ns": 317639749740547,
+          "process_cpu_ms": 2115,
+          "thread_cpu_ns": 2065659308,
+          "rss_kb": 168872,
+          "rss_high_water_kb": 195576,
+          "native_heap_allocated_bytes": 8178272,
+          "java_heap_used_bytes": 7855176
+        }
+      },
+      "first_fallback_frame": null,
+      "fallback_reason": null,
+      "state_policy": "fresh-engine; retained state across warmup and repeated input loops",
+      "input_loop_count": 1,
+      "dropped_frames": 0,
+      "schedule_rebases": 0
+    }
+  ],
+  "replays": [],
+  "options": {
+    "inputDir": "\/data\/local\/tmp\/cuebell-denoising-20261114-smoke-v1\/inputs",
+    "outputDir": "\/data\/local\/tmp\/cuebell-denoising-20261114-smoke-v1\/results",
+    "modelPath": "\/data\/local\/tmp\/cuebell-denoising-20261114-smoke-v1\/gtcrn_simple.onnx",
+    "durationSeconds": "30",
+    "warmupSeconds": "5",
+    "stress": "true",
+    "replay": "false",
+    "apkSha256": "77d648eefa38ed66c78f95684a1cafb7f142a8622caac5c58ccb807ce79c79e4",
+    "label": "device-smoke-v1"
+  },
+  "thread_priority": {
+    "requested": -16,
+    "actual": -16
+  },
+  "input_manifest_sha256": "e7e3618b51831182ca8a9e7216c2eab960df7ad3bc48b7ba611fc1e7f04c705d",
+  "model": {
+    "path": "\/data\/local\/tmp\/cuebell-denoising-20261114-smoke-v1\/gtcrn_simple.onnx",
+    "sha256": "e77603ac0c23dac3227dd2d7135b3a585cbee2679048aecfa886657d3ae1b534"
+  },
+  "environment": {
+    "manufacturer": "vivo",
+    "model": "I2404",
+    "device": "I2404",
+    "fingerprint": "iQOO\/I2404i\/I2404:16\/BP2A.250605.031.A3_V000L1\/compiler261014093954:user\/release-keys",
+    "sdk_int": 36,
+    "abis": [
+      "arm64-v8a"
+    ],
+    "is_64_bit": true,
+    "logical_processors": 8,
+    "pid": 25721,
+    "entry_point": "app_process",
+    "thread": "main",
+    "initial_resources": {
+      "monotonic_ns": 317566899830389,
+      "process_cpu_ms": 730,
+      "thread_cpu_ns": 718561260,
+      "rss_kb": 157852,
+      "rss_high_water_kb": 157852,
+      "native_heap_allocated_bytes": 1410848,
+      "java_heap_used_bytes": 2228224
+    },
+    "classpath_artifacts": [
+      {
+        "path": "\/data\/local\/tmp\/cuebell-denoising-20261114-smoke-v1\/benchmark.apk",
+        "sha256": "77d648eefa38ed66c78f95684a1cafb7f142a8622caac5c58ccb807ce79c79e4"
+      }
+    ],
+    "caller_supplied_apk_sha256": "77d648eefa38ed66c78f95684a1cafb7f142a8622caac5c58ccb807ce79c79e4"
+  },
+  "reset_check": {
+    "frames_per_pass": 32,
+    "input_id": "colored-snr-p10__hi-positive",
+    "output_pcm_sha256": [
+      "e777c8d75803f8e1ef8c701047a3ca4bf4d4cb951df9e126aa285e4326378434",
+      "e777c8d75803f8e1ef8c701047a3ca4bf4d4cb951df9e126aa285e4326378434"
+    ],
+    "identical_after_recreation": true,
+    "all_engine_frames_active": true,
+    "policy": "two fresh production engines, same PCM, absolute-clock replay",
+    "passes": [
+      {
+        "active_mode": "gtcrn",
+        "requested_mode": "gtcrn",
+        "algorithmic_delay_samples": 256,
+        "startup_padding_samples": 256,
+        "initialization_ns": 182436846,
+        "processed_frames": 32,
+        "max_process_ns": 17637923,
+        "overload_count": 0,
+        "fallback_reason": null
+      },
+      {
+        "active_mode": "gtcrn",
+        "requested_mode": "gtcrn",
+        "algorithmic_delay_samples": 256,
+        "startup_padding_samples": 256,
+        "initialization_ns": 101710539,
+        "processed_frames": 32,
+        "max_process_ns": 19288000,
+        "overload_count": 0,
+        "fallback_reason": null
+      }
+    ]
+  }
+}

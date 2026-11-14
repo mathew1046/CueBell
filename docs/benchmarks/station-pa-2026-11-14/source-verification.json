@@ -1,0 +1,57 @@
+{
+  "source_files_verified": 5,
+  "cases": [
+    {
+      "id": "01-india-station-pa",
+      "wav_duration_s": 55.458,
+      "source_duration_s": 55.457959,
+      "source_codec": "mp3",
+      "source_sample_rate": "44100",
+      "source_channels": 2,
+      "source_bitrate": "146950"
+    },
+    {
+      "id": "02-slough-platform-four",
+      "wav_duration_s": 23.214125,
+      "source_duration_s": 23.214104,
+      "source_codec": "mp3",
+      "source_sample_rate": "48000",
+      "source_channels": 2,
+      "source_bitrate": "181792"
+    },
+    {
+      "id": "03-slough-through-train",
+      "wav_duration_s": 53.0043125,
+      "source_duration_s": 53.004333,
+      "source_codec": "mp3",
+      "source_sample_rate": "48000",
+      "source_channels": 2,
+      "source_bitrate": "182942"
+    },
+    {
+      "id": "04-slough-distant-pa",
+      "wav_duration_s": 27.0984375,
+      "source_duration_s": 27.098417,
+      "source_codec": "mp3",
+      "source_sample_rate": "48000",
+      "source_channels": 2,
+      "source_bitrate": "182318"
+    },
+    {
+      "id": "05-southall-platform-pa",
+      "wav_duration_s": 29.3965,
+      "source_duration_s": 29.396463,
+      "source_codec": "mp3",
+      "source_sample_rate": "44100",
+      "source_channels": 2,
+      "source_bitrate": "178663"
+    }
+  ],
+  "audio_seconds": 188.17137499999998,
+  "before_after_gnani_reserved_seconds": 734,
+  "prior_gnani_seconds": 4925.599719883,
+  "authorized_total_gnani_seconds": 7200,
+  "prior_luna_attempts": 419,
+  "authorized_total_luna_attempts": 600,
+  "planned_luna_attempts": 10
+}

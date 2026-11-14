@@ -1,0 +1,38 @@
+{
+  "id": "04-slough-distant-pa",
+  "arm": "after",
+  "reference": "<UNVERIFIED_TRANSCRIPT/>",
+  "input_sha256": "d52fab328ecd2b7fed9b7abb4e385ad49a3285d0dc9e1b29767191460bbec6af",
+  "source_audio_seconds": 27.0984375,
+  "status": "inconclusive",
+  "scoring_version": "unicode-marks-v2",
+  "sent_frames": 910,
+  "schedule_rebases": 0,
+  "maximum_send_lateness_ms": 1.6969459993561031,
+  "unfinished_utterance_ids": [],
+  "connection_seconds": 40.17241966700021,
+  "attempt_seconds": 40.4386960060001,
+  "transcript": "",
+  "events": [
+    {
+      "elapsed_s": 0.07071880200055602,
+      "message": {
+        "type": "connected",
+        "message": "STT service ready — VAD service connected",
+        "request_id": "01a1d99f-5d86-71cf-857e-d52c5afc7297",
+        "config": {
+          "sample_rate": 16000,
+          "chunk_size": 512,
+          "partials_enabled": false,
+          "partial_interval_ms": 450,
+          "partial_max_window_s": 15.0,
+          "language_code": "indic-auto",
+          "format": "verbatim"
+        },
+        "timestamp": "2026-11-14T10:34:22.539499+00:00"
+      }
+    }
+  ],
+  "reference_score_eligible": false,
+  "score": null
+}

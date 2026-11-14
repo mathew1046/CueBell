@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-14",
+  "branch": "feat/on-device-denoising",
+  "decision": "Compare execution context, then replace the streaming DFT with a preallocated FFT while preserving the model.",
+  "reason": "The original native frontend uses quadratic transforms. The first phone deadline failure also includes off-CPU time, so native compute and scheduling must be assessed separately.",
+  "upstream_frontend": "https://raw.githubusercontent.com/k2-fsa/sherpa-onnx/v2.0.1/sherpa-onnx/csrc/online-speech-denoiser-stft-impl.h",
+  "original_benchmark_apk": {
+    "path": "/home/mathew/Arrakis/CueBell/artifacts/CueBell-denoising-benchmark-v1.apk",
+    "sha256": "77d648eefa38ed66c78f95684a1cafb7f142a8622caac5c58ccb807ce79c79e4"
+  },
+  "invariants": {
+    "model": "gtcrn_simple.onnx",
+    "model_sha256": "e77603ac0c23dac3227dd2d7135b3a585cbee2679048aecfa886657d3ae1b534",
+    "sample_rate": 16000,
+    "packet_samples": 512,
+    "packet_interval_ms": 32,
+    "alignment_samples": 256,
+    "backend": "Gnani Prisma plus OpenAI GPT-6 Luna",
+    "default_noise_reduction": "off"
+  },
+  "comparisons": [
+    "Original APK: shell app_process versus managed Android instrumentation.",
+    "Managed instrumentation: original DFT versus rebuilt FFT, same model and input hashes.",
+    "Qualified native output: clean/raw, clean/enhanced, colored-noise/raw, colored-noise/enhanced through equal backend settings."
+  ],
+  "numerical_checks": [
+    "Forward and inverse transforms against the original implementation.",
+    "Zeros, impulses, DC, Nyquist, sinusoidal and deterministic random inputs.",
+    "Window, normalization, overlap, stream state and PCM-output comparison."
+  ],
+  "processing_gate": {
+    "active_sustained_p99_ms_exclusive": 8,
+    "processing_deadline_ms_inclusive": 32,
+    "raw_fallback_allowed_for_success": false,
+    "failed_or_fallback_frames_may_be_discarded": false
+  },
+  "interpretation": "A processing-gate pass is not a zero-delay, ASR-quality, battery-life or all-phone guarantee. Report initialization, fixed alignment, scheduling and recognition separately.",
+  "paid_budget": {
+    "prior_openai_attempts": 419,
+    "combined_openai_attempt_ceiling": 600,
+    "prior_gnani_connection_minutes": 72.080,
+    "combined_gnani_connection_minute_ceiling": 120,
+    "new_tts_requested": false
+  }
+}

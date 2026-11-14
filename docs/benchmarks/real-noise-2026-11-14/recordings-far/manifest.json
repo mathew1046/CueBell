@@ -1,0 +1,114 @@
+{
+  "schema": 1,
+  "dataset": "Microsoft DNS5 dev Track2 Speakerphone real recordings",
+  "source_url": "https://dnschallengepublic.blob.core.windows.net/dns5archive/V5_dev_testset.zip",
+  "source_page": "https://github.com/microsoft/DNS-Challenge",
+  "http_headers": {
+    "Content-Length": "3236752796",
+    "Content-Type": "application/x-zip-compressed",
+    "Content-MD5": "dqoc3aJKECCYaU+rzFfODQ==",
+    "Last-Modified": "Thu, 08 Dec 2022 01:46:22 GMT",
+    "ETag": "0x8DAD8BE02A959DB",
+    "Vary": "Origin",
+    "Server": "Windows-Azure-Blob/1.0 Microsoft-HTTPAPI/2.0",
+    "x-ms-request-id": "b222062a-b01e-001f-73f7-733612000000",
+    "x-ms-version": "2009-09-19",
+    "x-ms-lease-status": "unlocked",
+    "x-ms-blob-type": "BlockBlob",
+    "Date": "Sat, 14 Nov 2026 05:17:02 GMT",
+    "Connection": "close"
+  },
+  "selection": "One primary-speaker recording per case-insensitive category; SHA256 filename ranking; reserve a NoNoise control only if eligible. No outcome-based selection.",
+  "distance_filter": "far",
+  "no_noise_control_count": 0,
+  "transformation": "FFmpeg mono PCM16 16k conversion only; no synthesis/mixing/gain/padding/trim",
+  "clean_reference_available": false,
+  "transcript_source": "V5_dev_testset/Track2_Speakerphone/transcripts/v5_devset_transcripts_track2.tsv",
+  "transcript_sha256": "8c8667fe7a78ea27c76ba285c8f62b4edc2ced753bc8c1fe9322364b077ab595",
+  "records": [
+    {
+      "id": "01-breathing-far",
+      "case_id": "01-breathing-far",
+      "variant": "real-recorded",
+      "relative_path": "before/01-breathing-far.wav",
+      "sha256": "994b30be2d14790d5c1004748f7be824347f69bde96ef31ece53471d40998393",
+      "pcm_sha256": "a7f0ae8f9ddeb91a8569a43bf91594ff1df9ffe909e19f387dfdf414a8972b3b",
+      "sample_count": 160000,
+      "sample_zero_offset": 0,
+      "noise_category": "breathing",
+      "distance": "far",
+      "source_member": "V5_dev_testset/Track2_Speakerphone/noisy/A72LC42LU78IP_M_breathing_far_sad_SP_desktop_primary.wav",
+      "source_sha256": "85892375d5fde50e1fb6ce7d8359721d2fd6bb2fb585ed35ccff4b15cf4f0a72",
+      "source_crc32": "8f538fb1",
+      "source_transcript": {
+        "index": "827",
+        "filename": "A72LC42LU78IP_M_breathing_far_sad_SP_desktop_primary.wav",
+        "text": "The failure to keep these two usages distinct presents hazards to the reader. The blue rug was suspiciously"
+      },
+      "duration_s": 10.0
+    },
+    {
+      "id": "02-baby-far",
+      "case_id": "02-baby-far",
+      "variant": "real-recorded",
+      "relative_path": "before/02-baby-far.wav",
+      "sha256": "5ad704de38f4f386d6a87f7397e0e13b75196cd310daa5187db4ac23a584c0d8",
+      "pcm_sha256": "3705d2eebf474e95ec91ee963306c9bc3888b9d98644c402f0fb39c7fb0896a4",
+      "sample_count": 160000,
+      "sample_zero_offset": 0,
+      "noise_category": "Baby",
+      "distance": "Far",
+      "source_member": "V5_dev_testset/Track2_Speakerphone/noisy/A1S7M3UYORM9UI_F_Baby_Far_Regular_SP_Desk_Primary.wav",
+      "source_sha256": "2739b7c79113502b715c56211b5414eb556d7b6f6ea8da68ac67093362ea4d04",
+      "source_crc32": "17589739",
+      "source_transcript": {
+        "index": "652",
+        "filename": "A1S7M3UYORM9UI_F_Baby_Far_Regular_SP_Desk_Primary.wav",
+        "text": "Sensibility, wasn't it. Whatever had been the elementary school <UNKOWN/>, gradually in his ability to work in groups allies, I'll tell you my feature, like chopped."
+      },
+      "duration_s": 10.0
+    },
+    {
+      "id": "03-typing-far",
+      "case_id": "03-typing-far",
+      "variant": "real-recorded",
+      "relative_path": "before/03-typing-far.wav",
+      "sha256": "078bd7f9b4c613decb812c8d6a07dfbe575a2463594460ba532b6c0095b5522e",
+      "pcm_sha256": "ccac02f664d54e85a2b65bcea8b0ed7dcd44581147abe76f94c70be955bc73e8",
+      "sample_count": 160000,
+      "sample_zero_offset": 0,
+      "noise_category": "typing",
+      "distance": "far",
+      "source_member": "V5_dev_testset/Track2_Speakerphone/noisy/A32Q6TNSAG4U3I_M_typing_far_yelling_SP_desktop_primary.wav",
+      "source_sha256": "afda0ca89b1e603debbcf5587c06767553d954b170763217a9e81cbc2b0ae48a",
+      "source_crc32": "d6148b68",
+      "source_transcript": {
+        "index": "789",
+        "filename": "A32Q6TNSAG4U3I_M_typing_far_yelling_SP_desktop_primary.wav",
+        "text": "Stay right here where you are, kid, he called. Are you a thrower of flame"
+      },
+      "duration_s": 10.0
+    },
+    {
+      "id": "04-creaky-far",
+      "case_id": "04-creaky-far",
+      "variant": "real-recorded",
+      "relative_path": "before/04-creaky-far.wav",
+      "sha256": "a519d19c7b4c7c59bbe9fcbadd8b40de7a32e0f69e4a8398ae91c037815df4b7",
+      "pcm_sha256": "df262437d9212317ed1413856901a65681fab6f6fc4075520f459f3c0505d3e3",
+      "sample_count": 160000,
+      "sample_zero_offset": 0,
+      "noise_category": "creaky",
+      "distance": "far",
+      "source_member": "V5_dev_testset/Track2_Speakerphone/noisy/ACM1CEGHXTKZP_M_creaky_far_happy_SP_desktop_primary.wav",
+      "source_sha256": "ed4dbbe33c6387fa7ef142cb08659c29aea62c537b42cce567e7a6a789a9ad18",
+      "source_crc32": "5a2b9456",
+      "source_transcript": {
+        "index": "867",
+        "filename": "ACM1CEGHXTKZP_M_creaky_far_happy_SP_desktop_primary.wav",
+        "text": "<UNKNOWN/> A muscular abdomen is good for your back. <UNKNOWN/> barbecue <UNKNOWN/>"
+      },
+      "duration_s": 10.0
+    }
+  ]
+}

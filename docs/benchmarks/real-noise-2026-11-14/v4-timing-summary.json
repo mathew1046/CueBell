@@ -1,0 +1,740 @@
+{
+  "cohorts": [
+    {
+      "cohort": "near",
+      "frames": 3756,
+      "reset_check": {
+        "frames_per_pass": 32,
+        "input_id": "01-baby-near",
+        "output_pcm_sha256": [
+          "0764a8c1cee7c321c60e7454685a041892ff09731eca1fd1dcd3241239c71d5a",
+          "0764a8c1cee7c321c60e7454685a041892ff09731eca1fd1dcd3241239c71d5a"
+        ],
+        "identical_after_recreation": true,
+        "all_engine_frames_active": true,
+        "policy": "two fresh production engines, same PCM, absolute-clock replay",
+        "passes": [
+          {
+            "active_mode": "gtcrn",
+            "requested_mode": "gtcrn",
+            "algorithmic_delay_samples": 256,
+            "startup_padding_samples": 256,
+            "initialization_ns": 145776616,
+            "processed_frames": 32,
+            "max_process_ns": 5990769,
+            "overload_count": 0,
+            "processing_debt_ns": 0,
+            "max_processing_debt_ns": 0,
+            "processing_debt_limit_ns": 64000000,
+            "fallback_reason": null
+          },
+          {
+            "active_mode": "gtcrn",
+            "requested_mode": "gtcrn",
+            "algorithmic_delay_samples": 256,
+            "startup_padding_samples": 256,
+            "initialization_ns": 92634539,
+            "processed_frames": 32,
+            "max_process_ns": 5214539,
+            "overload_count": 0,
+            "processing_debt_ns": 0,
+            "max_processing_debt_ns": 0,
+            "processing_debt_limit_ns": 64000000,
+            "fallback_reason": null
+          }
+        ]
+      },
+      "stages": [
+        {
+          "input_id": "01-baby-near",
+          "initialization_wall_ms": 97.197923,
+          "process_cpu_percent_one_core": 14.675932756155902,
+          "diagnostics": {
+            "active_mode": "gtcrn",
+            "requested_mode": "gtcrn",
+            "algorithmic_delay_samples": 256,
+            "startup_padding_samples": 256,
+            "initialization_ns": 97163000,
+            "processed_frames": 313,
+            "max_process_ns": 5533846,
+            "overload_count": 0,
+            "processing_debt_ns": 0,
+            "max_processing_debt_ns": 0,
+            "processing_debt_limit_ns": 64000000,
+            "fallback_reason": null,
+            "close_wall_ms": 5.767077,
+            "resources_after_close": {
+              "monotonic_ns": 327999451798011,
+              "process_cpu_ms": 3367,
+              "thread_cpu_ns": 3311144415,
+              "rss_kb": 188604,
+              "rss_high_water_kb": 191420,
+              "native_heap_allocated_bytes": 8166384,
+              "java_heap_used_bytes": 2369920,
+              "runtime_gc_counters": {
+                "art.gc.gc-count": "1",
+                "art.gc.gc-time": "9",
+                "art.gc.blocking-gc-count": "0",
+                "art.gc.blocking-gc-time": "0"
+              }
+            }
+          },
+          "fallback_reason": null,
+          "dropped_frames": 0,
+          "schedule_rebases": 0
+        },
+        {
+          "input_id": "02-typing-near",
+          "initialization_wall_ms": 94.433231,
+          "process_cpu_percent_one_core": 14.285610545209396,
+          "diagnostics": {
+            "active_mode": "gtcrn",
+            "requested_mode": "gtcrn",
+            "algorithmic_delay_samples": 256,
+            "startup_padding_samples": 256,
+            "initialization_ns": 94413615,
+            "processed_frames": 313,
+            "max_process_ns": 5715692,
+            "overload_count": 0,
+            "processing_debt_ns": 0,
+            "max_processing_debt_ns": 0,
+            "processing_debt_limit_ns": 64000000,
+            "fallback_reason": null,
+            "close_wall_ms": 5.396846,
+            "resources_after_close": {
+              "monotonic_ns": 328019616769089,
+              "process_cpu_ms": 4938,
+              "thread_cpu_ns": 4879222565,
+              "rss_kb": 192088,
+              "rss_high_water_kb": 193708,
+              "native_heap_allocated_bytes": 8177008,
+              "java_heap_used_bytes": 7268736,
+              "runtime_gc_counters": {
+                "art.gc.gc-count": "1",
+                "art.gc.gc-time": "9",
+                "art.gc.blocking-gc-count": "0",
+                "art.gc.blocking-gc-time": "0"
+              }
+            }
+          },
+          "fallback_reason": null,
+          "dropped_frames": 0,
+          "schedule_rebases": 0
+        },
+        {
+          "input_id": "03-water-near",
+          "initialization_wall_ms": 96.200846,
+          "process_cpu_percent_one_core": 18.199800822741278,
+          "diagnostics": {
+            "active_mode": "gtcrn",
+            "requested_mode": "gtcrn",
+            "algorithmic_delay_samples": 256,
+            "startup_padding_samples": 256,
+            "initialization_ns": 96176923,
+            "processed_frames": 313,
+            "max_process_ns": 13447308,
+            "overload_count": 0,
+            "processing_debt_ns": 0,
+            "max_processing_debt_ns": 0,
+            "processing_debt_limit_ns": 64000000,
+            "fallback_reason": null,
+            "close_wall_ms": 5.591385,
+            "resources_after_close": {
+              "monotonic_ns": 328039787087552,
+              "process_cpu_ms": 6913,
+              "thread_cpu_ns": 6843566929,
+              "rss_kb": 192480,
+              "rss_high_water_kb": 194016,
+              "native_heap_allocated_bytes": 8175664,
+              "java_heap_used_bytes": 6517072,
+              "runtime_gc_counters": {
+                "art.gc.gc-count": "2",
+                "art.gc.gc-time": "14",
+                "art.gc.blocking-gc-count": "0",
+                "art.gc.blocking-gc-time": "0"
+              }
+            }
+          },
+          "fallback_reason": null,
+          "dropped_frames": 0,
+          "schedule_rebases": 0
+        },
+        {
+          "input_id": "04-aircon-near",
+          "initialization_wall_ms": 96.335,
+          "process_cpu_percent_one_core": 16.17703865199616,
+          "diagnostics": {
+            "active_mode": "gtcrn",
+            "requested_mode": "gtcrn",
+            "algorithmic_delay_samples": 256,
+            "startup_padding_samples": 256,
+            "initialization_ns": 96316615,
+            "processed_frames": 313,
+            "max_process_ns": 16718077,
+            "overload_count": 0,
+            "processing_debt_ns": 0,
+            "max_processing_debt_ns": 0,
+            "processing_debt_limit_ns": 64000000,
+            "fallback_reason": null,
+            "close_wall_ms": 5.917461,
+            "resources_after_close": {
+              "monotonic_ns": 328059961281091,
+              "process_cpu_ms": 8689,
+              "thread_cpu_ns": 8581570422,
+              "rss_kb": 190604,
+              "rss_high_water_kb": 196028,
+              "native_heap_allocated_bytes": 8183776,
+              "java_heap_used_bytes": 7421424,
+              "runtime_gc_counters": {
+                "art.gc.gc-count": "3",
+                "art.gc.gc-time": "28",
+                "art.gc.blocking-gc-count": "0",
+                "art.gc.blocking-gc-time": "0"
+              }
+            }
+          },
+          "fallback_reason": null,
+          "dropped_frames": 0,
+          "schedule_rebases": 0
+        },
+        {
+          "input_id": "05-dog-near",
+          "initialization_wall_ms": 98.000846,
+          "process_cpu_percent_one_core": 15.175810391455718,
+          "diagnostics": {
+            "active_mode": "gtcrn",
+            "requested_mode": "gtcrn",
+            "algorithmic_delay_samples": 256,
+            "startup_padding_samples": 256,
+            "initialization_ns": 97980000,
+            "processed_frames": 313,
+            "max_process_ns": 8113615,
+            "overload_count": 0,
+            "processing_debt_ns": 0,
+            "max_processing_debt_ns": 0,
+            "processing_debt_limit_ns": 64000000,
+            "fallback_reason": null,
+            "close_wall_ms": 5.523307,
+            "resources_after_close": {
+              "monotonic_ns": 328080139071247,
+              "process_cpu_ms": 10372,
+              "thread_cpu_ns": 10260020262,
+              "rss_kb": 171884,
+              "rss_high_water_kb": 196028,
+              "native_heap_allocated_bytes": 8182576,
+              "java_heap_used_bytes": 6883448,
+              "runtime_gc_counters": {
+                "art.gc.gc-count": "4",
+                "art.gc.gc-time": "33",
+                "art.gc.blocking-gc-count": "0",
+                "art.gc.blocking-gc-time": "0"
+              }
+            }
+          },
+          "fallback_reason": null,
+          "dropped_frames": 0,
+          "schedule_rebases": 0
+        },
+        {
+          "input_id": "06-breathing-near",
+          "initialization_wall_ms": 97.140923,
+          "process_cpu_percent_one_core": 14.725899438762015,
+          "diagnostics": {
+            "active_mode": "gtcrn",
+            "requested_mode": "gtcrn",
+            "algorithmic_delay_samples": 256,
+            "startup_padding_samples": 256,
+            "initialization_ns": 97123770,
+            "processed_frames": 313,
+            "max_process_ns": 5749231,
+            "overload_count": 0,
+            "processing_debt_ns": 0,
+            "max_processing_debt_ns": 0,
+            "processing_debt_limit_ns": 64000000,
+            "fallback_reason": null,
+            "close_wall_ms": 5.606153,
+            "resources_after_close": {
+              "monotonic_ns": 328100317862863,
+              "process_cpu_ms": 12017,
+              "thread_cpu_ns": 11893275804,
+              "rss_kb": 170472,
+              "rss_high_water_kb": 196028,
+              "native_heap_allocated_bytes": 8180624,
+              "java_heap_used_bytes": 6102240,
+              "runtime_gc_counters": {
+                "art.gc.gc-count": "5",
+                "art.gc.gc-time": "43",
+                "art.gc.blocking-gc-count": "0",
+                "art.gc.blocking-gc-time": "0"
+              }
+            }
+          },
+          "fallback_reason": null,
+          "dropped_frames": 0,
+          "schedule_rebases": 0
+        },
+        {
+          "input_id": "07-mouseclicks-near",
+          "initialization_wall_ms": 99.561538,
+          "process_cpu_percent_one_core": 14.656072524775613,
+          "diagnostics": {
+            "active_mode": "gtcrn",
+            "requested_mode": "gtcrn",
+            "algorithmic_delay_samples": 256,
+            "startup_padding_samples": 256,
+            "initialization_ns": 99543461,
+            "processed_frames": 313,
+            "max_process_ns": 5359077,
+            "overload_count": 0,
+            "processing_debt_ns": 0,
+            "max_processing_debt_ns": 0,
+            "processing_debt_limit_ns": 64000000,
+            "fallback_reason": null,
+            "close_wall_ms": 5.762846,
+            "resources_after_close": {
+              "monotonic_ns": 328120500299787,
+              "process_cpu_ms": 13653,
+              "thread_cpu_ns": 13524225879,
+              "rss_kb": 172108,
+              "rss_high_water_kb": 196028,
+              "native_heap_allocated_bytes": 8181552,
+              "java_heap_used_bytes": 7217376,
+              "runtime_gc_counters": {
+                "art.gc.gc-count": "6",
+                "art.gc.gc-time": "47",
+                "art.gc.blocking-gc-count": "0",
+                "art.gc.blocking-gc-time": "0"
+              }
+            }
+          },
+          "fallback_reason": null,
+          "dropped_frames": 0,
+          "schedule_rebases": 0
+        },
+        {
+          "input_id": "08-clatter-near",
+          "initialization_wall_ms": 96.252385,
+          "process_cpu_percent_one_core": 14.855431479059982,
+          "diagnostics": {
+            "active_mode": "gtcrn",
+            "requested_mode": "gtcrn",
+            "algorithmic_delay_samples": 256,
+            "startup_padding_samples": 256,
+            "initialization_ns": 96233231,
+            "processed_frames": 313,
+            "max_process_ns": 6071923,
+            "overload_count": 0,
+            "processing_debt_ns": 0,
+            "max_processing_debt_ns": 0,
+            "processing_debt_limit_ns": 64000000,
+            "fallback_reason": null,
+            "close_wall_ms": 5.758384,
+            "resources_after_close": {
+              "monotonic_ns": 328140682838866,
+              "process_cpu_ms": 15313,
+              "thread_cpu_ns": 15169516045,
+              "rss_kb": 142216,
+              "rss_high_water_kb": 196028,
+              "native_heap_allocated_bytes": 8180752,
+              "java_heap_used_bytes": 6252264,
+              "runtime_gc_counters": {
+                "art.gc.gc-count": "7",
+                "art.gc.gc-time": "58",
+                "art.gc.blocking-gc-count": "0",
+                "art.gc.blocking-gc-time": "0"
+              }
+            }
+          },
+          "fallback_reason": null,
+          "dropped_frames": 0,
+          "schedule_rebases": 0
+        },
+        {
+          "input_id": "09-creaky-near",
+          "initialization_wall_ms": 95.543616,
+          "process_cpu_percent_one_core": 15.406733726487062,
+          "diagnostics": {
+            "active_mode": "gtcrn",
+            "requested_mode": "gtcrn",
+            "algorithmic_delay_samples": 256,
+            "startup_padding_samples": 256,
+            "initialization_ns": 95518154,
+            "processed_frames": 313,
+            "max_process_ns": 12149154,
+            "overload_count": 0,
+            "processing_debt_ns": 0,
+            "max_processing_debt_ns": 0,
+            "processing_debt_limit_ns": 64000000,
+            "fallback_reason": null,
+            "close_wall_ms": 5.625538,
+            "resources_after_close": {
+              "monotonic_ns": 328160867389098,
+              "process_cpu_ms": 17024,
+              "thread_cpu_ns": 16863785329,
+              "rss_kb": 113340,
+              "rss_high_water_kb": 196028,
+              "native_heap_allocated_bytes": 8174800,
+              "java_heap_used_bytes": 3107384,
+              "runtime_gc_counters": {
+                "art.gc.gc-count": "9",
+                "art.gc.gc-time": "72",
+                "art.gc.blocking-gc-count": "0",
+                "art.gc.blocking-gc-time": "0"
+              }
+            }
+          },
+          "fallback_reason": null,
+          "dropped_frames": 0,
+          "schedule_rebases": 0
+        },
+        {
+          "input_id": "10-dishwasher-near",
+          "initialization_wall_ms": 96.636077,
+          "process_cpu_percent_one_core": 14.235638505160855,
+          "diagnostics": {
+            "active_mode": "gtcrn",
+            "requested_mode": "gtcrn",
+            "algorithmic_delay_samples": 256,
+            "startup_padding_samples": 256,
+            "initialization_ns": 96573231,
+            "processed_frames": 313,
+            "max_process_ns": 6224308,
+            "overload_count": 0,
+            "processing_debt_ns": 0,
+            "max_processing_debt_ns": 0,
+            "processing_debt_limit_ns": 64000000,
+            "fallback_reason": null,
+            "close_wall_ms": 5.792539,
+            "resources_after_close": {
+              "monotonic_ns": 328181052787483,
+              "process_cpu_ms": 18610,
+              "thread_cpu_ns": 18443575283,
+              "rss_kb": 114808,
+              "rss_high_water_kb": 196028,
+              "native_heap_allocated_bytes": 8176544,
+              "java_heap_used_bytes": 4052544,
+              "runtime_gc_counters": {
+                "art.gc.gc-count": "10",
+                "art.gc.gc-time": "76",
+                "art.gc.blocking-gc-count": "0",
+                "art.gc.blocking-gc-time": "0"
+              }
+            }
+          },
+          "fallback_reason": null,
+          "dropped_frames": 0,
+          "schedule_rebases": 0
+        },
+        {
+          "input_id": "11-door-near",
+          "initialization_wall_ms": 95.736923,
+          "process_cpu_percent_one_core": 18.54938896213064,
+          "diagnostics": {
+            "active_mode": "gtcrn",
+            "requested_mode": "gtcrn",
+            "algorithmic_delay_samples": 256,
+            "startup_padding_samples": 256,
+            "initialization_ns": 95715077,
+            "processed_frames": 313,
+            "max_process_ns": 50913308,
+            "overload_count": 3,
+            "processing_debt_ns": 0,
+            "max_processing_debt_ns": 18913308,
+            "processing_debt_limit_ns": 64000000,
+            "fallback_reason": null,
+            "close_wall_ms": 6.91323,
+            "resources_after_close": {
+              "monotonic_ns": 328201247963177,
+              "process_cpu_ms": 20636,
+              "thread_cpu_ns": 20457541074,
+              "rss_kb": 93952,
+              "rss_high_water_kb": 196028,
+              "native_heap_allocated_bytes": 8177200,
+              "java_heap_used_bytes": 3935168,
+              "runtime_gc_counters": {
+                "art.gc.gc-count": "11",
+                "art.gc.gc-time": "87",
+                "art.gc.blocking-gc-count": "0",
+                "art.gc.blocking-gc-time": "0"
+              }
+            }
+          },
+          "fallback_reason": null,
+          "dropped_frames": 0,
+          "schedule_rebases": 0
+        },
+        {
+          "input_id": "12-cutlery-near",
+          "initialization_wall_ms": 129.032538,
+          "process_cpu_percent_one_core": 14.455548832109166,
+          "diagnostics": {
+            "active_mode": "gtcrn",
+            "requested_mode": "gtcrn",
+            "algorithmic_delay_samples": 256,
+            "startup_padding_samples": 256,
+            "initialization_ns": 129013231,
+            "processed_frames": 313,
+            "max_process_ns": 5904847,
+            "overload_count": 0,
+            "processing_debt_ns": 0,
+            "max_processing_debt_ns": 0,
+            "processing_debt_limit_ns": 64000000,
+            "fallback_reason": null,
+            "close_wall_ms": 5.797539,
+            "resources_after_close": {
+              "monotonic_ns": 328221477648486,
+              "process_cpu_ms": 22277,
+              "thread_cpu_ns": 22092918114,
+              "rss_kb": 95184,
+              "rss_high_water_kb": 196028,
+              "native_heap_allocated_bytes": 8178064,
+              "java_heap_used_bytes": 5925448,
+              "runtime_gc_counters": {
+                "art.gc.gc-count": "12",
+                "art.gc.gc-time": "92",
+                "art.gc.blocking-gc-count": "0",
+                "art.gc.blocking-gc-time": "0"
+              }
+            }
+          },
+          "fallback_reason": null,
+          "dropped_frames": 0,
+          "schedule_rebases": 0
+        }
+      ],
+      "aggregate_timing": {
+        "count": 3756,
+        "active_frames": 3756,
+        "process_ms": {
+          "p50": 4.608,
+          "p95": 6.235154,
+          "p99": 10.882462,
+          "max": 50.921923
+        },
+        "calls_ge_32ms": 3,
+        "completion_deadline_misses": 8,
+        "max_completion_lateness_ms": 26.729231,
+        "max_processing_debt_ms": 18.913308,
+        "all_reset_frames_active": true,
+        "reset_outputs_identical": true,
+        "scope": "Fresh engine per 10-second clip; app_process file replay, not live microphone service or a long-session battery test."
+      }
+    },
+    {
+      "cohort": "far",
+      "frames": 1252,
+      "reset_check": {
+        "frames_per_pass": 32,
+        "input_id": "01-breathing-far",
+        "output_pcm_sha256": [
+          "e3a97eada5711d8ffb7cd9809a3a378372175cbebb04513b998550dedf910ba6",
+          "e3a97eada5711d8ffb7cd9809a3a378372175cbebb04513b998550dedf910ba6"
+        ],
+        "identical_after_recreation": true,
+        "all_engine_frames_active": true,
+        "policy": "two fresh production engines, same PCM, absolute-clock replay",
+        "passes": [
+          {
+            "active_mode": "gtcrn",
+            "requested_mode": "gtcrn",
+            "algorithmic_delay_samples": 256,
+            "startup_padding_samples": 256,
+            "initialization_ns": 145593308,
+            "processed_frames": 32,
+            "max_process_ns": 5845000,
+            "overload_count": 0,
+            "processing_debt_ns": 0,
+            "max_processing_debt_ns": 0,
+            "processing_debt_limit_ns": 64000000,
+            "fallback_reason": null
+          },
+          {
+            "active_mode": "gtcrn",
+            "requested_mode": "gtcrn",
+            "algorithmic_delay_samples": 256,
+            "startup_padding_samples": 256,
+            "initialization_ns": 95716923,
+            "processed_frames": 32,
+            "max_process_ns": 17160230,
+            "overload_count": 0,
+            "processing_debt_ns": 0,
+            "max_processing_debt_ns": 0,
+            "processing_debt_limit_ns": 64000000,
+            "fallback_reason": null
+          }
+        ]
+      },
+      "stages": [
+        {
+          "input_id": "01-breathing-far",
+          "initialization_wall_ms": 99.968923,
+          "process_cpu_percent_one_core": 14.365510218717743,
+          "diagnostics": {
+            "active_mode": "gtcrn",
+            "requested_mode": "gtcrn",
+            "algorithmic_delay_samples": 256,
+            "startup_padding_samples": 256,
+            "initialization_ns": 99944924,
+            "processed_frames": 313,
+            "max_process_ns": 9678692,
+            "overload_count": 0,
+            "processing_debt_ns": 0,
+            "max_processing_debt_ns": 0,
+            "processing_debt_limit_ns": 64000000,
+            "fallback_reason": null,
+            "close_wall_ms": 5.358384,
+            "resources_after_close": {
+              "monotonic_ns": 328252665069718,
+              "process_cpu_ms": 3251,
+              "thread_cpu_ns": 3212899146,
+              "rss_kb": 189228,
+              "rss_high_water_kb": 190840,
+              "native_heap_allocated_bytes": 8178368,
+              "java_heap_used_bytes": 6283264,
+              "runtime_gc_counters": {
+                "art.gc.gc-count": "0",
+                "art.gc.gc-time": "0",
+                "art.gc.blocking-gc-count": "0",
+                "art.gc.blocking-gc-time": "0"
+              }
+            }
+          },
+          "fallback_reason": null,
+          "dropped_frames": 0,
+          "schedule_rebases": 0
+        },
+        {
+          "input_id": "02-baby-far",
+          "initialization_wall_ms": 96.864923,
+          "process_cpu_percent_one_core": 15.556365294734425,
+          "diagnostics": {
+            "active_mode": "gtcrn",
+            "requested_mode": "gtcrn",
+            "algorithmic_delay_samples": 256,
+            "startup_padding_samples": 256,
+            "initialization_ns": 96840308,
+            "processed_frames": 313,
+            "max_process_ns": 11084000,
+            "overload_count": 0,
+            "processing_debt_ns": 0,
+            "max_processing_debt_ns": 0,
+            "processing_debt_limit_ns": 64000000,
+            "fallback_reason": null,
+            "close_wall_ms": 5.383384,
+            "resources_after_close": {
+              "monotonic_ns": 328272834819489,
+              "process_cpu_ms": 4964,
+              "thread_cpu_ns": 4912663308,
+              "rss_kb": 191004,
+              "rss_high_water_kb": 192584,
+              "native_heap_allocated_bytes": 8175024,
+              "java_heap_used_bytes": 5705912,
+              "runtime_gc_counters": {
+                "art.gc.gc-count": "1",
+                "art.gc.gc-time": "9",
+                "art.gc.blocking-gc-count": "0",
+                "art.gc.blocking-gc-time": "0"
+              }
+            }
+          },
+          "fallback_reason": null,
+          "dropped_frames": 0,
+          "schedule_rebases": 0
+        },
+        {
+          "input_id": "03-typing-far",
+          "initialization_wall_ms": 115.761231,
+          "process_cpu_percent_one_core": 18.387969855002453,
+          "diagnostics": {
+            "active_mode": "gtcrn",
+            "requested_mode": "gtcrn",
+            "algorithmic_delay_samples": 256,
+            "startup_padding_samples": 256,
+            "initialization_ns": 115737847,
+            "processed_frames": 313,
+            "max_process_ns": 51177231,
+            "overload_count": 3,
+            "processing_debt_ns": 0,
+            "max_processing_debt_ns": 22027923,
+            "processing_debt_limit_ns": 64000000,
+            "fallback_reason": null,
+            "close_wall_ms": 29.701538,
+            "resources_after_close": {
+              "monotonic_ns": 328293044801413,
+              "process_cpu_ms": 6984,
+              "thread_cpu_ns": 6926928682,
+              "rss_kb": 78348,
+              "rss_high_water_kb": 192584,
+              "native_heap_allocated_bytes": 8175600,
+              "java_heap_used_bytes": 6136664,
+              "runtime_gc_counters": {
+                "art.gc.gc-count": "2",
+                "art.gc.gc-time": "13",
+                "art.gc.blocking-gc-count": "0",
+                "art.gc.blocking-gc-time": "0"
+              }
+            }
+          },
+          "fallback_reason": null,
+          "dropped_frames": 0,
+          "schedule_rebases": 0
+        },
+        {
+          "input_id": "04-creaky-far",
+          "initialization_wall_ms": 146.590847,
+          "process_cpu_percent_one_core": 15.265935169341668,
+          "diagnostics": {
+            "active_mode": "gtcrn",
+            "requested_mode": "gtcrn",
+            "algorithmic_delay_samples": 256,
+            "startup_padding_samples": 256,
+            "initialization_ns": 146571154,
+            "processed_frames": 313,
+            "max_process_ns": 8879461,
+            "overload_count": 0,
+            "processing_debt_ns": 0,
+            "max_processing_debt_ns": 0,
+            "processing_debt_limit_ns": 64000000,
+            "fallback_reason": null,
+            "close_wall_ms": 5.588615,
+            "resources_after_close": {
+              "monotonic_ns": 328313275073722,
+              "process_cpu_ms": 8720,
+              "thread_cpu_ns": 8619217021,
+              "rss_kb": 84432,
+              "rss_high_water_kb": 192584,
+              "native_heap_allocated_bytes": 8177248,
+              "java_heap_used_bytes": 3768680,
+              "runtime_gc_counters": {
+                "art.gc.gc-count": "3",
+                "art.gc.gc-time": "35",
+                "art.gc.blocking-gc-count": "0",
+                "art.gc.blocking-gc-time": "0"
+              }
+            }
+          },
+          "fallback_reason": null,
+          "dropped_frames": 0,
+          "schedule_rebases": 0
+        }
+      ],
+      "aggregate_timing": {
+        "count": 1252,
+        "active_frames": 1252,
+        "process_ms": {
+          "p50": 4.682231,
+          "p95": 7.080923,
+          "p99": 13.280308,
+          "max": 51.201308
+        },
+        "calls_ge_32ms": 3,
+        "completion_deadline_misses": 6,
+        "max_completion_lateness_ms": 27.609539,
+        "max_processing_debt_ms": 22.027923,
+        "all_reset_frames_active": true,
+        "reset_outputs_identical": true,
+        "scope": "Fresh engine per 10-second clip; app_process file replay, not live microphone service or a long-session battery test."
+      }
+    }
+  ]
+}

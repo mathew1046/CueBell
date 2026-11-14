@@ -1,0 +1,32 @@
+Current Battery Service state:
+  AC powered: false
+  USB powered: true
+  Wireless powered: false
+  Dock powered: false
+  Max charging current: 0
+ Time when the latest updated value of the Max charging current was sent via battery changed broadcast: +57s893ms
+  Max charging voltage: 0
+  Charge counter: 4872000
+  engine: 0
+  soc decimal: 0
+  adapter power: 0
+  board temp status: 0
+  low bat status: 0
+  reverse wl chg status: 0
+  reverse wl chg exception: 0
+  chg shut vbat: 3200
+  last mode flag: 0
+  last mode keep time: 4
+  status: 2
+  health: 2
+  present: true
+  level: 79
+  scale: 100
+  voltage: 4160
+ Time when the latest updated value of the voltage was sent via battery changed broadcast: +7d7h13m24s475ms
+ The last voltage value sent via the battery changed broadcast: 4160
+  temperature: 357
+  technology: Li-poly
+  Charging state: 0
+  Charging policy: 0
+  Capacity level: 3

@@ -97,6 +97,7 @@ async def variant(args, name: str, index: int, port: int) -> dict:
         "mode": args.mode,
         "repeat": args.repeat,
         "tail_silence_s": args.tail_silence,
+        "leading_silence_s": args.leading_silence,
         "manifest": str(args.manifest),
         "manifest_sha256": hashlib.sha256(args.manifest.read_bytes()).hexdigest(),
         "client_sha256": hashlib.sha256(
@@ -132,6 +133,8 @@ async def variant(args, name: str, index: int, port: int) -> dict:
                 str(args.repeat),
                 "--tail-silence",
                 str(args.tail_silence),
+                "--leading-silence",
+                str(args.leading_silence),
                 "--max-stream-seconds",
                 "90",
             ]
@@ -225,6 +228,7 @@ def main() -> None:
     parser.add_argument("--mode", choices=["monitor", "request"], default="monitor")
     parser.add_argument("--repeat", type=int, default=1)
     parser.add_argument("--tail-silence", type=float, default=24)
+    parser.add_argument("--leading-silence", type=float, default=0.3)
     parser.add_argument("--port", type=int, default=8090)
     parser.add_argument("--concurrency", type=int, choices=[1, 2], default=2)
     parser.add_argument("--shuffle", action="store_true")

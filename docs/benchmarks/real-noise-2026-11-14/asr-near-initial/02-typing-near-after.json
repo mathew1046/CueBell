@@ -1,0 +1,70 @@
+{
+  "id": "02-typing-near",
+  "arm": "after",
+  "reference": "The diagnosis was discouraging, however, he was not overly worried. The shadow vanished. In either case, they do not.",
+  "input_sha256": "3e3d0670f7790d781945b4a296165223fea9320ee4856ee731a13c22f6725816",
+  "source_audio_seconds": 10.0,
+  "status": "completed",
+  "sent_frames": 376,
+  "schedule_rebases": 0,
+  "maximum_send_lateness_ms": 1.6823139999360137,
+  "unfinished_utterance_ids": [],
+  "connection_seconds": 23.067882402000123,
+  "attempt_seconds": 23.381512941999972,
+  "transcript": "The diagnosis was discouraging; however, he was not overly worried. The shadow vanished. In either case, they do not affect.",
+  "events": [
+    {
+      "elapsed_s": 0.06907272900025418,
+      "message": {
+        "type": "connected",
+        "message": "STT service ready — VAD service connected",
+        "request_id": "01a1d88d-b8f8-78b3-9367-8ad210cffc78",
+        "config": {
+          "sample_rate": 16000,
+          "chunk_size": 512,
+          "partials_enabled": false,
+          "partial_interval_ms": 450,
+          "partial_max_window_s": 15.0,
+          "language_code": "indic-auto",
+          "format": "verbatim"
+        },
+        "timestamp": "2026-11-14T05:35:29.111328+00:00"
+      }
+    },
+    {
+      "elapsed_s": 0.9594864650002819,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "u342670fa",
+        "t_ms": 628,
+        "timestamp": "2026-11-14T05:35:30.000987+00:00"
+      }
+    },
+    {
+      "elapsed_s": 10.761748282000099,
+      "message": {
+        "type": "transcript",
+        "text": "The diagnosis was discouraging; however, he was not overly worried. The shadow vanished. In either case, they do not affect.",
+        "audio_duration_ms": 10228.0,
+        "segment_id": "01a1d88d-b8f8-78b3-9367-8ad210cffc78-seg-1",
+        "segment_index": 1,
+        "utterance_id": "u342670fa",
+        "is_final": true,
+        "latency": 179,
+        "prefetched": false,
+        "timestamp": "2026-11-14T05:35:39.803774+00:00",
+        "detected_language_code": "en-IN"
+      }
+    }
+  ],
+  "reference_score_eligible": true,
+  "score": {
+    "reference_words": 19,
+    "hypothesis_words": 20,
+    "errors": 1,
+    "substitutions": 0,
+    "insertions": 1,
+    "deletions": 0,
+    "wer": 0.05263157894736842
+  }
+}

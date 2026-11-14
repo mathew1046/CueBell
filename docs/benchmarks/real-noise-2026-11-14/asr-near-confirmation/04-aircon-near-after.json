@@ -1,0 +1,71 @@
+{
+  "id": "04-aircon-near",
+  "arm": "after",
+  "reference": "Naturally, curly hair runs in my family. More often these officers are restricted.",
+  "input_sha256": "8cf66900fc534a4f2dc5fdafc2cd76315a4c53bf3ba17fe56e777b83594d9e17",
+  "source_audio_seconds": 10.0,
+  "status": "completed",
+  "scoring_version": "unicode-marks-v2",
+  "sent_frames": 376,
+  "schedule_rebases": 0,
+  "maximum_send_lateness_ms": 2.3480549998566858,
+  "unfinished_utterance_ids": [],
+  "connection_seconds": 23.146396468000148,
+  "attempt_seconds": 23.70131794200006,
+  "transcript": "நேச்சுரலி கர்லி ஹேர்ஸ் ரன்ஸ் இன் மை ஃபேமிலி, மோர் ஆஃப்டன் திஸ் ஆஃபீஸர்ஸ் ஆர். Restricted.",
+  "events": [
+    {
+      "elapsed_s": 0.05508702099996299,
+      "message": {
+        "type": "connected",
+        "message": "STT service ready — VAD service connected",
+        "request_id": "01a1d891-82b8-7a65-a1cf-a9d817f8e5fe",
+        "config": {
+          "sample_rate": 16000,
+          "chunk_size": 512,
+          "partials_enabled": false,
+          "partial_interval_ms": 450,
+          "partial_max_window_s": 15.0,
+          "language_code": "indic-auto",
+          "format": "verbatim"
+        },
+        "timestamp": "2026-11-14T05:39:37.348749+00:00"
+      }
+    },
+    {
+      "elapsed_s": 1.9649369940002543,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "ubd912767",
+        "t_ms": 1588,
+        "timestamp": "2026-11-14T05:39:39.258042+00:00"
+      }
+    },
+    {
+      "elapsed_s": 10.906143132000125,
+      "message": {
+        "type": "transcript",
+        "text": "நேச்சுரலி கர்லி ஹேர்ஸ் ரன்ஸ் இன் மை ஃபேமிலி, மோர் ஆஃப்டன் திஸ் ஆஃபீஸர்ஸ் ஆர். Restricted.",
+        "audio_duration_ms": 9268.0,
+        "segment_id": "01a1d891-82b8-7a65-a1cf-a9d817f8e5fe-seg-1",
+        "segment_index": 1,
+        "utterance_id": "ubd912767",
+        "is_final": true,
+        "latency": 294,
+        "prefetched": false,
+        "timestamp": "2026-11-14T05:39:48.200846+00:00",
+        "detected_language_code": "ta-IN"
+      }
+    }
+  ],
+  "reference_score_eligible": true,
+  "score": {
+    "reference_words": 13,
+    "hypothesis_words": 13,
+    "errors": 12,
+    "substitutions": 12,
+    "insertions": 0,
+    "deletions": 0,
+    "wer": 0.9230769230769231
+  }
+}

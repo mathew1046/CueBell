@@ -1,0 +1,96 @@
+{
+  "id": "08-clatter-near",
+  "arm": "after",
+  "reference": "Bake slowly at least one-half hour longer. A second twitched his shirtsleeve, and he felt a brief burn on his upper arm. So if anybody",
+  "input_sha256": "f6b30ee832e401151a6571f2a53a466d5a8703c1dc98a5191f6b4ea78a5ccb5b",
+  "source_audio_seconds": 10.0,
+  "status": "completed",
+  "scoring_version": "unicode-marks-v2",
+  "sent_frames": 376,
+  "schedule_rebases": 0,
+  "maximum_send_lateness_ms": 1.3563090001298406,
+  "unfinished_utterance_ids": [],
+  "connection_seconds": 23.1304715629999,
+  "attempt_seconds": 26.527142279000145,
+  "transcript": "Bake slowly, at least one half hour longer. A second switch by a shirt sleeve. And he felt a brief burn on his upper arm. So if anybody.",
+  "events": [
+    {
+      "elapsed_s": 0.0556982209996022,
+      "message": {
+        "type": "connected",
+        "message": "STT service ready — VAD service connected",
+        "request_id": "01a1d89e-5e1f-775b-ad51-b6168862fdca",
+        "config": {
+          "sample_rate": 16000,
+          "chunk_size": 512,
+          "partials_enabled": false,
+          "partial_interval_ms": 450,
+          "partial_max_window_s": 15.0,
+          "language_code": "indic-auto",
+          "format": "verbatim"
+        },
+        "timestamp": "2026-11-14T05:53:39.946791+00:00"
+      }
+    },
+    {
+      "elapsed_s": 0.8159434689996488,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "ueb7a05b6",
+        "t_ms": 468,
+        "timestamp": "2026-11-14T05:53:40.707565+00:00"
+      }
+    },
+    {
+      "elapsed_s": 9.476221898999938,
+      "message": {
+        "type": "transcript",
+        "text": "Bake slowly, at least one half hour longer. A second switch by a shirt sleeve. And he felt a brief burn on his upper arm.",
+        "audio_duration_ms": 9076.0,
+        "segment_id": "01a1d89e-5e1f-775b-ad51-b6168862fdca-seg-1",
+        "segment_index": 1,
+        "utterance_id": "ueb7a05b6",
+        "is_final": true,
+        "latency": 208,
+        "prefetched": false,
+        "timestamp": "2026-11-14T05:53:49.367996+00:00",
+        "detected_language_code": "en-IN"
+      }
+    },
+    {
+      "elapsed_s": 9.565794418999758,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "uec211587",
+        "t_ms": 9204,
+        "timestamp": "2026-11-14T05:53:49.455593+00:00"
+      }
+    },
+    {
+      "elapsed_s": 10.94773299399958,
+      "message": {
+        "type": "transcript",
+        "text": "So if anybody.",
+        "audio_duration_ms": 1312.0,
+        "segment_id": "01a1d89e-5e1f-775b-ad51-b6168862fdca-seg-2",
+        "segment_index": 2,
+        "utterance_id": "uec211587",
+        "is_final": true,
+        "latency": 62,
+        "prefetched": false,
+        "timestamp": "2026-11-14T05:53:50.838604+00:00",
+        "detected_language_code": "en-IN"
+      }
+    }
+  ],
+  "reference_score_eligible": true,
+  "score": {
+    "reference_words": 26,
+    "hypothesis_words": 28,
+    "errors": 5,
+    "substitutions": 3,
+    "insertions": 2,
+    "deletions": 0,
+    "wer": 0.19230769230769232
+  }
+}

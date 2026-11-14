@@ -1,0 +1,171 @@
+{
+  "id": "03-typing-far",
+  "arm": "after",
+  "reference": "Stay right here where you are, kid, he called. Are you a thrower of flame",
+  "input_sha256": "1a309c9e81f086c498f7a0967d07b8a32ef372d38ef0f44e0b64725a91872bbd",
+  "source_audio_seconds": 10.0,
+  "status": "completed",
+  "scoring_version": "unicode-marks-v2",
+  "sent_frames": 376,
+  "schedule_rebases": 0,
+  "maximum_send_lateness_ms": 3.4043070004372566,
+  "unfinished_utterance_ids": [],
+  "connection_seconds": 23.199573466000402,
+  "attempt_seconds": 23.69342004500004,
+  "transcript": "Let's say right here. রিয়ার। યુઅર। कीट ही कोड। Are you a thrower of flying?",
+  "events": [
+    {
+      "elapsed_s": 0.05157635500017932,
+      "message": {
+        "type": "connected",
+        "message": "STT service ready — VAD service connected",
+        "request_id": "01a1d891-e0d5-719e-9de2-767e9b00e101",
+        "config": {
+          "sample_rate": 16000,
+          "chunk_size": 512,
+          "partials_enabled": false,
+          "partial_interval_ms": 450,
+          "partial_max_window_s": 15.0,
+          "language_code": "indic-auto",
+          "format": "verbatim"
+        },
+        "timestamp": "2026-11-14T05:40:01.451074+00:00"
+      }
+    },
+    {
+      "elapsed_s": 1.3701365090000763,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "uce116cfb",
+        "t_ms": 980,
+        "timestamp": "2026-11-14T05:40:02.770637+00:00"
+      }
+    },
+    {
+      "elapsed_s": 3.1174639560003925,
+      "message": {
+        "type": "transcript",
+        "text": "Let's say right here.",
+        "audio_duration_ms": 2292.0,
+        "segment_id": "01a1d891-e0d5-719e-9de2-767e9b00e101-seg-1",
+        "segment_index": 1,
+        "utterance_id": "uce116cfb",
+        "is_final": true,
+        "latency": 85,
+        "prefetched": false,
+        "timestamp": "2026-11-14T05:40:04.516469+00:00",
+        "detected_language_code": "en-IN"
+      }
+    },
+    {
+      "elapsed_s": 3.2192028990002655,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "u3cbfba3f",
+        "t_ms": 2836,
+        "timestamp": "2026-11-14T05:40:04.619454+00:00"
+      }
+    },
+    {
+      "elapsed_s": 4.449011707000409,
+      "message": {
+        "type": "transcript",
+        "text": "রিয়ার।",
+        "audio_duration_ms": 1376.0,
+        "segment_id": "01a1d891-e0d5-719e-9de2-767e9b00e101-seg-2",
+        "segment_index": 2,
+        "utterance_id": "u3cbfba3f",
+        "is_final": true,
+        "latency": 43,
+        "prefetched": false,
+        "timestamp": "2026-11-14T05:40:05.844990+00:00",
+        "detected_language_code": "bn-IN"
+      }
+    },
+    {
+      "elapsed_s": 4.988528634999966,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "u40985b14",
+        "t_ms": 4596,
+        "timestamp": "2026-11-14T05:40:06.388925+00:00"
+      }
+    },
+    {
+      "elapsed_s": 5.95892575400012,
+      "message": {
+        "type": "transcript",
+        "text": "યુઅર।",
+        "audio_duration_ms": 1504.0,
+        "segment_id": "01a1d891-e0d5-719e-9de2-767e9b00e101-seg-3",
+        "segment_index": 3,
+        "utterance_id": "u40985b14",
+        "is_final": true,
+        "latency": 58,
+        "prefetched": false,
+        "timestamp": "2026-11-14T05:40:07.359772+00:00",
+        "detected_language_code": "gu-IN"
+      }
+    },
+    {
+      "elapsed_s": 6.0688952450000215,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "uc96c12de",
+        "t_ms": 5684,
+        "timestamp": "2026-11-14T05:40:07.469363+00:00"
+      }
+    },
+    {
+      "elapsed_s": 7.764957534000132,
+      "message": {
+        "type": "transcript",
+        "text": "कीट ही कोड।",
+        "audio_duration_ms": 1792.0,
+        "segment_id": "01a1d891-e0d5-719e-9de2-767e9b00e101-seg-4",
+        "segment_index": 4,
+        "utterance_id": "uc96c12de",
+        "is_final": true,
+        "latency": 62,
+        "prefetched": false,
+        "timestamp": "2026-11-14T05:40:09.164687+00:00",
+        "detected_language_code": "hi-IN"
+      }
+    },
+    {
+      "elapsed_s": 7.95886039700008,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "u9b10e440",
+        "t_ms": 7572,
+        "timestamp": "2026-11-14T05:40:09.359669+00:00"
+      }
+    },
+    {
+      "elapsed_s": 10.436465607000173,
+      "message": {
+        "type": "transcript",
+        "text": "Are you a thrower of flying?",
+        "audio_duration_ms": 2624.0,
+        "segment_id": "01a1d891-e0d5-719e-9de2-767e9b00e101-seg-5",
+        "segment_index": 5,
+        "utterance_id": "u9b10e440",
+        "is_final": true,
+        "latency": 110,
+        "prefetched": false,
+        "timestamp": "2026-11-14T05:40:11.837217+00:00",
+        "detected_language_code": "en-IN"
+      }
+    }
+  ],
+  "reference_score_eligible": true,
+  "score": {
+    "reference_words": 15,
+    "hypothesis_words": 15,
+    "errors": 9,
+    "substitutions": 7,
+    "insertions": 1,
+    "deletions": 1,
+    "wer": 0.6
+  }
+}

@@ -1,0 +1,989 @@
+{
+  "schema_version": 1,
+  "kind": "synthetic-denoising-case-streams",
+  "sample_rate": 16000,
+  "frame_samples": 512,
+  "source_corpus": {
+    "path": "/home/mathew/Arrakis/CueBell/backend/benchmarks/corpus.json",
+    "sha256": "0475b1692d8e93ee79404aa64ef652a43a02c44882a5ce4cbcfefea82c542832",
+    "snapshot": "source/corpus.json"
+  },
+  "source_audio_directory": "/home/mathew/Arrakis/CueBell/docs/benchmarks/2026-11-13/audio",
+  "generator": {
+    "scripts": [
+      {
+        "path": "/home/mathew/Arrakis/CueBell/backend/benchmarks/denoising/__init__.py",
+        "snapshot": "source/__init__.py",
+        "sha256": "92bb2c5ff2c74df707a415a1a71b81eaeeb7a8e5c3a3d18164a6575c60aadbfb"
+      },
+      {
+        "path": "/home/mathew/Arrakis/CueBell/backend/benchmarks/denoising/analyze.py",
+        "snapshot": "source/analyze.py",
+        "sha256": "9c3bc6aeefac855012124e55a22aef4aaa090ad07046693071581b9561415c05"
+      },
+      {
+        "path": "/home/mathew/Arrakis/CueBell/backend/benchmarks/denoising/audio.py",
+        "snapshot": "source/audio.py",
+        "sha256": "61417ab32213bfd8f1688222a2f8be9dae1687e38f90d22f419cd5b76e4a6bdb"
+      },
+      {
+        "path": "/home/mathew/Arrakis/CueBell/backend/benchmarks/denoising/prepare.py",
+        "snapshot": "source/prepare.py",
+        "sha256": "244421863e04ce5e2b316c1f21e7ed10fe50e4a176ef0facbceb3aad5692ea6e"
+      },
+      {
+        "path": "/home/mathew/Arrakis/CueBell/backend/benchmarks/denoising/register_outputs.py",
+        "snapshot": "source/register_outputs.py",
+        "sha256": "a271d0a02636767a38ca43e3a1fd38fffc04135a1f1db0038815372e1096d278"
+      },
+      {
+        "path": "/home/mathew/Arrakis/CueBell/backend/benchmarks/denoising/test_denoising.py",
+        "snapshot": "source/test_denoising.py",
+        "sha256": "167c3c9a85b9fa5936b2eea217468389150dced84d999840d772dc4f04532c27"
+      }
+    ],
+    "python": "3.12.14",
+    "seed": "cuebell-denoising-2026-11-14-v1",
+    "leading_silence_s": 0.3,
+    "tail_silence_s": 24.0,
+    "peak_headroom": 0.97
+  },
+  "noise": {
+    "kind": "synthetic stationary colored AR(1)",
+    "pole": 0.92,
+    "startup_discard_samples": 4096,
+    "excitation": "SHAKE256 uint32 uniform",
+    "snr_reference": "RMS from fixture start through annotated speech endpoint; includes intrinsic pauses; no threshold-based VAD",
+    "not_real_venue_audio": true
+  },
+  "optional_reverb": {
+    "enabled": false,
+    "kind": "separately-labelled synthetic causal FIR",
+    "taps_sample_gain": [
+      [
+        0,
+        1.0
+      ],
+      [
+        577,
+        0.25
+      ],
+      [
+        1489,
+        -0.16
+      ],
+      [
+        3001,
+        0.1
+      ],
+      [
+        5711,
+        0.05
+      ]
+    ]
+  },
+  "alignment": {
+    "sample_zero_offset": 0,
+    "time_stretch": false,
+    "endpoint_policy": "source speech endpoints unchanged for denoising/reverb",
+    "denoiser_tail_guard_s": 24.0
+  },
+  "variants": [
+    "clean",
+    "colored-snr-p10"
+  ],
+  "cases": [
+    {
+      "scripts": [
+        {
+          "fixture_id": "hi-positive",
+          "text": "टोकन चार सौ बयालीस, कृपया काउंटर दो पर जाएँ।",
+          "english_gloss": "Token four hundred forty two, please go to counter two.",
+          "source_wav_sha256": "0861ca2815cadfda5e65d14904610437f50501d09e73886aa2d643e8af238746",
+          "start_sample": 4800,
+          "source_end_sample": 54720,
+          "speech_end_sample": 54720,
+          "source_sample_count": 49920,
+          "silence_after_s": 2.0
+        }
+      ],
+      "source_assembled_pcm_sha256": "33069faec89608fecd22814a1f641970688e4a3773ea87503e74f58911d17ccc",
+      "speech_end_sample": 54720,
+      "sample_count": 471040,
+      "duration_s": 29.44,
+      "final_padding_samples": 320,
+      "leading_silence_s": 0.3,
+      "tail_silence_s": 24.0,
+      "case_id": "hi-positive",
+      "source_case": {
+        "id": "hi-positive",
+        "language": "hi",
+        "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+        "kind": "positive",
+        "sequence": [
+          {
+            "fixture_id": "hi-positive",
+            "silence_after_s": 2.0
+          }
+        ],
+        "expected": {
+          "alert": true,
+          "token": "442",
+          "location": "counter 2",
+          "location_aliases": [
+            "काउंटर दो",
+            "काउंटर दो पर",
+            "काउंटर 2",
+            "counter two"
+          ],
+          "voice_stop": false,
+          "correction": false
+        }
+      },
+      "counterparts": {
+        "clean": {
+          "relative_path": "audio/clean/hi-positive.wav",
+          "sha256": "0b28b8a9881735a86f142cef942156c9ee2a343e0e203a917bddcee499168722",
+          "pcm_sha256": "db786f31383d1a3105a4327f1a428e188c830485a258bb225989777e4d3f6bd8",
+          "sample_count": 471040,
+          "duration_s": 29.44,
+          "frame_samples": 512,
+          "frame_remainder": 0,
+          "sample_zero_offset": 0,
+          "alignment_policy": "causal-unshifted; no samples trimmed or time shifted"
+        },
+        "colored-snr-p10": {
+          "relative_path": "audio/colored-snr-p10/hi-positive.wav",
+          "sha256": "c898a65eb4c965e5f42a2ae35fc50a3e4bd0dbf6cbb30073a8b03f5b82e5fa64",
+          "pcm_sha256": "8cf18ec980bf77ccd0046f2f5b27cb54257a1966b153cc67517519aa36e1b46c",
+          "sample_count": 471040,
+          "duration_s": 29.44,
+          "frame_samples": 512,
+          "frame_remainder": 0,
+          "sample_zero_offset": 0,
+          "alignment_policy": "causal-unshifted; no samples trimmed or time shifted",
+          "synthetic_reverb": false,
+          "target_snr_db": 10.0,
+          "snr_signal": "dry speech",
+          "noise_seed": "cuebell-denoising-2026-11-14-v1\u0000hi-positive",
+          "mix_measurement": {
+            "speech_rms_pcm": 6049.944557230561,
+            "noise_plus_quantization_rms_pcm": 1913.1592882640127,
+            "achieved_snr_db": 10.000005282807576,
+            "peak_abs_pcm": 31783,
+            "noise_scale": 19088.230725772406,
+            "common_gain": 0.8750732495083017
+          },
+          "denoised_counterpart": null
+        }
+      },
+      "common_gain": 0.8750732495083017,
+      "gain_policy": "shared across clean and all noise/reverb conditions for this case"
+    },
+    {
+      "scripts": [
+        {
+          "fixture_id": "hi-near-miss",
+          "text": "टोकन चार सौ तैंतालीस, कृपया काउंटर तीन पर जाएँ।",
+          "english_gloss": "Token four hundred forty three, please go to counter three.",
+          "source_wav_sha256": "4f11aa2e3dd49493266ab85e0f42c7d1f3a466d8ef04e4a052f119a4ab5ea31f",
+          "start_sample": 4800,
+          "source_end_sample": 67520,
+          "speech_end_sample": 67520,
+          "source_sample_count": 62720,
+          "silence_after_s": 2.0
+        }
+      ],
+      "source_assembled_pcm_sha256": "64252d11563a138ede342550ba3116ae4dee29524515c34abf49cebb74295c45",
+      "speech_end_sample": 67520,
+      "sample_count": 483840,
+      "duration_s": 30.24,
+      "final_padding_samples": 320,
+      "leading_silence_s": 0.3,
+      "tail_silence_s": 24.0,
+      "case_id": "hi-near-miss",
+      "source_case": {
+        "id": "hi-near-miss",
+        "language": "hi",
+        "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+        "kind": "near-miss",
+        "sequence": [
+          {
+            "fixture_id": "hi-near-miss",
+            "silence_after_s": 2.0
+          }
+        ],
+        "expected": {
+          "alert": false,
+          "token": null,
+          "location": null,
+          "voice_stop": false,
+          "correction": false
+        }
+      },
+      "counterparts": {
+        "clean": {
+          "relative_path": "audio/clean/hi-near-miss.wav",
+          "sha256": "918947198c723e2d71f3717982d0dd2c690e79362b0ab7921eb390c984b23403",
+          "pcm_sha256": "e351e49e2e93afa68fc90fc3f5df508a9aeafb62b6966dcab01d3f4a51584cdb",
+          "sample_count": 483840,
+          "duration_s": 30.24,
+          "frame_samples": 512,
+          "frame_remainder": 0,
+          "sample_zero_offset": 0,
+          "alignment_policy": "causal-unshifted; no samples trimmed or time shifted"
+        },
+        "colored-snr-p10": {
+          "relative_path": "audio/colored-snr-p10/hi-near-miss.wav",
+          "sha256": "6e84d27b33df78bad2f0a37a899b1e001e5d85798f38073b443ea26132352685",
+          "pcm_sha256": "eb89d437b6d8049edcd26dc7bca30377792560f5ac3d948bb83ffece5e34774f",
+          "sample_count": 483840,
+          "duration_s": 30.24,
+          "frame_samples": 512,
+          "frame_remainder": 0,
+          "sample_zero_offset": 0,
+          "alignment_policy": "causal-unshifted; no samples trimmed or time shifted",
+          "synthetic_reverb": false,
+          "target_snr_db": 10.0,
+          "snr_signal": "dry speech",
+          "noise_seed": "cuebell-denoising-2026-11-14-v1\u0000hi-near-miss",
+          "mix_measurement": {
+            "speech_rms_pcm": 5799.771204496317,
+            "noise_plus_quantization_rms_pcm": 1834.0491626299188,
+            "achieved_snr_db": 9.999997768329298,
+            "peak_abs_pcm": 31783,
+            "noise_scale": 17020.149909390537,
+            "common_gain": 0.9023080531851723
+          },
+          "denoised_counterpart": null
+        }
+      },
+      "common_gain": 0.9023080531851723,
+      "gain_policy": "shared across clean and all noise/reverb conditions for this case"
+    },
+    {
+      "scripts": [
+        {
+          "fixture_id": "ml-positive",
+          "text": "ടോക്കൺ നാനൂറ്റി നാൽപ്പത്തിരണ്ട്, കൗണ്ടർ രണ്ടിലേക്ക് വരൂ.",
+          "english_gloss": "Token four hundred forty two, come to counter two.",
+          "source_wav_sha256": "b4fc0be4a1ffd5cbd7fc42bc678e603ec517d9fd67344e4a23ca4f141204bd46",
+          "start_sample": 4800,
+          "source_end_sample": 67520,
+          "speech_end_sample": 67520,
+          "source_sample_count": 62720,
+          "silence_after_s": 2.0
+        }
+      ],
+      "source_assembled_pcm_sha256": "839b01b83027319ad719b573edf65a14a668cb29f48cbeeb174dce7a87b1c3cb",
+      "speech_end_sample": 67520,
+      "sample_count": 483840,
+      "duration_s": 30.24,
+      "final_padding_samples": 320,
+      "leading_silence_s": 0.3,
+      "tail_silence_s": 24.0,
+      "case_id": "ml-positive",
+      "source_case": {
+        "id": "ml-positive",
+        "language": "ml",
+        "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+        "kind": "positive",
+        "sequence": [
+          {
+            "fixture_id": "ml-positive",
+            "silence_after_s": 2.0
+          }
+        ],
+        "expected": {
+          "alert": true,
+          "token": "442",
+          "location": "counter 2",
+          "location_aliases": [
+            "കൗണ്ടർ രണ്ടിലേക്ക്",
+            "കൗണ്ടർ രണ്ട്",
+            "കൗണ്ടർ 2",
+            "കൗണ്ടർ രണ്ടിൽ"
+          ],
+          "voice_stop": false,
+          "correction": false
+        }
+      },
+      "counterparts": {
+        "clean": {
+          "relative_path": "audio/clean/ml-positive.wav",
+          "sha256": "10444eff6830480e91026af37055356b41b65835a6d980f1020b6cf2818f0e60",
+          "pcm_sha256": "839b01b83027319ad719b573edf65a14a668cb29f48cbeeb174dce7a87b1c3cb",
+          "sample_count": 483840,
+          "duration_s": 30.24,
+          "frame_samples": 512,
+          "frame_remainder": 0,
+          "sample_zero_offset": 0,
+          "alignment_policy": "causal-unshifted; no samples trimmed or time shifted"
+        },
+        "colored-snr-p10": {
+          "relative_path": "audio/colored-snr-p10/ml-positive.wav",
+          "sha256": "ee410b6cd815aa0bdf355740dfdddd8a89400d2a95aa86f206115e4583591ffc",
+          "pcm_sha256": "f05f80707cb6bf1fb28b3f65dcc1d4494756418b5ee3a1ea54c3866d5d7333ef",
+          "sample_count": 483840,
+          "duration_s": 30.24,
+          "frame_samples": 512,
+          "frame_remainder": 0,
+          "sample_zero_offset": 0,
+          "alignment_policy": "causal-unshifted; no samples trimmed or time shifted",
+          "synthetic_reverb": false,
+          "target_snr_db": 10.0,
+          "snr_signal": "dry speech",
+          "noise_seed": "cuebell-denoising-2026-11-14-v1\u0000ml-positive",
+          "mix_measurement": {
+            "speech_rms_pcm": 5259.887488737804,
+            "noise_plus_quantization_rms_pcm": 1663.3203479902077,
+            "achieved_snr_db": 10.000011081498785,
+            "peak_abs_pcm": 31619,
+            "noise_scale": 14084.210302209825,
+            "common_gain": 1.0
+          },
+          "denoised_counterpart": null
+        }
+      },
+      "common_gain": 1.0,
+      "gain_policy": "shared across clean and all noise/reverb conditions for this case"
+    },
+    {
+      "scripts": [
+        {
+          "fixture_id": "ml-voice-stop",
+          "text": "ക്യൂബെൽ, കേൾക്കുന്നത് നിർത്തൂ.",
+          "english_gloss": "CueBell, stop listening.",
+          "source_wav_sha256": "4fa3295b93c8902068de6e7c4460160778ac7393f8150e67f144781e6c92b885",
+          "start_sample": 4800,
+          "source_end_sample": 47040,
+          "speech_end_sample": 47040,
+          "source_sample_count": 42240,
+          "silence_after_s": 2.0
+        }
+      ],
+      "source_assembled_pcm_sha256": "f15ced08ef3c8b11688027a9486934de788cc8c7a05b47e5c535be57f8db3336",
+      "speech_end_sample": 47040,
+      "sample_count": 463360,
+      "duration_s": 28.96,
+      "final_padding_samples": 320,
+      "leading_silence_s": 0.3,
+      "tail_silence_s": 24.0,
+      "case_id": "ml-voice-stop",
+      "source_case": {
+        "id": "ml-voice-stop",
+        "language": "ml",
+        "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+        "kind": "voice-stop",
+        "sequence": [
+          {
+            "fixture_id": "ml-voice-stop",
+            "silence_after_s": 2.0
+          }
+        ],
+        "expected": {
+          "alert": false,
+          "token": null,
+          "location": null,
+          "voice_stop": true,
+          "correction": false
+        }
+      },
+      "counterparts": {
+        "clean": {
+          "relative_path": "audio/clean/ml-voice-stop.wav",
+          "sha256": "f96156f40ae3fa9936f4c666721367fb359fd98c24e33e6a29f3f094e47651dc",
+          "pcm_sha256": "f15ced08ef3c8b11688027a9486934de788cc8c7a05b47e5c535be57f8db3336",
+          "sample_count": 463360,
+          "duration_s": 28.96,
+          "frame_samples": 512,
+          "frame_remainder": 0,
+          "sample_zero_offset": 0,
+          "alignment_policy": "causal-unshifted; no samples trimmed or time shifted"
+        },
+        "colored-snr-p10": {
+          "relative_path": "audio/colored-snr-p10/ml-voice-stop.wav",
+          "sha256": "baebd714f9adf2e357628f0d79e2683d581c17b4b1dab21bcaffec7b126477b3",
+          "pcm_sha256": "c2a3bf5e8a033fcdbdbc10029c5ef64ba658101fc2c5dd4f4fd7aa229384de27",
+          "sample_count": 463360,
+          "duration_s": 28.96,
+          "frame_samples": 512,
+          "frame_remainder": 0,
+          "sample_zero_offset": 0,
+          "alignment_policy": "causal-unshifted; no samples trimmed or time shifted",
+          "synthetic_reverb": false,
+          "target_snr_db": 10.0,
+          "snr_signal": "dry speech",
+          "noise_seed": "cuebell-denoising-2026-11-14-v1\u0000ml-voice-stop",
+          "mix_measurement": {
+            "speech_rms_pcm": 4951.916455573359,
+            "noise_plus_quantization_rms_pcm": 1565.9363843706528,
+            "achieved_snr_db": 9.999983880389733,
+            "peak_abs_pcm": 30525,
+            "noise_scale": 13207.98696067729,
+            "common_gain": 1.0
+          },
+          "denoised_counterpart": null
+        }
+      },
+      "common_gain": 1.0,
+      "gain_policy": "shared across clean and all noise/reverb conditions for this case"
+    },
+    {
+      "scripts": [
+        {
+          "fixture_id": "ta-positive",
+          "text": "டோக்கன் நானூற்று நாற்பத்து இரண்டு, கவுன்டர் இரண்டிற்கு வரவும்.",
+          "english_gloss": "Token four hundred forty two, please come to counter two.",
+          "source_wav_sha256": "1d4a3963a5aa97e2d36acbf228a2e5d0a04ca3330101ce827d7f39c1e1b53fa0",
+          "start_sample": 4800,
+          "source_end_sample": 79040,
+          "speech_end_sample": 79040,
+          "source_sample_count": 74240,
+          "silence_after_s": 2.0
+        }
+      ],
+      "source_assembled_pcm_sha256": "9d912c906f14f42d5b1a31bd739b859b6e9d66ba0f4214df4e8b628faf9c4675",
+      "speech_end_sample": 79040,
+      "sample_count": 495104,
+      "duration_s": 30.944,
+      "final_padding_samples": 64,
+      "leading_silence_s": 0.3,
+      "tail_silence_s": 24.0,
+      "case_id": "ta-positive",
+      "source_case": {
+        "id": "ta-positive",
+        "language": "ta",
+        "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+        "kind": "positive",
+        "sequence": [
+          {
+            "fixture_id": "ta-positive",
+            "silence_after_s": 2.0
+          }
+        ],
+        "expected": {
+          "alert": true,
+          "token": "442",
+          "location": "counter 2",
+          "location_aliases": [
+            "கவுன்டர் இரண்டிற்கு",
+            "கவுன்டர் இரண்டு",
+            "கவுண்டர் இரண்டிற்கு",
+            "கவுண்டர் இரண்டு",
+            "கவுன்டர் 2",
+            "கவுண்டர் 2"
+          ],
+          "voice_stop": false,
+          "correction": false
+        }
+      },
+      "counterparts": {
+        "clean": {
+          "relative_path": "audio/clean/ta-positive.wav",
+          "sha256": "b7d4b957919b7e13d3ac8f9f5fb7168fb443001c7db2a36c17bbab88aa00ad2d",
+          "pcm_sha256": "598433d4ca10adc3b2dc2c39930f46007f2c683b2c8bc8867e14dbf6fbd30193",
+          "sample_count": 495104,
+          "duration_s": 30.944,
+          "frame_samples": 512,
+          "frame_remainder": 0,
+          "sample_zero_offset": 0,
+          "alignment_policy": "causal-unshifted; no samples trimmed or time shifted"
+        },
+        "colored-snr-p10": {
+          "relative_path": "audio/colored-snr-p10/ta-positive.wav",
+          "sha256": "76bd90e35b338de84dc672b5e1b654f87564b2ad2f4f803bf9327699d4184899",
+          "pcm_sha256": "d51b2c59fd567c948cd9cbe42c6b7490ec873d19c1b42487f553cfab71e11229",
+          "sample_count": 495104,
+          "duration_s": 30.944,
+          "frame_samples": 512,
+          "frame_remainder": 0,
+          "sample_zero_offset": 0,
+          "alignment_policy": "causal-unshifted; no samples trimmed or time shifted",
+          "synthetic_reverb": false,
+          "target_snr_db": 10.0,
+          "snr_signal": "dry speech",
+          "noise_seed": "cuebell-denoising-2026-11-14-v1\u0000ta-positive",
+          "mix_measurement": {
+            "speech_rms_pcm": 5185.384300946169,
+            "noise_plus_quantization_rms_pcm": 1639.7616232963446,
+            "achieved_snr_db": 10.00000460911918,
+            "peak_abs_pcm": 31783,
+            "noise_scale": 14713.239460582272,
+            "common_gain": 0.9462544272689305
+          },
+          "denoised_counterpart": null
+        }
+      },
+      "common_gain": 0.9462544272689305,
+      "gain_policy": "shared across clean and all noise/reverb conditions for this case"
+    },
+    {
+      "scripts": [
+        {
+          "fixture_id": "ta-near-miss",
+          "text": "டோக்கன் நானூற்று நாற்பத்து மூன்று, கவுன்டர் மூன்றிற்கு வரவும்.",
+          "english_gloss": "Token four hundred forty three, please come to counter three.",
+          "source_wav_sha256": "fba688f81dce9c07af9181b37e48b8055d11d4c5051eb20534d0f20d730b7f4e",
+          "start_sample": 4800,
+          "source_end_sample": 90560,
+          "speech_end_sample": 90560,
+          "source_sample_count": 85760,
+          "silence_after_s": 0.15
+        },
+        {
+          "fixture_id": "ta-positive",
+          "text": "டோக்கன் நானூற்று நாற்பத்து இரண்டு, கவுன்டர் இரண்டிற்கு வரவும்.",
+          "english_gloss": "Token four hundred forty two, please come to counter two.",
+          "source_wav_sha256": "1d4a3963a5aa97e2d36acbf228a2e5d0a04ca3330101ce827d7f39c1e1b53fa0",
+          "start_sample": 92960,
+          "source_end_sample": 167200,
+          "speech_end_sample": 167200,
+          "source_sample_count": 74240,
+          "silence_after_s": 2.0
+        }
+      ],
+      "source_assembled_pcm_sha256": "6d4fd3a4ff41edbdd97150459abccd12e9932c4ab23d60c6efd864f18baced55",
+      "speech_end_sample": 167200,
+      "sample_count": 583680,
+      "duration_s": 36.48,
+      "final_padding_samples": 480,
+      "leading_silence_s": 0.3,
+      "tail_silence_s": 24.0,
+      "case_id": "ta-burst",
+      "source_case": {
+        "id": "ta-burst",
+        "language": "ta",
+        "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+        "kind": "burst",
+        "sequence": [
+          {
+            "fixture_id": "ta-near-miss",
+            "silence_after_s": 0.15
+          },
+          {
+            "fixture_id": "ta-positive",
+            "silence_after_s": 2.0
+          }
+        ],
+        "expected": {
+          "alert": true,
+          "token": "442",
+          "location": "counter 2",
+          "location_aliases": [
+            "கவுன்டர் இரண்டிற்கு",
+            "கவுன்டர் இரண்டு",
+            "கவுண்டர் இரண்டிற்கு",
+            "கவுண்டர் இரண்டு",
+            "கவுன்டர் 2",
+            "கவுண்டர் 2"
+          ],
+          "voice_stop": false,
+          "correction": false
+        }
+      },
+      "counterparts": {
+        "clean": {
+          "relative_path": "audio/clean/ta-burst.wav",
+          "sha256": "73b05f0f85ab871c076439cb4a232b8daf7ce4463c73329332a8feb0992e2deb",
+          "pcm_sha256": "d35ba8870e76240ed076fc548fbc0db1944bea43c70e510eacf1400c6604fa81",
+          "sample_count": 583680,
+          "duration_s": 36.48,
+          "frame_samples": 512,
+          "frame_remainder": 0,
+          "sample_zero_offset": 0,
+          "alignment_policy": "causal-unshifted; no samples trimmed or time shifted"
+        },
+        "colored-snr-p10": {
+          "relative_path": "audio/colored-snr-p10/ta-burst.wav",
+          "sha256": "0b5e66c30ca43daa23d1c7344921178f22bee4b000fff4d5cde73e775cae50c0",
+          "pcm_sha256": "a25964d8792c413821bd30b85ef7a5746a75d83313a56a967d30ecc002945694",
+          "sample_count": 583680,
+          "duration_s": 36.48,
+          "frame_samples": 512,
+          "frame_remainder": 0,
+          "sample_zero_offset": 0,
+          "alignment_policy": "causal-unshifted; no samples trimmed or time shifted",
+          "synthetic_reverb": false,
+          "target_snr_db": 10.0,
+          "snr_signal": "dry speech",
+          "noise_seed": "cuebell-denoising-2026-11-14-v1\u0000ta-burst",
+          "mix_measurement": {
+            "speech_rms_pcm": 5235.867026882305,
+            "noise_plus_quantization_rms_pcm": 1655.7266608888212,
+            "achieved_snr_db": 9.999999329478102,
+            "peak_abs_pcm": 31783,
+            "noise_scale": 15010.588113142323,
+            "common_gain": 0.9400415435589308
+          },
+          "denoised_counterpart": null
+        }
+      },
+      "common_gain": 0.9400415435589308,
+      "gain_policy": "shared across clean and all noise/reverb conditions for this case"
+    },
+    {
+      "scripts": [
+        {
+          "fixture_id": "te-positive",
+          "text": "టోకెన్ నాలుగు వందల నలభై రెండు, కౌంటర్ రెండుకు రండి.",
+          "english_gloss": "Token four hundred forty two, please come to counter two.",
+          "source_wav_sha256": "c63d716741f023ecffc2d9673f76ed1ff06ad06fc019e5079a1313e2c0d462d0",
+          "start_sample": 4800,
+          "source_end_sample": 66240,
+          "speech_end_sample": 66240,
+          "source_sample_count": 61440,
+          "silence_after_s": 2.0
+        }
+      ],
+      "source_assembled_pcm_sha256": "797852c57d7bc19f5a1d9643c1ab322e45c935c41b1cb93668eaf02aa986a86f",
+      "speech_end_sample": 66240,
+      "sample_count": 482304,
+      "duration_s": 30.144,
+      "final_padding_samples": 64,
+      "leading_silence_s": 0.3,
+      "tail_silence_s": 24.0,
+      "case_id": "te-positive",
+      "source_case": {
+        "id": "te-positive",
+        "language": "te",
+        "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+        "kind": "positive",
+        "sequence": [
+          {
+            "fixture_id": "te-positive",
+            "silence_after_s": 2.0
+          }
+        ],
+        "expected": {
+          "alert": true,
+          "token": "442",
+          "location": "counter 2",
+          "location_aliases": [
+            "కౌంటర్ రెండుకు",
+            "కౌంటర్ రెండు",
+            "కౌంటర్ 2"
+          ],
+          "voice_stop": false,
+          "correction": false
+        }
+      },
+      "counterparts": {
+        "clean": {
+          "relative_path": "audio/clean/te-positive.wav",
+          "sha256": "020928226bd4056747719f6368524a92dea1d89985189fea576638b7ae060b96",
+          "pcm_sha256": "98a65a7f562c599bc9ed4ea12468b684f92826b5553c4c12ef5bfc5470c423ea",
+          "sample_count": 482304,
+          "duration_s": 30.144,
+          "frame_samples": 512,
+          "frame_remainder": 0,
+          "sample_zero_offset": 0,
+          "alignment_policy": "causal-unshifted; no samples trimmed or time shifted"
+        },
+        "colored-snr-p10": {
+          "relative_path": "audio/colored-snr-p10/te-positive.wav",
+          "sha256": "d234d26c01d20f8544af9399504c1e14ea7adcfd799cfb0dc6cbe994cbdda75b",
+          "pcm_sha256": "f39ca96b8486d63293d7aa4cd7a65941afb27d7d50a6271678e26cd6bbb0ba61",
+          "sample_count": 482304,
+          "duration_s": 30.144,
+          "frame_samples": 512,
+          "frame_remainder": 0,
+          "sample_zero_offset": 0,
+          "alignment_policy": "causal-unshifted; no samples trimmed or time shifted",
+          "synthetic_reverb": false,
+          "target_snr_db": 10.0,
+          "snr_signal": "dry speech",
+          "noise_seed": "cuebell-denoising-2026-11-14-v1\u0000te-positive",
+          "mix_measurement": {
+            "speech_rms_pcm": 5965.987016426329,
+            "noise_plus_quantization_rms_pcm": 1886.6102756602397,
+            "achieved_snr_db": 10.000002166762972,
+            "peak_abs_pcm": 31783,
+            "noise_scale": 18284.454763093403,
+            "common_gain": 0.8638687095634575
+          },
+          "denoised_counterpart": null
+        }
+      },
+      "common_gain": 0.8638687095634575,
+      "gain_policy": "shared across clean and all noise/reverb conditions for this case"
+    },
+    {
+      "scripts": [
+        {
+          "fixture_id": "mr-positive",
+          "text": "टोकन चारशे बेचाळीस, कृपया काउंटर दोनवर या.",
+          "english_gloss": "Token four hundred forty two, please come to counter two.",
+          "source_wav_sha256": "e4fd430024e050ef2b96e02dbf78c66847feb6a9770b7a21097c37a197e6a1a1",
+          "start_sample": 4800,
+          "source_end_sample": 54720,
+          "speech_end_sample": 54720,
+          "source_sample_count": 49920,
+          "silence_after_s": 2.0
+        }
+      ],
+      "source_assembled_pcm_sha256": "614c3fc7d47df2f371b3d8523ce4fc546320cdf4112acddd82ab0d0051caddf7",
+      "speech_end_sample": 54720,
+      "sample_count": 471040,
+      "duration_s": 29.44,
+      "final_padding_samples": 320,
+      "leading_silence_s": 0.3,
+      "tail_silence_s": 24.0,
+      "case_id": "mr-positive",
+      "source_case": {
+        "id": "mr-positive",
+        "language": "mr",
+        "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+        "kind": "positive",
+        "sequence": [
+          {
+            "fixture_id": "mr-positive",
+            "silence_after_s": 2.0
+          }
+        ],
+        "expected": {
+          "alert": true,
+          "token": "442",
+          "location": "counter 2",
+          "location_aliases": [
+            "काउंटर दोनवर",
+            "काउंटर दोन",
+            "काउंटर 2"
+          ],
+          "voice_stop": false,
+          "correction": false
+        }
+      },
+      "counterparts": {
+        "clean": {
+          "relative_path": "audio/clean/mr-positive.wav",
+          "sha256": "990379b0d414cf4e692f6c957c97fc33397e607a85b5d6096679088759d8eaef",
+          "pcm_sha256": "94d48c04dd43a3aec8895da1dad6897caeb4f8358cb35061bbc1a680f0a2dda4",
+          "sample_count": 471040,
+          "duration_s": 29.44,
+          "frame_samples": 512,
+          "frame_remainder": 0,
+          "sample_zero_offset": 0,
+          "alignment_policy": "causal-unshifted; no samples trimmed or time shifted"
+        },
+        "colored-snr-p10": {
+          "relative_path": "audio/colored-snr-p10/mr-positive.wav",
+          "sha256": "a17600604a438a8af757de1bf1ca40f21dec351e85ca6ac5a6ab52dc743c624b",
+          "pcm_sha256": "6bfee5424537205f25709390d3a884e18a62042ba4ecb606448c23ad72a67c8c",
+          "sample_count": 471040,
+          "duration_s": 29.44,
+          "frame_samples": 512,
+          "frame_remainder": 0,
+          "sample_zero_offset": 0,
+          "alignment_policy": "causal-unshifted; no samples trimmed or time shifted",
+          "synthetic_reverb": false,
+          "target_snr_db": 10.0,
+          "snr_signal": "dry speech",
+          "noise_seed": "cuebell-denoising-2026-11-14-v1\u0000mr-positive",
+          "mix_measurement": {
+            "speech_rms_pcm": 6621.235195803878,
+            "noise_plus_quantization_rms_pcm": 2093.817582862715,
+            "achieved_snr_db": 10.00000344884851,
+            "peak_abs_pcm": 31783,
+            "noise_scale": 19512.850844991666,
+            "common_gain": 0.9018776816082738
+          },
+          "denoised_counterpart": null
+        }
+      },
+      "common_gain": 0.9018776816082738,
+      "gain_policy": "shared across clean and all noise/reverb conditions for this case"
+    },
+    {
+      "scripts": [
+        {
+          "fixture_id": "en-positive",
+          "text": "Token four hundred and forty two, please go to counter two.",
+          "english_gloss": "Token four hundred forty two, please go to counter two.",
+          "source_wav_sha256": "64feede2485f2d76eebf4ea42d63e7d936ea5212b9dc9d2b3ab313833a60cdc5",
+          "start_sample": 4800,
+          "source_end_sample": 79040,
+          "speech_end_sample": 79040,
+          "source_sample_count": 74240,
+          "silence_after_s": 2.0
+        }
+      ],
+      "source_assembled_pcm_sha256": "5106dd2caebde21c311b45376ab594dc2eb02a0fa3ad30c527fbfce4e03b986f",
+      "speech_end_sample": 79040,
+      "sample_count": 495104,
+      "duration_s": 30.944,
+      "final_padding_samples": 64,
+      "leading_silence_s": 0.3,
+      "tail_silence_s": 24.0,
+      "case_id": "en-positive",
+      "source_case": {
+        "id": "en-positive",
+        "language": "en",
+        "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+        "kind": "positive",
+        "sequence": [
+          {
+            "fixture_id": "en-positive",
+            "silence_after_s": 2.0
+          }
+        ],
+        "expected": {
+          "alert": true,
+          "token": "442",
+          "location": "counter 2",
+          "location_aliases": [
+            "counter two"
+          ],
+          "voice_stop": false,
+          "correction": false
+        }
+      },
+      "counterparts": {
+        "clean": {
+          "relative_path": "audio/clean/en-positive.wav",
+          "sha256": "d2786609ebac9efe0ebb42abb12b9e4a6a637756b71391b19b41f43598cc1d54",
+          "pcm_sha256": "83083c406e819c5f795ad17aafab2ef157eea4602ce3b8cf46f4ff5b3bf04344",
+          "sample_count": 495104,
+          "duration_s": 30.944,
+          "frame_samples": 512,
+          "frame_remainder": 0,
+          "sample_zero_offset": 0,
+          "alignment_policy": "causal-unshifted; no samples trimmed or time shifted"
+        },
+        "colored-snr-p10": {
+          "relative_path": "audio/colored-snr-p10/en-positive.wav",
+          "sha256": "4dfdb2cbf994eaa873ebe3ca27d2906315fbfbc5ae33e1460931d77287089165",
+          "pcm_sha256": "fe7269dc0f612ae617e53c81a6308882bb30299f3862408a5eb5f5290ae255df",
+          "sample_count": 495104,
+          "duration_s": 30.944,
+          "frame_samples": 512,
+          "frame_remainder": 0,
+          "sample_zero_offset": 0,
+          "alignment_policy": "causal-unshifted; no samples trimmed or time shifted",
+          "synthetic_reverb": false,
+          "target_snr_db": 10.0,
+          "snr_signal": "dry speech",
+          "noise_seed": "cuebell-denoising-2026-11-14-v1\u0000en-positive",
+          "mix_measurement": {
+            "speech_rms_pcm": 5110.348237032456,
+            "noise_plus_quantization_rms_pcm": 1616.0346547367783,
+            "achieved_snr_db": 9.999996516194216,
+            "peak_abs_pcm": 31783,
+            "noise_scale": 14100.636325624086,
+            "common_gain": 0.9516492040930394
+          },
+          "denoised_counterpart": null
+        }
+      },
+      "common_gain": 0.9516492040930394,
+      "gain_policy": "shared across clean and all noise/reverb conditions for this case"
+    },
+    {
+      "scripts": [
+        {
+          "fixture_id": "hi-positive",
+          "text": "टोकन चार सौ बयालीस, कृपया काउंटर दो पर जाएँ।",
+          "english_gloss": "Token four hundred forty two, please go to counter two.",
+          "source_wav_sha256": "0861ca2815cadfda5e65d14904610437f50501d09e73886aa2d643e8af238746",
+          "start_sample": 4800,
+          "source_end_sample": 54720,
+          "speech_end_sample": 54720,
+          "source_sample_count": 49920,
+          "silence_after_s": 0.15
+        },
+        {
+          "fixture_id": "hi-correction",
+          "text": "सुधार: चार सौ बयालीस नहीं, टोकन चार सौ तैंतालीस काउंटर तीन पर आएँ।",
+          "english_gloss": "Correction: not four hundred forty two; token four hundred forty three, come to counter three.",
+          "source_wav_sha256": "d95a4d8960b672db04a065f5e7fdd5c6ea92f4dbaa0426f9d59f323e371a7397",
+          "start_sample": 57120,
+          "source_end_sample": 177440,
+          "speech_end_sample": 162080,
+          "source_sample_count": 120320,
+          "silence_after_s": 2.0
+        }
+      ],
+      "source_assembled_pcm_sha256": "60ad499f37b8c1c603db7045fc2368dee72937459e75c07a4eb3469c9c33892e",
+      "speech_end_sample": 162080,
+      "sample_count": 593920,
+      "duration_s": 37.12,
+      "final_padding_samples": 480,
+      "leading_silence_s": 0.3,
+      "tail_silence_s": 24.0,
+      "case_id": "hi-correction",
+      "source_case": {
+        "id": "hi-correction",
+        "language": "hi",
+        "request": "Notify me when pharmacy token 442 is called. Vibrate.",
+        "kind": "correction",
+        "sequence": [
+          {
+            "fixture_id": "hi-positive",
+            "silence_after_s": 0.15
+          },
+          {
+            "fixture_id": "hi-correction",
+            "silence_after_s": 2.0
+          }
+        ],
+        "expected": {
+          "alert": false,
+          "token": null,
+          "location": null,
+          "voice_stop": false,
+          "correction": true
+        }
+      },
+      "counterparts": {
+        "clean": {
+          "relative_path": "audio/clean/hi-correction.wav",
+          "sha256": "04bcd099594fa46eeb7a0fccb92b9a49f4423aca2944115a3f420aa6d0335a18",
+          "pcm_sha256": "7ee43b540ac0bef4fcc87fd1cd901b3b0f8834119b2e792004aa8eab6dace8d5",
+          "sample_count": 593920,
+          "duration_s": 37.12,
+          "frame_samples": 512,
+          "frame_remainder": 0,
+          "sample_zero_offset": 0,
+          "alignment_policy": "causal-unshifted; no samples trimmed or time shifted"
+        },
+        "colored-snr-p10": {
+          "relative_path": "audio/colored-snr-p10/hi-correction.wav",
+          "sha256": "b34125c523a83add6d6d3ebd359bd6e4d3c0d8b5ea4046a522ea0d9797ae9f03",
+          "pcm_sha256": "e82f5ea75b53f1f35002ae2a720d69975c123b338576f09581e5a45db330b8fb",
+          "sample_count": 593920,
+          "duration_s": 37.12,
+          "frame_samples": 512,
+          "frame_remainder": 0,
+          "sample_zero_offset": 0,
+          "alignment_policy": "causal-unshifted; no samples trimmed or time shifted",
+          "synthetic_reverb": false,
+          "target_snr_db": 10.0,
+          "snr_signal": "dry speech",
+          "noise_seed": "cuebell-denoising-2026-11-14-v1\u0000hi-correction",
+          "mix_measurement": {
+            "speech_rms_pcm": 5551.792293658259,
+            "noise_plus_quantization_rms_pcm": 1755.6311892111466,
+            "achieved_snr_db": 9.999998442553421,
+            "peak_abs_pcm": 31783,
+            "noise_scale": 16924.9542194076,
+            "common_gain": 0.8809607416492508
+          },
+          "denoised_counterpart": null
+        }
+      },
+      "common_gain": 0.8809607416492508,
+      "gain_policy": "shared across clean and all noise/reverb conditions for this case"
+    }
+  ],
+  "pipeline_manifests": {
+    "clean": {
+      "relative_path": "pipeline/clean.json",
+      "sha256": "25eff8a076f7b2792b0805e4823c61f2b409cc2a285945c21cd8c6acc288cf23"
+    },
+    "colored-snr-p10": {
+      "relative_path": "pipeline/colored-snr-p10.json",
+      "sha256": "a027f2bbc4d56fb59c51258f3928768365f781dbc9b825ae6cffb0f0720cd463"
+    }
+  },
+  "device_inputs_sha256": "e7e3618b51831182ca8a9e7216c2eab960df7ad3bc48b7ba611fc1e7f04c705d"
+}

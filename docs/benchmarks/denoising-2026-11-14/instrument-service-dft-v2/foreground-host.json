@@ -1,0 +1,156 @@
+{
+  "schema_version": 1,
+  "status": "completed",
+  "options": {
+    "outputDir": "\/data\/user\/0\/expo.modules.queuelistener.test\/files\/denoising\/instrument-service-dft-v2\/results",
+    "modelPath": "\/data\/user\/0\/expo.modules.queuelistener.test\/files\/denoising\/instrument-service-dft-v2\/gtcrn_simple.onnx",
+    "lifecycleTimeoutSeconds": "130",
+    "replay": "false",
+    "stress": "true",
+    "durationSeconds": "30",
+    "hostMode": "service-only",
+    "ids": "colored-snr-p10__hi-positive",
+    "label": "instrument-service-dft-v2",
+    "modes": "engine,bypass",
+    "wakeLock": "true",
+    "inputDir": "\/data\/user\/0\/expo.modules.queuelistener.test\/files\/denoising\/instrument-service-dft-v2\/inputs",
+    "warmupSeconds": "5",
+    "apkSha256": "0ca042ab8778f1787df49aa8ba6796056eeee4d237aa0bd67f36d78190fbcc09"
+  },
+  "host_mode": "service-only",
+  "deadline_elapsed_realtime_ms": 630938800,
+  "timeout_ms": 130000,
+  "service_type": "mediaProcessing",
+  "microphone_used": false,
+  "screen_kept_on": false,
+  "events": [
+    {
+      "event": "starting_activity",
+      "elapsed_realtime_ms": 630808816,
+      "details": {}
+    },
+    {
+      "event": "activity_created",
+      "elapsed_realtime_ms": 630809567,
+      "details": {}
+    },
+    {
+      "event": "activity_resumed",
+      "elapsed_realtime_ms": 630809595,
+      "details": {}
+    },
+    {
+      "event": "activity_window_focus",
+      "elapsed_realtime_ms": 630810108,
+      "details": {
+        "has_focus": true
+      }
+    },
+    {
+      "event": "service_ready",
+      "elapsed_realtime_ms": 630810156,
+      "details": {
+        "service_type": "mediaProcessing",
+        "service_component": "expo.modules.queuelistener.DenoisingBenchmarkService",
+        "host_mode": "service-only",
+        "foreground_requested": true,
+        "notifications_enabled": false,
+        "wake_lock_requested": true,
+        "wake_lock_held": true,
+        "wake_lock_timeout_ms": 130000,
+        "service_started_elapsed_realtime_ms": 630810130,
+        "microphone_used": false,
+        "screen_kept_on": false,
+        "cancellation": null
+      }
+    },
+    {
+      "event": "activity_paused",
+      "elapsed_realtime_ms": 630810313,
+      "details": {}
+    },
+    {
+      "event": "activity_window_focus",
+      "elapsed_realtime_ms": 630810356,
+      "details": {
+        "has_focus": false
+      }
+    },
+    {
+      "event": "activity_stopped",
+      "elapsed_realtime_ms": 630811383,
+      "details": {}
+    },
+    {
+      "event": "starting_processing",
+      "elapsed_realtime_ms": 630811399,
+      "details": {}
+    },
+    {
+      "event": "service_resources_released",
+      "elapsed_realtime_ms": 630885213,
+      "details": {
+        "service_type": "mediaProcessing",
+        "service_component": "expo.modules.queuelistener.DenoisingBenchmarkService",
+        "host_mode": "service-only",
+        "foreground_requested": false,
+        "notifications_enabled": false,
+        "wake_lock_requested": true,
+        "wake_lock_held": false,
+        "wake_lock_timeout_ms": 130000,
+        "service_started_elapsed_realtime_ms": 630810130,
+        "microphone_used": false,
+        "screen_kept_on": false,
+        "cancellation": null
+      }
+    },
+    {
+      "event": "service_resources_released",
+      "elapsed_realtime_ms": 630885225,
+      "details": {
+        "service_type": "mediaProcessing",
+        "service_component": "expo.modules.queuelistener.DenoisingBenchmarkService",
+        "host_mode": "service-only",
+        "foreground_requested": false,
+        "notifications_enabled": false,
+        "wake_lock_requested": true,
+        "wake_lock_held": false,
+        "wake_lock_timeout_ms": 130000,
+        "service_started_elapsed_realtime_ms": 630810130,
+        "microphone_used": false,
+        "screen_kept_on": false,
+        "cancellation": null
+      }
+    },
+    {
+      "event": "service_destroyed",
+      "elapsed_realtime_ms": 630885228,
+      "details": {
+        "service_type": "mediaProcessing",
+        "service_component": "expo.modules.queuelistener.DenoisingBenchmarkService",
+        "host_mode": "service-only",
+        "foreground_requested": false,
+        "notifications_enabled": false,
+        "wake_lock_requested": true,
+        "wake_lock_held": false,
+        "wake_lock_timeout_ms": 130000,
+        "service_started_elapsed_realtime_ms": 630810130,
+        "microphone_used": false,
+        "screen_kept_on": false,
+        "cancellation": null
+      }
+    },
+    {
+      "event": "cleanup_finished",
+      "elapsed_realtime_ms": 630885239,
+      "details": {}
+    },
+    {
+      "event": "activity_destroyed",
+      "elapsed_realtime_ms": 630885243,
+      "details": {}
+    }
+  ],
+  "service_destroyed": true,
+  "activity_finish_requested": true
+}

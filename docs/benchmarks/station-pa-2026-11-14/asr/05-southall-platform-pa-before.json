@@ -1,0 +1,113 @@
+{
+  "id": "05-southall-platform-pa",
+  "arm": "before",
+  "reference": "<UNVERIFIED_TRANSCRIPT/>",
+  "input_sha256": "e396e872a48cc04a7e216146953d104d4a8d4e9dd16ddd94f25cb938f5bddc0d",
+  "source_audio_seconds": 29.3965,
+  "status": "completed",
+  "scoring_version": "unicode-marks-v2",
+  "sent_frames": 982,
+  "schedule_rebases": 0,
+  "maximum_send_lateness_ms": 1.7421390002709813,
+  "unfinished_utterance_ids": [],
+  "connection_seconds": 42.468236683000214,
+  "attempt_seconds": 42.88002652999967,
+  "transcript": "Train to arrive at platform four is the fourteen forty eight tenth trains. Service to London Paddington. Walking up to the path, well, West Wheeling, Wheeling Broadway, and London Paddington. Platform four for the fourteen forty eight ten trains service to London Paddington.",
+  "events": [
+    {
+      "elapsed_s": 0.02359256199997617,
+      "message": {
+        "type": "connected",
+        "message": "STT service ready — VAD service connected",
+        "request_id": "01a1d998-fc42-76ae-910f-95576e6d7dff",
+        "config": {
+          "sample_rate": 16000,
+          "chunk_size": 512,
+          "partials_enabled": false,
+          "partial_interval_ms": 450,
+          "partial_max_window_s": 15.0,
+          "language_code": "indic-auto",
+          "format": "verbatim"
+        },
+        "timestamp": "2026-11-14T10:27:24.439067+00:00"
+      }
+    },
+    {
+      "elapsed_s": 3.8278302929993515,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "u4cf92d49",
+        "t_ms": 3348,
+        "timestamp": "2026-11-14T10:27:28.215965+00:00"
+      }
+    },
+    {
+      "elapsed_s": 12.759380446999785,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "u33dac77f",
+        "t_ms": 12404,
+        "timestamp": "2026-11-14T10:27:37.218292+00:00"
+      }
+    },
+    {
+      "elapsed_s": 12.799631871999736,
+      "message": {
+        "type": "transcript",
+        "text": "Train to arrive at platform four is the fourteen forty eight tenth trains. Service to London Paddington.",
+        "audio_duration_ms": 9460.0,
+        "segment_id": "01a1d998-fc42-76ae-910f-95576e6d7dff-seg-1",
+        "segment_index": 1,
+        "utterance_id": "u4cf92d49",
+        "is_final": true,
+        "latency": 266,
+        "prefetched": false,
+        "timestamp": "2026-11-14T10:27:37.259149+00:00",
+        "detected_language_code": "en-IN"
+      }
+    },
+    {
+      "elapsed_s": 19.04799911199916,
+      "message": {
+        "type": "transcript",
+        "text": "Walking up to the path, well, West Wheeling, Wheeling Broadway, and London Paddington.",
+        "audio_duration_ms": 6336.0,
+        "segment_id": "01a1d998-fc42-76ae-910f-95576e6d7dff-seg-2",
+        "segment_index": 2,
+        "utterance_id": "u33dac77f",
+        "is_final": true,
+        "latency": 168,
+        "prefetched": false,
+        "timestamp": "2026-11-14T10:27:43.510679+00:00",
+        "detected_language_code": "en-IN"
+      }
+    },
+    {
+      "elapsed_s": 19.162943389999782,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "u1384eb27",
+        "t_ms": 18804,
+        "timestamp": "2026-11-14T10:27:43.623742+00:00"
+      }
+    },
+    {
+      "elapsed_s": 27.053076472999237,
+      "message": {
+        "type": "transcript",
+        "text": "Platform four for the fourteen forty eight ten trains service to London Paddington.",
+        "audio_duration_ms": 8032.0,
+        "segment_id": "01a1d998-fc42-76ae-910f-95576e6d7dff-seg-3",
+        "segment_index": 3,
+        "utterance_id": "u1384eb27",
+        "is_final": true,
+        "latency": 148,
+        "prefetched": false,
+        "timestamp": "2026-11-14T10:27:51.515316+00:00",
+        "detected_language_code": "en-IN"
+      }
+    }
+  ],
+  "reference_score_eligible": false,
+  "score": null
+}

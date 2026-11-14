@@ -1,0 +1,70 @@
+{
+  "id": "01-baby-near",
+  "arm": "before",
+  "reference": "He recognized his jacket and trousers. Yes, ma'am, it sure was. A portable electric heater is advisable for shelters in cold climates.",
+  "input_sha256": "78dc8521b70cb0c52b9b6a30d5a7957ed3a2ac4c978878abbfddfb1dea96234b",
+  "source_audio_seconds": 10.0,
+  "status": "completed",
+  "sent_frames": 376,
+  "schedule_rebases": 0,
+  "maximum_send_lateness_ms": 2.240398000139976,
+  "unfinished_utterance_ids": [],
+  "connection_seconds": 23.069097564000003,
+  "attempt_seconds": 23.370177844999944,
+  "transcript": "He recognized his jacket and trousers. Yes maam, it was, it's your was. A portable electric heater is advisable for shelters. കോൾഡ് ക്ലൈമറ്റ്.",
+  "events": [
+    {
+      "elapsed_s": 0.05604231200004506,
+      "message": {
+        "type": "connected",
+        "message": "STT service ready — VAD service connected",
+        "request_id": "01a1d88e-14a0-7352-be35-64080176759d",
+        "config": {
+          "sample_rate": 16000,
+          "chunk_size": 512,
+          "partials_enabled": false,
+          "partial_interval_ms": 450,
+          "partial_max_window_s": 15.0,
+          "language_code": "indic-auto",
+          "format": "verbatim"
+        },
+        "timestamp": "2026-11-14T05:35:52.558697+00:00"
+      }
+    },
+    {
+      "elapsed_s": 1.4562466219999806,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "u137800f8",
+        "t_ms": 1108,
+        "timestamp": "2026-11-14T05:35:53.957212+00:00"
+      }
+    },
+    {
+      "elapsed_s": 10.843271049000123,
+      "message": {
+        "type": "transcript",
+        "text": "He recognized his jacket and trousers. Yes maam, it was, it's your was. A portable electric heater is advisable for shelters. കോൾഡ് ക്ലൈമറ്റ്.",
+        "audio_duration_ms": 9748.0,
+        "segment_id": "01a1d88e-14a0-7352-be35-64080176759d-seg-1",
+        "segment_index": 1,
+        "utterance_id": "u137800f8",
+        "is_final": true,
+        "latency": 268,
+        "prefetched": false,
+        "timestamp": "2026-11-14T05:36:03.348607+00:00",
+        "detected_language_code": "en-IN"
+      }
+    }
+  ],
+  "reference_score_eligible": true,
+  "score": {
+    "reference_words": 22,
+    "hypothesis_words": 27,
+    "errors": 10,
+    "substitutions": 5,
+    "insertions": 5,
+    "deletions": 0,
+    "wer": 0.45454545454545453
+  }
+}

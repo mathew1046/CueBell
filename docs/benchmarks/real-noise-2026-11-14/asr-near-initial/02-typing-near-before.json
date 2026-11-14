@@ -1,0 +1,70 @@
+{
+  "id": "02-typing-near",
+  "arm": "before",
+  "reference": "The diagnosis was discouraging, however, he was not overly worried. The shadow vanished. In either case, they do not.",
+  "input_sha256": "1925794cbb77d44fb935b02de3648450439ecdad87e848d1085236cca7375084",
+  "source_audio_seconds": 10.0,
+  "status": "completed",
+  "sent_frames": 376,
+  "schedule_rebases": 0,
+  "maximum_send_lateness_ms": 2.2836390003249107,
+  "unfinished_utterance_ids": [],
+  "connection_seconds": 23.079583598000227,
+  "attempt_seconds": 23.473593918999995,
+  "transcript": "The diagnosis was discouraging; however, he was not overly worried. The shadow vanished. In either case, they do not affect.",
+  "events": [
+    {
+      "elapsed_s": 0.07996393400026136,
+      "message": {
+        "type": "connected",
+        "message": "STT service ready — VAD service connected",
+        "request_id": "01a1d88d-b91b-707f-a16a-b37d4b082dad",
+        "config": {
+          "sample_rate": 16000,
+          "chunk_size": 512,
+          "partials_enabled": false,
+          "partial_interval_ms": 450,
+          "partial_max_window_s": 15.0,
+          "language_code": "indic-auto",
+          "format": "verbatim"
+        },
+        "timestamp": "2026-11-14T05:35:29.195267+00:00"
+      }
+    },
+    {
+      "elapsed_s": 0.9486615440000605,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "u83dee774",
+        "t_ms": 596,
+        "timestamp": "2026-11-14T05:35:30.064990+00:00"
+      }
+    },
+    {
+      "elapsed_s": 10.772155552000186,
+      "message": {
+        "type": "transcript",
+        "text": "The diagnosis was discouraging; however, he was not overly worried. The shadow vanished. In either case, they do not affect.",
+        "audio_duration_ms": 10260.0,
+        "segment_id": "01a1d88d-b91b-707f-a16a-b37d4b082dad-seg-1",
+        "segment_index": 1,
+        "utterance_id": "u83dee774",
+        "is_final": true,
+        "latency": 185,
+        "prefetched": false,
+        "timestamp": "2026-11-14T05:35:39.892134+00:00",
+        "detected_language_code": "en-IN"
+      }
+    }
+  ],
+  "reference_score_eligible": true,
+  "score": {
+    "reference_words": 19,
+    "hypothesis_words": 20,
+    "errors": 1,
+    "substitutions": 0,
+    "insertions": 1,
+    "deletions": 0,
+    "wer": 0.05263157894736842
+  }
+}

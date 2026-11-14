@@ -1,0 +1,70 @@
+{
+  "id": "09-creaky-near",
+  "arm": "after",
+  "reference": "Nine of them had gone down the gangplank already. The carpet cleaners shampooed our oriental rug. You saw them always together those.",
+  "input_sha256": "b47f72b3fb0a459bafd4947bcb1ace944f179c431097c7ceea7b73d894e86c7d",
+  "source_audio_seconds": 10.0,
+  "status": "completed",
+  "sent_frames": 376,
+  "schedule_rebases": 0,
+  "maximum_send_lateness_ms": 1.998321999963082,
+  "unfinished_utterance_ids": [],
+  "connection_seconds": 23.066960422000193,
+  "attempt_seconds": 23.590718767999988,
+  "transcript": "Nine of them had gone down the gangplank already. The carpet cleaner shampooed our oriental rug. You saw them always together those.",
+  "events": [
+    {
+      "elapsed_s": 0.04725731899998209,
+      "message": {
+        "type": "connected",
+        "message": "STT service ready — VAD service connected",
+        "request_id": "01a1d88c-a24b-7bf6-8588-93df1de74882",
+        "config": {
+          "sample_rate": 16000,
+          "chunk_size": 512,
+          "partials_enabled": false,
+          "partial_interval_ms": 450,
+          "partial_max_window_s": 15.0,
+          "language_code": "indic-auto",
+          "format": "verbatim"
+        },
+        "timestamp": "2026-11-14T05:34:17.853313+00:00"
+      }
+    },
+    {
+      "elapsed_s": 1.2170858730000873,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "u69dc2e25",
+        "t_ms": 884,
+        "timestamp": "2026-11-14T05:34:19.033699+00:00"
+      }
+    },
+    {
+      "elapsed_s": 10.99342242900002,
+      "message": {
+        "type": "transcript",
+        "text": "Nine of them had gone down the gangplank already. The carpet cleaner shampooed our oriental rug. You saw them always together those.",
+        "audio_duration_ms": 9972.0,
+        "segment_id": "01a1d88c-a24b-7bf6-8588-93df1de74882-seg-1",
+        "segment_index": 1,
+        "utterance_id": "u69dc2e25",
+        "is_final": true,
+        "latency": 267,
+        "prefetched": false,
+        "timestamp": "2026-11-14T05:34:28.662775+00:00",
+        "detected_language_code": "en-IN"
+      }
+    }
+  ],
+  "reference_score_eligible": true,
+  "score": {
+    "reference_words": 22,
+    "hypothesis_words": 22,
+    "errors": 1,
+    "substitutions": 1,
+    "insertions": 0,
+    "deletions": 0,
+    "wer": 0.045454545454545456
+  }
+}

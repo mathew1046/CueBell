@@ -1,0 +1,31 @@
+{
+  "entry_point": "app_process64; production Kotlin/JNI through debug test APK",
+  "serial": "10BG2C197Q00ARD",
+  "apk_sha256": "b9318ebbb40a85633063175e7f478e492754faacd18889d2f74dbcd9926e7ac9",
+  "model_sha256": "e77603ac0c23dac3227dd2d7135b3a585cbee2679048aecfa886657d3ae1b534",
+  "input_manifest_sha256": "d87b3064d0d82ecbfdbd8ac64d223eed044b7388ae77a6bddcb371b4b4403920",
+  "device_root": "/data/local/tmp/cuebell-denoising-real-near-v4",
+  "security_settings_changed": false,
+  "native_overlay": null,
+  "runtime_identity_source": "Actual deployed library hashes, not embedded APK provenance",
+  "native_sha256": {
+    "libc++_shared.so": "3e852764502d06e0cf1080d532ae7c608b7649d946a3a9d7e84e3d4b7d683214",
+    "libexpo-modules-core.so": "11f93d7b6926a8ad64e227f701fb1fa47da35fb0e684656e28163c73a5691c2b",
+    "libexpo-modules-jsi.so": "d1edc1d9900de77b0a8aaace2fd61c40ae36b801687a8adeabd21cbaad616603",
+    "libexpo-modules-v2.so": "d644e4202b81c4b454d8bcca4db1a8428d4e666722541465d1960c4ea4f66696",
+    "libexpo-modules-worklets.so": "0c459e72c5afc42126fb160a0afc7a8c11bfcb4fada937613225e84d05105d0f",
+    "libfbjni.so": "a9e35ba55d3f956920281f519385f8a72475ee24819799cb08375fdd4cce2b22",
+    "libhermestooling.so": "833a4e65483eed5b59b222568027bbfd5694eca89ddf30d5137630b664d87e04",
+    "libhermesvm.so": "3746fede16adc7b214d95a378563ac76dc60912bc20e47aaf311925b0a185cb4",
+    "libimagepipeline.so": "1b377992e4256fa9398ec057722f84a359c7d588e570c8a41f51d930c19ece7d",
+    "libjsi.so": "4cde940e3bb4ca6f9e82585ee50339d7570074210fd5439ce85a6303af653b85",
+    "libnative-filters.so": "bb82aec5ab2a8ac4e1968f41c6477824f1f3fff90c0eeb2c90cdeb1923d69833",
+    "libnative-imagetranscoder.so": "2aed28298a25afd52ac670cf9682398c6c7ba42a57195c01efd565e7ddfe17ca",
+    "libreactnative.so": "64ad838aeb7c731eeabb836a6bc4a6d00a5e0089788f95c6f2f1a6e467344a8b",
+    "libworklets.so": "499bfb897773b13744843eb54239c82d7472d1e22b278bf143df6870761fbf4e",
+    "libsherpa-onnx-jni.so": "59964bf7d9cf9520231d6cce3f6728b05f3c0ecac765bd9182bd9fc9d0539c65"
+  },
+  "command": "CLASSPATH=/data/local/tmp/cuebell-denoising-real-near-v4/benchmark.apk LD_LIBRARY_PATH=/data/local/tmp/cuebell-denoising-real-near-v4/lib /system/bin/app_process64 -Djava.library.path=/data/local/tmp/cuebell-denoising-real-near-v4/lib /system/bin expo.modules.queuelistener.DenoisingBenchmarkMain inputDir=/data/local/tmp/cuebell-denoising-real-near-v4/inputs outputDir=/data/local/tmp/cuebell-denoising-real-near-v4/results modelPath=/data/local/tmp/cuebell-denoising-real-near-v4/gtcrn_simple.onnx durationSeconds=30 warmupSeconds=5 stress=false replay=true apkSha256=b9318ebbb40a85633063175e7f478e492754faacd18889d2f74dbcd9926e7ac9 label=device-real-near-v4",
+  "exit_code": 0,
+  "pull_exit_code": 0
+}

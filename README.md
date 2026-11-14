@@ -19,7 +19,7 @@
 **Status:** active prototype · Android only · development-signed preview
 
 **Download the Android preview:**
-https://github.com/mathew1046/CueBell/releases/tag/v1.3.1-preview
+https://github.com/mathew1046/CueBell/releases/tag/v1.4.0-preview
 
 **Report a bug or suggest an improvement:**
 https://github.com/mathew1046/CueBell/issues
@@ -100,14 +100,15 @@ Gnani Evon is **not integrated**: its usable API contract has not been supplied.
 ## Try the Android preview
 
 APK download:
-https://github.com/mathew1046/CueBell/releases/download/v1.3.1-preview/CueBell-1.3.1-arm64.apk
+https://github.com/mathew1046/CueBell/releases/download/v1.4.0-preview/CueBell-1.4.0-arm64.apk
 
 Checksum:
-https://github.com/mathew1046/CueBell/releases/download/v1.3.1-preview/CueBell-1.3.1-SHA256SUMS
+https://github.com/mathew1046/CueBell/releases/download/v1.4.0-preview/CueBell-1.4.0-SHA256SUMS
 
 - Android 7+ on an ARM64 phone; iOS is not implemented.
-- Version **1.3.1**, Android version code **6**, package `app.cuebell.mobile`.
-- Development-signed preview, **not a production/store distribution**. Its signing certificate matches the 1.3.0 preview for in-place updates.
+- Version **1.4.0**, Android version code **7**, package `app.cuebell.mobile`.
+- Experimental on-device noise reduction is available in **Settings → Listening** and is off by default. Stop listening before changing it.
+- Development-signed preview, **not a production/store distribution**. Its signing certificate matches the 1.3.1 preview for in-place updates.
 - The preview is preconfigured; there is no backend URL or provider-key setup on the phone. Sessions for an older deployment are not reused: submit your request again after updating.
 - **Expo Go cannot run the custom native microphone service.** Use the APK or a native development build.
 

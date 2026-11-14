@@ -1,0 +1,312 @@
+{
+  "clips": [
+    {
+      "id": "01-baby-near",
+      "cohort": "near",
+      "before": {
+        "SIG": 3.487587872719587,
+        "BAK": 1.8679876350915452,
+        "OVRL": 2.2082816989989773
+      },
+      "after": {
+        "SIG": 3.306694145358021,
+        "BAK": 3.862807644362274,
+        "OVRL": 2.9524748735130046
+      },
+      "full_scale_sample_counts": {
+        "before": 0,
+        "after": 0
+      }
+    },
+    {
+      "id": "02-typing-near",
+      "cohort": "near",
+      "before": {
+        "SIG": 3.591963950971708,
+        "BAK": 2.9820960960924734,
+        "OVRL": 2.7819097214692885
+      },
+      "after": {
+        "SIG": 3.4371436828085833,
+        "BAK": 3.9961630614468326,
+        "OVRL": 3.1331473551722433
+      },
+      "full_scale_sample_counts": {
+        "before": 0,
+        "after": 0
+      }
+    },
+    {
+      "id": "03-water-near",
+      "cohort": "near",
+      "before": {
+        "SIG": 3.1348496249648488,
+        "BAK": 1.5856356864823942,
+        "OVRL": 1.7297758738010194
+      },
+      "after": {
+        "SIG": 2.974598127159843,
+        "BAK": 3.8762587750259287,
+        "OVRL": 2.669725676590876
+      },
+      "full_scale_sample_counts": {
+        "before": 0,
+        "after": 0
+      }
+    },
+    {
+      "id": "04-aircon-near",
+      "cohort": "near",
+      "before": {
+        "SIG": 3.5675343445771315,
+        "BAK": 1.601697104251307,
+        "OVRL": 1.9249003797288047
+      },
+      "after": {
+        "SIG": 2.9612820174547143,
+        "BAK": 3.8612186316994164,
+        "OVRL": 2.6651409353800504
+      },
+      "full_scale_sample_counts": {
+        "before": 0,
+        "after": 0
+      }
+    },
+    {
+      "id": "05-dog-near",
+      "cohort": "near",
+      "before": {
+        "SIG": 3.421942376382443,
+        "BAK": 1.8722327293767498,
+        "OVRL": 2.1044599412543423
+      },
+      "after": {
+        "SIG": 2.848468154870332,
+        "BAK": 3.920633474464756,
+        "OVRL": 2.5874108571465935
+      },
+      "full_scale_sample_counts": {
+        "before": 0,
+        "after": 0
+      }
+    },
+    {
+      "id": "06-breathing-near",
+      "cohort": "near",
+      "before": {
+        "SIG": 3.5843937182811603,
+        "BAK": 3.6083360782567206,
+        "OVRL": 3.0599031171603537
+      },
+      "after": {
+        "SIG": 3.287164124894636,
+        "BAK": 4.06118220129525,
+        "OVRL": 3.0174528963465854
+      },
+      "full_scale_sample_counts": {
+        "before": 0,
+        "after": 0
+      }
+    },
+    {
+      "id": "07-mouseclicks-near",
+      "cohort": "near",
+      "before": {
+        "SIG": 3.7377613615378804,
+        "BAK": 3.330056491653507,
+        "OVRL": 3.0739680810268895
+      },
+      "after": {
+        "SIG": 3.6006240975851744,
+        "BAK": 4.096242216941613,
+        "OVRL": 3.348228593479824
+      },
+      "full_scale_sample_counts": {
+        "before": 1,
+        "after": 0
+      }
+    },
+    {
+      "id": "08-clatter-near",
+      "cohort": "near",
+      "before": {
+        "SIG": 3.6342497097668107,
+        "BAK": 3.282048861154591,
+        "OVRL": 2.935828932789185
+      },
+      "after": {
+        "SIG": 3.386583791616205,
+        "BAK": 4.040457214002552,
+        "OVRL": 3.1237604839731357
+      },
+      "full_scale_sample_counts": {
+        "before": 0,
+        "after": 0
+      }
+    },
+    {
+      "id": "09-creaky-near",
+      "cohort": "near",
+      "before": {
+        "SIG": 3.3672396631242805,
+        "BAK": 2.042279570171764,
+        "OVRL": 2.2229121106195855
+      },
+      "after": {
+        "SIG": 3.09847621760632,
+        "BAK": 3.8785670804059826,
+        "OVRL": 2.7872094633353686
+      },
+      "full_scale_sample_counts": {
+        "before": 0,
+        "after": 0
+      }
+    },
+    {
+      "id": "10-dishwasher-near",
+      "cohort": "near",
+      "before": {
+        "SIG": 3.007883391826726,
+        "BAK": 1.1724340796182726,
+        "OVRL": 1.4144858466309396
+      },
+      "after": {
+        "SIG": 2.8216965434932,
+        "BAK": 3.6179682554177717,
+        "OVRL": 2.4582023162566817
+      },
+      "full_scale_sample_counts": {
+        "before": 0,
+        "after": 0
+      }
+    },
+    {
+      "id": "11-door-near",
+      "cohort": "near",
+      "before": {
+        "SIG": 3.5659479330425343,
+        "BAK": 3.4686147830852203,
+        "OVRL": 2.987535052474232
+      },
+      "after": {
+        "SIG": 3.516461603129036,
+        "BAK": 4.1696975006158175,
+        "OVRL": 3.2690434007409546
+      },
+      "full_scale_sample_counts": {
+        "before": 0,
+        "after": 0
+      }
+    },
+    {
+      "id": "12-cutlery-near",
+      "cohort": "near",
+      "before": {
+        "SIG": 2.480198161267616,
+        "BAK": 2.5092428512847786,
+        "OVRL": 1.814513661637146
+      },
+      "after": {
+        "SIG": 2.103226563704316,
+        "BAK": 3.895169594297484,
+        "OVRL": 1.9199956871114892
+      },
+      "full_scale_sample_counts": {
+        "before": 0,
+        "after": 0
+      }
+    },
+    {
+      "id": "01-breathing-far",
+      "cohort": "far",
+      "before": {
+        "SIG": 3.553619248644728,
+        "BAK": 3.3588616307306323,
+        "OVRL": 2.945880741285808
+      },
+      "after": {
+        "SIG": 3.3822661066912056,
+        "BAK": 4.00193827008772,
+        "OVRL": 3.057838313424611
+      },
+      "full_scale_sample_counts": {
+        "before": 0,
+        "after": 0
+      }
+    },
+    {
+      "id": "02-baby-far",
+      "cohort": "far",
+      "before": {
+        "SIG": 2.917418785988796,
+        "BAK": 2.7157349897755916,
+        "OVRL": 2.0731453551586823
+      },
+      "after": {
+        "SIG": 2.7921419836829937,
+        "BAK": 3.554555407962282,
+        "OVRL": 2.261234238292294
+      },
+      "full_scale_sample_counts": {
+        "before": 0,
+        "after": 0
+      }
+    },
+    {
+      "id": "03-typing-far",
+      "cohort": "far",
+      "before": {
+        "SIG": 3.369457307224526,
+        "BAK": 2.643397245456563,
+        "OVRL": 2.486650710721625
+      },
+      "after": {
+        "SIG": 3.1578124182623997,
+        "BAK": 3.9586816809152987,
+        "OVRL": 2.848817784038399
+      },
+      "full_scale_sample_counts": {
+        "before": 238,
+        "after": 258
+      }
+    },
+    {
+      "id": "04-creaky-far",
+      "cohort": "far",
+      "before": {
+        "SIG": 2.418841567757835,
+        "BAK": 2.189692389379343,
+        "OVRL": 1.675402306154084
+      },
+      "after": {
+        "SIG": 2.756469308643467,
+        "BAK": 4.042250962030774,
+        "OVRL": 2.3404020438975834
+      },
+      "full_scale_sample_counts": {
+        "before": 0,
+        "after": 0
+      }
+    }
+  ],
+  "clip_count": 16,
+  "equal_clip_weighted_means": {
+    "SIG": {
+      "before": 3.3025555636299133,
+      "after": 3.089444305435028
+    },
+    "BAK": {
+      "before": 2.514396763866341,
+      "after": 3.9271119981857345
+    },
+    "OVRL": {
+      "before": 2.339972095681935,
+      "after": 2.777505307418731
+    }
+  },
+  "full_scale_sample_counts": {
+    "before": 239,
+    "after": 258
+  },
+  "full_scale_counts_limitation": "Threshold counts describe converted PCM samples, not proof of historical clipping in the original recording."
+}

@@ -1,0 +1,19 @@
+{
+  "commit": "6e1f32cc11b6a019c9a143d169af4043a6178c4d",
+  "source_path": "/home/mathew/Arrakis/CueBell/docs/benchmarks/denoising-2026-11-14/source/release-1.3.1/backend",
+  "sha256": {
+    "backend/app/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "backend/app/config.py": "5d91901cfcd1bd13cff89d729fb2e1b9a9eab3c71af6d9bce937c3b29b457260",
+    "backend/app/engine.py": "b1db23dd429fe5f44292c806e7611d23503204741679c4a399866366c6375a74",
+    "backend/app/gnani.py": "879bc42230eeee5385d9cc1ae9eb0d65163d3ab48fc76ef9e2d6e7bfc5fe1bdd",
+    "backend/app/guard.py": "951830741583d7f821603ed5bbbfe2db1763b486792ad1b16050e1d88e423d27",
+    "backend/app/intelligence.py": "4d0220a214e277e759e537959bde4902ed6b8be7113fb75e335d95751229923b",
+    "backend/app/main.py": "551ce81b25cf74ee0cbe4886f33c73cfe683c146f8a58a29a05cbd250b2b1aca",
+    "backend/app/models.py": "27fd068e955a68f5fe794c6eeaed0c1fc36ae90a5b264b5c51a9af8d55fbe434",
+    "backend/app/prompts.py": "fdea2e2b1e390c9581937d93a65d7dd0caedd21b38a0319e09ed0b6895be5add",
+    "backend/app/validation.py": "b90163f714228fe87f38597aff73ba1695314088f9a0e431260e597a2d70e5ca",
+    "backend/pyproject.toml": "7236c67880546840839b4696310da62dc457714a262e67f76a482c06031e5bc7",
+    "backend/requirements.lock": "f45b1cd576853438364c4bfe544a35bec0151d356bf139d161b978085a32ac8c"
+  },
+  "purpose": "Fixed released backend for all noise-reduction acoustic conditions; unchanged default settings"
+}

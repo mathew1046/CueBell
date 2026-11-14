@@ -1,0 +1,24 @@
+{
+  "git_head": "6e1f32cc11b6a019c9a143d169af4043a6178c4d",
+  "git_branch": "feat/on-device-denoising",
+  "scope": "Working-tree source used for this study; original v4 APK build metadata retained separately",
+  "source_sha256": {
+    "backend/benchmarks/denoising/field_recordings.py": "a69da909472e8f2e2a89968224e1fa3e57180223aac35cbc0f097fc34575711d",
+    "backend/benchmarks/denoising/observe_recorded.py": "7094ad670f984f3a6e6ea8c1c4407d834f9a4edee1520bca0185547f8f9dd757",
+    "backend/benchmarks/denoising/transcribe.py": "17dcbd7ca8a2bf05a8d2d17f1171317e4ec2fffdf9c41ec7356c4a5bf4c220cc",
+    "backend/benchmarks/denoising/export_recorded.py": "305819a160874262c22f6e2b6c9a43ebe2559165d769b8d40853593f55085fa2",
+    "backend/benchmarks/denoising/quality.py": "12c94bdc2944adf9cea8dc095dcdc536fdabfd84d3d1d500ce4144a19c4f4451",
+    "backend/benchmarks/denoising/device.py": "671194a9b20c64b17e08faa6935f161233ae644b53362a17ca0ec716619d7e77",
+    "backend/app/intelligence.py": "4d0220a214e277e759e537959bde4902ed6b8be7113fb75e335d95751229923b",
+    "backend/app/prompts.py": "fdea2e2b1e390c9581937d93a65d7dd0caedd21b38a0319e09ed0b6895be5add",
+    "backend/app/config.py": "5d91901cfcd1bd13cff89d729fb2e1b9a9eab3c71af6d9bce937c3b29b457260",
+    "backend/app/models.py": "27fd068e955a68f5fe794c6eeaed0c1fc36ae90a5b264b5c51a9af8d55fbe434",
+    "backend/app/validation.py": "b90163f714228fe87f38597aff73ba1695314088f9a0e431260e597a2d70e5ca",
+    "backend/app/gnani.py": "879bc42230eeee5385d9cc1ae9eb0d65163d3ab48fc76ef9e2d6e7bfc5fe1bdd",
+    "mobile/modules/queue-listener/android/src/main/java/expo/modules/queuelistener/StreamingNoiseReducer.kt": "53505f98b446ca16be71f5ce995f76b3c07ef9e14973f130ca462491b32754c3",
+    "mobile/modules/queue-listener/android/src/main/java/expo/modules/queuelistener/GtcrnNoiseReducer.kt": "82fa78604ff727710cf25d0fad0a761dfb27924f2e1e26123ddd438017ef419d",
+    "mobile/modules/queue-listener/android/src/androidTest/java/expo/modules/queuelistener/DenoisingBenchmarkInstrumentation.kt": "fce00b2bba90f1a7de529b2a3b60f7fb09db14cfdfef6e84eb41b65b36c9ed2b"
+  },
+  "device_results_sha256": "4d86f8af59ef79651ed43b100373cf58abb7992486df0ceae70c3c0bc6723f3d",
+  "device_manifest_sha256": "19c059a7568ff30403e5a0174432d14d9f61edb57f96e81876fd59fe0231560a"
+}

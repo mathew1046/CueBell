@@ -3,6 +3,56 @@
 This is an evidence record, not an accuracy benchmark or a reliability guarantee.
 Results are grouped by preview version; historical checks are labelled separately.
 
+## 1.4.0-preview — 2026-11-14
+
+### Automated checks
+
+| Check | Result and scope |
+| --- | --- |
+| Backend | 487 tests passed; one optional numerical-module test module skipped in the backend environment. Ruff lint and app/test formatting passed. |
+| Mobile | 49 tests passed with version 1.4.0 / code 7, including the newly tracked source and evidence. TypeScript, lint and build-time service-origin validation passed. |
+| Native Android | 33 JUnit tests passed with zero failures, errors or skips. The ARM64 release build succeeded with the pinned FFT runtime. |
+| DNSMOS tooling | Its 25 numerical tests passed separately in the pinned scoring environment during the recorded-noise evaluation. |
+
+Source whitespace checks passed. Downloaded source pages/transcripts, raw device
+logs and the checksum-pinned upstream patch retain their original whitespace.
+The 500 staged text files were checked for configured private backend values;
+no matches were found. These are targeted checks, not a comprehensive audit.
+
+### Noise-reduction evidence
+
+- All 16 selected DNS5 recorded-noise clips and all five genuine station-PA
+  recordings completed phone replay with the bounded-debt FFT implementation.
+- The station recordings retained their original noise and complete duration.
+  All 5,883 processing frames were enhanced, with no fallback; the 16 ms causal
+  delay was retained. These are replay results, not live-microphone or long-session
+  reliability measurements.
+- Estimated background quality improved, but actual Gnani and GPT-6 Luna checks
+  found reproducible recognition regressions. The feature is released for
+  hands-on comparison, off by default.
+
+Recorded observations and before/after provenance:
+https://github.com/mathew1046/CueBell/blob/v1.4.0-preview/docs/STATION_PA_DENOISING_2026-11-14.md
+https://github.com/mathew1046/CueBell/blob/v1.4.0-preview/docs/REAL_NOISE_DENOISING_2026-11-14.md
+
+### Release artifact
+
+- Package `app.cuebell.mobile`, version 1.4.0, Android version code 7, ARM64 only.
+- APK signature and 16 KB ZIP alignment passed. The development signing
+  certificate matches 1.3.1 for in-place updates; the APK is non-debuggable.
+- Verified the compiled service origin, microphone foreground service, cleartext
+  rejection, and unchanged alarm bytes. No configured private backend values or
+  environment/keystore files were found in the APK.
+- Packaged FFT JNI SHA256:
+  `59964bf7d9cf9520231d6cce3f6728b05f3c0ecac765bd9182bd9fc9d0539c65`.
+- Packaged GTCRN model SHA256:
+  `e77603ac0c23dac3227dd2d7135b3a585cbee2679048aecfa886657d3ae1b534`.
+- APK size: 25,167,101 bytes. SHA256:
+  `99c6700e865951a20f250bea49fb8e3b5a072814c336d8b3e7563bb2f6c192e9`.
+
+Release artifact and checksum:
+https://github.com/mathew1046/CueBell/releases/tag/v1.4.0-preview
+
 ## 1.3.1-preview — 2026-11-14
 
 ### Automated checks

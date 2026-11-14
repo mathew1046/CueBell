@@ -1,3 +1,5 @@
+import type { NoiseReductionMode } from '../../modules/queue-listener';
+
 export type Preference = 'visual' | 'vibration' | 'sound';
 export type MonitoringTask = {
   subject: string; condition: string; summary: string;
@@ -27,6 +29,10 @@ export type QueueEvent = {
     evidence_text: string; ambiguity_reason: string | null };
 };
 export type Connection = { url: string; token: string; expires: number; suppressMonitor?: boolean };
+export type NativeNoiseReduction = {
+  requestedMode: NoiseReductionMode; activeMode: NoiseReductionMode; fallbackReason: string | null;
+};
 export type NativeSnapshot = {
   running: boolean; state: string; message: string; mode: string; events: QueueEvent[];
+  noiseReductionMode?: NoiseReductionMode; noiseReduction?: NativeNoiseReduction;
 };

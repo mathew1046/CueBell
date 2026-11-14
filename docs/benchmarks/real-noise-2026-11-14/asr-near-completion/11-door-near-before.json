@@ -1,0 +1,71 @@
+{
+  "id": "11-door-near",
+  "arm": "before",
+  "reference": "How come you are riding the roads kids like you? She must have put his clothes in the closest. The cloud was",
+  "input_sha256": "47ee7a64e27fb59151b6b6434128c884420a3ca3519eb95c8b2b5600583ad5e6",
+  "source_audio_seconds": 10.0,
+  "status": "completed",
+  "scoring_version": "unicode-marks-v2",
+  "sent_frames": 376,
+  "schedule_rebases": 0,
+  "maximum_send_lateness_ms": 1.1767569999392435,
+  "unfinished_utterance_ids": [],
+  "connection_seconds": 23.06964068799971,
+  "attempt_seconds": 24.45328947200005,
+  "transcript": "How come you are riding the rods, kids like you? She must have put his clothes in the closet. The cloud was ah.",
+  "events": [
+    {
+      "elapsed_s": 0.03916438399983235,
+      "message": {
+        "type": "connected",
+        "message": "STT service ready — VAD service connected",
+        "request_id": "01a1d89e-bdd9-720a-ae81-1b2b0c22343b",
+        "config": {
+          "sample_rate": 16000,
+          "chunk_size": 512,
+          "partials_enabled": false,
+          "partial_interval_ms": 450,
+          "partial_max_window_s": 15.0,
+          "language_code": "indic-auto",
+          "format": "verbatim"
+        },
+        "timestamp": "2026-11-14T05:54:04.445068+00:00"
+      }
+    },
+    {
+      "elapsed_s": 2.045730017999631,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "u9b73a3f1",
+        "t_ms": 1684,
+        "timestamp": "2026-11-14T05:54:06.449572+00:00"
+      }
+    },
+    {
+      "elapsed_s": 10.803382251999665,
+      "message": {
+        "type": "transcript",
+        "text": "How come you are riding the rods, kids like you? She must have put his clothes in the closet. The cloud was ah.",
+        "audio_duration_ms": 9172.0,
+        "segment_id": "01a1d89e-bdd9-720a-ae81-1b2b0c22343b-seg-1",
+        "segment_index": 1,
+        "utterance_id": "u9b73a3f1",
+        "is_final": true,
+        "latency": 227,
+        "prefetched": false,
+        "timestamp": "2026-11-14T05:54:15.209020+00:00",
+        "detected_language_code": "en-IN"
+      }
+    }
+  ],
+  "reference_score_eligible": true,
+  "score": {
+    "reference_words": 22,
+    "hypothesis_words": 23,
+    "errors": 3,
+    "substitutions": 2,
+    "insertions": 1,
+    "deletions": 0,
+    "wer": 0.13636363636363635
+  }
+}

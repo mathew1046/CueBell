@@ -1,0 +1,70 @@
+{
+  "id": "01-breathing-far",
+  "arm": "after",
+  "reference": "The failure to keep these two usages distinct presents hazards to the reader. The blue rug was suspiciously",
+  "input_sha256": "64a246fd379de08ead69b1f0d7378d43e73e49ec69f960d937b3c74bc7a74fd6",
+  "source_audio_seconds": 10.0,
+  "status": "completed",
+  "sent_frames": 376,
+  "schedule_rebases": 0,
+  "maximum_send_lateness_ms": 2.520595000078174,
+  "unfinished_utterance_ids": [],
+  "connection_seconds": 23.163240089999817,
+  "attempt_seconds": 23.758303092999995,
+  "transcript": "The failure to possess or use a distinct presence hazards to the reader.",
+  "events": [
+    {
+      "elapsed_s": 0.044973233999826334,
+      "message": {
+        "type": "connected",
+        "message": "STT service ready — VAD service connected",
+        "request_id": "01a1d88e-ce37-7d6f-b5e7-351e7225b01e",
+        "config": {
+          "sample_rate": 16000,
+          "chunk_size": 512,
+          "partials_enabled": false,
+          "partial_interval_ms": 450,
+          "partial_max_window_s": 15.0,
+          "language_code": "indic-auto",
+          "format": "verbatim"
+        },
+        "timestamp": "2026-11-14T05:36:40.076234+00:00"
+      }
+    },
+    {
+      "elapsed_s": 0.3197819110000637,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "u595f6e3c",
+        "t_ms": 0,
+        "timestamp": "2026-11-14T05:36:40.350615+00:00"
+      }
+    },
+    {
+      "elapsed_s": 10.870426169999973,
+      "message": {
+        "type": "transcript",
+        "text": "The failure to possess or use a distinct presence hazards to the reader.",
+        "audio_duration_ms": 10528.0,
+        "segment_id": "01a1d88e-ce37-7d6f-b5e7-351e7225b01e-seg-1",
+        "segment_index": 1,
+        "utterance_id": "u595f6e3c",
+        "is_final": true,
+        "latency": 195,
+        "prefetched": false,
+        "timestamp": "2026-11-14T05:36:50.901111+00:00",
+        "detected_language_code": "en-IN"
+      }
+    }
+  ],
+  "reference_score_eligible": true,
+  "score": {
+    "reference_words": 18,
+    "hypothesis_words": 13,
+    "errors": 10,
+    "substitutions": 5,
+    "insertions": 0,
+    "deletions": 5,
+    "wer": 0.5555555555555556
+  }
+}

@@ -1,0 +1,475 @@
+{
+  "scoring_version": "unicode-marks-v2",
+  "provider_evidence_unchanged": true,
+  "cohorts": [
+    {
+      "cohort": "near",
+      "paired_recordings": 5,
+      "aggregates": {
+        "before": {
+          "errors": 13,
+          "reference_words": 94,
+          "micro_wer": 0.13829787234042554
+        },
+        "after": {
+          "errors": 21,
+          "reference_words": 94,
+          "micro_wer": 0.22340425531914893
+        }
+      },
+      "pairs": {
+        "09-creaky-near": {
+          "after": {
+            "id": "09-creaky-near",
+            "arm": "after",
+            "reference": "Nine of them had gone down the gangplank already. The carpet cleaners shampooed our oriental rug. You saw them always together those.",
+            "input_sha256": "b47f72b3fb0a459bafd4947bcb1ace944f179c431097c7ceea7b73d894e86c7d",
+            "source_audio_seconds": 10.0,
+            "status": "completed",
+            "sent_frames": 376,
+            "schedule_rebases": 0,
+            "maximum_send_lateness_ms": 1.998321999963082,
+            "unfinished_utterance_ids": [],
+            "connection_seconds": 23.066960422000193,
+            "attempt_seconds": 23.590718767999988,
+            "transcript": "Nine of them had gone down the gangplank already. The carpet cleaner shampooed our oriental rug. You saw them always together those.",
+            "reference_score_eligible": true,
+            "score": {
+              "reference_words": 22,
+              "hypothesis_words": 22,
+              "errors": 1,
+              "substitutions": 1,
+              "insertions": 0,
+              "deletions": 0,
+              "wer": 0.045454545454545456
+            },
+            "raw_evidence_sha256": "817f9208c5cee7963e416da1ce74f042e175d317577b225e69cca8705e767e64",
+            "detected_languages": [
+              "en-IN"
+            ]
+          },
+          "before": {
+            "id": "09-creaky-near",
+            "arm": "before",
+            "reference": "Nine of them had gone down the gangplank already. The carpet cleaners shampooed our oriental rug. You saw them always together those.",
+            "input_sha256": "72c3bec4413c3a5a8eb19fb84ba357f5226c86a0fd32d0d238e3bd20ca63338f",
+            "source_audio_seconds": 10.0,
+            "status": "completed",
+            "sent_frames": 376,
+            "schedule_rebases": 0,
+            "maximum_send_lateness_ms": 1.4054170001145394,
+            "unfinished_utterance_ids": [],
+            "connection_seconds": 23.063222820999727,
+            "attempt_seconds": 23.511771656000292,
+            "transcript": "Nine of them had gone down the gangplank already; the carpet cleaner shampooed our oriental rug. You saw them always together those.",
+            "reference_score_eligible": true,
+            "score": {
+              "reference_words": 22,
+              "hypothesis_words": 22,
+              "errors": 1,
+              "substitutions": 1,
+              "insertions": 0,
+              "deletions": 0,
+              "wer": 0.045454545454545456
+            },
+            "raw_evidence_sha256": "c07e51249590b38d8ad6a945e4cb33195d94e71100d17fd845f0759411a57e7a",
+            "detected_languages": [
+              "en-IN"
+            ]
+          }
+        },
+        "07-mouseclicks-near": {
+          "before": {
+            "id": "07-mouseclicks-near",
+            "arm": "before",
+            "reference": "It's hard to tell an original from a forgery. His prescription: hot and cold compresses to increase her.",
+            "input_sha256": "6a143951de2956786d47d75c516a1f896e3958689b773060453c821edd9f5f5b",
+            "source_audio_seconds": 10.0,
+            "status": "completed",
+            "sent_frames": 376,
+            "schedule_rebases": 0,
+            "maximum_send_lateness_ms": 1.4219049999155686,
+            "unfinished_utterance_ids": [],
+            "connection_seconds": 23.061029970999698,
+            "attempt_seconds": 23.34411942099996,
+            "transcript": "It's hard to tell an original from forgery. His prescription: hot and cold compresses to increase her warmth.",
+            "reference_score_eligible": true,
+            "score": {
+              "reference_words": 18,
+              "hypothesis_words": 18,
+              "errors": 2,
+              "substitutions": 0,
+              "insertions": 1,
+              "deletions": 1,
+              "wer": 0.1111111111111111
+            },
+            "raw_evidence_sha256": "cfadd2635f26f9726f33852ccd7d699feb2eebccaa816cf56be53eb8e80fb5f7",
+            "detected_languages": [
+              "en-IN",
+              "en-IN"
+            ]
+          },
+          "after": {
+            "id": "07-mouseclicks-near",
+            "arm": "after",
+            "reference": "It's hard to tell an original from a forgery. His prescription: hot and cold compresses to increase her.",
+            "input_sha256": "e682cf4e0337a3df660a905397f7dc8cbd6a6ae24c018ddd6b0b3ffe50151637",
+            "source_audio_seconds": 10.0,
+            "status": "completed",
+            "sent_frames": 376,
+            "schedule_rebases": 0,
+            "maximum_send_lateness_ms": 1.5475270001843455,
+            "unfinished_utterance_ids": [],
+            "connection_seconds": 23.064288428000054,
+            "attempt_seconds": 23.325328401000206,
+            "transcript": "It's hard to tell an original from forgery. His prescription: hot and cold compresses to increase her warmth.",
+            "reference_score_eligible": true,
+            "score": {
+              "reference_words": 18,
+              "hypothesis_words": 18,
+              "errors": 2,
+              "substitutions": 0,
+              "insertions": 1,
+              "deletions": 1,
+              "wer": 0.1111111111111111
+            },
+            "raw_evidence_sha256": "ed8f84e3e9dd6cd3b82366279909f4488ef293cad3c4241f4f3616ca63976225",
+            "detected_languages": [
+              "en-IN",
+              "en-IN"
+            ]
+          }
+        },
+        "04-aircon-near": {
+          "after": {
+            "id": "04-aircon-near",
+            "arm": "after",
+            "reference": "Naturally, curly hair runs in my family. More often these officers are restricted.",
+            "input_sha256": "8cf66900fc534a4f2dc5fdafc2cd76315a4c53bf3ba17fe56e777b83594d9e17",
+            "source_audio_seconds": 10.0,
+            "status": "completed",
+            "sent_frames": 376,
+            "schedule_rebases": 0,
+            "maximum_send_lateness_ms": 2.114421999976912,
+            "unfinished_utterance_ids": [],
+            "connection_seconds": 23.054467419000048,
+            "attempt_seconds": 24.386850564999804,
+            "transcript": "நேச்சுரலி கர்லி ஹேர்ஸ் ரன்ஸ் இன் மை ஃபேமிலி, மோர் ஆஃப்டன் திஸ் ஆஃபீஸர்ஸ் ஆர். Restricted.",
+            "reference_score_eligible": true,
+            "score": {
+              "reference_words": 13,
+              "hypothesis_words": 13,
+              "errors": 12,
+              "substitutions": 12,
+              "insertions": 0,
+              "deletions": 0,
+              "wer": 0.9230769230769231
+            },
+            "raw_evidence_sha256": "d203dc8df70cf3d81efadd083b3822259bb15623946fc8b12b1666735d6f00d8",
+            "detected_languages": [
+              "ta-IN"
+            ]
+          },
+          "before": {
+            "id": "04-aircon-near",
+            "arm": "before",
+            "reference": "Naturally, curly hair runs in my family. More often these officers are restricted.",
+            "input_sha256": "9f29eb0640b80dde1c51148ca4705400862dc65dc2fa0561feb1ee3e9dd7d6e9",
+            "source_audio_seconds": 10.0,
+            "status": "completed",
+            "sent_frames": 376,
+            "schedule_rebases": 0,
+            "maximum_send_lateness_ms": 1.4740060000804078,
+            "unfinished_utterance_ids": [],
+            "connection_seconds": 23.0609537790001,
+            "attempt_seconds": 24.495734878999883,
+            "transcript": "Naturally curly hair runs in my family; more often these offices are. Restricted to.",
+            "reference_score_eligible": true,
+            "score": {
+              "reference_words": 13,
+              "hypothesis_words": 14,
+              "errors": 2,
+              "substitutions": 1,
+              "insertions": 1,
+              "deletions": 0,
+              "wer": 0.15384615384615385
+            },
+            "raw_evidence_sha256": "98abacbfc8937a7e9682b308037443eab0aac41ced7d705573382659b8eae940",
+            "detected_languages": [
+              "en-IN"
+            ]
+          }
+        },
+        "02-typing-near": {
+          "before": {
+            "id": "02-typing-near",
+            "arm": "before",
+            "reference": "The diagnosis was discouraging, however, he was not overly worried. The shadow vanished. In either case, they do not.",
+            "input_sha256": "1925794cbb77d44fb935b02de3648450439ecdad87e848d1085236cca7375084",
+            "source_audio_seconds": 10.0,
+            "status": "completed",
+            "sent_frames": 376,
+            "schedule_rebases": 0,
+            "maximum_send_lateness_ms": 2.2836390003249107,
+            "unfinished_utterance_ids": [],
+            "connection_seconds": 23.079583598000227,
+            "attempt_seconds": 23.473593918999995,
+            "transcript": "The diagnosis was discouraging; however, he was not overly worried. The shadow vanished. In either case, they do not affect.",
+            "reference_score_eligible": true,
+            "score": {
+              "reference_words": 19,
+              "hypothesis_words": 20,
+              "errors": 1,
+              "substitutions": 0,
+              "insertions": 1,
+              "deletions": 0,
+              "wer": 0.05263157894736842
+            },
+            "raw_evidence_sha256": "c1d0b2cc328d176c135c23abd18e063bea9e247bb91335a877d826aae20f7573",
+            "detected_languages": [
+              "en-IN"
+            ]
+          },
+          "after": {
+            "id": "02-typing-near",
+            "arm": "after",
+            "reference": "The diagnosis was discouraging, however, he was not overly worried. The shadow vanished. In either case, they do not.",
+            "input_sha256": "3e3d0670f7790d781945b4a296165223fea9320ee4856ee731a13c22f6725816",
+            "source_audio_seconds": 10.0,
+            "status": "completed",
+            "sent_frames": 376,
+            "schedule_rebases": 0,
+            "maximum_send_lateness_ms": 1.6823139999360137,
+            "unfinished_utterance_ids": [],
+            "connection_seconds": 23.067882402000123,
+            "attempt_seconds": 23.381512941999972,
+            "transcript": "The diagnosis was discouraging; however, he was not overly worried. The shadow vanished. In either case, they do not affect.",
+            "reference_score_eligible": true,
+            "score": {
+              "reference_words": 19,
+              "hypothesis_words": 20,
+              "errors": 1,
+              "substitutions": 0,
+              "insertions": 1,
+              "deletions": 0,
+              "wer": 0.05263157894736842
+            },
+            "raw_evidence_sha256": "918e24237add1327b40ae5ebeb12e2609cd6c6ad247624f7fca917c2f2039b03",
+            "detected_languages": [
+              "en-IN"
+            ]
+          }
+        },
+        "01-baby-near": {
+          "after": {
+            "id": "01-baby-near",
+            "arm": "after",
+            "reference": "He recognized his jacket and trousers. Yes, ma'am, it sure was. A portable electric heater is advisable for shelters in cold climates.",
+            "input_sha256": "fe2ae488ce866b7d5466b927fd11361df2b295c64445094ef9f4a81af96e903d",
+            "source_audio_seconds": 10.0,
+            "status": "completed",
+            "sent_frames": 376,
+            "schedule_rebases": 0,
+            "maximum_send_lateness_ms": 1.5696180003033078,
+            "unfinished_utterance_ids": [],
+            "connection_seconds": 23.079197942000064,
+            "attempt_seconds": 23.39802949800014,
+            "transcript": "He recognized his jacket and trousers. Yes maam, it was, it's your was a portable electric heater is advisable for shelters in cold climate.",
+            "reference_score_eligible": true,
+            "score": {
+              "reference_words": 22,
+              "hypothesis_words": 24,
+              "errors": 5,
+              "substitutions": 3,
+              "insertions": 2,
+              "deletions": 0,
+              "wer": 0.22727272727272727
+            },
+            "raw_evidence_sha256": "725343c1a3b9771d16007a77b352a083bc3bdd7a28f43f0cbd2ae17df28c67cc",
+            "detected_languages": [
+              "en-IN"
+            ]
+          },
+          "before": {
+            "id": "01-baby-near",
+            "arm": "before",
+            "reference": "He recognized his jacket and trousers. Yes, ma'am, it sure was. A portable electric heater is advisable for shelters in cold climates.",
+            "input_sha256": "78dc8521b70cb0c52b9b6a30d5a7957ed3a2ac4c978878abbfddfb1dea96234b",
+            "source_audio_seconds": 10.0,
+            "status": "completed",
+            "sent_frames": 376,
+            "schedule_rebases": 0,
+            "maximum_send_lateness_ms": 2.240398000139976,
+            "unfinished_utterance_ids": [],
+            "connection_seconds": 23.069097564000003,
+            "attempt_seconds": 23.370177844999944,
+            "transcript": "He recognized his jacket and trousers. Yes maam, it was, it's your was. A portable electric heater is advisable for shelters. കോൾഡ് ക്ലൈമറ്റ്.",
+            "reference_score_eligible": true,
+            "score": {
+              "reference_words": 22,
+              "hypothesis_words": 23,
+              "errors": 7,
+              "substitutions": 4,
+              "insertions": 2,
+              "deletions": 1,
+              "wer": 0.3181818181818182
+            },
+            "raw_evidence_sha256": "fff2ef7d96291abde140bbd644528d5a11155612d3a6e2d1a5c363577b1e1a65",
+            "detected_languages": [
+              "en-IN"
+            ]
+          }
+        }
+      },
+      "connection_seconds": 230.66668434600024
+    },
+    {
+      "cohort": "far",
+      "paired_recordings": 2,
+      "aggregates": {
+        "before": {
+          "errors": 13,
+          "reference_words": 33,
+          "micro_wer": 0.3939393939393939
+        },
+        "after": {
+          "errors": 19,
+          "reference_words": 33,
+          "micro_wer": 0.5757575757575758
+        }
+      },
+      "pairs": {
+        "03-typing-far": {
+          "after": {
+            "id": "03-typing-far",
+            "arm": "after",
+            "reference": "Stay right here where you are, kid, he called. Are you a thrower of flame",
+            "input_sha256": "1a309c9e81f086c498f7a0967d07b8a32ef372d38ef0f44e0b64725a91872bbd",
+            "source_audio_seconds": 10.0,
+            "status": "completed",
+            "sent_frames": 376,
+            "schedule_rebases": 0,
+            "maximum_send_lateness_ms": 3.0100470003162627,
+            "unfinished_utterance_ids": [],
+            "connection_seconds": 23.178546573000403,
+            "attempt_seconds": 23.47761187499964,
+            "transcript": "Let's say right here. রিয়ার। યુઅર। कीट ही कोड। Are you a thrower of flying?",
+            "reference_score_eligible": true,
+            "score": {
+              "reference_words": 15,
+              "hypothesis_words": 15,
+              "errors": 9,
+              "substitutions": 7,
+              "insertions": 1,
+              "deletions": 1,
+              "wer": 0.6
+            },
+            "raw_evidence_sha256": "4692dec12964a4d3426ebb00c840f5b24ed6b8e43a3231486c3ec2e08b2ef8a1",
+            "detected_languages": [
+              "en-IN",
+              "bn-IN",
+              "gu-IN",
+              "hi-IN",
+              "en-IN"
+            ]
+          },
+          "before": {
+            "id": "03-typing-far",
+            "arm": "before",
+            "reference": "Stay right here where you are, kid, he called. Are you a thrower of flame",
+            "input_sha256": "078bd7f9b4c613decb812c8d6a07dfbe575a2463594460ba532b6c0095b5522e",
+            "source_audio_seconds": 10.0,
+            "status": "completed",
+            "sent_frames": 376,
+            "schedule_rebases": 0,
+            "maximum_send_lateness_ms": 2.1410550002656237,
+            "unfinished_utterance_ids": [],
+            "connection_seconds": 23.177584621999813,
+            "attempt_seconds": 23.47319408300018,
+            "transcript": "Stay right here. রিয়ার। યુઆર. Kid he called. Are you a thrower of flame?",
+            "reference_score_eligible": true,
+            "score": {
+              "reference_words": 15,
+              "hypothesis_words": 14,
+              "errors": 3,
+              "substitutions": 2,
+              "insertions": 0,
+              "deletions": 1,
+              "wer": 0.2
+            },
+            "raw_evidence_sha256": "d14529377ed659913cb35974f8db24041fccd1158e464ba481f9fda30308f53a",
+            "detected_languages": [
+              "en-IN",
+              "bn-IN",
+              "gu-IN",
+              "en-IN",
+              "en-IN"
+            ]
+          }
+        },
+        "01-breathing-far": {
+          "before": {
+            "id": "01-breathing-far",
+            "arm": "before",
+            "reference": "The failure to keep these two usages distinct presents hazards to the reader. The blue rug was suspiciously",
+            "input_sha256": "994b30be2d14790d5c1004748f7be824347f69bde96ef31ece53471d40998393",
+            "source_audio_seconds": 10.0,
+            "status": "completed",
+            "sent_frames": 376,
+            "schedule_rebases": 0,
+            "maximum_send_lateness_ms": 1.440381999600504,
+            "unfinished_utterance_ids": [],
+            "connection_seconds": 23.175516851999873,
+            "attempt_seconds": 23.761971468999946,
+            "transcript": "The failure to keep this to use a distinct presence hazards to the reader.",
+            "reference_score_eligible": true,
+            "score": {
+              "reference_words": 18,
+              "hypothesis_words": 14,
+              "errors": 10,
+              "substitutions": 4,
+              "insertions": 1,
+              "deletions": 5,
+              "wer": 0.5555555555555556
+            },
+            "raw_evidence_sha256": "96f37725951b22fc8f574a2952b5778e5c9c61271cf91fa86111da9a8bf97503",
+            "detected_languages": [
+              "en-IN"
+            ]
+          },
+          "after": {
+            "id": "01-breathing-far",
+            "arm": "after",
+            "reference": "The failure to keep these two usages distinct presents hazards to the reader. The blue rug was suspiciously",
+            "input_sha256": "64a246fd379de08ead69b1f0d7378d43e73e49ec69f960d937b3c74bc7a74fd6",
+            "source_audio_seconds": 10.0,
+            "status": "completed",
+            "sent_frames": 376,
+            "schedule_rebases": 0,
+            "maximum_send_lateness_ms": 2.520595000078174,
+            "unfinished_utterance_ids": [],
+            "connection_seconds": 23.163240089999817,
+            "attempt_seconds": 23.758303092999995,
+            "transcript": "The failure to possess or use a distinct presence hazards to the reader.",
+            "reference_score_eligible": true,
+            "score": {
+              "reference_words": 18,
+              "hypothesis_words": 13,
+              "errors": 10,
+              "substitutions": 5,
+              "insertions": 0,
+              "deletions": 5,
+              "wer": 0.5555555555555556
+            },
+            "raw_evidence_sha256": "4b34bc9444ca95051481e406e4e725f6f46797237e09336559fb7c283f1d72e8",
+            "detected_languages": [
+              "en-IN"
+            ]
+          }
+        }
+      },
+      "connection_seconds": 92.69488813699991
+    }
+  ],
+  "new_gnani_connection_seconds": 323.36157248300015
+}

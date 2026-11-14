@@ -1,0 +1,112 @@
+{
+  "schema": 1,
+  "model": "prisma-v3.0",
+  "language": "indic-auto",
+  "reference_hints_sent": false,
+  "new_luna_calls": 0,
+  "concurrency": 2,
+  "normalization": "Unicode NFKC, lowercase, punctuation removed; apostrophes retained; no numeric/spelling rewriting",
+  "connection_seconds": 92.69488813699991,
+  "results": [
+    {
+      "id": "03-typing-far",
+      "arm": "after",
+      "reference": "Stay right here where you are, kid, he called. Are you a thrower of flame",
+      "input_sha256": "1a309c9e81f086c498f7a0967d07b8a32ef372d38ef0f44e0b64725a91872bbd",
+      "source_audio_seconds": 10.0,
+      "status": "completed",
+      "sent_frames": 376,
+      "schedule_rebases": 0,
+      "maximum_send_lateness_ms": 3.0100470003162627,
+      "unfinished_utterance_ids": [],
+      "connection_seconds": 23.178546573000403,
+      "attempt_seconds": 23.47761187499964,
+      "transcript": "Let's say right here. রিয়ার। યુઅર। कीट ही कोड। Are you a thrower of flying?",
+      "reference_score_eligible": true,
+      "score": {
+        "reference_words": 15,
+        "hypothesis_words": 20,
+        "errors": 13,
+        "substitutions": 8,
+        "insertions": 5,
+        "deletions": 0,
+        "wer": 0.8666666666666667
+      }
+    },
+    {
+      "id": "03-typing-far",
+      "arm": "before",
+      "reference": "Stay right here where you are, kid, he called. Are you a thrower of flame",
+      "input_sha256": "078bd7f9b4c613decb812c8d6a07dfbe575a2463594460ba532b6c0095b5522e",
+      "source_audio_seconds": 10.0,
+      "status": "completed",
+      "sent_frames": 376,
+      "schedule_rebases": 0,
+      "maximum_send_lateness_ms": 2.1410550002656237,
+      "unfinished_utterance_ids": [],
+      "connection_seconds": 23.177584621999813,
+      "attempt_seconds": 23.47319408300018,
+      "transcript": "Stay right here. রিয়ার। યુઆર. Kid he called. Are you a thrower of flame?",
+      "reference_score_eligible": true,
+      "score": {
+        "reference_words": 15,
+        "hypothesis_words": 17,
+        "errors": 5,
+        "substitutions": 3,
+        "insertions": 2,
+        "deletions": 0,
+        "wer": 0.3333333333333333
+      }
+    },
+    {
+      "id": "01-breathing-far",
+      "arm": "before",
+      "reference": "The failure to keep these two usages distinct presents hazards to the reader. The blue rug was suspiciously",
+      "input_sha256": "994b30be2d14790d5c1004748f7be824347f69bde96ef31ece53471d40998393",
+      "source_audio_seconds": 10.0,
+      "status": "completed",
+      "sent_frames": 376,
+      "schedule_rebases": 0,
+      "maximum_send_lateness_ms": 1.440381999600504,
+      "unfinished_utterance_ids": [],
+      "connection_seconds": 23.175516851999873,
+      "attempt_seconds": 23.761971468999946,
+      "transcript": "The failure to keep this to use a distinct presence hazards to the reader.",
+      "reference_score_eligible": true,
+      "score": {
+        "reference_words": 18,
+        "hypothesis_words": 14,
+        "errors": 10,
+        "substitutions": 4,
+        "insertions": 1,
+        "deletions": 5,
+        "wer": 0.5555555555555556
+      }
+    },
+    {
+      "id": "01-breathing-far",
+      "arm": "after",
+      "reference": "The failure to keep these two usages distinct presents hazards to the reader. The blue rug was suspiciously",
+      "input_sha256": "64a246fd379de08ead69b1f0d7378d43e73e49ec69f960d937b3c74bc7a74fd6",
+      "source_audio_seconds": 10.0,
+      "status": "completed",
+      "sent_frames": 376,
+      "schedule_rebases": 0,
+      "maximum_send_lateness_ms": 2.520595000078174,
+      "unfinished_utterance_ids": [],
+      "connection_seconds": 23.163240089999817,
+      "attempt_seconds": 23.758303092999995,
+      "transcript": "The failure to possess or use a distinct presence hazards to the reader.",
+      "reference_score_eligible": true,
+      "score": {
+        "reference_words": 18,
+        "hypothesis_words": 13,
+        "errors": 10,
+        "substitutions": 5,
+        "insertions": 0,
+        "deletions": 5,
+        "wer": 0.5555555555555556
+      }
+    }
+  ]
+}

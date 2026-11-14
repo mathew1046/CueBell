@@ -1,0 +1,228 @@
+{
+  "cohorts": [
+    {
+      "cohort": "near",
+      "records": 12,
+      "previous_pairs_identical": [
+        "01-baby-near",
+        "02-typing-near",
+        "03-water-near",
+        "04-aircon-near",
+        "06-breathing-near",
+        "07-mouseclicks-near",
+        "09-creaky-near",
+        "12-cutlery-near"
+      ],
+      "recording_eligibility": [
+        {
+          "id": "01-baby-near",
+          "eligible": true,
+          "already_tested": true
+        },
+        {
+          "id": "02-typing-near",
+          "eligible": true,
+          "already_tested": true
+        },
+        {
+          "id": "03-water-near",
+          "eligible": false,
+          "already_tested": false
+        },
+        {
+          "id": "04-aircon-near",
+          "eligible": true,
+          "already_tested": true
+        },
+        {
+          "id": "05-dog-near",
+          "eligible": true,
+          "already_tested": false
+        },
+        {
+          "id": "06-breathing-near",
+          "eligible": false,
+          "already_tested": false
+        },
+        {
+          "id": "07-mouseclicks-near",
+          "eligible": true,
+          "already_tested": true
+        },
+        {
+          "id": "08-clatter-near",
+          "eligible": true,
+          "already_tested": false
+        },
+        {
+          "id": "09-creaky-near",
+          "eligible": true,
+          "already_tested": true
+        },
+        {
+          "id": "10-dishwasher-near",
+          "eligible": true,
+          "already_tested": false
+        },
+        {
+          "id": "11-door-near",
+          "eligible": true,
+          "already_tested": false
+        },
+        {
+          "id": "12-cutlery-near",
+          "eligible": false,
+          "already_tested": false
+        }
+      ],
+      "stages": [
+        {
+          "id": "01-baby-near",
+          "fallback": null,
+          "max_ms": 5.533846,
+          "max_debt_ms": 0.0,
+          "overload_count": 0
+        },
+        {
+          "id": "02-typing-near",
+          "fallback": null,
+          "max_ms": 5.715692,
+          "max_debt_ms": 0.0,
+          "overload_count": 0
+        },
+        {
+          "id": "03-water-near",
+          "fallback": null,
+          "max_ms": 13.447308,
+          "max_debt_ms": 0.0,
+          "overload_count": 0
+        },
+        {
+          "id": "04-aircon-near",
+          "fallback": null,
+          "max_ms": 16.718077,
+          "max_debt_ms": 0.0,
+          "overload_count": 0
+        },
+        {
+          "id": "05-dog-near",
+          "fallback": null,
+          "max_ms": 8.113615,
+          "max_debt_ms": 0.0,
+          "overload_count": 0
+        },
+        {
+          "id": "06-breathing-near",
+          "fallback": null,
+          "max_ms": 5.749231,
+          "max_debt_ms": 0.0,
+          "overload_count": 0
+        },
+        {
+          "id": "07-mouseclicks-near",
+          "fallback": null,
+          "max_ms": 5.359077,
+          "max_debt_ms": 0.0,
+          "overload_count": 0
+        },
+        {
+          "id": "08-clatter-near",
+          "fallback": null,
+          "max_ms": 6.071923,
+          "max_debt_ms": 0.0,
+          "overload_count": 0
+        },
+        {
+          "id": "09-creaky-near",
+          "fallback": null,
+          "max_ms": 12.149154,
+          "max_debt_ms": 0.0,
+          "overload_count": 0
+        },
+        {
+          "id": "10-dishwasher-near",
+          "fallback": null,
+          "max_ms": 6.224308,
+          "max_debt_ms": 0.0,
+          "overload_count": 0
+        },
+        {
+          "id": "11-door-near",
+          "fallback": null,
+          "max_ms": 50.913308,
+          "max_debt_ms": 18.913308,
+          "overload_count": 3
+        },
+        {
+          "id": "12-cutlery-near",
+          "fallback": null,
+          "max_ms": 5.904847,
+          "max_debt_ms": 0.0,
+          "overload_count": 0
+        }
+      ]
+    },
+    {
+      "cohort": "far",
+      "records": 4,
+      "previous_pairs_identical": [
+        "01-breathing-far",
+        "02-baby-far",
+        "03-typing-far"
+      ],
+      "recording_eligibility": [
+        {
+          "id": "01-breathing-far",
+          "eligible": true,
+          "already_tested": true
+        },
+        {
+          "id": "02-baby-far",
+          "eligible": false,
+          "already_tested": false
+        },
+        {
+          "id": "03-typing-far",
+          "eligible": true,
+          "already_tested": true
+        },
+        {
+          "id": "04-creaky-far",
+          "eligible": false,
+          "already_tested": false
+        }
+      ],
+      "stages": [
+        {
+          "id": "01-breathing-far",
+          "fallback": null,
+          "max_ms": 9.678692,
+          "max_debt_ms": 0.0,
+          "overload_count": 0
+        },
+        {
+          "id": "02-baby-far",
+          "fallback": null,
+          "max_ms": 11.084,
+          "max_debt_ms": 0.0,
+          "overload_count": 0
+        },
+        {
+          "id": "03-typing-far",
+          "fallback": null,
+          "max_ms": 51.177231,
+          "max_debt_ms": 22.027923,
+          "overload_count": 3
+        },
+        {
+          "id": "04-creaky-far",
+          "fallback": null,
+          "max_ms": 8.879461,
+          "max_debt_ms": 0.0,
+          "overload_count": 0
+        }
+      ]
+    }
+  ],
+  "previous_fully_enhanced_pairs_identical": true
+}

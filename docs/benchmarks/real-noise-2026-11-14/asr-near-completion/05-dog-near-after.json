@@ -1,0 +1,71 @@
+{
+  "id": "05-dog-near",
+  "arm": "after",
+  "reference": "To keep them scattered somewhere and yet here m was called loose cuddling. List of must be tented everyday routinely.",
+  "input_sha256": "3aa1e7b2e148711dcc81ff5e3fc2987cce7f7856dda00d89c7a6096391ea2b3a",
+  "source_audio_seconds": 10.0,
+  "status": "completed",
+  "scoring_version": "unicode-marks-v2",
+  "sent_frames": 376,
+  "schedule_rebases": 0,
+  "maximum_send_lateness_ms": 1.339419000032649,
+  "unfinished_utterance_ids": [],
+  "connection_seconds": 23.067857534000268,
+  "attempt_seconds": 23.413683290000336,
+  "transcript": "To keep them scattered somewhat, and yet here. எம் வாஸ் கால்ட் லூஸ் ஹர்ட்லிங், லிவ் ஸ்டாக் மஸ்ட் பி டென்டெட் எவ்ரி டே ரொட்டீன்லி.",
+  "events": [
+    {
+      "elapsed_s": 0.07191602100010641,
+      "message": {
+        "type": "connected",
+        "message": "STT service ready — VAD service connected",
+        "request_id": "01a1d89f-1931-76ce-a184-c8ac6c3ae844",
+        "config": {
+          "sample_rate": 16000,
+          "chunk_size": 512,
+          "partials_enabled": false,
+          "partial_interval_ms": 450,
+          "partial_max_window_s": 15.0,
+          "language_code": "indic-auto",
+          "format": "verbatim"
+        },
+        "timestamp": "2026-11-14T05:54:27.896919+00:00"
+      }
+    },
+    {
+      "elapsed_s": 1.2295554450001873,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "u4e60669f",
+        "t_ms": 884,
+        "timestamp": "2026-11-14T05:54:29.052894+00:00"
+      }
+    },
+    {
+      "elapsed_s": 10.862572297000042,
+      "message": {
+        "type": "transcript",
+        "text": "To keep them scattered somewhat, and yet here. எம் வாஸ் கால்ட் லூஸ் ஹர்ட்லிங், லிவ் ஸ்டாக் மஸ்ட் பி டென்டெட் எவ்ரி டே ரொட்டீன்லி.",
+        "audio_duration_ms": 9972.0,
+        "segment_id": "01a1d89f-1931-76ce-a184-c8ac6c3ae844-seg-1",
+        "segment_index": 1,
+        "utterance_id": "u4e60669f",
+        "is_final": true,
+        "latency": 291,
+        "prefetched": false,
+        "timestamp": "2026-11-14T05:54:38.687862+00:00",
+        "detected_language_code": "ta-IN"
+      }
+    }
+  ],
+  "reference_score_eligible": true,
+  "score": {
+    "reference_words": 20,
+    "hypothesis_words": 21,
+    "errors": 14,
+    "substitutions": 13,
+    "insertions": 1,
+    "deletions": 0,
+    "wer": 0.7
+  }
+}

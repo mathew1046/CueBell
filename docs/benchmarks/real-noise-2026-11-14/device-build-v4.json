@@ -1,0 +1,23 @@
+{
+  "apk": "/home/mathew/Arrakis/CueBell/artifacts/CueBell-denoising-real-noise-v4.apk",
+  "apk_sha256": "b9318ebbb40a85633063175e7f478e492754faacd18889d2f74dbcd9926e7ac9",
+  "apk_bytes": 238276371,
+  "jni_sha256": "59964bf7d9cf9520231d6cce3f6728b05f3c0ecac765bd9182bd9fc9d0539c65",
+  "command": [
+    "./gradlew",
+    ":queue-listener:assembleDebugAndroidTest",
+    "-PreactNativeArchitectures=arm64-v8a",
+    "-PcuebellSherpaFftDir=/home/mathew/.cache/cuebell/sherpa-fft-v1-storage/dist",
+    "--max-workers=4"
+  ],
+  "source_sha256": {
+    "/home/mathew/Arrakis/CueBell/mobile/modules/queue-listener/android/src/main/java/expo/modules/queuelistener/StreamingNoiseReducer.kt": "53505f98b446ca16be71f5ce995f76b3c07ef9e14973f130ca462491b32754c3",
+    "/home/mathew/Arrakis/CueBell/mobile/modules/queue-listener/android/src/main/java/expo/modules/queuelistener/NoiseReductionDiagnostics.kt": "218ba797b9a3dedd7a639ba313ec08255449cb8b0f03d7929e9f2957133c31f3",
+    "/home/mathew/Arrakis/CueBell/mobile/modules/queue-listener/android/src/main/java/expo/modules/queuelistener/GtcrnNoiseReducer.kt": "82fa78604ff727710cf25d0fad0a761dfb27924f2e1e26123ddd438017ef419d",
+    "/home/mathew/Arrakis/CueBell/mobile/modules/queue-listener/android/src/main/java/expo/modules/queuelistener/ListenerService.kt": "f87522925ef295c904faa1e4fba2cce9b7b45ed28bdd719b349594824eff986a",
+    "/home/mathew/Arrakis/CueBell/mobile/modules/queue-listener/android/src/androidTest/java/expo/modules/queuelistener/DenoisingBenchmarkInstrumentation.kt": "fce00b2bba90f1a7de529b2a3b60f7fb09db14cfdfef6e84eb41b65b36c9ed2b"
+  },
+  "processing_debt_limit_ns": 64000000,
+  "frame_interval_ns": 32000000,
+  "algorithmic_delay_samples": 256
+}

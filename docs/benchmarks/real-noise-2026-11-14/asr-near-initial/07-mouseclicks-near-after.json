@@ -1,0 +1,95 @@
+{
+  "id": "07-mouseclicks-near",
+  "arm": "after",
+  "reference": "It's hard to tell an original from a forgery. His prescription: hot and cold compresses to increase her.",
+  "input_sha256": "e682cf4e0337a3df660a905397f7dc8cbd6a6ae24c018ddd6b0b3ffe50151637",
+  "source_audio_seconds": 10.0,
+  "status": "completed",
+  "sent_frames": 376,
+  "schedule_rebases": 0,
+  "maximum_send_lateness_ms": 1.5475270001843455,
+  "unfinished_utterance_ids": [],
+  "connection_seconds": 23.064288428000054,
+  "attempt_seconds": 23.325328401000206,
+  "transcript": "It's hard to tell an original from forgery. His prescription: hot and cold compresses to increase her warmth.",
+  "events": [
+    {
+      "elapsed_s": 0.045518865999838454,
+      "message": {
+        "type": "connected",
+        "message": "STT service ready — VAD service connected",
+        "request_id": "01a1d88c-fde1-7c6b-b5d3-f02b7ed49a8e",
+        "config": {
+          "sample_rate": 16000,
+          "chunk_size": 512,
+          "partials_enabled": false,
+          "partial_interval_ms": 450,
+          "partial_max_window_s": 15.0,
+          "language_code": "indic-auto",
+          "format": "verbatim"
+        },
+        "timestamp": "2026-11-14T05:34:41.190808+00:00"
+      }
+    },
+    {
+      "elapsed_s": 2.2405968349999057,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "u6a3adca6",
+        "t_ms": 1908,
+        "timestamp": "2026-11-14T05:34:43.386080+00:00"
+      }
+    },
+    {
+      "elapsed_s": 5.601705699999911,
+      "message": {
+        "type": "transcript",
+        "text": "It's hard to tell an original from forgery.",
+        "audio_duration_ms": 3764.0,
+        "segment_id": "01a1d88c-fde1-7c6b-b5d3-f02b7ed49a8e-seg-1",
+        "segment_index": 1,
+        "utterance_id": "u6a3adca6",
+        "is_final": true,
+        "latency": 145,
+        "prefetched": false,
+        "timestamp": "2026-11-14T05:34:46.746845+00:00",
+        "detected_language_code": "en-IN"
+      }
+    },
+    {
+      "elapsed_s": 5.715252973000133,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "ua6969a5f",
+        "t_ms": 5364,
+        "timestamp": "2026-11-14T05:34:46.860813+00:00"
+      }
+    },
+    {
+      "elapsed_s": 10.746433082999829,
+      "message": {
+        "type": "transcript",
+        "text": "His prescription: hot and cold compresses to increase her warmth.",
+        "audio_duration_ms": 5184.0,
+        "segment_id": "01a1d88c-fde1-7c6b-b5d3-f02b7ed49a8e-seg-2",
+        "segment_index": 2,
+        "utterance_id": "ua6969a5f",
+        "is_final": true,
+        "latency": 178,
+        "prefetched": false,
+        "timestamp": "2026-11-14T05:34:51.891652+00:00",
+        "detected_language_code": "en-IN"
+      }
+    }
+  ],
+  "reference_score_eligible": true,
+  "score": {
+    "reference_words": 18,
+    "hypothesis_words": 18,
+    "errors": 2,
+    "substitutions": 0,
+    "insertions": 1,
+    "deletions": 1,
+    "wer": 0.1111111111111111
+  }
+}

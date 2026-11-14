@@ -1,0 +1,3157 @@
+{
+  "schema_version": 1,
+  "status": "completed",
+  "label": "device-v4",
+  "engine_class": "expo.modules.queuelistener.GtcrnNoiseReducer",
+  "sample_rate": 16000,
+  "frame_samples": 512,
+  "clock_policy": "absolute System.nanoTime deadlines; no rebasing or dropped frames",
+  "stages": [
+    {
+      "id": "replay-01-india-station-pa-engine",
+      "mode": "engine",
+      "kind": "replay",
+      "input_id": "01-india-station-pa",
+      "input_sha256": "b9b7c42f09da1b4669071e4d61858baa344bd63e37a54c29e01682b4f01368a0",
+      "frame_count": 1734,
+      "warmup_frames": 0,
+      "sustained_frames": 1734,
+      "audio_duration_s": 55.488,
+      "source_sample_count": 887328,
+      "last_frame_zero_padding_samples": 480,
+      "elapsed_ms": 55459.599388,
+      "process_cpu_ms": 8024,
+      "process_cpu_percent_one_core": 14.468189616487173,
+      "frames_file": "replay-01-india-station-pa-engine.frames.csv",
+      "frames_sha256": "0527586f33e266a8000819d665315d34f05265b30be6c6ee39c444e45d7d13b1",
+      "initialization_wall_ms": 63.810154,
+      "resources_before_initialization": {
+        "monotonic_ns": 342144032291623,
+        "process_cpu_ms": 1277,
+        "thread_cpu_ns": 1224673313,
+        "rss_kb": 193164,
+        "rss_high_water_kb": 193164,
+        "native_heap_allocated_bytes": 8165088,
+        "java_heap_used_bytes": 10288952,
+        "runtime_gc_counters": {
+          "art.gc.gc-count": "1",
+          "art.gc.gc-time": "21",
+          "art.gc.blocking-gc-count": "0",
+          "art.gc.blocking-gc-time": "0"
+        }
+      },
+      "resources_after_initialization": {
+        "monotonic_ns": 342144096528623,
+        "process_cpu_ms": 1341,
+        "thread_cpu_ns": 1288290314,
+        "rss_kb": 194516,
+        "rss_high_water_kb": 194516,
+        "native_heap_allocated_bytes": 12608688,
+        "java_heap_used_bytes": 10358584,
+        "runtime_gc_counters": {
+          "art.gc.gc-count": "1",
+          "art.gc.gc-time": "21",
+          "art.gc.blocking-gc-count": "0",
+          "art.gc.blocking-gc-time": "0"
+        }
+      },
+      "resources_sustained_start": {
+        "monotonic_ns": 342144096809162,
+        "process_cpu_ms": 1341,
+        "thread_cpu_ns": 1288557314,
+        "rss_kb": 194516,
+        "rss_high_water_kb": 194516,
+        "native_heap_allocated_bytes": 12609152,
+        "java_heap_used_bytes": 10395448,
+        "runtime_gc_counters": {
+          "art.gc.gc-count": "1",
+          "art.gc.gc-time": "21",
+          "art.gc.blocking-gc-count": "0",
+          "art.gc.blocking-gc-time": "0"
+        }
+      },
+      "resources_sustained_end": {
+        "monotonic_ns": 342199588431704,
+        "process_cpu_ms": 9365,
+        "thread_cpu_ns": 9291372369,
+        "rss_kb": 194016,
+        "rss_high_water_kb": 195608,
+        "native_heap_allocated_bytes": 12534640,
+        "java_heap_used_bytes": 9299880,
+        "runtime_gc_counters": {
+          "art.gc.gc-count": "3",
+          "art.gc.gc-time": "33",
+          "art.gc.blocking-gc-count": "0",
+          "art.gc.blocking-gc-time": "0"
+        }
+      },
+      "resource_samples": [
+        {
+          "monotonic_ns": 342144133969777,
+          "process_cpu_ms": 1346,
+          "thread_cpu_ns": 1293491083,
+          "rss_kb": 194564,
+          "rss_high_water_kb": 194564,
+          "native_heap_allocated_bytes": 12534304,
+          "java_heap_used_bytes": 10432312,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "1",
+            "art.gc.gc-time": "21",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 0,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342149124531624,
+          "process_cpu_ms": 1969,
+          "thread_cpu_ns": 1904997920,
+          "rss_kb": 192312,
+          "rss_high_water_kb": 195608,
+          "native_heap_allocated_bytes": 12532880,
+          "java_heap_used_bytes": 8176032,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "2",
+            "art.gc.gc-time": "24",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 156,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342154116635085,
+          "process_cpu_ms": 2521,
+          "thread_cpu_ns": 2457573906,
+          "rss_kb": 192220,
+          "rss_high_water_kb": 195608,
+          "native_heap_allocated_bytes": 12533248,
+          "java_heap_used_bytes": 8540576,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "2",
+            "art.gc.gc-time": "24",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 312,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342159108409240,
+          "process_cpu_ms": 3265,
+          "thread_cpu_ns": 3201056826,
+          "rss_kb": 192484,
+          "rss_high_water_kb": 195608,
+          "native_heap_allocated_bytes": 12533712,
+          "java_heap_used_bytes": 8921504,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "2",
+            "art.gc.gc-time": "24",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 468,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342164100393548,
+          "process_cpu_ms": 3809,
+          "thread_cpu_ns": 3745335595,
+          "rss_kb": 192572,
+          "rss_high_water_kb": 195608,
+          "native_heap_allocated_bytes": 12534176,
+          "java_heap_used_bytes": 9286048,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "2",
+            "art.gc.gc-time": "24",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 624,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342169092193471,
+          "process_cpu_ms": 4323,
+          "thread_cpu_ns": 4259114663,
+          "rss_kb": 192832,
+          "rss_high_water_kb": 195608,
+          "native_heap_allocated_bytes": 12534640,
+          "java_heap_used_bytes": 9650592,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "2",
+            "art.gc.gc-time": "24",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 780,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342174092312010,
+          "process_cpu_ms": 5483,
+          "thread_cpu_ns": 5419516138,
+          "rss_kb": 193096,
+          "rss_high_water_kb": 195608,
+          "native_heap_allocated_bytes": 12535104,
+          "java_heap_used_bytes": 10015136,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "2",
+            "art.gc.gc-time": "24",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 936,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342179076578779,
+          "process_cpu_ms": 6255,
+          "thread_cpu_ns": 6191213297,
+          "rss_kb": 193096,
+          "rss_high_water_kb": 195608,
+          "native_heap_allocated_bytes": 12535568,
+          "java_heap_used_bytes": 10379680,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "2",
+            "art.gc.gc-time": "24",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 1092,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342184068088010,
+          "process_cpu_ms": 6888,
+          "thread_cpu_ns": 6823750070,
+          "rss_kb": 193360,
+          "rss_high_water_kb": 195608,
+          "native_heap_allocated_bytes": 12536032,
+          "java_heap_used_bytes": 10744224,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "2",
+            "art.gc.gc-time": "24",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 1248,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342189068517780,
+          "process_cpu_ms": 8053,
+          "thread_cpu_ns": 7979305646,
+          "rss_kb": 193604,
+          "rss_high_water_kb": 195608,
+          "native_heap_allocated_bytes": 12532880,
+          "java_heap_used_bytes": 8464296,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "3",
+            "art.gc.gc-time": "33",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 1404,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342194052194472,
+          "process_cpu_ms": 8807,
+          "thread_cpu_ns": 8732660040,
+          "rss_kb": 193740,
+          "rss_high_water_kb": 195608,
+          "native_heap_allocated_bytes": 12533248,
+          "java_heap_used_bytes": 8828840,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "3",
+            "art.gc.gc-time": "33",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 1560,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342199044256011,
+          "process_cpu_ms": 9309,
+          "thread_cpu_ns": 9235016978,
+          "rss_kb": 193948,
+          "rss_high_water_kb": 195608,
+          "native_heap_allocated_bytes": 12533712,
+          "java_heap_used_bytes": 9193384,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "3",
+            "art.gc.gc-time": "33",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 1716,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342199588136319,
+          "process_cpu_ms": 9365,
+          "thread_cpu_ns": 9291082830,
+          "rss_kb": 194016,
+          "rss_high_water_kb": 195608,
+          "native_heap_allocated_bytes": 12534176,
+          "java_heap_used_bytes": 9263016,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "3",
+            "art.gc.gc-time": "33",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 1733,
+          "phase": "sustained"
+        }
+      ],
+      "diagnostics": {
+        "active_mode": "gtcrn",
+        "requested_mode": "gtcrn",
+        "algorithmic_delay_samples": 256,
+        "startup_padding_samples": 256,
+        "initialization_ns": 63788385,
+        "processed_frames": 1734,
+        "max_process_ns": 14752000,
+        "overload_count": 0,
+        "processing_debt_ns": 0,
+        "max_processing_debt_ns": 0,
+        "processing_debt_limit_ns": 64000000,
+        "fallback_reason": null,
+        "close_wall_ms": 4.294693,
+        "resources_after_close": {
+          "monotonic_ns": 342199608533550,
+          "process_cpu_ms": 9396,
+          "thread_cpu_ns": 9311007908,
+          "rss_kb": 194148,
+          "rss_high_water_kb": 195820,
+          "native_heap_allocated_bytes": 8166320,
+          "java_heap_used_bytes": 10052328,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "4",
+            "art.gc.gc-time": "42",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          }
+        }
+      },
+      "first_fallback_frame": null,
+      "fallback_reason": null,
+      "state_policy": "fresh-engine-per-case",
+      "input_loop_count": 1,
+      "dropped_frames": 0,
+      "schedule_rebases": 0
+    },
+    {
+      "id": "replay-01-india-station-pa-bypass",
+      "mode": "bypass",
+      "kind": "replay",
+      "input_id": "01-india-station-pa",
+      "input_sha256": "b9b7c42f09da1b4669071e4d61858baa344bd63e37a54c29e01682b4f01368a0",
+      "frame_count": 1734,
+      "warmup_frames": 0,
+      "sustained_frames": 1734,
+      "audio_duration_s": 55.488,
+      "source_sample_count": 887328,
+      "last_frame_zero_padding_samples": 480,
+      "elapsed_ms": 55459.380235,
+      "process_cpu_ms": 175,
+      "process_cpu_percent_one_core": 0.31554625972823047,
+      "frames_file": "replay-01-india-station-pa-bypass.frames.csv",
+      "frames_sha256": "c87915587a6a36c7387eef3fb1df30f9e24ac52b589fe048d769dad331e18336",
+      "initialization_wall_ms": 0.001462,
+      "resources_before_initialization": {
+        "monotonic_ns": 342199619718088,
+        "process_cpu_ms": 9416,
+        "thread_cpu_ns": 9322096753,
+        "rss_kb": 197324,
+        "rss_high_water_kb": 197636,
+        "native_heap_allocated_bytes": 8166080,
+        "java_heap_used_bytes": 15368904,
+        "runtime_gc_counters": {
+          "art.gc.gc-count": "5",
+          "art.gc.gc-time": "51",
+          "art.gc.blocking-gc-count": "0",
+          "art.gc.blocking-gc-time": "0"
+        }
+      },
+      "resources_after_initialization": {
+        "monotonic_ns": 342199620033473,
+        "process_cpu_ms": 9417,
+        "thread_cpu_ns": 9322383985,
+        "rss_kb": 197324,
+        "rss_high_water_kb": 197636,
+        "native_heap_allocated_bytes": 8166544,
+        "java_heap_used_bytes": 15405768,
+        "runtime_gc_counters": {
+          "art.gc.gc-count": "5",
+          "art.gc.gc-time": "51",
+          "art.gc.blocking-gc-count": "0",
+          "art.gc.blocking-gc-time": "0"
+        }
+      },
+      "resources_sustained_start": {
+        "monotonic_ns": 342199620275319,
+        "process_cpu_ms": 9417,
+        "thread_cpu_ns": 9322622523,
+        "rss_kb": 197324,
+        "rss_high_water_kb": 197636,
+        "native_heap_allocated_bytes": 8167008,
+        "java_heap_used_bytes": 15442632,
+        "runtime_gc_counters": {
+          "art.gc.gc-count": "5",
+          "art.gc.gc-time": "51",
+          "art.gc.blocking-gc-count": "0",
+          "art.gc.blocking-gc-time": "0"
+        }
+      },
+      "resources_sustained_end": {
+        "monotonic_ns": 342255113279938,
+        "process_cpu_ms": 9593,
+        "thread_cpu_ns": 9462934919,
+        "rss_kb": 166748,
+        "rss_high_water_kb": 197636,
+        "native_heap_allocated_bytes": 8178000,
+        "java_heap_used_bytes": 5090168,
+        "runtime_gc_counters": {
+          "art.gc.gc-count": "6",
+          "art.gc.gc-time": "61",
+          "art.gc.blocking-gc-count": "0",
+          "art.gc.blocking-gc-time": "0"
+        }
+      },
+      "resource_samples": [
+        {
+          "monotonic_ns": 342199652600934,
+          "process_cpu_ms": 9427,
+          "thread_cpu_ns": 9323122138,
+          "rss_kb": 186716,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8165664,
+          "java_heap_used_bytes": 4594552,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "6",
+            "art.gc.gc-time": "61",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 0,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342204644866473,
+          "process_cpu_ms": 9433,
+          "thread_cpu_ns": 9329156364,
+          "rss_kb": 186980,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8166032,
+          "java_heap_used_bytes": 4647800,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "6",
+            "art.gc.gc-time": "61",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 156,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342209636938396,
+          "process_cpu_ms": 9441,
+          "thread_cpu_ns": 9336602746,
+          "rss_kb": 187220,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8166496,
+          "java_heap_used_bytes": 4684664,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "6",
+            "art.gc.gc-time": "61",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 312,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342214628916858,
+          "process_cpu_ms": 9448,
+          "thread_cpu_ns": 9343735352,
+          "rss_kb": 187220,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8166960,
+          "java_heap_used_bytes": 4721528,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "6",
+            "art.gc.gc-time": "61",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 468,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342219621874705,
+          "process_cpu_ms": 9466,
+          "thread_cpu_ns": 9362106349,
+          "rss_kb": 187452,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8167424,
+          "java_heap_used_bytes": 4758392,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "6",
+            "art.gc.gc-time": "61",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 624,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342224616862167,
+          "process_cpu_ms": 9512,
+          "thread_cpu_ns": 9381535654,
+          "rss_kb": 187788,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8174288,
+          "java_heap_used_bytes": 4795256,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "6",
+            "art.gc.gc-time": "61",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 780,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342229604902090,
+          "process_cpu_ms": 9525,
+          "thread_cpu_ns": 9394519738,
+          "rss_kb": 188016,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8174752,
+          "java_heap_used_bytes": 4832120,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "6",
+            "art.gc.gc-time": "61",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 936,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342234598760321,
+          "process_cpu_ms": 9538,
+          "thread_cpu_ns": 9407459742,
+          "rss_kb": 182344,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8175216,
+          "java_heap_used_bytes": 4868984,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "6",
+            "art.gc.gc-time": "61",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 1092,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342239588576244,
+          "process_cpu_ms": 9550,
+          "thread_cpu_ns": 9419693828,
+          "rss_kb": 182576,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8175680,
+          "java_heap_used_bytes": 4905848,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "6",
+            "art.gc.gc-time": "61",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 1248,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342244581167706,
+          "process_cpu_ms": 9565,
+          "thread_cpu_ns": 9435099441,
+          "rss_kb": 166620,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8176144,
+          "java_heap_used_bytes": 4942712,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "6",
+            "art.gc.gc-time": "61",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 1404,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342249573223937,
+          "process_cpu_ms": 9574,
+          "thread_cpu_ns": 9443463145,
+          "rss_kb": 166492,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8176608,
+          "java_heap_used_bytes": 4979576,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "6",
+            "art.gc.gc-time": "61",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 1560,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342254566388630,
+          "process_cpu_ms": 9584,
+          "thread_cpu_ns": 9454289461,
+          "rss_kb": 166748,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8177072,
+          "java_heap_used_bytes": 5016440,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "6",
+            "art.gc.gc-time": "61",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 1716,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342255110702784,
+          "process_cpu_ms": 9591,
+          "thread_cpu_ns": 9460583612,
+          "rss_kb": 166748,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8177536,
+          "java_heap_used_bytes": 5053304,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "6",
+            "art.gc.gc-time": "61",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 1733,
+          "phase": "sustained"
+        }
+      ],
+      "diagnostics": {
+        "active_mode": "bypass",
+        "close_wall_ms": 2.31E-4,
+        "resources_after_close": {
+          "monotonic_ns": 342255156941861,
+          "process_cpu_ms": 9637,
+          "thread_cpu_ns": 9505401380,
+          "rss_kb": 168988,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8179600,
+          "java_heap_used_bytes": 7572344,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "6",
+            "art.gc.gc-time": "61",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          }
+        }
+      },
+      "first_fallback_frame": null,
+      "fallback_reason": null,
+      "state_policy": "fresh-engine-per-case",
+      "input_loop_count": 1,
+      "dropped_frames": 0,
+      "schedule_rebases": 0
+    },
+    {
+      "id": "replay-02-slough-platform-four-engine",
+      "mode": "engine",
+      "kind": "replay",
+      "input_id": "02-slough-platform-four",
+      "input_sha256": "e45e4f4fbcf81a007d418edb55ac3e85a460ba5a0b71197390a3b5c69e9c09ab",
+      "frame_count": 726,
+      "warmup_frames": 0,
+      "sustained_frames": 726,
+      "audio_duration_s": 23.232,
+      "source_sample_count": 371426,
+      "last_frame_zero_padding_samples": 286,
+      "elapsed_ms": 23203.479771,
+      "process_cpu_ms": 2555,
+      "process_cpu_percent_one_core": 11.011279451253994,
+      "frames_file": "replay-02-slough-platform-four-engine.frames.csv",
+      "frames_sha256": "1bc9720603db271c8b4b9f99833cfd65923ac2c3a4b05aacfbda7012012efffc",
+      "initialization_wall_ms": 69.038538,
+      "resources_before_initialization": {
+        "monotonic_ns": 342255174119630,
+        "process_cpu_ms": 9650,
+        "thread_cpu_ns": 9518991378,
+        "rss_kb": 170568,
+        "rss_high_water_kb": 197636,
+        "native_heap_allocated_bytes": 8181056,
+        "java_heap_used_bytes": 10247032,
+        "runtime_gc_counters": {
+          "art.gc.gc-count": "6",
+          "art.gc.gc-time": "61",
+          "art.gc.blocking-gc-count": "0",
+          "art.gc.blocking-gc-time": "0"
+        }
+      },
+      "resources_after_initialization": {
+        "monotonic_ns": 342255243997245,
+        "process_cpu_ms": 9725,
+        "thread_cpu_ns": 9587882459,
+        "rss_kb": 169512,
+        "rss_high_water_kb": 197636,
+        "native_heap_allocated_bytes": 12615392,
+        "java_heap_used_bytes": 6171264,
+        "runtime_gc_counters": {
+          "art.gc.gc-count": "7",
+          "art.gc.gc-time": "65",
+          "art.gc.blocking-gc-count": "0",
+          "art.gc.blocking-gc-time": "0"
+        }
+      },
+      "resources_sustained_start": {
+        "monotonic_ns": 342255244334168,
+        "process_cpu_ms": 9725,
+        "thread_cpu_ns": 9588172075,
+        "rss_kb": 169512,
+        "rss_high_water_kb": 197636,
+        "native_heap_allocated_bytes": 12615856,
+        "java_heap_used_bytes": 6208128,
+        "runtime_gc_counters": {
+          "art.gc.gc-count": "7",
+          "art.gc.gc-time": "65",
+          "art.gc.blocking-gc-count": "0",
+          "art.gc.blocking-gc-time": "0"
+        }
+      },
+      "resources_sustained_end": {
+        "monotonic_ns": 342278479809247,
+        "process_cpu_ms": 12280,
+        "thread_cpu_ns": 12141764455,
+        "rss_kb": 170868,
+        "rss_high_water_kb": 197636,
+        "native_heap_allocated_bytes": 12543952,
+        "java_heap_used_bytes": 8006272,
+        "runtime_gc_counters": {
+          "art.gc.gc-count": "7",
+          "art.gc.gc-time": "65",
+          "art.gc.blocking-gc-count": "0",
+          "art.gc.blocking-gc-time": "0"
+        }
+      },
+      "resource_samples": [
+        {
+          "monotonic_ns": 342255280571091,
+          "process_cpu_ms": 9730,
+          "thread_cpu_ns": 9592409229,
+          "rss_kb": 169560,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 12541008,
+          "java_heap_used_bytes": 6244992,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "7",
+            "art.gc.gc-time": "65",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 0,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342260272407938,
+          "process_cpu_ms": 10330,
+          "thread_cpu_ns": 10192365758,
+          "rss_kb": 170076,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 12541376,
+          "java_heap_used_bytes": 6609536,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "7",
+            "art.gc.gc-time": "65",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 156,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342265263712631,
+          "process_cpu_ms": 10834,
+          "thread_cpu_ns": 10696464834,
+          "rss_kb": 170340,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 12541840,
+          "java_heap_used_bytes": 6974080,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "7",
+            "art.gc.gc-time": "65",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 312,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342270255878708,
+          "process_cpu_ms": 11464,
+          "thread_cpu_ns": 11326260682,
+          "rss_kb": 170340,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 12542304,
+          "java_heap_used_bytes": 7355008,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "7",
+            "art.gc.gc-time": "65",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 468,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342275247555016,
+          "process_cpu_ms": 11960,
+          "thread_cpu_ns": 11821910452,
+          "rss_kb": 170604,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 12542896,
+          "java_heap_used_bytes": 7719552,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "7",
+            "art.gc.gc-time": "65",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 624,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342278479522401,
+          "process_cpu_ms": 12280,
+          "thread_cpu_ns": 12141485070,
+          "rss_kb": 170868,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 12543488,
+          "java_heap_used_bytes": 7969408,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "7",
+            "art.gc.gc-time": "65",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 725,
+          "phase": "sustained"
+        }
+      ],
+      "diagnostics": {
+        "active_mode": "gtcrn",
+        "requested_mode": "gtcrn",
+        "algorithmic_delay_samples": 256,
+        "startup_padding_samples": 256,
+        "initialization_ns": 69014461,
+        "processed_frames": 726,
+        "max_process_ns": 12787384,
+        "overload_count": 0,
+        "processing_debt_ns": 0,
+        "max_processing_debt_ns": 0,
+        "processing_debt_limit_ns": 64000000,
+        "fallback_reason": null,
+        "close_wall_ms": 4.243385,
+        "resources_after_close": {
+          "monotonic_ns": 342278489422093,
+          "process_cpu_ms": 12290,
+          "thread_cpu_ns": 12151276223,
+          "rss_kb": 170384,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8177888,
+          "java_heap_used_bytes": 9194112,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "7",
+            "art.gc.gc-time": "65",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          }
+        }
+      },
+      "first_fallback_frame": null,
+      "fallback_reason": null,
+      "state_policy": "fresh-engine-per-case",
+      "input_loop_count": 1,
+      "dropped_frames": 0,
+      "schedule_rebases": 0
+    },
+    {
+      "id": "replay-02-slough-platform-four-bypass",
+      "mode": "bypass",
+      "kind": "replay",
+      "input_id": "02-slough-platform-four",
+      "input_sha256": "e45e4f4fbcf81a007d418edb55ac3e85a460ba5a0b71197390a3b5c69e9c09ab",
+      "frame_count": 726,
+      "warmup_frames": 0,
+      "sustained_frames": 726,
+      "audio_duration_s": 23.232,
+      "source_sample_count": 371426,
+      "last_frame_zero_padding_samples": 286,
+      "elapsed_ms": 23201.278078,
+      "process_cpu_ms": 43,
+      "process_cpu_percent_one_core": 0.18533461758200992,
+      "frames_file": "replay-02-slough-platform-four-bypass.frames.csv",
+      "frames_sha256": "d01ce74dae46a6513e1c008fbec311fb004be688bcb5d55e15079828301f1cda",
+      "initialization_wall_ms": 9.23E-4,
+      "resources_before_initialization": {
+        "monotonic_ns": 342278496238785,
+        "process_cpu_ms": 12300,
+        "thread_cpu_ns": 12157969299,
+        "rss_kb": 172296,
+        "rss_high_water_kb": 197636,
+        "native_heap_allocated_bytes": 8179264,
+        "java_heap_used_bytes": 12057216,
+        "runtime_gc_counters": {
+          "art.gc.gc-count": "7",
+          "art.gc.gc-time": "65",
+          "art.gc.blocking-gc-count": "0",
+          "art.gc.blocking-gc-time": "0"
+        }
+      },
+      "resources_after_initialization": {
+        "monotonic_ns": 342278496527324,
+        "process_cpu_ms": 12300,
+        "thread_cpu_ns": 12158249607,
+        "rss_kb": 172296,
+        "rss_high_water_kb": 197636,
+        "native_heap_allocated_bytes": 8179728,
+        "java_heap_used_bytes": 12094080,
+        "runtime_gc_counters": {
+          "art.gc.gc-count": "7",
+          "art.gc.gc-time": "65",
+          "art.gc.blocking-gc-count": "0",
+          "art.gc.blocking-gc-time": "0"
+        }
+      },
+      "resources_sustained_start": {
+        "monotonic_ns": 342278496724016,
+        "process_cpu_ms": 12300,
+        "thread_cpu_ns": 12158446222,
+        "rss_kb": 172296,
+        "rss_high_water_kb": 197636,
+        "native_heap_allocated_bytes": 8180192,
+        "java_heap_used_bytes": 12130944,
+        "runtime_gc_counters": {
+          "art.gc.gc-count": "7",
+          "art.gc.gc-time": "65",
+          "art.gc.blocking-gc-count": "0",
+          "art.gc.blocking-gc-time": "0"
+        }
+      },
+      "resources_sustained_end": {
+        "monotonic_ns": 342301730235402,
+        "process_cpu_ms": 12344,
+        "thread_cpu_ns": 12198415856,
+        "rss_kb": 166732,
+        "rss_high_water_kb": 197636,
+        "native_heap_allocated_bytes": 8176528,
+        "java_heap_used_bytes": 3620104,
+        "runtime_gc_counters": {
+          "art.gc.gc-count": "8",
+          "art.gc.gc-time": "71",
+          "art.gc.blocking-gc-count": "0",
+          "art.gc.blocking-gc-time": "0"
+        }
+      },
+      "resource_samples": [
+        {
+          "monotonic_ns": 342278529114401,
+          "process_cpu_ms": 12304,
+          "thread_cpu_ns": 12158915146,
+          "rss_kb": 165840,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8173840,
+          "java_heap_used_bytes": 3382536,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "8",
+            "art.gc.gc-time": "71",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 0,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342283521469170,
+          "process_cpu_ms": 12312,
+          "thread_cpu_ns": 12166490464,
+          "rss_kb": 166208,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8174208,
+          "java_heap_used_bytes": 3419400,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "8",
+            "art.gc.gc-time": "71",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 156,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342288513538709,
+          "process_cpu_ms": 12320,
+          "thread_cpu_ns": 12175281694,
+          "rss_kb": 166208,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8174672,
+          "java_heap_used_bytes": 3456264,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "8",
+            "art.gc.gc-time": "71",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 312,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342293505469248,
+          "process_cpu_ms": 12329,
+          "thread_cpu_ns": 12183620240,
+          "rss_kb": 166432,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8175136,
+          "java_heap_used_bytes": 3493128,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "8",
+            "art.gc.gc-time": "71",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 468,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342298497559940,
+          "process_cpu_ms": 12337,
+          "thread_cpu_ns": 12191384935,
+          "rss_kb": 166692,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8175600,
+          "java_heap_used_bytes": 3529992,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "8",
+            "art.gc.gc-time": "71",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 624,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342301729583094,
+          "process_cpu_ms": 12343,
+          "thread_cpu_ns": 12197782933,
+          "rss_kb": 166692,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8176064,
+          "java_heap_used_bytes": 3566856,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "8",
+            "art.gc.gc-time": "71",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 725,
+          "phase": "sustained"
+        }
+      ],
+      "diagnostics": {
+        "active_mode": "bypass",
+        "close_wall_ms": 0,
+        "resources_after_close": {
+          "monotonic_ns": 342301746883633,
+          "process_cpu_ms": 12358,
+          "thread_cpu_ns": 12212537857,
+          "rss_kb": 167620,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8178000,
+          "java_heap_used_bytes": 4791560,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "8",
+            "art.gc.gc-time": "71",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          }
+        }
+      },
+      "first_fallback_frame": null,
+      "fallback_reason": null,
+      "state_policy": "fresh-engine-per-case",
+      "input_loop_count": 1,
+      "dropped_frames": 0,
+      "schedule_rebases": 0
+    },
+    {
+      "id": "replay-03-slough-through-train-engine",
+      "mode": "engine",
+      "kind": "replay",
+      "input_id": "03-slough-through-train",
+      "input_sha256": "87250b4e8f16793e0b33957108df7cc62fc538ee2e5eb0f7fa348621c781b30c",
+      "frame_count": 1657,
+      "warmup_frames": 0,
+      "sustained_frames": 1657,
+      "audio_duration_s": 53.024,
+      "source_sample_count": 848069,
+      "last_frame_zero_padding_samples": 315,
+      "elapsed_ms": 52995.789619,
+      "process_cpu_ms": 6576,
+      "process_cpu_percent_one_core": 12.408532917947841,
+      "frames_file": "replay-03-slough-through-train-engine.frames.csv",
+      "frames_sha256": "3f5362a1c867f3f7c896ad089023d3e4435ddbc302a3ebe3d54fe15f2f6960c9",
+      "initialization_wall_ms": 64.968539,
+      "resources_before_initialization": {
+        "monotonic_ns": 342301761475402,
+        "process_cpu_ms": 12370,
+        "thread_cpu_ns": 12224823474,
+        "rss_kb": 171316,
+        "rss_high_water_kb": 197636,
+        "native_heap_allocated_bytes": 8179456,
+        "java_heap_used_bytes": 10599688,
+        "runtime_gc_counters": {
+          "art.gc.gc-count": "8",
+          "art.gc.gc-time": "71",
+          "art.gc.blocking-gc-count": "0",
+          "art.gc.blocking-gc-time": "0"
+        }
+      },
+      "resources_after_initialization": {
+        "monotonic_ns": 342301826888940,
+        "process_cpu_ms": 12438,
+        "thread_cpu_ns": 12289632860,
+        "rss_kb": 169316,
+        "rss_high_water_kb": 197636,
+        "native_heap_allocated_bytes": 12616112,
+        "java_heap_used_bytes": 6044568,
+        "runtime_gc_counters": {
+          "art.gc.gc-count": "9",
+          "art.gc.gc-time": "74",
+          "art.gc.blocking-gc-count": "0",
+          "art.gc.blocking-gc-time": "0"
+        }
+      },
+      "resources_sustained_start": {
+        "monotonic_ns": 342301827143940,
+        "process_cpu_ms": 12439,
+        "thread_cpu_ns": 12289878168,
+        "rss_kb": 169316,
+        "rss_high_water_kb": 197636,
+        "native_heap_allocated_bytes": 12616576,
+        "java_heap_used_bytes": 6081432,
+        "runtime_gc_counters": {
+          "art.gc.gc-count": "9",
+          "art.gc.gc-time": "74",
+          "art.gc.blocking-gc-count": "0",
+          "art.gc.blocking-gc-time": "0"
+        }
+      },
+      "resources_sustained_end": {
+        "monotonic_ns": 342354854952559,
+        "process_cpu_ms": 19015,
+        "thread_cpu_ns": 18858235731,
+        "rss_kb": 118840,
+        "rss_high_water_kb": 197636,
+        "native_heap_allocated_bytes": 12540944,
+        "java_heap_used_bytes": 5083824,
+        "runtime_gc_counters": {
+          "art.gc.gc-count": "10",
+          "art.gc.gc-time": "80",
+          "art.gc.blocking-gc-count": "0",
+          "art.gc.blocking-gc-time": "0"
+        }
+      },
+      "resource_samples": [
+        {
+          "monotonic_ns": 342301863101556,
+          "process_cpu_ms": 12443,
+          "thread_cpu_ns": 12293946013,
+          "rss_kb": 169328,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 12541728,
+          "java_heap_used_bytes": 6118296,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "9",
+            "art.gc.gc-time": "74",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 0,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342306854623018,
+          "process_cpu_ms": 12948,
+          "thread_cpu_ns": 12799033617,
+          "rss_kb": 169460,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 12542096,
+          "java_heap_used_bytes": 6499224,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "9",
+            "art.gc.gc-time": "74",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 156,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342311846506479,
+          "process_cpu_ms": 13455,
+          "thread_cpu_ns": 13305962152,
+          "rss_kb": 169708,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 12542560,
+          "java_heap_used_bytes": 6863768,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "9",
+            "art.gc.gc-time": "74",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 312,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342316838927711,
+          "process_cpu_ms": 14068,
+          "thread_cpu_ns": 13918840538,
+          "rss_kb": 119380,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 12543024,
+          "java_heap_used_bytes": 7228312,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "9",
+            "art.gc.gc-time": "74",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 468,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342321832884249,
+          "process_cpu_ms": 14935,
+          "thread_cpu_ns": 14785397000,
+          "rss_kb": 119904,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 12543488,
+          "java_heap_used_bytes": 7592856,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "9",
+            "art.gc.gc-time": "74",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 624,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342326822389480,
+          "process_cpu_ms": 15451,
+          "thread_cpu_ns": 15302252442,
+          "rss_kb": 119412,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 12543952,
+          "java_heap_used_bytes": 7957400,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "9",
+            "art.gc.gc-time": "74",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 780,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342331814435711,
+          "process_cpu_ms": 16035,
+          "thread_cpu_ns": 15886086354,
+          "rss_kb": 119412,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 12544416,
+          "java_heap_used_bytes": 8321944,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "9",
+            "art.gc.gc-time": "74",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 936,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342336806705250,
+          "process_cpu_ms": 16601,
+          "thread_cpu_ns": 16451960585,
+          "rss_kb": 119664,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 12544880,
+          "java_heap_used_bytes": 8686488,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "9",
+            "art.gc.gc-time": "74",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 1092,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342341798566097,
+          "process_cpu_ms": 17095,
+          "thread_cpu_ns": 16946122427,
+          "rss_kb": 120192,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 12545344,
+          "java_heap_used_bytes": 9067416,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "9",
+            "art.gc.gc-time": "74",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 1248,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342346790583943,
+          "process_cpu_ms": 18093,
+          "thread_cpu_ns": 17943483645,
+          "rss_kb": 120716,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 12545808,
+          "java_heap_used_bytes": 9431960,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "9",
+            "art.gc.gc-time": "74",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 1404,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342351782925251,
+          "process_cpu_ms": 18693,
+          "thread_cpu_ns": 18536578728,
+          "rss_kb": 119556,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 12540112,
+          "java_heap_used_bytes": 4813488,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "10",
+            "art.gc.gc-time": "80",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 1560,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342354854684559,
+          "process_cpu_ms": 19015,
+          "thread_cpu_ns": 18857976346,
+          "rss_kb": 118840,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 12540480,
+          "java_heap_used_bytes": 5046960,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "10",
+            "art.gc.gc-time": "80",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 1656,
+          "phase": "sustained"
+        }
+      ],
+      "diagnostics": {
+        "active_mode": "gtcrn",
+        "requested_mode": "gtcrn",
+        "algorithmic_delay_samples": 256,
+        "startup_padding_samples": 256,
+        "initialization_ns": 64949846,
+        "processed_frames": 1657,
+        "max_process_ns": 24309846,
+        "overload_count": 0,
+        "processing_debt_ns": 0,
+        "max_processing_debt_ns": 0,
+        "processing_debt_limit_ns": 64000000,
+        "fallback_reason": null,
+        "close_wall_ms": 4.322077,
+        "resources_after_close": {
+          "monotonic_ns": 342354869857559,
+          "process_cpu_ms": 19030,
+          "thread_cpu_ns": 18873009270,
+          "rss_kb": 119312,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8174880,
+          "java_heap_used_bytes": 7488176,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "10",
+            "art.gc.gc-time": "80",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          }
+        }
+      },
+      "first_fallback_frame": null,
+      "fallback_reason": null,
+      "state_policy": "fresh-engine-per-case",
+      "input_loop_count": 1,
+      "dropped_frames": 0,
+      "schedule_rebases": 0
+    },
+    {
+      "id": "replay-03-slough-through-train-bypass",
+      "mode": "bypass",
+      "kind": "replay",
+      "input_id": "03-slough-through-train",
+      "input_sha256": "87250b4e8f16793e0b33957108df7cc62fc538ee2e5eb0f7fa348621c781b30c",
+      "frame_count": 1657,
+      "warmup_frames": 0,
+      "sustained_frames": 1657,
+      "audio_duration_s": 53.024,
+      "source_sample_count": 848069,
+      "last_frame_zero_padding_samples": 315,
+      "elapsed_ms": 52993.348003,
+      "process_cpu_ms": 134,
+      "process_cpu_percent_one_core": 0.2528619252220376,
+      "frames_file": "replay-03-slough-through-train-bypass.frames.csv",
+      "frames_sha256": "a9b14d2e28fbc5102caaa0d5fd8e5c30f09d58da6f6e3217bac17c09a9e391dc",
+      "initialization_wall_ms": 0.001461,
+      "resources_before_initialization": {
+        "monotonic_ns": 342354883465482,
+        "process_cpu_ms": 19048,
+        "thread_cpu_ns": 18886424884,
+        "rss_kb": 120872,
+        "rss_high_water_kb": 197636,
+        "native_heap_allocated_bytes": 8180992,
+        "java_heap_used_bytes": 10896048,
+        "runtime_gc_counters": {
+          "art.gc.gc-count": "10",
+          "art.gc.gc-time": "80",
+          "art.gc.blocking-gc-count": "0",
+          "art.gc.blocking-gc-time": "0"
+        }
+      },
+      "resources_after_initialization": {
+        "monotonic_ns": 342354883785482,
+        "process_cpu_ms": 19052,
+        "thread_cpu_ns": 18886724192,
+        "rss_kb": 120872,
+        "rss_high_water_kb": 197636,
+        "native_heap_allocated_bytes": 8176864,
+        "java_heap_used_bytes": 9698200,
+        "runtime_gc_counters": {
+          "art.gc.gc-count": "11",
+          "art.gc.gc-time": "90",
+          "art.gc.blocking-gc-count": "0",
+          "art.gc.blocking-gc-time": "0"
+        }
+      },
+      "resources_sustained_start": {
+        "monotonic_ns": 342354883984328,
+        "process_cpu_ms": 19052,
+        "thread_cpu_ns": 18886922654,
+        "rss_kb": 120864,
+        "rss_high_water_kb": 197636,
+        "native_heap_allocated_bytes": 8174128,
+        "java_heap_used_bytes": 9735064,
+        "runtime_gc_counters": {
+          "art.gc.gc-count": "11",
+          "art.gc.gc-time": "90",
+          "art.gc.blocking-gc-count": "0",
+          "art.gc.blocking-gc-time": "0"
+        }
+      },
+      "resources_sustained_end": {
+        "monotonic_ns": 342407909655716,
+        "process_cpu_ms": 19186,
+        "thread_cpu_ns": 19007913643,
+        "rss_kb": 113848,
+        "rss_high_water_kb": 197636,
+        "native_heap_allocated_bytes": 8178176,
+        "java_heap_used_bytes": 4977640,
+        "runtime_gc_counters": {
+          "art.gc.gc-count": "12",
+          "art.gc.gc-time": "101",
+          "art.gc.blocking-gc-count": "0",
+          "art.gc.blocking-gc-time": "0"
+        }
+      },
+      "resource_samples": [
+        {
+          "monotonic_ns": 342354916381251,
+          "process_cpu_ms": 19065,
+          "thread_cpu_ns": 18887444730,
+          "rss_kb": 115676,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8172576,
+          "java_heap_used_bytes": 4518888,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "12",
+            "art.gc.gc-time": "101",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 0,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342359908692021,
+          "process_cpu_ms": 19074,
+          "thread_cpu_ns": 18896459556,
+          "rss_kb": 115940,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8172944,
+          "java_heap_used_bytes": 4572136,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "12",
+            "art.gc.gc-time": "101",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 156,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342364900692867,
+          "process_cpu_ms": 19082,
+          "thread_cpu_ns": 18904434708,
+          "rss_kb": 114908,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8173408,
+          "java_heap_used_bytes": 4609000,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "12",
+            "art.gc.gc-time": "101",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 312,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342369896520252,
+          "process_cpu_ms": 19094,
+          "thread_cpu_ns": 18916174565,
+          "rss_kb": 115144,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8173872,
+          "java_heap_used_bytes": 4645864,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "12",
+            "art.gc.gc-time": "101",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 468,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342374884688868,
+          "process_cpu_ms": 19103,
+          "thread_cpu_ns": 18924823107,
+          "rss_kb": 115400,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8174336,
+          "java_heap_used_bytes": 4682728,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "12",
+            "art.gc.gc-time": "101",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 624,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342379876678483,
+          "process_cpu_ms": 19109,
+          "thread_cpu_ns": 18930849104,
+          "rss_kb": 115400,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8174800,
+          "java_heap_used_bytes": 4719592,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "12",
+            "art.gc.gc-time": "101",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 780,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342384870202484,
+          "process_cpu_ms": 19125,
+          "thread_cpu_ns": 18947412706,
+          "rss_kb": 115652,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8175264,
+          "java_heap_used_bytes": 4756456,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "12",
+            "art.gc.gc-time": "101",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 936,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342389862277792,
+          "process_cpu_ms": 19143,
+          "thread_cpu_ns": 18965357716,
+          "rss_kb": 115912,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8175728,
+          "java_heap_used_bytes": 4793320,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "12",
+            "art.gc.gc-time": "101",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 1092,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342394852707100,
+          "process_cpu_ms": 19157,
+          "thread_cpu_ns": 18978678403,
+          "rss_kb": 115912,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8176192,
+          "java_heap_used_bytes": 4830184,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "12",
+            "art.gc.gc-time": "101",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 1248,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342399845386100,
+          "process_cpu_ms": 19167,
+          "thread_cpu_ns": 18989137487,
+          "rss_kb": 116164,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8176656,
+          "java_heap_used_bytes": 4867048,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "12",
+            "art.gc.gc-time": "101",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 1404,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342404837159331,
+          "process_cpu_ms": 19179,
+          "thread_cpu_ns": 19000452712,
+          "rss_kb": 113976,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8177248,
+          "java_heap_used_bytes": 4903912,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "12",
+            "art.gc.gc-time": "101",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 1560,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342407908904870,
+          "process_cpu_ms": 19186,
+          "thread_cpu_ns": 19007175489,
+          "rss_kb": 113848,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8177712,
+          "java_heap_used_bytes": 4940776,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "12",
+            "art.gc.gc-time": "101",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 1656,
+          "phase": "sustained"
+        }
+      ],
+      "diagnostics": {
+        "active_mode": "bypass",
+        "close_wall_ms": 7.7E-5,
+        "resources_after_close": {
+          "monotonic_ns": 342407927893177,
+          "process_cpu_ms": 19204,
+          "thread_cpu_ns": 19025934182,
+          "rss_kb": 115736,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8179584,
+          "java_heap_used_bytes": 7349224,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "12",
+            "art.gc.gc-time": "101",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          }
+        }
+      },
+      "first_fallback_frame": null,
+      "fallback_reason": null,
+      "state_policy": "fresh-engine-per-case",
+      "input_loop_count": 1,
+      "dropped_frames": 0,
+      "schedule_rebases": 0
+    },
+    {
+      "id": "replay-04-slough-distant-pa-engine",
+      "mode": "engine",
+      "kind": "replay",
+      "input_id": "04-slough-distant-pa",
+      "input_sha256": "92c4f9640c11ec9168805a3d65fa7eb6065b4b34cd1d65dd6fb8d36d8f83a357",
+      "frame_count": 847,
+      "warmup_frames": 0,
+      "sustained_frames": 847,
+      "audio_duration_s": 27.104,
+      "source_sample_count": 433575,
+      "last_frame_zero_padding_samples": 89,
+      "elapsed_ms": 27075.511694,
+      "process_cpu_ms": 3127,
+      "process_cpu_percent_one_core": 11.549181545820797,
+      "frames_file": "replay-04-slough-distant-pa-engine.frames.csv",
+      "frames_sha256": "d4b4c8925c3123b13c4f5c9547aea5001facc2f176710c2ab8162043491960c4",
+      "initialization_wall_ms": 65.602846,
+      "resources_before_initialization": {
+        "monotonic_ns": 342407938931639,
+        "process_cpu_ms": 19213,
+        "thread_cpu_ns": 19034713796,
+        "rss_kb": 117848,
+        "rss_high_water_kb": 197636,
+        "native_heap_allocated_bytes": 8180912,
+        "java_heap_used_bytes": 10712040,
+        "runtime_gc_counters": {
+          "art.gc.gc-count": "12",
+          "art.gc.gc-time": "101",
+          "art.gc.blocking-gc-count": "0",
+          "art.gc.blocking-gc-time": "0"
+        }
+      },
+      "resources_after_initialization": {
+        "monotonic_ns": 342408004930177,
+        "process_cpu_ms": 19281,
+        "thread_cpu_ns": 19099439949,
+        "rss_kb": 116136,
+        "rss_high_water_kb": 197636,
+        "native_heap_allocated_bytes": 12615904,
+        "java_heap_used_bytes": 6312312,
+        "runtime_gc_counters": {
+          "art.gc.gc-count": "13",
+          "art.gc.gc-time": "104",
+          "art.gc.blocking-gc-count": "0",
+          "art.gc.blocking-gc-time": "0"
+        }
+      },
+      "resources_sustained_start": {
+        "monotonic_ns": 342408005191716,
+        "process_cpu_ms": 19282,
+        "thread_cpu_ns": 19099692642,
+        "rss_kb": 116136,
+        "rss_high_water_kb": 197636,
+        "native_heap_allocated_bytes": 12616368,
+        "java_heap_used_bytes": 6349176,
+        "runtime_gc_counters": {
+          "art.gc.gc-count": "13",
+          "art.gc.gc-time": "104",
+          "art.gc.blocking-gc-count": "0",
+          "art.gc.blocking-gc-time": "0"
+        }
+      },
+      "resources_sustained_end": {
+        "monotonic_ns": 342435112699025,
+        "process_cpu_ms": 22409,
+        "thread_cpu_ns": 22226453907,
+        "rss_kb": 117200,
+        "rss_high_water_kb": 197636,
+        "native_heap_allocated_bytes": 12544672,
+        "java_heap_used_bytes": 8429944,
+        "runtime_gc_counters": {
+          "art.gc.gc-count": "13",
+          "art.gc.gc-time": "104",
+          "art.gc.blocking-gc-count": "0",
+          "art.gc.blocking-gc-time": "0"
+        }
+      },
+      "resource_samples": [
+        {
+          "monotonic_ns": 342408041138408,
+          "process_cpu_ms": 19286,
+          "thread_cpu_ns": 19103750257,
+          "rss_kb": 116148,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 12541520,
+          "java_heap_used_bytes": 6386040,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "13",
+            "art.gc.gc-time": "104",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 0,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342413032549793,
+          "process_cpu_ms": 19994,
+          "thread_cpu_ns": 19812023951,
+          "rss_kb": 116408,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 12541888,
+          "java_heap_used_bytes": 6750584,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "13",
+            "art.gc.gc-time": "104",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 156,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342418024561870,
+          "process_cpu_ms": 20491,
+          "thread_cpu_ns": 20308406866,
+          "rss_kb": 116672,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 12542352,
+          "java_heap_used_bytes": 7115128,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "13",
+            "art.gc.gc-time": "104",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 312,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342423016521486,
+          "process_cpu_ms": 21185,
+          "thread_cpu_ns": 21002328167,
+          "rss_kb": 116936,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 12542816,
+          "java_heap_used_bytes": 7479672,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "13",
+            "art.gc.gc-time": "104",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 468,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342428008536948,
+          "process_cpu_ms": 21686,
+          "thread_cpu_ns": 21503578843,
+          "rss_kb": 116936,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 12543280,
+          "java_heap_used_bytes": 7860600,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "13",
+            "art.gc.gc-time": "104",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 624,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342433000697871,
+          "process_cpu_ms": 22195,
+          "thread_cpu_ns": 22012979595,
+          "rss_kb": 117200,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 12543744,
+          "java_heap_used_bytes": 8225144,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "13",
+            "art.gc.gc-time": "104",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 780,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342435112448025,
+          "process_cpu_ms": 22408,
+          "thread_cpu_ns": 22226209830,
+          "rss_kb": 117200,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 12544208,
+          "java_heap_used_bytes": 8393080,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "13",
+            "art.gc.gc-time": "104",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 846,
+          "phase": "sustained"
+        }
+      ],
+      "diagnostics": {
+        "active_mode": "gtcrn",
+        "requested_mode": "gtcrn",
+        "algorithmic_delay_samples": 256,
+        "startup_padding_samples": 256,
+        "initialization_ns": 65589231,
+        "processed_frames": 847,
+        "max_process_ns": 13816077,
+        "overload_count": 0,
+        "processing_debt_ns": 0,
+        "max_processing_debt_ns": 0,
+        "processing_debt_limit_ns": 64000000,
+        "fallback_reason": null,
+        "close_wall_ms": 4.313538,
+        "resources_after_close": {
+          "monotonic_ns": 342435122875410,
+          "process_cpu_ms": 22419,
+          "thread_cpu_ns": 22236564599,
+          "rss_kb": 116740,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8178608,
+          "java_heap_used_bytes": 9773432,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "13",
+            "art.gc.gc-time": "104",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          }
+        }
+      },
+      "first_fallback_frame": null,
+      "fallback_reason": null,
+      "state_policy": "fresh-engine-per-case",
+      "input_loop_count": 1,
+      "dropped_frames": 0,
+      "schedule_rebases": 0
+    },
+    {
+      "id": "replay-04-slough-distant-pa-bypass",
+      "mode": "bypass",
+      "kind": "replay",
+      "input_id": "04-slough-distant-pa",
+      "input_sha256": "92c4f9640c11ec9168805a3d65fa7eb6065b4b34cd1d65dd6fb8d36d8f83a357",
+      "frame_count": 847,
+      "warmup_frames": 0,
+      "sustained_frames": 847,
+      "audio_duration_s": 27.104,
+      "source_sample_count": 433575,
+      "last_frame_zero_padding_samples": 89,
+      "elapsed_ms": 27073.191001,
+      "process_cpu_ms": 60,
+      "process_cpu_percent_one_core": 0.22162145569683228,
+      "frames_file": "replay-04-slough-distant-pa-bypass.frames.csv",
+      "frames_sha256": "30f898f77a9f5b6b4cb7f5ba2082f92ac852e546fe989783e005cde15f6d46e4",
+      "initialization_wall_ms": 0.001,
+      "resources_before_initialization": {
+        "monotonic_ns": 342435132881256,
+        "process_cpu_ms": 22434,
+        "thread_cpu_ns": 22246393832,
+        "rss_kb": 116420,
+        "rss_high_water_kb": 197636,
+        "native_heap_allocated_bytes": 8184032,
+        "java_heap_used_bytes": 13472120,
+        "runtime_gc_counters": {
+          "art.gc.gc-count": "13",
+          "art.gc.gc-time": "104",
+          "art.gc.blocking-gc-count": "0",
+          "art.gc.blocking-gc-time": "0"
+        }
+      },
+      "resources_after_initialization": {
+        "monotonic_ns": 342435133174718,
+        "process_cpu_ms": 22434,
+        "thread_cpu_ns": 22246674755,
+        "rss_kb": 113632,
+        "rss_high_water_kb": 197636,
+        "native_heap_allocated_bytes": 8184496,
+        "java_heap_used_bytes": 13508984,
+        "runtime_gc_counters": {
+          "art.gc.gc-count": "13",
+          "art.gc.gc-time": "104",
+          "art.gc.blocking-gc-count": "0",
+          "art.gc.blocking-gc-time": "0"
+        }
+      },
+      "resources_sustained_start": {
+        "monotonic_ns": 342435133362718,
+        "process_cpu_ms": 22434,
+        "thread_cpu_ns": 22246862139,
+        "rss_kb": 112436,
+        "rss_high_water_kb": 197636,
+        "native_heap_allocated_bytes": 8185792,
+        "java_heap_used_bytes": 6246776,
+        "runtime_gc_counters": {
+          "art.gc.gc-count": "13",
+          "art.gc.gc-time": "104",
+          "art.gc.blocking-gc-count": "0",
+          "art.gc.blocking-gc-time": "0"
+        }
+      },
+      "resources_sustained_end": {
+        "monotonic_ns": 342462238862719,
+        "process_cpu_ms": 22495,
+        "thread_cpu_ns": 22301807459,
+        "rss_kb": 106876,
+        "rss_high_water_kb": 197636,
+        "native_heap_allocated_bytes": 8177376,
+        "java_heap_used_bytes": 4106656,
+        "runtime_gc_counters": {
+          "art.gc.gc-count": "14",
+          "art.gc.gc-time": "110",
+          "art.gc.blocking-gc-count": "0",
+          "art.gc.blocking-gc-time": "0"
+        }
+      },
+      "resource_samples": [
+        {
+          "monotonic_ns": 342435165577871,
+          "process_cpu_ms": 22436,
+          "thread_cpu_ns": 22247233294,
+          "rss_kb": 112196,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8174096,
+          "java_heap_used_bytes": 3832224,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "14",
+            "art.gc.gc-time": "110",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 0,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342440158195102,
+          "process_cpu_ms": 22446,
+          "thread_cpu_ns": 22257090530,
+          "rss_kb": 108560,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8174464,
+          "java_heap_used_bytes": 3885472,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "14",
+            "art.gc.gc-time": "110",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 156,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342445150157180,
+          "process_cpu_ms": 22460,
+          "thread_cpu_ns": 22270409628,
+          "rss_kb": 105928,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8174928,
+          "java_heap_used_bytes": 3922336,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "14",
+            "art.gc.gc-time": "110",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 312,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342450142108949,
+          "process_cpu_ms": 22474,
+          "thread_cpu_ns": 22280864014,
+          "rss_kb": 106400,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8175520,
+          "java_heap_used_bytes": 3959200,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "14",
+            "art.gc.gc-time": "110",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 468,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342455134164873,
+          "process_cpu_ms": 22482,
+          "thread_cpu_ns": 22289508707,
+          "rss_kb": 106648,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8175984,
+          "java_heap_used_bytes": 3996064,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "14",
+            "art.gc.gc-time": "110",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 624,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342460126088258,
+          "process_cpu_ms": 22490,
+          "thread_cpu_ns": 22297481079,
+          "rss_kb": 106648,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8176448,
+          "java_heap_used_bytes": 4032928,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "14",
+            "art.gc.gc-time": "110",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 780,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342462238196873,
+          "process_cpu_ms": 22494,
+          "thread_cpu_ns": 22301220998,
+          "rss_kb": 106876,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8176912,
+          "java_heap_used_bytes": 4069792,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "14",
+            "art.gc.gc-time": "110",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 846,
+          "phase": "sustained"
+        }
+      ],
+      "diagnostics": {
+        "active_mode": "bypass",
+        "close_wall_ms": 0,
+        "resources_after_close": {
+          "monotonic_ns": 342462255065565,
+          "process_cpu_ms": 22510,
+          "thread_cpu_ns": 22317328845,
+          "rss_kb": 107828,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8178848,
+          "java_heap_used_bytes": 5450144,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "14",
+            "art.gc.gc-time": "110",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          }
+        }
+      },
+      "first_fallback_frame": null,
+      "fallback_reason": null,
+      "state_policy": "fresh-engine-per-case",
+      "input_loop_count": 1,
+      "dropped_frames": 0,
+      "schedule_rebases": 0
+    },
+    {
+      "id": "replay-05-southall-platform-pa-engine",
+      "mode": "engine",
+      "kind": "replay",
+      "input_id": "05-southall-platform-pa",
+      "input_sha256": "e396e872a48cc04a7e216146953d104d4a8d4e9dd16ddd94f25cb938f5bddc0d",
+      "frame_count": 919,
+      "warmup_frames": 0,
+      "sustained_frames": 919,
+      "audio_duration_s": 29.408,
+      "source_sample_count": 470344,
+      "last_frame_zero_padding_samples": 184,
+      "elapsed_ms": 29379.552387,
+      "process_cpu_ms": 3211,
+      "process_cpu_percent_one_core": 10.929370052012155,
+      "frames_file": "replay-05-southall-platform-pa-engine.frames.csv",
+      "frames_sha256": "e5a521a8b440c5bbf8d33ff50cca73d1050cbd365c88dc46b23472610d451273",
+      "initialization_wall_ms": 69.780846,
+      "resources_before_initialization": {
+        "monotonic_ns": 342462268203719,
+        "process_cpu_ms": 22521,
+        "thread_cpu_ns": 22328021766,
+        "rss_kb": 110528,
+        "rss_high_water_kb": 197636,
+        "native_heap_allocated_bytes": 8180304,
+        "java_heap_used_bytes": 9386400,
+        "runtime_gc_counters": {
+          "art.gc.gc-count": "14",
+          "art.gc.gc-time": "110",
+          "art.gc.blocking-gc-count": "0",
+          "art.gc.blocking-gc-time": "0"
+        }
+      },
+      "resources_after_initialization": {
+        "monotonic_ns": 342462338390411,
+        "process_cpu_ms": 22592,
+        "thread_cpu_ns": 22394974228,
+        "rss_kb": 108684,
+        "rss_high_water_kb": 197636,
+        "native_heap_allocated_bytes": 12616560,
+        "java_heap_used_bytes": 4820680,
+        "runtime_gc_counters": {
+          "art.gc.gc-count": "15",
+          "art.gc.gc-time": "114",
+          "art.gc.blocking-gc-count": "0",
+          "art.gc.blocking-gc-time": "0"
+        }
+      },
+      "resources_sustained_start": {
+        "monotonic_ns": 342462338638796,
+        "process_cpu_ms": 22592,
+        "thread_cpu_ns": 22395214536,
+        "rss_kb": 108684,
+        "rss_high_water_kb": 197636,
+        "native_heap_allocated_bytes": 12617024,
+        "java_heap_used_bytes": 4857544,
+        "runtime_gc_counters": {
+          "art.gc.gc-count": "15",
+          "art.gc.gc-time": "114",
+          "art.gc.blocking-gc-count": "0",
+          "art.gc.blocking-gc-time": "0"
+        }
+      },
+      "resources_sustained_end": {
+        "monotonic_ns": 342491750205567,
+        "process_cpu_ms": 25803,
+        "thread_cpu_ns": 25605840728,
+        "rss_kb": 108264,
+        "rss_high_water_kb": 197636,
+        "native_heap_allocated_bytes": 12545328,
+        "java_heap_used_bytes": 7102152,
+        "runtime_gc_counters": {
+          "art.gc.gc-count": "15",
+          "art.gc.gc-time": "114",
+          "art.gc.blocking-gc-count": "0",
+          "art.gc.blocking-gc-time": "0"
+        }
+      },
+      "resource_samples": [
+        {
+          "monotonic_ns": 342462374708027,
+          "process_cpu_ms": 22596,
+          "thread_cpu_ns": 22399396767,
+          "rss_kb": 108728,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 12542176,
+          "java_heap_used_bytes": 4894408,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "15",
+            "art.gc.gc-time": "114",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 0,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342467366258719,
+          "process_cpu_ms": 23321,
+          "thread_cpu_ns": 23123536708,
+          "rss_kb": 107008,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 12542544,
+          "java_heap_used_bytes": 5258952,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "15",
+            "art.gc.gc-time": "114",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 156,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342472358240874,
+          "process_cpu_ms": 23834,
+          "thread_cpu_ns": 23636554169,
+          "rss_kb": 107268,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 12543008,
+          "java_heap_used_bytes": 5639880,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "15",
+            "art.gc.gc-time": "114",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 312,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342477350103720,
+          "process_cpu_ms": 24339,
+          "thread_cpu_ns": 24142122557,
+          "rss_kb": 107532,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 12543472,
+          "java_heap_used_bytes": 6004424,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "15",
+            "art.gc.gc-time": "114",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 468,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342482342071643,
+          "process_cpu_ms": 24837,
+          "thread_cpu_ns": 24639324124,
+          "rss_kb": 107796,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 12543936,
+          "java_heap_used_bytes": 6368968,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "15",
+            "art.gc.gc-time": "114",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 624,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342487336675644,
+          "process_cpu_ms": 25333,
+          "thread_cpu_ns": 25136214347,
+          "rss_kb": 108060,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 12544400,
+          "java_heap_used_bytes": 6733512,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "15",
+            "art.gc.gc-time": "114",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 780,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342491749954721,
+          "process_cpu_ms": 25803,
+          "thread_cpu_ns": 25605595882,
+          "rss_kb": 108264,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 12544864,
+          "java_heap_used_bytes": 7065288,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "15",
+            "art.gc.gc-time": "114",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 918,
+          "phase": "sustained"
+        }
+      ],
+      "diagnostics": {
+        "active_mode": "gtcrn",
+        "requested_mode": "gtcrn",
+        "algorithmic_delay_samples": 256,
+        "startup_padding_samples": 256,
+        "initialization_ns": 69738769,
+        "processed_frames": 919,
+        "max_process_ns": 14896616,
+        "overload_count": 0,
+        "processing_debt_ns": 0,
+        "max_processing_debt_ns": 0,
+        "processing_debt_limit_ns": 64000000,
+        "fallback_reason": null,
+        "close_wall_ms": 4.364923,
+        "resources_after_close": {
+          "monotonic_ns": 342491760981798,
+          "process_cpu_ms": 25814,
+          "thread_cpu_ns": 25616520190,
+          "rss_kb": 108312,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8179264,
+          "java_heap_used_bytes": 8535752,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "15",
+            "art.gc.gc-time": "114",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          }
+        }
+      },
+      "first_fallback_frame": null,
+      "fallback_reason": null,
+      "state_policy": "fresh-engine-per-case",
+      "input_loop_count": 1,
+      "dropped_frames": 0,
+      "schedule_rebases": 0
+    },
+    {
+      "id": "replay-05-southall-platform-pa-bypass",
+      "mode": "bypass",
+      "kind": "replay",
+      "input_id": "05-southall-platform-pa",
+      "input_sha256": "e396e872a48cc04a7e216146953d104d4a8d4e9dd16ddd94f25cb938f5bddc0d",
+      "frame_count": 919,
+      "warmup_frames": 0,
+      "sustained_frames": 919,
+      "audio_duration_s": 29.408,
+      "source_sample_count": 470344,
+      "last_frame_zero_padding_samples": 184,
+      "elapsed_ms": 29377.063156,
+      "process_cpu_ms": 77,
+      "process_cpu_percent_one_core": 0.2621092503056196,
+      "frames_file": "replay-05-southall-platform-pa-bypass.frames.csv",
+      "frames_sha256": "0e8da8531e1d89bb504a54c3e6efad00d52eb3847d6ad8b1be1da46938806ca9",
+      "initialization_wall_ms": 0.001154,
+      "resources_before_initialization": {
+        "monotonic_ns": 342491771636952,
+        "process_cpu_ms": 25826,
+        "thread_cpu_ns": 25627093805,
+        "rss_kb": 110960,
+        "rss_high_water_kb": 197636,
+        "native_heap_allocated_bytes": 8180576,
+        "java_heap_used_bytes": 12512968,
+        "runtime_gc_counters": {
+          "art.gc.gc-count": "15",
+          "art.gc.gc-time": "114",
+          "art.gc.blocking-gc-count": "0",
+          "art.gc.blocking-gc-time": "0"
+        }
+      },
+      "resources_after_initialization": {
+        "monotonic_ns": 342491771896336,
+        "process_cpu_ms": 25826,
+        "thread_cpu_ns": 25627344575,
+        "rss_kb": 110960,
+        "rss_high_water_kb": 197636,
+        "native_heap_allocated_bytes": 8181040,
+        "java_heap_used_bytes": 12549832,
+        "runtime_gc_counters": {
+          "art.gc.gc-count": "15",
+          "art.gc.gc-time": "114",
+          "art.gc.blocking-gc-count": "0",
+          "art.gc.blocking-gc-time": "0"
+        }
+      },
+      "resources_sustained_start": {
+        "monotonic_ns": 342491772149798,
+        "process_cpu_ms": 25830,
+        "thread_cpu_ns": 25627546036,
+        "rss_kb": 110960,
+        "rss_high_water_kb": 197636,
+        "native_heap_allocated_bytes": 8181504,
+        "java_heap_used_bytes": 12586696,
+        "runtime_gc_counters": {
+          "art.gc.gc-count": "15",
+          "art.gc.gc-time": "114",
+          "art.gc.blocking-gc-count": "0",
+          "art.gc.blocking-gc-time": "0"
+        }
+      },
+      "resources_sustained_end": {
+        "monotonic_ns": 342521181419107,
+        "process_cpu_ms": 25903,
+        "thread_cpu_ns": 25689223810,
+        "rss_kb": 106184,
+        "rss_high_water_kb": 197636,
+        "native_heap_allocated_bytes": 8175920,
+        "java_heap_used_bytes": 4251288,
+        "runtime_gc_counters": {
+          "art.gc.gc-count": "16",
+          "art.gc.gc-time": "130",
+          "art.gc.blocking-gc-count": "0",
+          "art.gc.blocking-gc-time": "0"
+        }
+      },
+      "resource_samples": [
+        {
+          "monotonic_ns": 342491804413259,
+          "process_cpu_ms": 25842,
+          "thread_cpu_ns": 25628004728,
+          "rss_kb": 105416,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8172768,
+          "java_heap_used_bytes": 3976856,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "16",
+            "art.gc.gc-time": "130",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 0,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342496797105567,
+          "process_cpu_ms": 25852,
+          "thread_cpu_ns": 25637669273,
+          "rss_kb": 105416,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8173136,
+          "java_heap_used_bytes": 4030104,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "16",
+            "art.gc.gc-time": "130",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 156,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342501788876875,
+          "process_cpu_ms": 25862,
+          "thread_cpu_ns": 25647562051,
+          "rss_kb": 105460,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8173600,
+          "java_heap_used_bytes": 4066968,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "16",
+            "art.gc.gc-time": "130",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 312,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342506780728645,
+          "process_cpu_ms": 25869,
+          "thread_cpu_ns": 25654780197,
+          "rss_kb": 105708,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8174064,
+          "java_heap_used_bytes": 4103832,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "16",
+            "art.gc.gc-time": "130",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 468,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342511774561876,
+          "process_cpu_ms": 25885,
+          "thread_cpu_ns": 25671215352,
+          "rss_kb": 105708,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8174528,
+          "java_heap_used_bytes": 4140696,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "16",
+            "art.gc.gc-time": "130",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 624,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342516764788338,
+          "process_cpu_ms": 25895,
+          "thread_cpu_ns": 25680989274,
+          "rss_kb": 105940,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8174992,
+          "java_heap_used_bytes": 4177560,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "16",
+            "art.gc.gc-time": "130",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 780,
+          "phase": "sustained"
+        },
+        {
+          "monotonic_ns": 342521180758184,
+          "process_cpu_ms": 25903,
+          "thread_cpu_ns": 25688573041,
+          "rss_kb": 106184,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8175456,
+          "java_heap_used_bytes": 4214424,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "16",
+            "art.gc.gc-time": "130",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          },
+          "frame": 918,
+          "phase": "sustained"
+        }
+      ],
+      "diagnostics": {
+        "active_mode": "bypass",
+        "close_wall_ms": 2.31E-4,
+        "resources_after_close": {
+          "monotonic_ns": 342521195824953,
+          "process_cpu_ms": 25918,
+          "thread_cpu_ns": 25703434042,
+          "rss_kb": 107208,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8177392,
+          "java_heap_used_bytes": 5684888,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "16",
+            "art.gc.gc-time": "130",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          }
+        }
+      },
+      "first_fallback_frame": null,
+      "fallback_reason": null,
+      "state_policy": "fresh-engine-per-case",
+      "input_loop_count": 1,
+      "dropped_frames": 0,
+      "schedule_rebases": 0
+    }
+  ],
+  "replays": [
+    {
+      "input_id": "01-india-station-pa",
+      "case_id": "01-india-station-pa",
+      "variant": "real-station-pa",
+      "mode": "engine",
+      "input_sha256": "b9b7c42f09da1b4669071e4d61858baa344bd63e37a54c29e01682b4f01368a0",
+      "output_file": "replay-01-india-station-pa-engine.wav",
+      "output_sha256": "59f00e85383cf41e3d341e1d88739b1d8d06fd85825ca8bf3a2a71b9edb5b5b9",
+      "sample_count": 887328,
+      "sample_zero_offset": 0,
+      "causal_unshifted": true,
+      "state_policy": "fresh-engine-per-case",
+      "all_engine_frames_active": true,
+      "diagnostics": {
+        "active_mode": "gtcrn",
+        "requested_mode": "gtcrn",
+        "algorithmic_delay_samples": 256,
+        "startup_padding_samples": 256,
+        "initialization_ns": 63788385,
+        "processed_frames": 1734,
+        "max_process_ns": 14752000,
+        "overload_count": 0,
+        "processing_debt_ns": 0,
+        "max_processing_debt_ns": 0,
+        "processing_debt_limit_ns": 64000000,
+        "fallback_reason": null,
+        "close_wall_ms": 4.294693,
+        "resources_after_close": {
+          "monotonic_ns": 342199608533550,
+          "process_cpu_ms": 9396,
+          "thread_cpu_ns": 9311007908,
+          "rss_kb": 194148,
+          "rss_high_water_kb": 195820,
+          "native_heap_allocated_bytes": 8166320,
+          "java_heap_used_bytes": 10052328,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "4",
+            "art.gc.gc-time": "42",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          }
+        }
+      },
+      "stage_id": "replay-01-india-station-pa-engine"
+    },
+    {
+      "input_id": "01-india-station-pa",
+      "case_id": "01-india-station-pa",
+      "variant": "real-station-pa",
+      "mode": "bypass",
+      "input_sha256": "b9b7c42f09da1b4669071e4d61858baa344bd63e37a54c29e01682b4f01368a0",
+      "output_file": "replay-01-india-station-pa-bypass.wav",
+      "output_sha256": "7a9e1071db653ca8eb8d83960fce7fc6a4da5acba036992d074080752c3fd1b1",
+      "sample_count": 887328,
+      "sample_zero_offset": 0,
+      "causal_unshifted": true,
+      "state_policy": "fresh-engine-per-case",
+      "all_engine_frames_active": false,
+      "diagnostics": {
+        "active_mode": "bypass",
+        "close_wall_ms": 2.31E-4,
+        "resources_after_close": {
+          "monotonic_ns": 342255156941861,
+          "process_cpu_ms": 9637,
+          "thread_cpu_ns": 9505401380,
+          "rss_kb": 168988,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8179600,
+          "java_heap_used_bytes": 7572344,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "6",
+            "art.gc.gc-time": "61",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          }
+        }
+      },
+      "stage_id": "replay-01-india-station-pa-bypass"
+    },
+    {
+      "input_id": "02-slough-platform-four",
+      "case_id": "02-slough-platform-four",
+      "variant": "real-station-pa",
+      "mode": "engine",
+      "input_sha256": "e45e4f4fbcf81a007d418edb55ac3e85a460ba5a0b71197390a3b5c69e9c09ab",
+      "output_file": "replay-02-slough-platform-four-engine.wav",
+      "output_sha256": "8df2bac99f57b30671d950d26d5d3902cda044ebf785d5e1258771ba43a99900",
+      "sample_count": 371426,
+      "sample_zero_offset": 0,
+      "causal_unshifted": true,
+      "state_policy": "fresh-engine-per-case",
+      "all_engine_frames_active": true,
+      "diagnostics": {
+        "active_mode": "gtcrn",
+        "requested_mode": "gtcrn",
+        "algorithmic_delay_samples": 256,
+        "startup_padding_samples": 256,
+        "initialization_ns": 69014461,
+        "processed_frames": 726,
+        "max_process_ns": 12787384,
+        "overload_count": 0,
+        "processing_debt_ns": 0,
+        "max_processing_debt_ns": 0,
+        "processing_debt_limit_ns": 64000000,
+        "fallback_reason": null,
+        "close_wall_ms": 4.243385,
+        "resources_after_close": {
+          "monotonic_ns": 342278489422093,
+          "process_cpu_ms": 12290,
+          "thread_cpu_ns": 12151276223,
+          "rss_kb": 170384,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8177888,
+          "java_heap_used_bytes": 9194112,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "7",
+            "art.gc.gc-time": "65",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          }
+        }
+      },
+      "stage_id": "replay-02-slough-platform-four-engine"
+    },
+    {
+      "input_id": "02-slough-platform-four",
+      "case_id": "02-slough-platform-four",
+      "variant": "real-station-pa",
+      "mode": "bypass",
+      "input_sha256": "e45e4f4fbcf81a007d418edb55ac3e85a460ba5a0b71197390a3b5c69e9c09ab",
+      "output_file": "replay-02-slough-platform-four-bypass.wav",
+      "output_sha256": "0e82e72213da0efffdba8824eb78ab05c10149c16eab792cfc38dae808841b1b",
+      "sample_count": 371426,
+      "sample_zero_offset": 0,
+      "causal_unshifted": true,
+      "state_policy": "fresh-engine-per-case",
+      "all_engine_frames_active": false,
+      "diagnostics": {
+        "active_mode": "bypass",
+        "close_wall_ms": 0,
+        "resources_after_close": {
+          "monotonic_ns": 342301746883633,
+          "process_cpu_ms": 12358,
+          "thread_cpu_ns": 12212537857,
+          "rss_kb": 167620,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8178000,
+          "java_heap_used_bytes": 4791560,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "8",
+            "art.gc.gc-time": "71",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          }
+        }
+      },
+      "stage_id": "replay-02-slough-platform-four-bypass"
+    },
+    {
+      "input_id": "03-slough-through-train",
+      "case_id": "03-slough-through-train",
+      "variant": "real-station-pa",
+      "mode": "engine",
+      "input_sha256": "87250b4e8f16793e0b33957108df7cc62fc538ee2e5eb0f7fa348621c781b30c",
+      "output_file": "replay-03-slough-through-train-engine.wav",
+      "output_sha256": "8d9ffbd1caed9f0f3ee227dd20e3da71f3a9c502360cdb5b0e5ccaca09d3b3b9",
+      "sample_count": 848069,
+      "sample_zero_offset": 0,
+      "causal_unshifted": true,
+      "state_policy": "fresh-engine-per-case",
+      "all_engine_frames_active": true,
+      "diagnostics": {
+        "active_mode": "gtcrn",
+        "requested_mode": "gtcrn",
+        "algorithmic_delay_samples": 256,
+        "startup_padding_samples": 256,
+        "initialization_ns": 64949846,
+        "processed_frames": 1657,
+        "max_process_ns": 24309846,
+        "overload_count": 0,
+        "processing_debt_ns": 0,
+        "max_processing_debt_ns": 0,
+        "processing_debt_limit_ns": 64000000,
+        "fallback_reason": null,
+        "close_wall_ms": 4.322077,
+        "resources_after_close": {
+          "monotonic_ns": 342354869857559,
+          "process_cpu_ms": 19030,
+          "thread_cpu_ns": 18873009270,
+          "rss_kb": 119312,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8174880,
+          "java_heap_used_bytes": 7488176,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "10",
+            "art.gc.gc-time": "80",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          }
+        }
+      },
+      "stage_id": "replay-03-slough-through-train-engine"
+    },
+    {
+      "input_id": "03-slough-through-train",
+      "case_id": "03-slough-through-train",
+      "variant": "real-station-pa",
+      "mode": "bypass",
+      "input_sha256": "87250b4e8f16793e0b33957108df7cc62fc538ee2e5eb0f7fa348621c781b30c",
+      "output_file": "replay-03-slough-through-train-bypass.wav",
+      "output_sha256": "36fa7fe4b995dd9db8f50e0ac67fcc4cbf273bfa0c9ad6a92af94184347d4f52",
+      "sample_count": 848069,
+      "sample_zero_offset": 0,
+      "causal_unshifted": true,
+      "state_policy": "fresh-engine-per-case",
+      "all_engine_frames_active": false,
+      "diagnostics": {
+        "active_mode": "bypass",
+        "close_wall_ms": 7.7E-5,
+        "resources_after_close": {
+          "monotonic_ns": 342407927893177,
+          "process_cpu_ms": 19204,
+          "thread_cpu_ns": 19025934182,
+          "rss_kb": 115736,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8179584,
+          "java_heap_used_bytes": 7349224,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "12",
+            "art.gc.gc-time": "101",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          }
+        }
+      },
+      "stage_id": "replay-03-slough-through-train-bypass"
+    },
+    {
+      "input_id": "04-slough-distant-pa",
+      "case_id": "04-slough-distant-pa",
+      "variant": "real-station-pa",
+      "mode": "engine",
+      "input_sha256": "92c4f9640c11ec9168805a3d65fa7eb6065b4b34cd1d65dd6fb8d36d8f83a357",
+      "output_file": "replay-04-slough-distant-pa-engine.wav",
+      "output_sha256": "d52fab328ecd2b7fed9b7abb4e385ad49a3285d0dc9e1b29767191460bbec6af",
+      "sample_count": 433575,
+      "sample_zero_offset": 0,
+      "causal_unshifted": true,
+      "state_policy": "fresh-engine-per-case",
+      "all_engine_frames_active": true,
+      "diagnostics": {
+        "active_mode": "gtcrn",
+        "requested_mode": "gtcrn",
+        "algorithmic_delay_samples": 256,
+        "startup_padding_samples": 256,
+        "initialization_ns": 65589231,
+        "processed_frames": 847,
+        "max_process_ns": 13816077,
+        "overload_count": 0,
+        "processing_debt_ns": 0,
+        "max_processing_debt_ns": 0,
+        "processing_debt_limit_ns": 64000000,
+        "fallback_reason": null,
+        "close_wall_ms": 4.313538,
+        "resources_after_close": {
+          "monotonic_ns": 342435122875410,
+          "process_cpu_ms": 22419,
+          "thread_cpu_ns": 22236564599,
+          "rss_kb": 116740,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8178608,
+          "java_heap_used_bytes": 9773432,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "13",
+            "art.gc.gc-time": "104",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          }
+        }
+      },
+      "stage_id": "replay-04-slough-distant-pa-engine"
+    },
+    {
+      "input_id": "04-slough-distant-pa",
+      "case_id": "04-slough-distant-pa",
+      "variant": "real-station-pa",
+      "mode": "bypass",
+      "input_sha256": "92c4f9640c11ec9168805a3d65fa7eb6065b4b34cd1d65dd6fb8d36d8f83a357",
+      "output_file": "replay-04-slough-distant-pa-bypass.wav",
+      "output_sha256": "851daeaab6200fb4eb8bf707c67b9765ff14ca5d9d1287e33343084e16902846",
+      "sample_count": 433575,
+      "sample_zero_offset": 0,
+      "causal_unshifted": true,
+      "state_policy": "fresh-engine-per-case",
+      "all_engine_frames_active": false,
+      "diagnostics": {
+        "active_mode": "bypass",
+        "close_wall_ms": 0,
+        "resources_after_close": {
+          "monotonic_ns": 342462255065565,
+          "process_cpu_ms": 22510,
+          "thread_cpu_ns": 22317328845,
+          "rss_kb": 107828,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8178848,
+          "java_heap_used_bytes": 5450144,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "14",
+            "art.gc.gc-time": "110",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          }
+        }
+      },
+      "stage_id": "replay-04-slough-distant-pa-bypass"
+    },
+    {
+      "input_id": "05-southall-platform-pa",
+      "case_id": "05-southall-platform-pa",
+      "variant": "real-station-pa",
+      "mode": "engine",
+      "input_sha256": "e396e872a48cc04a7e216146953d104d4a8d4e9dd16ddd94f25cb938f5bddc0d",
+      "output_file": "replay-05-southall-platform-pa-engine.wav",
+      "output_sha256": "c5934c424b0de20bec6b465b889b46eecf95138ab2a20c2c5d76903e3f4bb536",
+      "sample_count": 470344,
+      "sample_zero_offset": 0,
+      "causal_unshifted": true,
+      "state_policy": "fresh-engine-per-case",
+      "all_engine_frames_active": true,
+      "diagnostics": {
+        "active_mode": "gtcrn",
+        "requested_mode": "gtcrn",
+        "algorithmic_delay_samples": 256,
+        "startup_padding_samples": 256,
+        "initialization_ns": 69738769,
+        "processed_frames": 919,
+        "max_process_ns": 14896616,
+        "overload_count": 0,
+        "processing_debt_ns": 0,
+        "max_processing_debt_ns": 0,
+        "processing_debt_limit_ns": 64000000,
+        "fallback_reason": null,
+        "close_wall_ms": 4.364923,
+        "resources_after_close": {
+          "monotonic_ns": 342491760981798,
+          "process_cpu_ms": 25814,
+          "thread_cpu_ns": 25616520190,
+          "rss_kb": 108312,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8179264,
+          "java_heap_used_bytes": 8535752,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "15",
+            "art.gc.gc-time": "114",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          }
+        }
+      },
+      "stage_id": "replay-05-southall-platform-pa-engine"
+    },
+    {
+      "input_id": "05-southall-platform-pa",
+      "case_id": "05-southall-platform-pa",
+      "variant": "real-station-pa",
+      "mode": "bypass",
+      "input_sha256": "e396e872a48cc04a7e216146953d104d4a8d4e9dd16ddd94f25cb938f5bddc0d",
+      "output_file": "replay-05-southall-platform-pa-bypass.wav",
+      "output_sha256": "9fd574aed3b8c2d713322ecb29766c11783bd581e3b0b4b9277d37eb3191aa8f",
+      "sample_count": 470344,
+      "sample_zero_offset": 0,
+      "causal_unshifted": true,
+      "state_policy": "fresh-engine-per-case",
+      "all_engine_frames_active": false,
+      "diagnostics": {
+        "active_mode": "bypass",
+        "close_wall_ms": 2.31E-4,
+        "resources_after_close": {
+          "monotonic_ns": 342521195824953,
+          "process_cpu_ms": 25918,
+          "thread_cpu_ns": 25703434042,
+          "rss_kb": 107208,
+          "rss_high_water_kb": 197636,
+          "native_heap_allocated_bytes": 8177392,
+          "java_heap_used_bytes": 5684888,
+          "runtime_gc_counters": {
+            "art.gc.gc-count": "16",
+            "art.gc.gc-time": "130",
+            "art.gc.blocking-gc-count": "0",
+            "art.gc.blocking-gc-time": "0"
+          }
+        }
+      },
+      "stage_id": "replay-05-southall-platform-pa-bypass"
+    }
+  ],
+  "options": {
+    "inputDir": "\/data\/local\/tmp\/cuebell-denoising-station-pa-v4\/inputs",
+    "outputDir": "\/data\/local\/tmp\/cuebell-denoising-station-pa-v4\/results",
+    "modelPath": "\/data\/local\/tmp\/cuebell-denoising-station-pa-v4\/gtcrn_simple.onnx",
+    "durationSeconds": "30",
+    "warmupSeconds": "5",
+    "stress": "false",
+    "replay": "true",
+    "apkSha256": "b9318ebbb40a85633063175e7f478e492754faacd18889d2f74dbcd9926e7ac9",
+    "label": "device-v4"
+  },
+  "phase": "completed",
+  "thread_priority": {
+    "requested": -16,
+    "actual": -16
+  },
+  "input_manifest_sha256": "19c059a7568ff30403e5a0174432d14d9f61edb57f96e81876fd59fe0231560a",
+  "model": {
+    "path": "\/data\/local\/tmp\/cuebell-denoising-station-pa-v4\/gtcrn_simple.onnx",
+    "sha256": "e77603ac0c23dac3227dd2d7135b3a585cbee2679048aecfa886657d3ae1b534"
+  },
+  "environment": {
+    "manufacturer": "vivo",
+    "model": "I2404",
+    "device": "I2404",
+    "fingerprint": "iQOO\/I2404i\/I2404:16\/BP2A.250605.031.A3_V000L1\/compiler261014093954:user\/release-keys",
+    "sdk_int": 36,
+    "abis": [
+      "arm64-v8a"
+    ],
+    "is_64_bit": true,
+    "logical_processors": 8,
+    "pid": 19212,
+    "entry_point": "app_process",
+    "uid": 2000,
+    "tid": 19212,
+    "process_cgroup": "5:net_prio:\/\n4:memory:\/apps\/in_active_bg\n3:cpuset:\/\n2:cpu:\/\n1:blkio:\/normal\n0::\/system\/uid_0\/pid_16148",
+    "thread_cgroup": "5:net_prio:\/\n4:memory:\/apps\/in_active_bg\n3:cpuset:\/\n2:cpu:\/\n1:blkio:\/normal\n0::\/system\/uid_0\/pid_16148",
+    "thread_cpuset": "\/",
+    "thread": "main",
+    "initial_resources": {
+      "monotonic_ns": 342141546236315,
+      "process_cpu_ms": 599,
+      "thread_cpu_ns": 588312702,
+      "rss_kb": 157672,
+      "rss_high_water_kb": 157684,
+      "native_heap_allocated_bytes": 1413792,
+      "java_heap_used_bytes": 2195456,
+      "runtime_gc_counters": {
+        "art.gc.gc-count": "0",
+        "art.gc.gc-time": "0",
+        "art.gc.blocking-gc-count": "0",
+        "art.gc.blocking-gc-time": "0"
+      }
+    },
+    "classpath_artifacts": [
+      {
+        "path": "\/data\/local\/tmp\/cuebell-denoising-station-pa-v4\/benchmark.apk",
+        "sha256": "b9318ebbb40a85633063175e7f478e492754faacd18889d2f74dbcd9926e7ac9"
+      }
+    ],
+    "caller_supplied_apk_sha256": "b9318ebbb40a85633063175e7f478e492754faacd18889d2f74dbcd9926e7ac9"
+  },
+  "reset_check": {
+    "frames_per_pass": 32,
+    "input_id": "01-india-station-pa",
+    "output_pcm_sha256": [
+      "40ba766603e46b8b931e0bd7d0ea2e98287e3838c596e9254e97fb9141bc7fd5",
+      "40ba766603e46b8b931e0bd7d0ea2e98287e3838c596e9254e97fb9141bc7fd5"
+    ],
+    "identical_after_recreation": true,
+    "all_engine_frames_active": true,
+    "policy": "two fresh production engines, same PCM, absolute-clock replay",
+    "passes": [
+      {
+        "active_mode": "gtcrn",
+        "requested_mode": "gtcrn",
+        "algorithmic_delay_samples": 256,
+        "startup_padding_samples": 256,
+        "initialization_ns": 101653538,
+        "processed_frames": 32,
+        "max_process_ns": 4098770,
+        "overload_count": 0,
+        "processing_debt_ns": 0,
+        "max_processing_debt_ns": 0,
+        "processing_debt_limit_ns": 64000000,
+        "fallback_reason": null
+      },
+      {
+        "active_mode": "gtcrn",
+        "requested_mode": "gtcrn",
+        "algorithmic_delay_samples": 256,
+        "startup_padding_samples": 256,
+        "initialization_ns": 62201538,
+        "processed_frames": 32,
+        "max_process_ns": 3712615,
+        "overload_count": 0,
+        "processing_debt_ns": 0,
+        "max_processing_debt_ns": 0,
+        "processing_debt_limit_ns": 64000000,
+        "fallback_reason": null
+      }
+    ]
+  }
+}

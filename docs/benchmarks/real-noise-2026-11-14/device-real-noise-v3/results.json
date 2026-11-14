@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "status": "failed",
+  "label": "device-real-noise-v3",
+  "engine_class": "expo.modules.queuelistener.GtcrnNoiseReducer",
+  "sample_rate": 16000,
+  "frame_samples": 512,
+  "clock_policy": "absolute System.nanoTime deadlines; no rebasing or dropped frames",
+  "stages": [],
+  "replays": [],
+  "options": {
+    "inputDir": "\/data\/local\/tmp\/cuebell-denoising-real-noise-v3\/inputs",
+    "outputDir": "\/data\/local\/tmp\/cuebell-denoising-real-noise-v3\/results",
+    "modelPath": "\/data\/local\/tmp\/cuebell-denoising-real-noise-v3\/gtcrn_simple.onnx",
+    "durationSeconds": "30",
+    "warmupSeconds": "5",
+    "stress": "false",
+    "replay": "true",
+    "apkSha256": "bcad3f25bbfce16381f73b886a1d157be2dd82da3659140b399dcac1bf543342",
+    "label": "device-real-noise-v3"
+  },
+  "phase": "validating-inputs",
+  "error": "org.json.JSONException: No value for schema_version\n\tat org.json.JSONObject.get(JSONObject.java:398)\n\tat org.json.JSONObject.getInt(JSONObject.java:487)\n\tat expo.modules.queuelistener.DenoisingBenchmark.run(DenoisingBenchmarkInstrumentation.kt:114)\n\tat expo.modules.queuelistener.DenoisingBenchmarkMain.main(DenoisingBenchmarkInstrumentation.kt:68)\n\tat com.android.internal.os.RuntimeInit.nativeFinishInit(Native Method)\n\tat com.android.internal.os.RuntimeInit.main(RuntimeInit.java:420)\n"
+}

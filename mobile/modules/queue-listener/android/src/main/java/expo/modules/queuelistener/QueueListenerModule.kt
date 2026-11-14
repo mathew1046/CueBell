@@ -12,6 +12,8 @@ import androidx.core.app.NotificationManagerCompat
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
 import expo.modules.kotlin.functions.Queues
+import expo.modules.kotlin.records.Field
+import expo.modules.kotlin.records.Record
 import org.json.JSONObject
 import java.util.concurrent.CopyOnWriteArraySet
 
@@ -29,6 +31,8 @@ object ListenerMemory {
   @Volatile var state = "STOPPED"
   @Volatile var message = "Microphone is off."
   @Volatile var mode = "monitor"
+  @Volatile var noiseReductionMode = "off"
+  @Volatile var noiseReduction = NoiseReductionDiagnostics.off()
   @Volatile internal var audioLevel: AudioLevel? = null
   @Synchronized fun emit(event: JSONObject) {
     if (event.optString("type") == "status") {
@@ -44,9 +48,23 @@ object ListenerMemory {
   }
   @Synchronized fun snapshot(): String = JSONObject().put("running", running)
     .put("state", state).put("message", message).put("mode", mode)
+    .put("noiseReductionMode", noiseReductionMode)
+    .put("noiseReduction", noiseReduction.json())
     .put("events", org.json.JSONArray(history.toList().map { JSONObject(it) })).toString()
   @Synchronized fun clear() { history.clear() }
 }
+
+class QueueListenerStartOptions : Record {
+  @Field var noiseReductionMode: String? = null
+}
+
+internal fun NoiseReductionDiagnostics.json(): JSONObject = JSONObject()
+  .put("requestedMode", requestedMode).put("activeMode", activeMode)
+  .put("sampleRate", sampleRate).put("frameSamples", frameSamples)
+  .put("algorithmicDelaySamples", algorithmicDelaySamples).put("startupPaddingSamples", startupPaddingSamples)
+  .put("initializationNanos", initializationNanos).put("processedFrames", processedFrames)
+  .put("lastProcessNanos", lastProcessNanos).put("maxProcessNanos", maxProcessNanos)
+  .put("overloadCount", overloadCount).put("fallbackReason", fallbackReason ?: JSONObject.NULL)
 
 class QueueListenerModule : Module() {
   private val observer: (String) -> Unit = { raw -> sendEvent("onEvent", mapOf("json" to raw)) }
@@ -78,8 +96,10 @@ class QueueListenerModule : Module() {
     Function("dismissAlert") { id: String ->
       appContext.reactContext?.getSystemService(NotificationManager::class.java)?.cancel("queue-alert:$id", 100)
     }
-    AsyncFunction("start") { baseUrl: String, token: String, mode: String ->
+    AsyncFunction("start") { baseUrl: String, token: String, mode: String, options: QueueListenerStartOptions? ->
       val context = appContext.reactContext ?: error("App unavailable.")
+      val noiseReductionMode = options?.noiseReductionMode ?: "off"
+      check(noiseReductionMode in listOf("off", "gtcrn")) { "Unknown noise reduction mode." }
       val handoff = ListenerHandoff.allowed(ListenerMemory.running, ListenerMemory.mode, ListenerMemory.state, mode)
       if (!handoff) {
         val activity = appContext.activityProvider?.currentActivity
@@ -99,9 +119,11 @@ class QueueListenerModule : Module() {
       check(NotificationGate.visible(context)) { "Enable Android notifications and the Listening status channel before starting." }
       val intent = Intent(context, ListenerService::class.java)
         .putExtra("url", baseUrl).putExtra("token", token).putExtra("mode", mode)
+        .putExtra("noiseReductionMode", noiseReductionMode)
       if (handoff) context.startService(intent)
       else ContextCompat.startForegroundService(context, intent)
       ListenerMemory.mode = mode
+      ListenerMemory.noiseReductionMode = noiseReductionMode
       ListenerMemory.running = true
       ListenerMemory.emit(JSONObject().put("type", "status").put("state", "STARTING")
         .put("message", "Connecting to speech recognition…"))

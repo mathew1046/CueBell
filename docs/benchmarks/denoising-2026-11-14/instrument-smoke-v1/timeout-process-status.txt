@@ -1,0 +1,59 @@
+Name:	uelistener.test
+Umask:	0077
+State:	S (sleeping)
+Tgid:	32534
+Ngid:	0
+Pid:	32534
+PPid:	1334
+TracerPid:	0
+Uid:	10392	10392	10392	10392
+Gid:	10392	10392	10392	10392
+FDSize:	128
+Groups:	3003 9997 20392 50392 99909997 
+VmPeak:	15687424 kB
+VmSize:	14963316 kB
+VmLck:	       0 kB
+VmPin:	       0 kB
+VmHWM:	  161140 kB
+VmRSS:	   83160 kB
+RssAnon:	   13020 kB
+RssFile:	   69040 kB
+RssShmem:	    1100 kB
+VmData:	  974184 kB
+VmStk:	    8192 kB
+VmExe:	       8 kB
+VmLib:	  230160 kB
+VmPTE:	    1368 kB
+VmSwap:	   81244 kB
+CoreDumping:	0
+THP_enabled:	1
+Threads:	18
+SigQ:	1/20564
+SigPnd:	0000000000000000
+ShdPnd:	0000000000000000
+SigBlk:	0000000080001204
+SigIgn:	0000000000000001
+SigCgt:	0000006e400084f8
+CapInh:	0000000000000000
+CapPrm:	0000000000000000
+CapEff:	0000000000000000
+CapBnd:	0000000000000000
+CapAmb:	0000000000000000
+NoNewPrivs:	0
+Seccomp:	2
+Seccomp_filters:	1
+Speculation_Store_Bypass:	thread vulnerable
+SpeculationIndirectBranch:	unknown
+Cpus_allowed:	3f
+Cpus_allowed_list:	0-5
+Mems_allowed:	1
+Mems_allowed_list:	0
+voluntary_ctxt_switches:	228
+nonvoluntary_ctxt_switches:	633
+5:net_prio:/
+4:memory:/apps/expo.modules.queuelistener.test
+3:cpuset:/l-foreground
+2:cpu:/foreground
+1:blkio:/normal
+0::/apps/uid_10392/pid_32534
+32534 (uelistener.test) S 1334 1334 0 0 -1 4194624 29110 0 1349 0 298 26 0 0 20 0 18 0 62778262 15322435584 20790 18446744073709551615 393300459520 393300464768 548713541568 0 0 0 4612 1 1073775864 0 0 0 17 0 0 0 0 0 0 393300492288 393300492312 394338906112 548713543666 548713543763 548713543763 548713549792 0

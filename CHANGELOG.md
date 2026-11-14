@@ -3,6 +3,35 @@
 Changes to downloadable Android previews are recorded here. Release assets and
 checksums are authoritative for each published build; historical APKs are not renamed.
 
+## 1.4.0-preview — 2026-11-14
+
+### Added
+
+- Experimental on-device GTCRN noise reduction in Settings → Listening. It is off
+  by default, persists across launches, and applies to spoken setup and monitoring.
+- ARM64 preview uses the tested, checksum-pinned FFT runtime with the same GTCRN
+  model. Processing preserves 16 kHz PCM framing and its 16 ms causal delay.
+- Bounded processing-debt fallback, continuous raw-audio handoff, and visible
+  fallback status; selection is locked during a listening session.
+- Reproducible Android replay, sourced-noise, station-PA, Gnani and GPT-6 Luna
+  benchmark tools, observations, and before/after evidence.
+
+### Evaluation
+
+- All five actual station recordings were fully enhanced on the phone without
+  fallback. Estimated background quality improved, but recognition of a platform
+  and service time regressed reproducibly. This preview exposes the experimental
+  feature for hands-on testing; it is not an accuracy-qualified default.
+- Stop listening before changing the Noise reduction setting.
+
+### Distribution
+
+- Android version 1.4.0 / version code 7; ARM64, development-signed preview.
+- Uses the same signing identity and configured backend as 1.3.1.
+
+Release notes, APK and checksum:
+https://github.com/mathew1046/CueBell/releases/tag/v1.4.0-preview
+
 ## 1.3.1-preview — 2026-11-14
 
 ### Added

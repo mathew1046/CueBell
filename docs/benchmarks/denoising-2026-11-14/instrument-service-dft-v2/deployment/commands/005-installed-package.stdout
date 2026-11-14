@@ -1,0 +1,143 @@
+Receiver Resolver Table:
+  Non-Data Actions:
+      androidx.profileinstaller.action.SAVE_PROFILE:
+        66fd567 expo.modules.queuelistener.test/androidx.profileinstaller.ProfileInstallReceiver filter 818adb2
+          Action: "androidx.profileinstaller.action.SAVE_PROFILE"
+      androidx.profileinstaller.action.INSTALL_PROFILE:
+        66fd567 expo.modules.queuelistener.test/androidx.profileinstaller.ProfileInstallReceiver filter 54d6f14
+          Action: "androidx.profileinstaller.action.INSTALL_PROFILE"
+      androidx.profileinstaller.action.SKIP_FILE:
+        66fd567 expo.modules.queuelistener.test/androidx.profileinstaller.ProfileInstallReceiver filter 74893bd
+          Action: "androidx.profileinstaller.action.SKIP_FILE"
+      androidx.profileinstaller.action.BENCHMARK_OPERATION:
+        66fd567 expo.modules.queuelistener.test/androidx.profileinstaller.ProfileInstallReceiver filter 11a6103
+          Action: "androidx.profileinstaller.action.BENCHMARK_OPERATION"
+
+Domain verification status:
+
+Permissions:
+  Permission [expo.modules.queuelistener.test.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION] (b7a67b5):
+    sourcePackage=expo.modules.queuelistener.test
+    uid=10392 gids=[] type=0 prot=signature
+    perm=PermissionInfo{9b57e4a expo.modules.queuelistener.test.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION}
+    flags=0x0
+
+Registered ContentProviders:
+  expo.modules.queuelistener.test/androidx.startup.InitializationProvider:
+    Provider{5fd81bb expo.modules.queuelistener.test/androidx.startup.InitializationProvider}
+
+ContentProvider Authorities:
+  [expo.modules.queuelistener.test.androidx-startup]:
+    Provider{5fd81bb expo.modules.queuelistener.test/androidx.startup.InitializationProvider}
+      applicationInfo=ApplicationInfo{c1966d8 expo.modules.queuelistener.test}
+
+Key Set Manager:
+  [expo.modules.queuelistener.test]
+      Signing KeySets: 198
+
+Packages:
+  Package [expo.modules.queuelistener.test] (6d53516):
+    appId=10392
+    pkg=Package{9278b50 expo.modules.queuelistener.test}
+    codePath=/data/app/~~P538qLjMpeXRguNNeTta8w==/expo.modules.queuelistener.test-REPrHSs19x-GHTOxIjM6Aw==
+    resourcePath=/data/app/~~P538qLjMpeXRguNNeTta8w==/expo.modules.queuelistener.test-REPrHSs19x-GHTOxIjM6Aw==
+    legacyNativeLibraryDir=/data/app/~~P538qLjMpeXRguNNeTta8w==/expo.modules.queuelistener.test-REPrHSs19x-GHTOxIjM6Aw==/lib
+    extractNativeLibs=false
+    primaryCpuAbi=arm64-v8a
+    secondaryCpuAbi=null
+    cpuAbiOverride=null
+    versionCode=0 minSdk=24 targetSdk=37
+    minExtensionVersions=[]
+    versionName=null
+    hiddenApiEnforcementPolicy=2
+    usesNonSdkApi=false
+    splits=[base]
+    apkSigningVersion=2
+    flags=[ DEBUGGABLE HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]
+    privateFlags=[ PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION ALLOW_AUDIO_PLAYBACK_CAPTURE PRIVATE_FLAG_ALLOW_NATIVE_HEAP_POINTER_TAGGING ]
+    forceQueryable=false
+    pageSizeCompat=0
+    queriesIntents=[Intent { act=android.intent.action.TTS_SERVICE }]
+    scannedAsStoppedSystemApp=false
+    supportsScreens=[small, medium, large, xlarge, resizeable, anyDensity]
+    usesOptionalLibraries:
+      androidx.window.extensions
+      androidx.window.sidecar
+    usesLibraryFiles:
+      /system_ext/framework/androidx.window.extensions.jar
+      /system_ext/framework/androidx.window.sidecar.jar
+    timeStamp=2026-11-14 09:25:57
+    lastUpdateTime=2026-11-14 09:26:00
+    installerPackageName=null
+    installerPackageUid=-1
+    initiatingPackageName=com.android.shell
+    originatingPackageName=null
+    packageSource=1
+    appMetadataFilePath=null
+    appMetadataSource=0
+    signatures=PackageSignatures{b838c1a version:2, signatures:[f204f7e7], past signatures:[]}
+    installPermissionsFixed=false
+    pkgFlags=[ DEBUGGABLE HAS_CODE ALLOW_CLEAR_USER_DATA ALLOW_BACKUP ]
+    privatePkgFlags=[ PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION ALLOW_AUDIO_PLAYBACK_CAPTURE PRIVATE_FLAG_ALLOW_NATIVE_HEAP_POINTER_TAGGING ]
+    apexModuleName=null
+    declared permissions:
+      expo.modules.queuelistener.test.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION: prot=signature
+    requested permissions:
+      android.permission.POST_NOTIFICATIONS
+      android.permission.ACCESS_LOCAL_NETWORK
+      android.permission.SYSTEM_ALERT_WINDOW
+      android.permission.FOREGROUND_SERVICE
+      android.permission.FOREGROUND_SERVICE_MEDIA_PROCESSING
+      android.permission.INTERNET
+      expo.modules.queuelistener.test.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+      android.permission.VIBRATE
+      android.permission.WAKE_LOCK
+    install permissions:
+      android.permission.FOREGROUND_SERVICE: granted=true
+      android.permission.FOREGROUND_SERVICE_MEDIA_PROCESSING: granted=true
+      android.permission.INTERNET: granted=true
+      expo.modules.queuelistener.test.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION: granted=true
+      android.permission.VIBRATE: granted=true
+      android.permission.WAKE_LOCK: granted=true
+    User 0: ceDataInode=613771 deDataInode=613779 installed=true hidden=false vHidden=1 suspended=false distractionFlags=0 stopped=true vStopped=false notLaunched=false enabled=0 instant=false virtual=false quarantined=false
+      installReason=0
+      dataDir=/data/user/0/expo.modules.queuelistener.test
+      firstInstallTime=2026-11-14 08:22:37
+      uninstallReason=0
+      overlay paths:
+        /product/overlay/NavigationBarModeGestural/NavigationBarModeGesturalOverlay.apk
+      legacy overlay paths:
+        /product/overlay/NavigationBarModeGestural/NavigationBarModeGesturalOverlay.apk
+      gids=[3003]
+      runtime permissions:
+        android.permission.POST_NOTIFICATIONS: granted=false, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+    User 10: ceDataInode=0 deDataInode=0 installed=false hidden=false vHidden=1 suspended=false distractionFlags=0 stopped=true vStopped=false notLaunched=true enabled=0 instant=false virtual=false quarantined=false
+      installReason=0
+      dataDir=null
+      firstInstallTime=1970-01-01 05:30:00
+      uninstallReason=0
+      gids=[3003]
+      runtime permissions:
+
+Queries:
+  system apps queryable: false
+  queries via forceQueryable:
+  queries via package name:
+  queries via component:
+    expo.modules.queuelistener.test:
+      com.mcdonalds.mobileapp
+      in.redbus.android
+  queryable via interaction:
+    User 0:
+    User 10:
+  queryable via uses-library:
+
+Dexopt state:
+  [expo.modules.queuelistener.test]
+    path: /data/app/~~P538qLjMpeXRguNNeTta8w==/expo.modules.queuelistener.test-REPrHSs19x-GHTOxIjM6Aw==/base.apk
+      arm64: [status=run-from-apk] [reason=unknown] [primary-abi]
+        [location is error]
+
+Compiler stats:
+  [expo.modules.queuelistener.test]
+    (No recorded stats)

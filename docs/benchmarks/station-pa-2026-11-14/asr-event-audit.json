@@ -1,0 +1,427 @@
+{
+  "attempts": [
+    {
+      "id": "01-india-station-pa",
+      "arm": "after",
+      "status": "completed",
+      "transcript_nonempty": true,
+      "event_counts": {
+        "connected": 1,
+        "speech_start": 4,
+        "transcript": 4
+      },
+      "provider_errors": [],
+      "final_transcript_messages": [
+        {
+          "type": "transcript",
+          "text": "से चलकर बंगलोर को जाने वाली चौंतीस तीस हरियालीसामुद्दीन बंगलोर राजधानी एक्सप्रेस अपने निर्धारित समय चार। लगकर चालीस मिनट व ऐसे पचास मिनट की देरी से आने की संभावना है।",
+          "audio_duration_ms": 14624.0,
+          "segment_id": "01a1d99b-d856-722b-bd92-9f6c45998370-seg-1",
+          "segment_index": 1,
+          "utterance_id": "ueaf499f5",
+          "is_final": true,
+          "latency": 249,
+          "prefetched": false,
+          "timestamp": "2026-11-14T10:30:46.759121+00:00",
+          "detected_language_code": "hi-IN"
+        },
+        {
+          "type": "transcript",
+          "text": "Can I have your again shipping two four three zero Rajdhani Express from Hazrat Nizamuddin to It is scheduled to arrive at four hours thirty minutes, over time by fifty minutes.",
+          "audio_duration_ms": 15764.0,
+          "segment_id": "01a1d99b-d856-722b-bd92-9f6c45998370-seg-2",
+          "segment_index": 2,
+          "utterance_id": "ua91508ce",
+          "is_final": true,
+          "latency": 242,
+          "prefetched": false,
+          "timestamp": "2026-11-14T10:31:02.635335+00:00",
+          "detected_language_code": "en-IN"
+        },
+        {
+          "type": "transcript",
+          "text": "कृपया ध्यान दीजिए। ट्रेन की जानकारी। पैंतीस मिनट की देरी से आने की संभावना है।",
+          "audio_duration_ms": 17012.0,
+          "segment_id": "01a1d99b-d856-722b-bd92-9f6c45998370-seg-3",
+          "segment_index": 3,
+          "utterance_id": "u44e1ed5a",
+          "is_final": true,
+          "latency": 192,
+          "prefetched": false,
+          "timestamp": "2026-11-14T10:31:22.828952+00:00",
+          "detected_language_code": "hi-IN"
+        },
+        {
+          "type": "transcript",
+          "text": "Can I have your attention, please?",
+          "audio_duration_ms": 5044.0,
+          "segment_id": "01a1d99b-d856-722b-bd92-9f6c45998370-seg-4",
+          "segment_index": 4,
+          "utterance_id": "u39c3343a",
+          "is_final": true,
+          "latency": 98,
+          "prefetched": false,
+          "timestamp": "2026-11-14T10:31:27.925084+00:00",
+          "detected_language_code": "en-IN"
+        }
+      ],
+      "unfinished_utterance_ids": []
+    },
+    {
+      "id": "01-india-station-pa",
+      "arm": "before",
+      "status": "completed",
+      "transcript_nonempty": true,
+      "event_counts": {
+        "connected": 1,
+        "speech_start": 4,
+        "transcript": 4
+      },
+      "provider_errors": [],
+      "final_transcript_messages": [
+        {
+          "type": "transcript",
+          "text": "से चलकर बंगलोर को जाने वाली चौंतीस तीस हजरत निजामुद्दीन बंगलोर राजधानी एक्सप्रेस अपने निर्धारित समय से चार। सजग, चालीस मिनट बारह ते अट्ठाईस मिनट के देरी से आने की संभावना है।",
+          "audio_duration_ms": 14400.0,
+          "segment_id": "01a1d99b-d818-7506-95c0-c3f98b665864-seg-1",
+          "segment_index": 1,
+          "utterance_id": "ub67ddafb",
+          "is_final": true,
+          "latency": 263,
+          "prefetched": false,
+          "timestamp": "2026-11-14T10:30:46.448156+00:00",
+          "detected_language_code": "hi-IN"
+        },
+        {
+          "type": "transcript",
+          "text": "Your attention, please, two four three zero Rajdhani Express. From Hazrat Nizamuddin to Bangalore, which is scheduled to arrive at... Four hours, forty minutes, divided by fifty minutes.",
+          "audio_duration_ms": 15796.0,
+          "segment_id": "01a1d99b-d818-7506-95c0-c3f98b665864-seg-2",
+          "segment_index": 2,
+          "utterance_id": "udec3fc8d",
+          "is_final": true,
+          "latency": 218,
+          "prefetched": false,
+          "timestamp": "2026-11-14T10:31:02.569825+00:00",
+          "detected_language_code": "en-IN"
+        },
+        {
+          "type": "transcript",
+          "text": "कृपया ध्यान दीजिए, बिलासपुर से चलकर इंदौर को जाने वाली बयासी चौंतीस। बिलासपुर इंदौर नर्मदा एक्सप्रेस अपने निर्धारित समय चार बजकर पच्चीस मिनट पर से पैंतीस मिनट के विल के आने की संभावना है।",
+          "audio_duration_ms": 16852.0,
+          "segment_id": "01a1d99b-d818-7506-95c0-c3f98b665864-seg-3",
+          "segment_index": 3,
+          "utterance_id": "u34b17b0b",
+          "is_final": true,
+          "latency": 273,
+          "prefetched": false,
+          "timestamp": "2026-11-14T10:31:22.662395+00:00",
+          "detected_language_code": "hi-IN"
+        },
+        {
+          "type": "transcript",
+          "text": "May I have your attention please eight two three four",
+          "audio_duration_ms": 5044.0,
+          "segment_id": "01a1d99b-d818-7506-95c0-c3f98b665864-seg-4",
+          "segment_index": 4,
+          "utterance_id": "ud72fee08",
+          "is_final": true,
+          "latency": 119,
+          "prefetched": false,
+          "timestamp": "2026-11-14T10:31:27.851837+00:00",
+          "detected_language_code": "en-IN"
+        }
+      ],
+      "unfinished_utterance_ids": []
+    },
+    {
+      "id": "02-slough-platform-four",
+      "arm": "after",
+      "status": "completed",
+      "transcript_nonempty": true,
+      "event_counts": {
+        "connected": 1,
+        "speech_start": 3,
+        "transcript": 3
+      },
+      "provider_errors": [],
+      "final_transcript_messages": [
+        {
+          "type": "transcript",
+          "text": "Four four for the eight seven hundred hours first grade Western Service to Freddy.",
+          "audio_duration_ms": 6452.0,
+          "segment_id": "01a1d99b-4918-72e4-9bad-f8dcb722584a-seg-1",
+          "segment_index": 1,
+          "utterance_id": "ueb8fecad",
+          "is_final": true,
+          "latency": 155,
+          "prefetched": false,
+          "timestamp": "2026-11-14T10:30:05.684577+00:00",
+          "detected_language_code": "en-IN"
+        },
+        {
+          "type": "transcript",
+          "text": "",
+          "audio_duration_ms": 4032.0,
+          "segment_id": "01a1d99b-4918-72e4-9bad-f8dcb722584a-seg-2",
+          "segment_index": 2,
+          "utterance_id": "udf0dad16",
+          "is_final": true,
+          "latency": 75,
+          "prefetched": false,
+          "timestamp": "2026-11-14T10:30:09.635686+00:00"
+        },
+        {
+          "type": "transcript",
+          "text": "For the eight seven hundred hours, first break Western service to breeding.",
+          "audio_duration_ms": 6368.0,
+          "segment_id": "01a1d99b-4918-72e4-9bad-f8dcb722584a-seg-3",
+          "segment_index": 3,
+          "utterance_id": "ufc562655",
+          "is_final": true,
+          "latency": 137,
+          "prefetched": false,
+          "timestamp": "2026-11-14T10:30:16.073817+00:00",
+          "detected_language_code": "en-IN"
+        }
+      ],
+      "unfinished_utterance_ids": []
+    },
+    {
+      "id": "02-slough-platform-four",
+      "arm": "before",
+      "status": "completed",
+      "transcript_nonempty": true,
+      "event_counts": {
+        "connected": 1,
+        "speech_start": 4,
+        "transcript": 4
+      },
+      "provider_errors": [],
+      "final_transcript_messages": [
+        {
+          "type": "transcript",
+          "text": "हो, देईल।",
+          "audio_duration_ms": 1300.0,
+          "segment_id": "01a1d99b-4947-7399-b13b-12aeb87b64a7-seg-1",
+          "segment_index": 1,
+          "utterance_id": "uf8121fac",
+          "is_final": true,
+          "latency": 69,
+          "prefetched": false,
+          "timestamp": "2026-11-14T10:30:01.374451+00:00",
+          "detected_language_code": "hi-IN"
+        },
+        {
+          "type": "transcript",
+          "text": "That is to breeding.",
+          "audio_duration_ms": 2324.0,
+          "segment_id": "01a1d99b-4947-7399-b13b-12aeb87b64a7-seg-2",
+          "segment_index": 2,
+          "utterance_id": "u9019463c",
+          "is_final": true,
+          "latency": 76,
+          "prefetched": false,
+          "timestamp": "2026-11-14T10:30:05.665808+00:00",
+          "detected_language_code": "en-IN"
+        },
+        {
+          "type": "transcript",
+          "text": "",
+          "audio_duration_ms": 4032.0,
+          "segment_id": "01a1d99b-4947-7399-b13b-12aeb87b64a7-seg-3",
+          "segment_index": 3,
+          "utterance_id": "uc846f4a1",
+          "is_final": true,
+          "latency": 16,
+          "prefetched": false,
+          "timestamp": "2026-11-14T10:30:09.641030+00:00"
+        },
+        {
+          "type": "transcript",
+          "text": "Platform four for the O Seven Hundred Hours: First Great Western Service to Breeding.",
+          "audio_duration_ms": 6368.0,
+          "segment_id": "01a1d99b-4947-7399-b13b-12aeb87b64a7-seg-4",
+          "segment_index": 4,
+          "utterance_id": "u9a036873",
+          "is_final": true,
+          "latency": 152,
+          "prefetched": false,
+          "timestamp": "2026-11-14T10:30:16.168837+00:00",
+          "detected_language_code": "en-IN"
+        }
+      ],
+      "unfinished_utterance_ids": []
+    },
+    {
+      "id": "03-slough-through-train",
+      "arm": "after",
+      "status": "completed",
+      "transcript_nonempty": false,
+      "event_counts": {
+        "connected": 1,
+        "speech_start": 1,
+        "transcript": 1
+      },
+      "provider_errors": [],
+      "final_transcript_messages": [
+        {
+          "type": "transcript",
+          "text": "",
+          "audio_duration_ms": 3284.0,
+          "segment_id": "01a1d99a-41c2-7331-9b66-111f30c9861e-seg-1",
+          "segment_index": 1,
+          "utterance_id": "ua9bfc3a8",
+          "is_final": true,
+          "latency": 74,
+          "prefetched": false,
+          "timestamp": "2026-11-14T10:28:55.862612+00:00"
+        }
+      ],
+      "unfinished_utterance_ids": []
+    },
+    {
+      "id": "03-slough-through-train",
+      "arm": "before",
+      "status": "inconclusive",
+      "transcript_nonempty": false,
+      "event_counts": {
+        "connected": 1
+      },
+      "provider_errors": [],
+      "final_transcript_messages": [],
+      "unfinished_utterance_ids": []
+    },
+    {
+      "id": "04-slough-distant-pa",
+      "arm": "after",
+      "status": "inconclusive",
+      "transcript_nonempty": false,
+      "event_counts": {
+        "connected": 1
+      },
+      "provider_errors": [],
+      "final_transcript_messages": [],
+      "unfinished_utterance_ids": []
+    },
+    {
+      "id": "04-slough-distant-pa",
+      "arm": "before",
+      "status": "inconclusive",
+      "transcript_nonempty": false,
+      "event_counts": {
+        "connected": 1
+      },
+      "provider_errors": [],
+      "final_transcript_messages": [],
+      "unfinished_utterance_ids": []
+    },
+    {
+      "id": "05-southall-platform-pa",
+      "arm": "after",
+      "status": "completed",
+      "transcript_nonempty": true,
+      "event_counts": {
+        "connected": 1,
+        "speech_start": 3,
+        "transcript": 3
+      },
+      "provider_errors": [],
+      "final_transcript_messages": [
+        {
+          "type": "transcript",
+          "text": "The next train to arrive at platform. Four is the forty-eight tenth train service to London Paddington.",
+          "audio_duration_ms": 10004.0,
+          "segment_id": "01a1d998-fc54-7ce7-a96a-72468cf38e33-seg-1",
+          "segment_index": 1,
+          "utterance_id": "u51ba5428",
+          "is_final": true,
+          "latency": 233,
+          "prefetched": false,
+          "timestamp": "2026-11-14T10:27:37.276738+00:00",
+          "detected_language_code": "en-IN"
+        },
+        {
+          "type": "transcript",
+          "text": "",
+          "audio_duration_ms": 6368.0,
+          "segment_id": "01a1d998-fc54-7ce7-a96a-72468cf38e33-seg-2",
+          "segment_index": 2,
+          "utterance_id": "u0b9b2c19",
+          "is_final": true,
+          "latency": 105,
+          "prefetched": false,
+          "timestamp": "2026-11-14T10:27:43.522831+00:00"
+        },
+        {
+          "type": "transcript",
+          "text": "That form for the fourteen forty eight train trains that is to London Paddington.",
+          "audio_duration_ms": 8032.0,
+          "segment_id": "01a1d998-fc54-7ce7-a96a-72468cf38e33-seg-3",
+          "segment_index": 3,
+          "utterance_id": "u1fec8a57",
+          "is_final": true,
+          "latency": 151,
+          "prefetched": false,
+          "timestamp": "2026-11-14T10:27:51.604088+00:00",
+          "detected_language_code": "en-IN"
+        }
+      ],
+      "unfinished_utterance_ids": []
+    },
+    {
+      "id": "05-southall-platform-pa",
+      "arm": "before",
+      "status": "completed",
+      "transcript_nonempty": true,
+      "event_counts": {
+        "connected": 1,
+        "speech_start": 3,
+        "transcript": 3
+      },
+      "provider_errors": [],
+      "final_transcript_messages": [
+        {
+          "type": "transcript",
+          "text": "Train to arrive at platform four is the fourteen forty eight tenth trains. Service to London Paddington.",
+          "audio_duration_ms": 9460.0,
+          "segment_id": "01a1d998-fc42-76ae-910f-95576e6d7dff-seg-1",
+          "segment_index": 1,
+          "utterance_id": "u4cf92d49",
+          "is_final": true,
+          "latency": 266,
+          "prefetched": false,
+          "timestamp": "2026-11-14T10:27:37.259149+00:00",
+          "detected_language_code": "en-IN"
+        },
+        {
+          "type": "transcript",
+          "text": "Walking up to the path, well, West Wheeling, Wheeling Broadway, and London Paddington.",
+          "audio_duration_ms": 6336.0,
+          "segment_id": "01a1d998-fc42-76ae-910f-95576e6d7dff-seg-2",
+          "segment_index": 2,
+          "utterance_id": "u33dac77f",
+          "is_final": true,
+          "latency": 168,
+          "prefetched": false,
+          "timestamp": "2026-11-14T10:27:43.510679+00:00",
+          "detected_language_code": "en-IN"
+        },
+        {
+          "type": "transcript",
+          "text": "Platform four for the fourteen forty eight ten trains service to London Paddington.",
+          "audio_duration_ms": 8032.0,
+          "segment_id": "01a1d998-fc42-76ae-910f-95576e6d7dff-seg-3",
+          "segment_index": 3,
+          "utterance_id": "u1384eb27",
+          "is_final": true,
+          "latency": 148,
+          "prefetched": false,
+          "timestamp": "2026-11-14T10:27:51.515316+00:00",
+          "detected_language_code": "en-IN"
+        }
+      ],
+      "unfinished_utterance_ids": []
+    }
+  ]
+}

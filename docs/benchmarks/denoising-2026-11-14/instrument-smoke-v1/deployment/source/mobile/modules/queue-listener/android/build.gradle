@@ -1,0 +1,86 @@
+plugins {
+  id 'com.android.library'
+  id 'expo-module-gradle-plugin'
+}
+group = 'expo.modules.queuelistener'
+version = '0.1.0'
+
+abstract class PrepareSherpaOnnx extends DefaultTask {
+  @OutputDirectory abstract DirectoryProperty getJniDirectory()
+}
+
+// GitHub publishes an AAR, not a Maven module. Verify it before exposing either
+// its Kotlin classes or JNI libraries; avoid a local-AAR dependency in this library.
+def sherpaVersion = '2.0.1'
+def sherpaName = "sherpa-onnx-static-link-onnxruntime-${sherpaVersion}.aar"
+def sherpaUrl = "https://github.com/k2-fsa/sherpa-onnx/releases/download/v${sherpaVersion}/${sherpaName}"
+def sherpaSha256 = '07e042d97f3a6bd5b7fe74d4eef0513dc01a714b16c15a903250095aba43a575'
+def sherpaDirectory = layout.buildDirectory.dir('generated/sherpa-onnx')
+def prepareSherpa = tasks.register('prepareSherpaOnnx', PrepareSherpaOnnx) {
+  jniDirectory.set(sherpaDirectory.map { it.dir('jni') })
+  inputs.property('url', sherpaUrl)
+  inputs.property('sha256', sherpaSha256)
+  outputs.dir(sherpaDirectory)
+  doLast {
+    def archive = new File(gradle.gradleUserHomeDir, "caches/cuebell-denoising/${sherpaName}")
+    def sha256 = { File input ->
+      def digest = java.security.MessageDigest.getInstance('SHA-256')
+      input.withInputStream { stream ->
+        byte[] buffer = new byte[65536]
+        int count
+        while ((count = stream.read(buffer)) != -1) digest.update(buffer, 0, count)
+      }
+      digest.digest().encodeHex().toString()
+    }
+    if (!archive.exists()) {
+      if (gradle.startParameter.offline) throw new GradleException("Offline: seed ${archive} with ${sherpaUrl}")
+      archive.parentFile.mkdirs()
+      def partial = new File(archive.path + '.partial')
+      try {
+        def connection = new URI(sherpaUrl).toURL().openConnection()
+        connection.connectTimeout = 30000
+        connection.readTimeout = 60000
+        connection.getInputStream().withCloseable { input -> partial.withOutputStream { it << input } }
+        if (sha256(partial) != sherpaSha256) throw new GradleException('sherpa-onnx download checksum mismatch')
+        java.nio.file.Files.move(partial.toPath(), archive.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING)
+      } finally { partial.delete() }
+    }
+    if (sha256(archive) != sherpaSha256) throw new GradleException("sherpa-onnx checksum mismatch: ${archive}")
+    copy {
+      from zipTree(archive)
+      include 'classes.jar', 'jni/**/*.so'
+      into sherpaDirectory
+    }
+  }
+}
+def verifyGtcrn = tasks.register('verifyGtcrnModel') {
+  def model = file('src/main/assets/noise-reduction/gtcrn_simple.onnx')
+  inputs.file(model)
+  doLast {
+    def actual = java.security.MessageDigest.getInstance('SHA-256').digest(model.bytes).encodeHex().toString()
+    if (actual != 'e77603ac0c23dac3227dd2d7135b3a585cbee2679048aecfa886657d3ae1b534') {
+      throw new GradleException('GTCRN model checksum mismatch')
+    }
+  }
+}
+android {
+  namespace 'expo.modules.queuelistener'
+  defaultConfig {
+    versionCode 1
+    versionName '0.1.0'
+    testInstrumentationRunner 'expo.modules.queuelistener.DenoisingBenchmarkInstrumentation'
+    consumerProguardFiles 'consumer-rules.pro'
+  }
+}
+androidComponents {
+  onVariants(selector().all()) { variant ->
+    variant.sources.jniLibs.addGeneratedSourceDirectory(prepareSherpa, { it.jniDirectory })
+  }
+}
+tasks.named('preBuild').configure { dependsOn prepareSherpa, verifyGtcrn }
+dependencies {
+  implementation files(sherpaDirectory.map { it.file('classes.jar') }).builtBy(prepareSherpa)
+  testImplementation 'junit:junit:4.13.2'
+  implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+  implementation 'androidx.core:core-ktx:1.17.0'
+}

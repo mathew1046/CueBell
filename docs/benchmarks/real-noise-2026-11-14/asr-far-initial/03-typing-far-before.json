@@ -1,0 +1,170 @@
+{
+  "id": "03-typing-far",
+  "arm": "before",
+  "reference": "Stay right here where you are, kid, he called. Are you a thrower of flame",
+  "input_sha256": "078bd7f9b4c613decb812c8d6a07dfbe575a2463594460ba532b6c0095b5522e",
+  "source_audio_seconds": 10.0,
+  "status": "completed",
+  "sent_frames": 376,
+  "schedule_rebases": 0,
+  "maximum_send_lateness_ms": 2.1410550002656237,
+  "unfinished_utterance_ids": [],
+  "connection_seconds": 23.177584621999813,
+  "attempt_seconds": 23.47319408300018,
+  "transcript": "Stay right here. রিয়ার। યુઆર. Kid he called. Are you a thrower of flame?",
+  "events": [
+    {
+      "elapsed_s": 0.04750406299990573,
+      "message": {
+        "type": "connected",
+        "message": "STT service ready — VAD service connected",
+        "request_id": "01a1d88e-71a3-768c-bc14-9744753bc554",
+        "config": {
+          "sample_rate": 16000,
+          "chunk_size": 512,
+          "partials_enabled": false,
+          "partial_interval_ms": 450,
+          "partial_max_window_s": 15.0,
+          "language_code": "indic-auto",
+          "format": "verbatim"
+        },
+        "timestamp": "2026-11-14T05:36:16.367853+00:00"
+      }
+    },
+    {
+      "elapsed_s": 1.5420879389998845,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "uda548913",
+        "t_ms": 1172,
+        "timestamp": "2026-11-14T05:36:17.864163+00:00"
+      }
+    },
+    {
+      "elapsed_s": 3.122617320000245,
+      "message": {
+        "type": "transcript",
+        "text": "Stay right here.",
+        "audio_duration_ms": 2036.0,
+        "segment_id": "01a1d88e-71a3-768c-bc14-9744753bc554-seg-1",
+        "segment_index": 1,
+        "utterance_id": "uda548913",
+        "is_final": true,
+        "latency": 61,
+        "prefetched": false,
+        "timestamp": "2026-11-14T05:36:19.444124+00:00",
+        "detected_language_code": "en-IN"
+      }
+    },
+    {
+      "elapsed_s": 3.2295014460000857,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "u4d038e9a",
+        "t_ms": 2868,
+        "timestamp": "2026-11-14T05:36:19.550797+00:00"
+      }
+    },
+    {
+      "elapsed_s": 4.411896094999975,
+      "message": {
+        "type": "transcript",
+        "text": "রিয়ার।",
+        "audio_duration_ms": 1408.0,
+        "segment_id": "01a1d88e-71a3-768c-bc14-9744753bc554-seg-2",
+        "segment_index": 2,
+        "utterance_id": "u4d038e9a",
+        "is_final": true,
+        "latency": 63,
+        "prefetched": false,
+        "timestamp": "2026-11-14T05:36:20.732456+00:00",
+        "detected_language_code": "bn-IN"
+      }
+    },
+    {
+      "elapsed_s": 4.937090094999803,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "u70ef9191",
+        "t_ms": 4596,
+        "timestamp": "2026-11-14T05:36:21.259098+00:00"
+      }
+    },
+    {
+      "elapsed_s": 5.942774890000237,
+      "message": {
+        "type": "transcript",
+        "text": "યુઆર.",
+        "audio_duration_ms": 1536.0,
+        "segment_id": "01a1d88e-71a3-768c-bc14-9744753bc554-seg-3",
+        "segment_index": 3,
+        "utterance_id": "u70ef9191",
+        "is_final": true,
+        "latency": 64,
+        "prefetched": false,
+        "timestamp": "2026-11-14T05:36:22.264788+00:00",
+        "detected_language_code": "gu-IN"
+      }
+    },
+    {
+      "elapsed_s": 6.029481247000149,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "u229e4c64",
+        "t_ms": 5684,
+        "timestamp": "2026-11-14T05:36:22.351152+00:00"
+      }
+    },
+    {
+      "elapsed_s": 7.7417807920001,
+      "message": {
+        "type": "transcript",
+        "text": "Kid he called.",
+        "audio_duration_ms": 1792.0,
+        "segment_id": "01a1d88e-71a3-768c-bc14-9744753bc554-seg-4",
+        "segment_index": 4,
+        "utterance_id": "u229e4c64",
+        "is_final": true,
+        "latency": 70,
+        "prefetched": false,
+        "timestamp": "2026-11-14T05:36:24.062379+00:00",
+        "detected_language_code": "en-IN"
+      }
+    },
+    {
+      "elapsed_s": 7.91826842699993,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "u7262a8d3",
+        "t_ms": 7572,
+        "timestamp": "2026-11-14T05:36:24.238814+00:00"
+      }
+    },
+    {
+      "elapsed_s": 10.406999215999804,
+      "message": {
+        "type": "transcript",
+        "text": "Are you a thrower of flame?",
+        "audio_duration_ms": 2624.0,
+        "segment_id": "01a1d88e-71a3-768c-bc14-9744753bc554-seg-5",
+        "segment_index": 5,
+        "utterance_id": "u7262a8d3",
+        "is_final": true,
+        "latency": 116,
+        "prefetched": false,
+        "timestamp": "2026-11-14T05:36:26.727973+00:00",
+        "detected_language_code": "en-IN"
+      }
+    }
+  ],
+  "reference_score_eligible": true,
+  "score": {
+    "reference_words": 15,
+    "hypothesis_words": 17,
+    "errors": 5,
+    "substitutions": 3,
+    "insertions": 2,
+    "deletions": 0,
+    "wer": 0.3333333333333333
+  }
+}

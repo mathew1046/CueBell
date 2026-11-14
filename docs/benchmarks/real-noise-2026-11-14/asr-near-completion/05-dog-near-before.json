@@ -1,0 +1,71 @@
+{
+  "id": "05-dog-near",
+  "arm": "before",
+  "reference": "To keep them scattered somewhere and yet here m was called loose cuddling. List of must be tented everyday routinely.",
+  "input_sha256": "1845de85c294741ce8554845560354053e8fa8b8f3166203f36c53ee907e376d",
+  "source_audio_seconds": 10.0,
+  "status": "completed",
+  "scoring_version": "unicode-marks-v2",
+  "sent_frames": 376,
+  "schedule_rebases": 0,
+  "maximum_send_lateness_ms": 1.6054640000220388,
+  "unfinished_utterance_ids": [],
+  "connection_seconds": 23.091054162999626,
+  "attempt_seconds": 23.452961660000256,
+  "transcript": "To keep m skirted somewhat, and yet here m was called loose. Herling list of must be tended every day. રોટિનલી ઇટલી।",
+  "events": [
+    {
+      "elapsed_s": 0.04687363999983063,
+      "message": {
+        "type": "connected",
+        "message": "STT service ready — VAD service connected",
+        "request_id": "01a1d89f-1964-7c1c-a476-b256b1e443cc",
+        "config": {
+          "sample_rate": 16000,
+          "chunk_size": 512,
+          "partials_enabled": false,
+          "partial_interval_ms": 450,
+          "partial_max_window_s": 15.0,
+          "language_code": "indic-auto",
+          "format": "verbatim"
+        },
+        "timestamp": "2026-11-14T05:54:27.886838+00:00"
+      }
+    },
+    {
+      "elapsed_s": 1.1914185979999274,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "uca61514d",
+        "t_ms": 852,
+        "timestamp": "2026-11-14T05:54:29.030853+00:00"
+      }
+    },
+    {
+      "elapsed_s": 10.827003034999962,
+      "message": {
+        "type": "transcript",
+        "text": "To keep m skirted somewhat, and yet here m was called loose. Herling list of must be tended every day. રોટિનલી ઇટલી।",
+        "audio_duration_ms": 10004.0,
+        "segment_id": "01a1d89f-1964-7c1c-a476-b256b1e443cc-seg-1",
+        "segment_index": 1,
+        "utterance_id": "uca61514d",
+        "is_final": true,
+        "latency": 249,
+        "prefetched": false,
+        "timestamp": "2026-11-14T05:54:38.666450+00:00",
+        "detected_language_code": "en-IN"
+      }
+    }
+  ],
+  "reference_score_eligible": true,
+  "score": {
+    "reference_words": 20,
+    "hypothesis_words": 22,
+    "errors": 9,
+    "substitutions": 7,
+    "insertions": 2,
+    "deletions": 0,
+    "wer": 0.45
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "model": "prisma-v3.0",
+  "language": "indic-auto",
+  "reference_hints_sent": false,
+  "new_luna_calls": 0,
+  "scoring_version": "unicode-marks-v2",
+  "concurrency": 2,
+  "normalization": "Unicode NFKC, lowercase, punctuation removed; apostrophes retained; no numeric/spelling rewriting",
+  "connection_seconds": 46.30215410400024,
+  "results": [
+    {
+      "id": "04-aircon-near",
+      "arm": "after",
+      "reference": "Naturally, curly hair runs in my family. More often these officers are restricted.",
+      "input_sha256": "8cf66900fc534a4f2dc5fdafc2cd76315a4c53bf3ba17fe56e777b83594d9e17",
+      "source_audio_seconds": 10.0,
+      "status": "completed",
+      "scoring_version": "unicode-marks-v2",
+      "sent_frames": 376,
+      "schedule_rebases": 0,
+      "maximum_send_lateness_ms": 2.3480549998566858,
+      "unfinished_utterance_ids": [],
+      "connection_seconds": 23.146396468000148,
+      "attempt_seconds": 23.70131794200006,
+      "transcript": "நேச்சுரலி கர்லி ஹேர்ஸ் ரன்ஸ் இன் மை ஃபேமிலி, மோர் ஆஃப்டன் திஸ் ஆஃபீஸர்ஸ் ஆர். Restricted.",
+      "reference_score_eligible": true,
+      "score": {
+        "reference_words": 13,
+        "hypothesis_words": 13,
+        "errors": 12,
+        "substitutions": 12,
+        "insertions": 0,
+        "deletions": 0,
+        "wer": 0.9230769230769231
+      }
+    },
+    {
+      "id": "04-aircon-near",
+      "arm": "before",
+      "reference": "Naturally, curly hair runs in my family. More often these officers are restricted.",
+      "input_sha256": "9f29eb0640b80dde1c51148ca4705400862dc65dc2fa0561feb1ee3e9dd7d6e9",
+      "source_audio_seconds": 10.0,
+      "status": "completed",
+      "scoring_version": "unicode-marks-v2",
+      "sent_frames": 376,
+      "schedule_rebases": 0,
+      "maximum_send_lateness_ms": 1.532212999791227,
+      "unfinished_utterance_ids": [],
+      "connection_seconds": 23.15575763600009,
+      "attempt_seconds": 23.691416535999906,
+      "transcript": "Naturally curly hair runs in my family; more often these offices are. Restricted to.",
+      "reference_score_eligible": true,
+      "score": {
+        "reference_words": 13,
+        "hypothesis_words": 14,
+        "errors": 2,
+        "substitutions": 1,
+        "insertions": 1,
+        "deletions": 0,
+        "wer": 0.15384615384615385
+      }
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "id": "04-aircon-near",
+  "arm": "before",
+  "reference": "Naturally, curly hair runs in my family. More often these officers are restricted.",
+  "input_sha256": "9f29eb0640b80dde1c51148ca4705400862dc65dc2fa0561feb1ee3e9dd7d6e9",
+  "source_audio_seconds": 10.0,
+  "status": "completed",
+  "sent_frames": 376,
+  "schedule_rebases": 0,
+  "maximum_send_lateness_ms": 1.4740060000804078,
+  "unfinished_utterance_ids": [],
+  "connection_seconds": 23.0609537790001,
+  "attempt_seconds": 24.495734878999883,
+  "transcript": "Naturally curly hair runs in my family; more often these offices are. Restricted to.",
+  "events": [
+    {
+      "elapsed_s": 0.04605471500008207,
+      "message": {
+        "type": "connected",
+        "message": "STT service ready — VAD service connected",
+        "request_id": "01a1d88d-5dac-79b0-945e-dfe2d195ba29",
+        "config": {
+          "sample_rate": 16000,
+          "chunk_size": 512,
+          "partials_enabled": false,
+          "partial_interval_ms": 450,
+          "partial_max_window_s": 15.0,
+          "language_code": "indic-auto",
+          "format": "verbatim"
+        },
+        "timestamp": "2026-11-14T05:35:05.711901+00:00"
+      }
+    },
+    {
+      "elapsed_s": 1.8960176959999444,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "u0097231b",
+        "t_ms": 1556,
+        "timestamp": "2026-11-14T05:35:07.550166+00:00"
+      }
+    },
+    {
+      "elapsed_s": 10.746009115000106,
+      "message": {
+        "type": "transcript",
+        "text": "Naturally curly hair runs in my family; more often these offices are. Restricted to.",
+        "audio_duration_ms": 9300.0,
+        "segment_id": "01a1d88d-5dac-79b0-945e-dfe2d195ba29-seg-1",
+        "segment_index": 1,
+        "utterance_id": "u0097231b",
+        "is_final": true,
+        "latency": 177,
+        "prefetched": false,
+        "timestamp": "2026-11-14T05:35:16.407086+00:00",
+        "detected_language_code": "en-IN"
+      }
+    }
+  ],
+  "reference_score_eligible": true,
+  "score": {
+    "reference_words": 13,
+    "hypothesis_words": 14,
+    "errors": 2,
+    "substitutions": 1,
+    "insertions": 1,
+    "deletions": 0,
+    "wer": 0.15384615384615385
+  }
+}

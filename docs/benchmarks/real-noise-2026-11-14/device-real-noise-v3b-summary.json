@@ -1,0 +1,209 @@
+{
+  "status": "completed",
+  "recordings": [
+    {
+      "id": "01-baby-near",
+      "active_frames": 313,
+      "total_frames": 313,
+      "fallback_frame": null,
+      "reason": null,
+      "process_active_ms": {
+        "count": 313,
+        "p50": 3.338154,
+        "p95": 3.711615,
+        "p99": 3.924,
+        "max": 5.488615,
+        "mean": 3.359712194888179
+      },
+      "last_invoked_ms": 3.556308,
+      "last_invoked_cpu_ms": 3.457462
+    },
+    {
+      "id": "02-typing-near",
+      "active_frames": 313,
+      "total_frames": 313,
+      "fallback_frame": null,
+      "reason": null,
+      "process_active_ms": {
+        "count": 313,
+        "p50": 3.440231,
+        "p95": 4.134846,
+        "p99": 5.851153,
+        "max": 18.259154,
+        "mean": 3.5926308498402553
+      },
+      "last_invoked_ms": 3.898154,
+      "last_invoked_cpu_ms": 3.879615
+    },
+    {
+      "id": "03-water-near",
+      "active_frames": 313,
+      "total_frames": 313,
+      "fallback_frame": null,
+      "reason": null,
+      "process_active_ms": {
+        "count": 313,
+        "p50": 3.324923,
+        "p95": 3.671384,
+        "p99": 3.824539,
+        "max": 6.207923,
+        "mean": 3.370764051118211
+      },
+      "last_invoked_ms": 3.403615,
+      "last_invoked_cpu_ms": 3.381537
+    },
+    {
+      "id": "04-aircon-near",
+      "active_frames": 313,
+      "total_frames": 313,
+      "fallback_frame": null,
+      "reason": null,
+      "process_active_ms": {
+        "count": 313,
+        "p50": 3.231077,
+        "p95": 3.558462,
+        "p99": 4.022231,
+        "max": 5.231461,
+        "mean": 3.2726985015974437
+      },
+      "last_invoked_ms": 3.500077,
+      "last_invoked_cpu_ms": 3.508077
+    },
+    {
+      "id": "05-dog-near",
+      "active_frames": 299,
+      "total_frames": 313,
+      "fallback_frame": 299,
+      "reason": "processing_deadline_exceeded",
+      "process_active_ms": {
+        "count": 299,
+        "p50": 3.332846,
+        "p95": 20.640693,
+        "p99": 28.776308,
+        "max": 29.886462,
+        "mean": 5.195296926421404
+      },
+      "last_invoked_ms": 39.127154,
+      "last_invoked_cpu_ms": 19.36577
+    },
+    {
+      "id": "06-breathing-near",
+      "active_frames": 313,
+      "total_frames": 313,
+      "fallback_frame": null,
+      "reason": null,
+      "process_active_ms": {
+        "count": 313,
+        "p50": 3.859616,
+        "p95": 6.903693,
+        "p99": 12.599692,
+        "max": 23.769,
+        "mean": 4.297717146964856
+      },
+      "last_invoked_ms": 3.133461,
+      "last_invoked_cpu_ms": 3.110924
+    },
+    {
+      "id": "07-mouseclicks-near",
+      "active_frames": 313,
+      "total_frames": 313,
+      "fallback_frame": null,
+      "reason": null,
+      "process_active_ms": {
+        "count": 313,
+        "p50": 3.565308,
+        "p95": 8.464923,
+        "p99": 18.730385,
+        "max": 25.103769,
+        "mean": 4.290935111821086
+      },
+      "last_invoked_ms": 4.110461,
+      "last_invoked_cpu_ms": 4.046153
+    },
+    {
+      "id": "08-clatter-near",
+      "active_frames": 90,
+      "total_frames": 313,
+      "fallback_frame": 90,
+      "reason": "processing_deadline_exceeded",
+      "process_active_ms": {
+        "count": 90,
+        "p50": 3.673615,
+        "p95": 4.565308,
+        "p99": 13.786462,
+        "max": 13.786462,
+        "mean": 3.9577332888888885
+      },
+      "last_invoked_ms": 39.105769,
+      "last_invoked_cpu_ms": 26.194001
+    },
+    {
+      "id": "09-creaky-near",
+      "active_frames": 313,
+      "total_frames": 313,
+      "fallback_frame": null,
+      "reason": null,
+      "process_active_ms": {
+        "count": 313,
+        "p50": 3.443385,
+        "p95": 3.837,
+        "p99": 4.172846,
+        "max": 5.769231,
+        "mean": 3.467676594249201
+      },
+      "last_invoked_ms": 3.190076,
+      "last_invoked_cpu_ms": 3.15777
+    },
+    {
+      "id": "10-dishwasher-near",
+      "active_frames": 63,
+      "total_frames": 313,
+      "fallback_frame": 63,
+      "reason": "processing_deadline_exceeded",
+      "process_active_ms": {
+        "count": 63,
+        "p50": 3.917307,
+        "p95": 4.729462,
+        "p99": 28.324308,
+        "max": 28.324308,
+        "mean": 4.529971920634921
+      },
+      "last_invoked_ms": 85.034154,
+      "last_invoked_cpu_ms": 17.936464
+    },
+    {
+      "id": "11-door-near",
+      "active_frames": 35,
+      "total_frames": 313,
+      "fallback_frame": 35,
+      "reason": "processing_deadline_exceeded",
+      "process_active_ms": {
+        "count": 35,
+        "p50": 4.796308,
+        "p95": 17.931769,
+        "p99": 29.708308,
+        "max": 29.708308,
+        "mean": 6.1430022285714285
+      },
+      "last_invoked_ms": 50.059461,
+      "last_invoked_cpu_ms": 23.58885
+    },
+    {
+      "id": "12-cutlery-near",
+      "active_frames": 313,
+      "total_frames": 313,
+      "fallback_frame": null,
+      "reason": null,
+      "process_active_ms": {
+        "count": 313,
+        "p50": 4.685231,
+        "p95": 7.870462,
+        "p99": 11.310231,
+        "max": 13.158231,
+        "mean": 5.123159003194888
+      },
+      "last_invoked_ms": 5.063,
+      "last_invoked_cpu_ms": 5.046461
+    }
+  ]
+}

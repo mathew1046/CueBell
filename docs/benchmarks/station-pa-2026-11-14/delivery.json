@@ -1,0 +1,13 @@
+{
+  "path": "/home/mathew/Arrakis/CueBell/artifacts/CueBell-station-pa-before-after-2026-11-14.zip",
+  "size_bytes": 9037183,
+  "sha256": "0e60ba9bfd3b0935e336a131660b53551938e1196791af81ed23bd7ff22e2bc7",
+  "files": 51,
+  "pairs": 5,
+  "wav_files": 10,
+  "all_wav_formats_and_hashes_verified": true,
+  "zip_crc_and_all_checksums_verified": true,
+  "text_files_secret_scanned": 40,
+  "secret_matches": 0,
+  "report_path": "/home/mathew/Arrakis/CueBell/docs/STATION_PA_DENOISING_2026-11-14.md"
+}

@@ -1,0 +1,127 @@
+{
+  "schema": 1,
+  "sample_rate": 16000,
+  "frame_samples": 512,
+  "inputs": [
+    {
+      "id": "01-baby-near",
+      "case_id": "01-baby-near",
+      "variant": "real-recorded",
+      "relative_path": "before/01-baby-near.wav",
+      "sha256": "78dc8521b70cb0c52b9b6a30d5a7957ed3a2ac4c978878abbfddfb1dea96234b",
+      "pcm_sha256": "151f9c252819c934b033b5ebadb5bc05a5c86369cb72c0694822b9555730b0de",
+      "sample_count": 160000,
+      "sample_zero_offset": 0
+    },
+    {
+      "id": "02-typing-near",
+      "case_id": "02-typing-near",
+      "variant": "real-recorded",
+      "relative_path": "before/02-typing-near.wav",
+      "sha256": "1925794cbb77d44fb935b02de3648450439ecdad87e848d1085236cca7375084",
+      "pcm_sha256": "fd06560bc2e999ecb7cd22813fedccc7830506346468aea9ce37e81a85025670",
+      "sample_count": 160000,
+      "sample_zero_offset": 0
+    },
+    {
+      "id": "03-water-near",
+      "case_id": "03-water-near",
+      "variant": "real-recorded",
+      "relative_path": "before/03-water-near.wav",
+      "sha256": "26907a2720be10790261bcd6786291cf4ec13ed35dbb2064dcee859fab6a0e55",
+      "pcm_sha256": "013ea35a3c7edd2d56c8d3d1020eedb42605d90b7d01ec2ee276d606a3f6866c",
+      "sample_count": 160000,
+      "sample_zero_offset": 0
+    },
+    {
+      "id": "04-aircon-near",
+      "case_id": "04-aircon-near",
+      "variant": "real-recorded",
+      "relative_path": "before/04-aircon-near.wav",
+      "sha256": "9f29eb0640b80dde1c51148ca4705400862dc65dc2fa0561feb1ee3e9dd7d6e9",
+      "pcm_sha256": "4f3d12f1f5d6fdee729bb4359b601d4b78028af3f0458a7c0c1a9405f3b75421",
+      "sample_count": 160000,
+      "sample_zero_offset": 0
+    },
+    {
+      "id": "05-dog-near",
+      "case_id": "05-dog-near",
+      "variant": "real-recorded",
+      "relative_path": "before/05-dog-near.wav",
+      "sha256": "1845de85c294741ce8554845560354053e8fa8b8f3166203f36c53ee907e376d",
+      "pcm_sha256": "c3e12a7600691bbf8087d1e1025cf6b96c27abe60bc560887ae591fae8c7463d",
+      "sample_count": 160000,
+      "sample_zero_offset": 0
+    },
+    {
+      "id": "06-breathing-near",
+      "case_id": "06-breathing-near",
+      "variant": "real-recorded",
+      "relative_path": "before/06-breathing-near.wav",
+      "sha256": "da8c58af6696b5b2492e17ef303613bbc62267137143aee692a50b58dd9527ae",
+      "pcm_sha256": "1e2f50890aa9d69ebad709ec63c30b23a7e8e15f3fe290210b0fc605fd5cd465",
+      "sample_count": 160000,
+      "sample_zero_offset": 0
+    },
+    {
+      "id": "07-mouseclicks-near",
+      "case_id": "07-mouseclicks-near",
+      "variant": "real-recorded",
+      "relative_path": "before/07-mouseclicks-near.wav",
+      "sha256": "6a143951de2956786d47d75c516a1f896e3958689b773060453c821edd9f5f5b",
+      "pcm_sha256": "0d37ab85bdfa48f203fffaf467bc297fa99d33730abca12bbcd26a1423f4159d",
+      "sample_count": 160000,
+      "sample_zero_offset": 0
+    },
+    {
+      "id": "08-clatter-near",
+      "case_id": "08-clatter-near",
+      "variant": "real-recorded",
+      "relative_path": "before/08-clatter-near.wav",
+      "sha256": "e0293c128f218d058efff41e01ebc14ee4d4c20061f2917b8a64ed1b284ad41d",
+      "pcm_sha256": "b3ebeb4276374aec04983c757c958b4548699a1afb58544874ea72924786a82b",
+      "sample_count": 160000,
+      "sample_zero_offset": 0
+    },
+    {
+      "id": "09-creaky-near",
+      "case_id": "09-creaky-near",
+      "variant": "real-recorded",
+      "relative_path": "before/09-creaky-near.wav",
+      "sha256": "72c3bec4413c3a5a8eb19fb84ba357f5226c86a0fd32d0d238e3bd20ca63338f",
+      "pcm_sha256": "d7abefea276480650a6b6b67dcdb32341e584595757eebecb836a5c7e92a47b6",
+      "sample_count": 160000,
+      "sample_zero_offset": 0
+    },
+    {
+      "id": "10-dishwasher-near",
+      "case_id": "10-dishwasher-near",
+      "variant": "real-recorded",
+      "relative_path": "before/10-dishwasher-near.wav",
+      "sha256": "7548654cd7523ee31f0fdf1359e7b112de7df42840903e21ec3144de9c6e299c",
+      "pcm_sha256": "755e78f0e3904d7623a93a6709c7db5c10ef3f77f9012381cc08db170bbce9bf",
+      "sample_count": 160000,
+      "sample_zero_offset": 0
+    },
+    {
+      "id": "11-door-near",
+      "case_id": "11-door-near",
+      "variant": "real-recorded",
+      "relative_path": "before/11-door-near.wav",
+      "sha256": "47ee7a64e27fb59151b6b6434128c884420a3ca3519eb95c8b2b5600583ad5e6",
+      "pcm_sha256": "5529252634525d1b91cb50fe372094ab7ca5b179b0efbc90e722e0ac588502b7",
+      "sample_count": 160000,
+      "sample_zero_offset": 0
+    },
+    {
+      "id": "12-cutlery-near",
+      "case_id": "12-cutlery-near",
+      "variant": "real-recorded",
+      "relative_path": "before/12-cutlery-near.wav",
+      "sha256": "80476ce8031e29dc08588393cc4b9d8b40a71ec6542d0b16ee7eaacf8bcebd3f",
+      "pcm_sha256": "3bdde8f453c9f124793f4c07e58b54237ebb5a96a3ce5ec135e4faf00bc4e308",
+      "sample_count": 160000,
+      "sample_zero_offset": 0
+    }
+  ]
+}

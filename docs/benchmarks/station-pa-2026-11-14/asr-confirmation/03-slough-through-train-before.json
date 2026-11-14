@@ -1,0 +1,38 @@
+{
+  "id": "03-slough-through-train",
+  "arm": "before",
+  "reference": "<UNVERIFIED_TRANSCRIPT/>",
+  "input_sha256": "87250b4e8f16793e0b33957108df7cc62fc538ee2e5eb0f7fa348621c781b30c",
+  "source_audio_seconds": 53.0043125,
+  "status": "inconclusive",
+  "scoring_version": "unicode-marks-v2",
+  "sent_frames": 1720,
+  "schedule_rebases": 0,
+  "maximum_send_lateness_ms": 1.5711100004409673,
+  "unfinished_utterance_ids": [],
+  "connection_seconds": 66.09639159000108,
+  "attempt_seconds": 66.43833270899995,
+  "transcript": "",
+  "events": [
+    {
+      "elapsed_s": 0.05711785900166433,
+      "message": {
+        "type": "connected",
+        "message": "STT service ready — VAD service connected",
+        "request_id": "01a1d99e-5a47-7113-8bb2-f54f699abd6d",
+        "config": {
+          "sample_rate": 16000,
+          "chunk_size": 512,
+          "partials_enabled": false,
+          "partial_interval_ms": 450,
+          "partial_max_window_s": 15.0,
+          "language_code": "indic-auto",
+          "format": "verbatim"
+        },
+        "timestamp": "2026-11-14T10:33:16.176932+00:00"
+      }
+    }
+  ],
+  "reference_score_eligible": false,
+  "score": null
+}

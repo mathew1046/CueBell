@@ -1,0 +1,37 @@
+--------- beginning of main
+11-14 09:26:06.812 15844 15844 I uelistener.test: Late-enabling -Xcheck:jni
+11-14 09:26:06.867 15844 15844 I uelistener.test: Using generational CollectorTypeCC GC.
+11-14 09:26:06.884 15844 15844 E uelistener.test: BBinder_init Processname  expo.modules.queuelistener.test  
+11-14 09:26:06.884 15844 15844 E uelistener.test: BBinder_init hasGetProcessName  expo.modules.queuelistener.test
+11-14 09:26:07.311 15844 15844 I uelistener.test: AssetManager2(0xb400007bfd895c18) locale list changing from [] to [en-US]
+--------- beginning of system
+11-14 09:26:07.596 15844 15905 I DisplayManager: Choreographer implicitly registered for the refresh rate.
+11-14 09:26:07.603 15844 15905 I GameManager: __progname=expo.modules.queuelistener.test
+11-14 09:26:07.640 15844 15844 I uelistener.test: AssetManager2(0xb400007bfd896ed8) locale list changing from [] to [en-US]
+11-14 09:26:07.758 15844 15905 I libEGL  : skip_priority_level=0, isWorkaroundEnable=1
+11-14 09:26:08.228 15844 15947 W ServiceManagerCppClient: Failed to get isDeclared for mapper/mediatek: Status(-1, EX_SECURITY): 'SELinux denied for service.'
+11-14 09:26:08.228 15844 15947 E Gralloc5: Failed to load mapper.mediatek.so
+11-14 09:26:08.257 15844 15844 W libc    : Access denied finding property "persist.vivo.ltw.enabled"
+11-14 09:26:08.265 15844 15844 W HWUI    : Unknown dataspace 0
+11-14 09:26:08.351 15844 15844 E uelistener.test: [perfctl] 15844 15844 FPSGO ver:7
+11-14 09:26:08.351 15844 15844 E uelistener.test: [perfctl] 1 1 1 0
+11-14 09:26:08.367 15844 15905 W BLASTBufferQueue: Unable to open /proc/vivo_rsc/frame_set_priority: No such file or directory
+11-14 09:26:08.367 15844 15905 I BLASTBufferQueue: QoSAllocBuff Successful. Ret 0 
+11-14 09:26:08.632 15844 15905 I GrallocExtra: gralloc_extra_query:is_SW3D 0
+11-14 09:26:08.633 15844 15905 E MEMCWrapper: MEMC_POST_PROCESSING_ENABLE_PROPERTY false.
+11-14 09:26:08.639 15844 15844 I Choreographer: Skipped 40 frames!  The application may be doing too much work on its main thread.
+11-14 09:26:08.753 15844 15844 I ImeTracker: expo.modules.queuelistener.test:e7e200f8: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+11-14 09:26:09.931 15844 15905 I HWUI    : [destroy] CanvasContext will be destroyed.
+11-14 09:26:09.962 15844 15905 I HWUI    : [setStopped] CanvasContext will be destroyed.
+11-14 09:26:10.948 15844 15848 I uelistener.test: Compiler allocated 7271KB to compile void android.view.ViewRootImpl.performTraversals()
+11-14 09:26:11.172 15844 16006 W libc    : Access denied finding property "ro.hardware.chipname"
+11-14 09:26:11.174 15844 16006 W sherpa-onnx: /home/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/jni/online-speech-denoiser.cc:operator():57
+11-14 09:26:11.174 15844 16006 W sherpa-onnx: config:
+11-14 09:26:11.174 15844 16006 W sherpa-onnx: OnlineSpeechDenoiserConfig(model=OfflineSpeechDenoiserModelConfig(gtcrn=OfflineSpeechDenoiserGtcrnModelConfig(model="/data/data/expo.modules.queuelistener.test/files/denoising/instrument-service-dft-v2/gtcrn_simple.onnx"), dpdfnet=OfflineSpeechDenoiserDpdfNetModelConfig(model="", attenuation_limit_db=0), voxlock=OfflineSpeechDenoiserVoxLockModelConfig(enroll_model="", chunk_model="", voice_sample=""), num_threads=1, debug=False, provider="cpu"))
+11-14 09:26:12.389 15844 16006 W sherpa-onnx: /home/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/jni/online-speech-denoiser.cc:operator():57
+11-14 09:26:12.389 15844 16006 W sherpa-onnx: config:
+11-14 09:26:12.389 15844 16006 W sherpa-onnx: OnlineSpeechDenoiserConfig(model=OfflineSpeechDenoiserModelConfig(gtcrn=OfflineSpeechDenoiserGtcrnModelConfig(model="/data/data/expo.modules.queuelistener.test/files/denoising/instrument-service-dft-v2/gtcrn_simple.onnx"), dpdfnet=OfflineSpeechDenoiserDpdfNetModelConfig(model="", attenuation_limit_db=0), voxlock=OfflineSpeechDenoiserVoxLockModelConfig(enroll_model="", chunk_model="", voice_sample=""), num_threads=1, debug=False, provider="cpu"))
+11-14 09:26:13.539 15844 16006 W sherpa-onnx: /home/runner/work/sherpa-onnx/sherpa-onnx/sherpa-onnx/jni/online-speech-denoiser.cc:operator():57
+11-14 09:26:13.539 15844 16006 W sherpa-onnx: config:
+11-14 09:26:13.539 15844 16006 W sherpa-onnx: OnlineSpeechDenoiserConfig(model=OfflineSpeechDenoiserModelConfig(gtcrn=OfflineSpeechDenoiserGtcrnModelConfig(model="/data/data/expo.modules.queuelistener.test/files/denoising/instrument-service-dft-v2/gtcrn_simple.onnx"), dpdfnet=OfflineSpeechDenoiserDpdfNetModelConfig(model="", attenuation_limit_db=0), voxlock=OfflineSpeechDenoiserVoxLockModelConfig(enroll_model="", chunk_model="", voice_sample=""), num_threads=1, debug=False, provider="cpu"))
+11-14 09:27:23.829 15844 15844 W WindowOnBackDispatcher: sendCancelIfRunning: isInProgress=false callback=android.view.ViewRootImpl$$ExternalSyntheticLambda13@8c9c5e0

@@ -1,0 +1,6 @@
+PASS: 9 sizes, 13 signals/size, 32 arbitrary spectra/size, allocation guard, 160-hop overlap/reset
+forward_max_abs=5.96046447754e-08
+inverse_max_abs=5.96046447754e-08
+overlap_max_abs=2.91038304567e-11
+host_only_dft_us_per_512_samples=672.528152
+host_only_fft_us_per_512_samples=20.373338

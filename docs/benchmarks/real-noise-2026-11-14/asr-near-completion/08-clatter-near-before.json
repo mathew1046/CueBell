@@ -1,0 +1,96 @@
+{
+  "id": "08-clatter-near",
+  "arm": "before",
+  "reference": "Bake slowly at least one-half hour longer. A second twitched his shirtsleeve, and he felt a brief burn on his upper arm. So if anybody",
+  "input_sha256": "e0293c128f218d058efff41e01ebc14ee4d4c20061f2917b8a64ed1b284ad41d",
+  "source_audio_seconds": 10.0,
+  "status": "completed",
+  "scoring_version": "unicode-marks-v2",
+  "sent_frames": 376,
+  "schedule_rebases": 0,
+  "maximum_send_lateness_ms": 2.018829000007827,
+  "unfinished_utterance_ids": [],
+  "connection_seconds": 23.087564954999834,
+  "attempt_seconds": 23.500784691999797,
+  "transcript": "Bake slowly, at least one half hour longer. A second switch by a shirt sleeve. And he felt a brief burn on his upper arm. So if anybody.",
+  "events": [
+    {
+      "elapsed_s": 0.051095605000227806,
+      "message": {
+        "type": "connected",
+        "message": "STT service ready — VAD service connected",
+        "request_id": "01a1d89e-5279-7c26-957e-528e9e3a6040",
+        "config": {
+          "sample_rate": 16000,
+          "chunk_size": 512,
+          "partials_enabled": false,
+          "partial_interval_ms": 450,
+          "partial_max_window_s": 15.0,
+          "language_code": "indic-auto",
+          "format": "verbatim"
+        },
+        "timestamp": "2026-11-14T05:53:36.956712+00:00"
+      }
+    },
+    {
+      "elapsed_s": 1.2888665979999132,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "ua52322ce",
+        "t_ms": 468,
+        "timestamp": "2026-11-14T05:53:38.195396+00:00"
+      }
+    },
+    {
+      "elapsed_s": 9.455616501999884,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "ue6ba9852",
+        "t_ms": 9108,
+        "timestamp": "2026-11-14T05:53:46.361758+00:00"
+      }
+    },
+    {
+      "elapsed_s": 9.466636826000013,
+      "message": {
+        "type": "transcript",
+        "text": "Bake slowly, at least one half hour longer. A second switch by a shirt sleeve. And he felt a brief burn on his upper arm.",
+        "audio_duration_ms": 9044.0,
+        "segment_id": "01a1d89e-5279-7c26-957e-528e9e3a6040-seg-1",
+        "segment_index": 1,
+        "utterance_id": "ua52322ce",
+        "is_final": true,
+        "latency": 227,
+        "prefetched": false,
+        "timestamp": "2026-11-14T05:53:46.371886+00:00",
+        "detected_language_code": "en-IN"
+      }
+    },
+    {
+      "elapsed_s": 10.619607927999823,
+      "message": {
+        "type": "transcript",
+        "text": "So if anybody.",
+        "audio_duration_ms": 1344.0,
+        "segment_id": "01a1d89e-5279-7c26-957e-528e9e3a6040-seg-2",
+        "segment_index": 2,
+        "utterance_id": "ue6ba9852",
+        "is_final": true,
+        "latency": 56,
+        "prefetched": false,
+        "timestamp": "2026-11-14T05:53:47.525443+00:00",
+        "detected_language_code": "en-IN"
+      }
+    }
+  ],
+  "reference_score_eligible": true,
+  "score": {
+    "reference_words": 26,
+    "hypothesis_words": 28,
+    "errors": 5,
+    "substitutions": 3,
+    "insertions": 2,
+    "deletions": 0,
+    "wer": 0.19230769230769232
+  }
+}

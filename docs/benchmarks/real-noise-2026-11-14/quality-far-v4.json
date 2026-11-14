@@ -1,0 +1,645 @@
+{
+  "schema_version": 1,
+  "status": "completed",
+  "started_utc": "2026-11-14T05:53:21.630880+00:00",
+  "before_directory": "/home/mathew/Arrakis/CueBell/docs/benchmarks/real-noise-2026-11-14/audio-far-v4/before",
+  "after_directory": "/home/mathew/Arrakis/CueBell/docs/benchmarks/real-noise-2026-11-14/audio-far-v4/after",
+  "scorer": {
+    "path": "/home/mathew/Arrakis/CueBell/backend/benchmarks/denoising/quality.py",
+    "sha256": "12c94bdc2944adf9cea8dc095dcdc536fdabfd84d3d1d500ce4144a19c4f4451"
+  },
+  "algorithm": {
+    "source_commit": "785ab12275d5cf9341c5e946b0eee9f8825ece3b",
+    "sample_rate": 16000,
+    "window_seconds": 9.01,
+    "window_samples": 144160,
+    "hop_seconds": 1,
+    "nonpersonal_polynomials": {
+      "SIG": [
+        -0.08397278,
+        1.22083953,
+        0.0052439
+      ],
+      "BAK": [
+        -0.13166888,
+        1.60915514,
+        -0.39604546
+      ],
+      "OVRL": [
+        -0.06766283,
+        1.11546468,
+        0.04602535
+      ]
+    },
+    "alignment": "causal-unshifted",
+    "normalization": false,
+    "resampling": false,
+    "trimming": false,
+    "p808_used": false,
+    "delta_direction": "after minus before; higher proxy scores are better"
+  },
+  "limitations": [
+    "DNSMOS values are model predictions, not human listening MOS, intelligibility or ASR proof.",
+    "No clean reference, speech transcription or real-provider latency is measured.",
+    "RMS attenuation/noise suppression alone cannot establish preserved speech or success.",
+    "Short audio is doubled in memory as in the official algorithm; repetition changes context.",
+    "Official window/hop arithmetic can leave a trailing region unscored; coverage is reported.",
+    "Full causal audio, including startup delay/padding, is retained without alignment/trimming.",
+    "Rail/full-scale sample counts indicate possible clipping, not verified historical clipping.",
+    "Aggregates are descriptive, equal-clip-weight proxies on successful pairs, not a ship gate."
+  ],
+  "clips": [
+    {
+      "filename": "01-breathing-far.wav",
+      "status": "completed",
+      "errors": [],
+      "before": {
+        "path": "/home/mathew/Arrakis/CueBell/docs/benchmarks/real-noise-2026-11-14/audio-far-v4/before/01-breathing-far.wav",
+        "sha256": "994b30be2d14790d5c1004748f7be824347f69bde96ef31ece53471d40998393",
+        "sample_rate": 16000,
+        "channels": 1,
+        "subtype": "PCM_16",
+        "sample_count": 160000,
+        "duration_s": 10.0,
+        "rms": 0.07709721534652896,
+        "rms_dbfs": -22.259226156614194,
+        "peak_abs": 0.759429931640625,
+        "minimum": -0.6673583984375,
+        "maximum": 0.759429931640625,
+        "clipped_count": 0,
+        "clipping_thresholds": {
+          "negative": -1.0,
+          "positive": 0.999969482421875
+        },
+        "zero_count": 167,
+        "sample_zero_offset": 0,
+        "dnsmos": {
+          "scores": {
+            "SIG": 3.553619248644728,
+            "BAK": 3.3588616307306323,
+            "OVRL": 2.945880741285808
+          },
+          "raw_scores": {
+            "SIG": 4.01566743850708,
+            "BAK": 3.140463352203369,
+            "OVRL": 3.2341647148132324
+          },
+          "original_sample_count": 160000,
+          "evaluation_sample_count": 160000,
+          "repeat_doublings": 0,
+          "repeat_factor": 1,
+          "num_hops": 1,
+          "evaluated_windows": 1,
+          "skipped_hops": [],
+          "evaluation_unscored_tail_samples": 15840,
+          "original_unscored_tail_samples": 15840,
+          "windows": [
+            {
+              "index": 0,
+              "start_sample": 0,
+              "end_sample": 144160,
+              "raw": {
+                "SIG": 4.01566743850708,
+                "BAK": 3.140463352203369,
+                "OVRL": 3.2341647148132324
+              },
+              "scores": {
+                "SIG": 3.553619248644728,
+                "BAK": 3.3588616307306323,
+                "OVRL": 2.945880741285808
+              }
+            }
+          ]
+        }
+      },
+      "after": {
+        "path": "/home/mathew/Arrakis/CueBell/docs/benchmarks/real-noise-2026-11-14/audio-far-v4/after/01-breathing-far.wav",
+        "sha256": "64a246fd379de08ead69b1f0d7378d43e73e49ec69f960d937b3c74bc7a74fd6",
+        "sample_rate": 16000,
+        "channels": 1,
+        "subtype": "PCM_16",
+        "sample_count": 160000,
+        "duration_s": 10.0,
+        "rms": 0.072547033716451,
+        "rms_dbfs": -22.787606803577518,
+        "peak_abs": 0.756988525390625,
+        "minimum": -0.666046142578125,
+        "maximum": 0.756988525390625,
+        "clipped_count": 0,
+        "clipping_thresholds": {
+          "negative": -1.0,
+          "positive": 0.999969482421875
+        },
+        "zero_count": 2840,
+        "sample_zero_offset": 0,
+        "dnsmos": {
+          "scores": {
+            "SIG": 3.3822661066912056,
+            "BAK": 4.00193827008772,
+            "OVRL": 3.057838313424611
+          },
+          "raw_scores": {
+            "SIG": 3.7158889770507812,
+            "BAK": 4.126237869262695,
+            "OVRL": 3.402160167694092
+          },
+          "original_sample_count": 160000,
+          "evaluation_sample_count": 160000,
+          "repeat_doublings": 0,
+          "repeat_factor": 1,
+          "num_hops": 1,
+          "evaluated_windows": 1,
+          "skipped_hops": [],
+          "evaluation_unscored_tail_samples": 15840,
+          "original_unscored_tail_samples": 15840,
+          "windows": [
+            {
+              "index": 0,
+              "start_sample": 0,
+              "end_sample": 144160,
+              "raw": {
+                "SIG": 3.7158889770507812,
+                "BAK": 4.126237869262695,
+                "OVRL": 3.402160167694092
+              },
+              "scores": {
+                "SIG": 3.3822661066912056,
+                "BAK": 4.00193827008772,
+                "OVRL": 3.057838313424611
+              }
+            }
+          ]
+        }
+      },
+      "delta": {
+        "SIG": -0.17135314195352214,
+        "BAK": 0.6430766393570879,
+        "OVRL": 0.11195757213880286
+      }
+    },
+    {
+      "filename": "02-baby-far.wav",
+      "status": "completed",
+      "errors": [],
+      "before": {
+        "path": "/home/mathew/Arrakis/CueBell/docs/benchmarks/real-noise-2026-11-14/audio-far-v4/before/02-baby-far.wav",
+        "sha256": "5ad704de38f4f386d6a87f7397e0e13b75196cd310daa5187db4ac23a584c0d8",
+        "sample_rate": 16000,
+        "channels": 1,
+        "subtype": "PCM_16",
+        "sample_count": 160000,
+        "duration_s": 10.0,
+        "rms": 0.020356073058288213,
+        "rms_dbfs": -33.826119982115074,
+        "peak_abs": 0.25067138671875,
+        "minimum": -0.208282470703125,
+        "maximum": 0.25067138671875,
+        "clipped_count": 0,
+        "clipping_thresholds": {
+          "negative": -1.0,
+          "positive": 0.999969482421875
+        },
+        "zero_count": 1342,
+        "sample_zero_offset": 0,
+        "dnsmos": {
+          "scores": {
+            "SIG": 2.917418785988796,
+            "BAK": 2.7157349897755916,
+            "OVRL": 2.0731453551586823
+          },
+          "raw_scores": {
+            "SIG": 3.007553815841675,
+            "BAK": 2.4084227085113525,
+            "OVRL": 2.0796282291412354
+          },
+          "original_sample_count": 160000,
+          "evaluation_sample_count": 160000,
+          "repeat_doublings": 0,
+          "repeat_factor": 1,
+          "num_hops": 1,
+          "evaluated_windows": 1,
+          "skipped_hops": [],
+          "evaluation_unscored_tail_samples": 15840,
+          "original_unscored_tail_samples": 15840,
+          "windows": [
+            {
+              "index": 0,
+              "start_sample": 0,
+              "end_sample": 144160,
+              "raw": {
+                "SIG": 3.007553815841675,
+                "BAK": 2.4084227085113525,
+                "OVRL": 2.0796282291412354
+              },
+              "scores": {
+                "SIG": 2.917418785988796,
+                "BAK": 2.7157349897755916,
+                "OVRL": 2.0731453551586823
+              }
+            }
+          ]
+        }
+      },
+      "after": {
+        "path": "/home/mathew/Arrakis/CueBell/docs/benchmarks/real-noise-2026-11-14/audio-far-v4/after/02-baby-far.wav",
+        "sha256": "376800c3ca82e23848dda5dffc36ab028854fc982dcc39f280a412ba4e4bc553",
+        "sample_rate": 16000,
+        "channels": 1,
+        "subtype": "PCM_16",
+        "sample_count": 160000,
+        "duration_s": 10.0,
+        "rms": 0.017901177622324047,
+        "rms_dbfs": -34.94236796358152,
+        "peak_abs": 0.22784423828125,
+        "minimum": -0.197113037109375,
+        "maximum": 0.22784423828125,
+        "clipped_count": 0,
+        "clipping_thresholds": {
+          "negative": -1.0,
+          "positive": 0.999969482421875
+        },
+        "zero_count": 7352,
+        "sample_zero_offset": 0,
+        "dnsmos": {
+          "scores": {
+            "SIG": 2.7921419836829937,
+            "BAK": 3.554555407962282,
+            "OVRL": 2.261234238292294
+          },
+          "raw_scores": {
+            "SIG": 2.835975170135498,
+            "BAK": 3.4021942615509033,
+            "OVRL": 2.3094284534454346
+          },
+          "original_sample_count": 160000,
+          "evaluation_sample_count": 160000,
+          "repeat_doublings": 0,
+          "repeat_factor": 1,
+          "num_hops": 1,
+          "evaluated_windows": 1,
+          "skipped_hops": [],
+          "evaluation_unscored_tail_samples": 15840,
+          "original_unscored_tail_samples": 15840,
+          "windows": [
+            {
+              "index": 0,
+              "start_sample": 0,
+              "end_sample": 144160,
+              "raw": {
+                "SIG": 2.835975170135498,
+                "BAK": 3.4021942615509033,
+                "OVRL": 2.3094284534454346
+              },
+              "scores": {
+                "SIG": 2.7921419836829937,
+                "BAK": 3.554555407962282,
+                "OVRL": 2.261234238292294
+              }
+            }
+          ]
+        }
+      },
+      "delta": {
+        "SIG": -0.12527680230580218,
+        "BAK": 0.8388204181866903,
+        "OVRL": 0.1880888831336116
+      }
+    },
+    {
+      "filename": "03-typing-far.wav",
+      "status": "completed",
+      "errors": [],
+      "before": {
+        "path": "/home/mathew/Arrakis/CueBell/docs/benchmarks/real-noise-2026-11-14/audio-far-v4/before/03-typing-far.wav",
+        "sha256": "078bd7f9b4c613decb812c8d6a07dfbe575a2463594460ba532b6c0095b5522e",
+        "sample_rate": 16000,
+        "channels": 1,
+        "subtype": "PCM_16",
+        "sample_count": 160000,
+        "duration_s": 10.0,
+        "rms": 0.20788307746772833,
+        "rms_dbfs": -13.643617251515048,
+        "peak_abs": 1.0,
+        "minimum": -1.0,
+        "maximum": 0.999969482421875,
+        "clipped_count": 238,
+        "clipping_thresholds": {
+          "negative": -1.0,
+          "positive": 0.999969482421875
+        },
+        "zero_count": 79,
+        "sample_zero_offset": 0,
+        "dnsmos": {
+          "scores": {
+            "SIG": 3.369457307224526,
+            "BAK": 2.643397245456563,
+            "OVRL": 2.486650710721625
+          },
+          "raw_scores": {
+            "SIG": 3.6944899559020996,
+            "BAK": 2.334953546524048,
+            "OVRL": 2.5971431732177734
+          },
+          "original_sample_count": 160000,
+          "evaluation_sample_count": 160000,
+          "repeat_doublings": 0,
+          "repeat_factor": 1,
+          "num_hops": 1,
+          "evaluated_windows": 1,
+          "skipped_hops": [],
+          "evaluation_unscored_tail_samples": 15840,
+          "original_unscored_tail_samples": 15840,
+          "windows": [
+            {
+              "index": 0,
+              "start_sample": 0,
+              "end_sample": 144160,
+              "raw": {
+                "SIG": 3.6944899559020996,
+                "BAK": 2.334953546524048,
+                "OVRL": 2.5971431732177734
+              },
+              "scores": {
+                "SIG": 3.369457307224526,
+                "BAK": 2.643397245456563,
+                "OVRL": 2.486650710721625
+              }
+            }
+          ]
+        }
+      },
+      "after": {
+        "path": "/home/mathew/Arrakis/CueBell/docs/benchmarks/real-noise-2026-11-14/audio-far-v4/after/03-typing-far.wav",
+        "sha256": "1a309c9e81f086c498f7a0967d07b8a32ef372d38ef0f44e0b64725a91872bbd",
+        "sample_rate": 16000,
+        "channels": 1,
+        "subtype": "PCM_16",
+        "sample_count": 160000,
+        "duration_s": 10.0,
+        "rms": 0.2057562586247634,
+        "rms_dbfs": -13.73293891382202,
+        "peak_abs": 1.0,
+        "minimum": -1.0,
+        "maximum": 0.999969482421875,
+        "clipped_count": 258,
+        "clipping_thresholds": {
+          "negative": -1.0,
+          "positive": 0.999969482421875
+        },
+        "zero_count": 1745,
+        "sample_zero_offset": 0,
+        "dnsmos": {
+          "scores": {
+            "SIG": 3.1578124182623997,
+            "BAK": 3.9586816809152987,
+            "OVRL": 2.848817784038399
+          },
+          "raw_scores": {
+            "SIG": 3.3578176498413086,
+            "BAK": 4.0451178550720215,
+            "OVRL": 3.092952251434326
+          },
+          "original_sample_count": 160000,
+          "evaluation_sample_count": 160000,
+          "repeat_doublings": 0,
+          "repeat_factor": 1,
+          "num_hops": 1,
+          "evaluated_windows": 1,
+          "skipped_hops": [],
+          "evaluation_unscored_tail_samples": 15840,
+          "original_unscored_tail_samples": 15840,
+          "windows": [
+            {
+              "index": 0,
+              "start_sample": 0,
+              "end_sample": 144160,
+              "raw": {
+                "SIG": 3.3578176498413086,
+                "BAK": 4.0451178550720215,
+                "OVRL": 3.092952251434326
+              },
+              "scores": {
+                "SIG": 3.1578124182623997,
+                "BAK": 3.9586816809152987,
+                "OVRL": 2.848817784038399
+              }
+            }
+          ]
+        }
+      },
+      "delta": {
+        "SIG": -0.2116448889621263,
+        "BAK": 1.3152844354587359,
+        "OVRL": 0.3621670733167739
+      }
+    },
+    {
+      "filename": "04-creaky-far.wav",
+      "status": "completed",
+      "errors": [],
+      "before": {
+        "path": "/home/mathew/Arrakis/CueBell/docs/benchmarks/real-noise-2026-11-14/audio-far-v4/before/04-creaky-far.wav",
+        "sha256": "a519d19c7b4c7c59bbe9fcbadd8b40de7a32e0f69e4a8398ae91c037815df4b7",
+        "sample_rate": 16000,
+        "channels": 1,
+        "subtype": "PCM_16",
+        "sample_count": 160000,
+        "duration_s": 10.0,
+        "rms": 0.01968980457952486,
+        "rms_dbfs": -34.11517188389601,
+        "peak_abs": 0.177337646484375,
+        "minimum": -0.1446533203125,
+        "maximum": 0.177337646484375,
+        "clipped_count": 0,
+        "clipping_thresholds": {
+          "negative": -1.0,
+          "positive": 0.999969482421875
+        },
+        "zero_count": 208,
+        "sample_zero_offset": 0,
+        "dnsmos": {
+          "scores": {
+            "SIG": 2.418841567757835,
+            "BAK": 2.189692389379343,
+            "OVRL": 1.675402306154084
+          },
+          "raw_scores": {
+            "SIG": 2.3601348400115967,
+            "BAK": 1.9033091068267822,
+            "OVRL": 1.6198867559432983
+          },
+          "original_sample_count": 160000,
+          "evaluation_sample_count": 160000,
+          "repeat_doublings": 0,
+          "repeat_factor": 1,
+          "num_hops": 1,
+          "evaluated_windows": 1,
+          "skipped_hops": [],
+          "evaluation_unscored_tail_samples": 15840,
+          "original_unscored_tail_samples": 15840,
+          "windows": [
+            {
+              "index": 0,
+              "start_sample": 0,
+              "end_sample": 144160,
+              "raw": {
+                "SIG": 2.3601348400115967,
+                "BAK": 1.9033091068267822,
+                "OVRL": 1.6198867559432983
+              },
+              "scores": {
+                "SIG": 2.418841567757835,
+                "BAK": 2.189692389379343,
+                "OVRL": 1.675402306154084
+              }
+            }
+          ]
+        }
+      },
+      "after": {
+        "path": "/home/mathew/Arrakis/CueBell/docs/benchmarks/real-noise-2026-11-14/audio-far-v4/after/04-creaky-far.wav",
+        "sha256": "7ac646bd427cbeb2a8e6efdc717d98f8851db4508b2853eeca777f5a692402fc",
+        "sample_rate": 16000,
+        "channels": 1,
+        "subtype": "PCM_16",
+        "sample_count": 160000,
+        "duration_s": 10.0,
+        "rms": 0.016416762865680553,
+        "rms_dbfs": -35.694249499960044,
+        "peak_abs": 0.146270751953125,
+        "minimum": -0.126373291015625,
+        "maximum": 0.146270751953125,
+        "clipped_count": 0,
+        "clipping_thresholds": {
+          "negative": -1.0,
+          "positive": 0.999969482421875
+        },
+        "zero_count": 759,
+        "sample_zero_offset": 0,
+        "dnsmos": {
+          "scores": {
+            "SIG": 2.756469308643467,
+            "BAK": 4.042250962030774,
+            "OVRL": 2.3404020438975834
+          },
+          "raw_scores": {
+            "SIG": 2.7883195877075195,
+            "BAK": 4.2049431800842285,
+            "OVRL": 2.4088590145111084
+          },
+          "original_sample_count": 160000,
+          "evaluation_sample_count": 160000,
+          "repeat_doublings": 0,
+          "repeat_factor": 1,
+          "num_hops": 1,
+          "evaluated_windows": 1,
+          "skipped_hops": [],
+          "evaluation_unscored_tail_samples": 15840,
+          "original_unscored_tail_samples": 15840,
+          "windows": [
+            {
+              "index": 0,
+              "start_sample": 0,
+              "end_sample": 144160,
+              "raw": {
+                "SIG": 2.7883195877075195,
+                "BAK": 4.2049431800842285,
+                "OVRL": 2.4088590145111084
+              },
+              "scores": {
+                "SIG": 2.756469308643467,
+                "BAK": 4.042250962030774,
+                "OVRL": 2.3404020438975834
+              }
+            }
+          ]
+        }
+      },
+      "delta": {
+        "SIG": 0.33762774088563186,
+        "BAK": 1.8525585726514313,
+        "OVRL": 0.6649997377434995
+      }
+    }
+  ],
+  "errors": [],
+  "provenance": {
+    "schema_version": 1,
+    "repository": "https://github.com/microsoft/DNS-Challenge",
+    "source_commit": "785ab12275d5cf9341c5e946b0eee9f8825ece3b",
+    "assets": {
+      "sig_bak_ovr.onnx": {
+        "url": "https://raw.githubusercontent.com/microsoft/DNS-Challenge/785ab12275d5cf9341c5e946b0eee9f8825ece3b/DNSMOS/DNSMOS/sig_bak_ovr.onnx",
+        "sha256": "269fbebdb513aa23cddfbb593542ecc540284a91849ac50516870e1ac78f6edd"
+      },
+      "dnsmos_local.py": {
+        "url": "https://raw.githubusercontent.com/microsoft/DNS-Challenge/785ab12275d5cf9341c5e946b0eee9f8825ece3b/DNSMOS/dnsmos_local.py",
+        "sha256": "1ab566afe006daab32ac7073296a5d0ef99f8b82f91c7266f3ccf26113d7a28b"
+      }
+    },
+    "model_family": "non-personalized DNSMOS SIG/BAK/OVRL",
+    "p808_used": false,
+    "cache": "/home/mathew/.cache/cuebell/dnsmos",
+    "metadata_sha256": "82ec60b9ad7d6b38562a04ed49b6d533955de1e27fb2a34b43643e86a5fed7c9",
+    "model_path": "/home/mathew/.cache/cuebell/dnsmos/sig_bak_ovr.onnx",
+    "reference_source_path": "/home/mathew/.cache/cuebell/dnsmos/dnsmos_local.py"
+  },
+  "runtime": {
+    "python": "3.12.14",
+    "platform": "Linux-7.3.1-1-cachyos-x86_64-with-glibc2.44",
+    "packages": {
+      "numpy": "2.3.4",
+      "onnxruntime": "1.23.2",
+      "soundfile": "0.13.1"
+    },
+    "libsndfile": "1.2.2",
+    "providers": [
+      "CPUExecutionProvider"
+    ],
+    "intra_op_threads": 1,
+    "inter_op_threads": 1,
+    "execution_mode": "ORT_SEQUENTIAL"
+  },
+  "aggregate": {
+    "total_pairs": 4,
+    "scored_pairs": 4,
+    "failed_pairs": 0,
+    "weighting": "equal weight per scored clip",
+    "metrics": {
+      "SIG": {
+        "before_mean": 3.064834227403971,
+        "after_mean": 3.0221724543200166,
+        "delta_mean": -0.04266177308395469,
+        "delta_median": -0.14831497212966216,
+        "delta_min": -0.2116448889621263,
+        "delta_max": 0.33762774088563186,
+        "positive_delta_pairs": 1,
+        "negative_delta_pairs": 3,
+        "zero_delta_pairs": 0
+      },
+      "BAK": {
+        "before_mean": 2.7269215638355324,
+        "after_mean": 3.889356580249019,
+        "delta_mean": 1.1624350164134865,
+        "delta_median": 1.077052426822713,
+        "delta_min": 0.6430766393570879,
+        "delta_max": 1.8525585726514313,
+        "positive_delta_pairs": 4,
+        "negative_delta_pairs": 0,
+        "zero_delta_pairs": 0
+      },
+      "OVRL": {
+        "before_mean": 2.29526977833005,
+        "after_mean": 2.627073094913222,
+        "delta_mean": 0.33180331658317197,
+        "delta_median": 0.27512797822519275,
+        "delta_min": 0.11195757213880286,
+        "delta_max": 0.6649997377434995,
+        "positive_delta_pairs": 4,
+        "negative_delta_pairs": 0,
+        "zero_delta_pairs": 0
+      }
+    }
+  },
+  "ended_utc": "2026-11-14T05:53:24.607844+00:00"
+}

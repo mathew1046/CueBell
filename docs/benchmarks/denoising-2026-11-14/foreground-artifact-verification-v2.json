@@ -1,0 +1,108 @@
+{
+  "same_dex": true,
+  "dex_count": 20,
+  "artifacts": [
+    {
+      "variant": "dft",
+      "apk_sha256": "0ca042ab8778f1787df49aa8ba6796056eeee4d237aa0bd67f36d78190fbcc09",
+      "native_sha256": "491b1b6e287fdfe5e0e1ffa918f5e5556299cb14bea7b7b8a0c19468f4156193",
+      "native_bytes": 24177488,
+      "permissions": [
+        "android.permission.FOREGROUND_SERVICE",
+        "android.permission.FOREGROUND_SERVICE_MEDIA_PROCESSING",
+        "android.permission.WAKE_LOCK",
+        "android.permission.POST_NOTIFICATIONS",
+        "android.permission.VIBRATE",
+        "android.permission.INTERNET",
+        "android.permission.SYSTEM_ALERT_WINDOW",
+        "android.permission.ACCESS_LOCAL_NETWORK",
+        "expo.modules.queuelistener.test.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+      ],
+      "services": [
+        {
+          "{http://schemas.android.com/apk/res/android}name": "expo.modules.queuelistener.DenoisingBenchmarkService",
+          "{http://schemas.android.com/apk/res/android}exported": "false",
+          "{http://schemas.android.com/apk/res/android}foregroundServiceType": "0x2000"
+        }
+      ],
+      "runtime_provenance": {
+        "variant": "official-sherpa-onnx-2.0.1",
+        "officialBinary": true,
+        "originalAarSha256": "07e042d97f3a6bd5b7fe74d4eef0513dc01a714b16c15a903250095aba43a575",
+        "patchedAbis": []
+      }
+    },
+    {
+      "variant": "fft",
+      "apk_sha256": "632792d38300e1d62443d69ebc61f55ed09eee123e55394c5cb9f6972a58cd10",
+      "native_sha256": "59964bf7d9cf9520231d6cce3f6728b05f3c0ecac765bd9182bd9fc9d0539c65",
+      "native_bytes": 24145240,
+      "permissions": [
+        "android.permission.FOREGROUND_SERVICE",
+        "android.permission.FOREGROUND_SERVICE_MEDIA_PROCESSING",
+        "android.permission.WAKE_LOCK",
+        "android.permission.POST_NOTIFICATIONS",
+        "android.permission.VIBRATE",
+        "android.permission.INTERNET",
+        "android.permission.SYSTEM_ALERT_WINDOW",
+        "android.permission.ACCESS_LOCAL_NETWORK",
+        "expo.modules.queuelistener.test.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+      ],
+      "services": [
+        {
+          "{http://schemas.android.com/apk/res/android}name": "expo.modules.queuelistener.DenoisingBenchmarkService",
+          "{http://schemas.android.com/apk/res/android}exported": "false",
+          "{http://schemas.android.com/apk/res/android}foregroundServiceType": "0x2000"
+        }
+      ],
+      "runtime_provenance": {
+        "variant": "cuebell-sherpa-2.0.1-double-fft-v1",
+        "officialBinary": false,
+        "upstreamCommit": "af2d8d81dbfa61c4cea4c568da78f3982edca005",
+        "sourceUrl": "https://codeload.github.com/k2-fsa/sherpa-onnx/tar.gz/af2d8d81dbfa61c4cea4c568da78f3982edca005",
+        "sourceSha256": "afcafe3c34bc2f15a363ad791fa1644a69bf0977a58c1b4f617468976c2faeb5",
+        "originalStftSha256": "5ec43424a1c5bf48c198dd7aaad3e19cc01d366e779fbc8196e8146f8514e124",
+        "patchSha256": "1d960516749ce3e45948d3ed00baf272caec99a189f176cac5e57d446947dc47",
+        "fftHeaderSha256": "bd161724019fca8caed89fa8f5804728342ce40646b46d7be351410c5f6994ef",
+        "buildScriptSha256": "4d8eb6a3dd9fac000f292e316d54e7ea798b9114ea05d4e651b543f9712d224d",
+        "ndkVersion": "27.1.12297006",
+        "cmakeVersion": "3.22.1",
+        "cmakeFlags": [
+          "-G",
+          "Ninja",
+          "-DCMAKE_MAKE_PROGRAM=/home/mathew/Android/Sdk/cmake/3.22.1/bin/ninja",
+          "-DCMAKE_TOOLCHAIN_FILE=/home/mathew/Android/Sdk/ndk/27.1.12297006/build/cmake/android.toolchain.cmake",
+          "-DCMAKE_BUILD_TYPE=Release",
+          "-DCMAKE_CXX_FLAGS=-ffp-contract=off",
+          "-DANDROID_ABI=arm64-v8a",
+          "-DANDROID_PLATFORM=android-21",
+          "-DANDROID_STL=c++_static",
+          "-DBUILD_SHARED_LIBS=OFF",
+          "-DSHERPA_ONNX_ENABLE_JNI=ON",
+          "-DSHERPA_ONNX_ENABLE_TTS=ON",
+          "-DSHERPA_ONNX_ENABLE_SPEAKER_DIARIZATION=ON",
+          "-DSHERPA_ONNX_ENABLE_BINARY=OFF",
+          "-DSHERPA_ONNX_ENABLE_C_API=OFF",
+          "-DSHERPA_ONNX_BUILD_C_API_EXAMPLES=OFF",
+          "-DSHERPA_ONNX_ENABLE_WEBSOCKET=OFF",
+          "-DSHERPA_ONNX_ENABLE_PYTHON=OFF",
+          "-DSHERPA_ONNX_ENABLE_TESTS=OFF",
+          "-DSHERPA_ONNX_ENABLE_CHECK=OFF",
+          "-DSHERPA_ONNX_ENABLE_PORTAUDIO=OFF",
+          "-DSHERPA_ONNX_USE_PRE_INSTALLED_ONNXRUNTIME_IF_AVAILABLE=OFF"
+        ],
+        "sourceDateEpoch": "1794614400",
+        "librarySha256": "59964bf7d9cf9520231d6cce3f6728b05f3c0ecac765bd9182bd9fc9d0539c65",
+        "libraryBytes": 24145240,
+        "modelSha256": "e77603ac0c23dac3227dd2d7135b3a585cbee2679048aecfa886657d3ae1b534",
+        "onnxruntimeVersion": "1.28.2",
+        "onnxruntimeArchiveSha256": "bc68410f35f13df82c260830bf476ee5565f5efd0ec7622297829a929613c6c0",
+        "originalAarSha256": "07e042d97f3a6bd5b7fe74d4eef0513dc01a714b16c15a903250095aba43a575",
+        "patchedAbis": [
+          "arm64-v8a"
+        ],
+        "otherAbis": "official pinned AAR"
+      }
+    }
+  ]
+}

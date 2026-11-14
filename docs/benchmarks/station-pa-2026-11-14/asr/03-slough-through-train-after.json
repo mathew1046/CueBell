@@ -1,0 +1,62 @@
+{
+  "id": "03-slough-through-train",
+  "arm": "after",
+  "reference": "<UNVERIFIED_TRANSCRIPT/>",
+  "input_sha256": "8d9ffbd1caed9f0f3ee227dd20e3da71f3a9c502360cdb5b0e5ccaca09d3b3b9",
+  "source_audio_seconds": 53.0043125,
+  "status": "completed",
+  "scoring_version": "unicode-marks-v2",
+  "sent_frames": 1720,
+  "schedule_rebases": 0,
+  "maximum_send_lateness_ms": 2.632947998790769,
+  "unfinished_utterance_ids": [],
+  "connection_seconds": 66.1026236509988,
+  "attempt_seconds": 66.3967030269996,
+  "transcript": "",
+  "events": [
+    {
+      "elapsed_s": 0.0434131999991223,
+      "message": {
+        "type": "connected",
+        "message": "STT service ready — VAD service connected",
+        "request_id": "01a1d99a-41c2-7331-9b66-111f30c9861e",
+        "config": {
+          "sample_rate": 16000,
+          "chunk_size": 512,
+          "partials_enabled": false,
+          "partial_interval_ms": 450,
+          "partial_max_window_s": 15.0,
+          "language_code": "indic-auto",
+          "format": "verbatim"
+        },
+        "timestamp": "2026-11-14T10:28:47.745692+00:00"
+      }
+    },
+    {
+      "elapsed_s": 5.439859920999879,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "ua9bfc3a8",
+        "t_ms": 5076,
+        "timestamp": "2026-11-14T10:28:53.136230+00:00"
+      }
+    },
+    {
+      "elapsed_s": 8.160170835999452,
+      "message": {
+        "type": "transcript",
+        "text": "",
+        "audio_duration_ms": 3284.0,
+        "segment_id": "01a1d99a-41c2-7331-9b66-111f30c9861e-seg-1",
+        "segment_index": 1,
+        "utterance_id": "ua9bfc3a8",
+        "is_final": true,
+        "latency": 74,
+        "prefetched": false,
+        "timestamp": "2026-11-14T10:28:55.862612+00:00"
+      }
+    }
+  ],
+  "reference_score_eligible": false,
+  "score": null
+}

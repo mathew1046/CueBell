@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "sample_rate": 16000,
+  "frame_samples": 512,
+  "inputs": [
+    {
+      "id": "01-india-station-pa",
+      "case_id": "01-india-station-pa",
+      "variant": "real-station-pa",
+      "relative_path": "before/01-india-station-pa.wav",
+      "sha256": "b9b7c42f09da1b4669071e4d61858baa344bd63e37a54c29e01682b4f01368a0",
+      "pcm_sha256": "2ec9f78b472c7eabf1a0b9247944fb89e5397fe11043a66419c7221e8d34df29",
+      "sample_count": 887328,
+      "sample_zero_offset": 0
+    },
+    {
+      "id": "02-slough-platform-four",
+      "case_id": "02-slough-platform-four",
+      "variant": "real-station-pa",
+      "relative_path": "before/02-slough-platform-four.wav",
+      "sha256": "e45e4f4fbcf81a007d418edb55ac3e85a460ba5a0b71197390a3b5c69e9c09ab",
+      "pcm_sha256": "1912ba3d3876b5a1715ae43378cd84a615c74d0c2baf082278603b6dac03abec",
+      "sample_count": 371426,
+      "sample_zero_offset": 0
+    },
+    {
+      "id": "03-slough-through-train",
+      "case_id": "03-slough-through-train",
+      "variant": "real-station-pa",
+      "relative_path": "before/03-slough-through-train.wav",
+      "sha256": "87250b4e8f16793e0b33957108df7cc62fc538ee2e5eb0f7fa348621c781b30c",
+      "pcm_sha256": "d27ca3fb71b29245b4a3a16e202154471915dc7fc3312a93f580423555b30d31",
+      "sample_count": 848069,
+      "sample_zero_offset": 0
+    },
+    {
+      "id": "04-slough-distant-pa",
+      "case_id": "04-slough-distant-pa",
+      "variant": "real-station-pa",
+      "relative_path": "before/04-slough-distant-pa.wav",
+      "sha256": "92c4f9640c11ec9168805a3d65fa7eb6065b4b34cd1d65dd6fb8d36d8f83a357",
+      "pcm_sha256": "c384771591782af0dd05e2968de527f850c3a00709638ba8bc86d0bbda9cde27",
+      "sample_count": 433575,
+      "sample_zero_offset": 0
+    },
+    {
+      "id": "05-southall-platform-pa",
+      "case_id": "05-southall-platform-pa",
+      "variant": "real-station-pa",
+      "relative_path": "before/05-southall-platform-pa.wav",
+      "sha256": "e396e872a48cc04a7e216146953d104d4a8d4e9dd16ddd94f25cb938f5bddc0d",
+      "pcm_sha256": "917f2ee81db3e434e2063135403cafec75d7a13f41063c31c56724ff14e2dfc9",
+      "sample_count": 470344,
+      "sample_zero_offset": 0
+    }
+  ]
+}

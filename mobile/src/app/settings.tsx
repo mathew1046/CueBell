@@ -66,6 +66,22 @@ export default function Settings() {
 
       {heading('Listening')}
       <SoftCard style={styles.group}>
+        <View style={styles.switchRow}>
+          <View style={styles.flex}>
+            <Text variant="titleMedium" style={{ color: theme.colors.onSurface }}>{t('Noise reduction')}</Text>
+            <Text variant="bodyMedium" style={{ color: theme.colors.onSurfaceVariant }}>{app.noiseReductionMode === 'gtcrn' ? t('On') : t('Off')}</Text>
+          </View>
+          <Switch value={app.noiseReductionMode === 'gtcrn'} disabled={app.noiseReductionLocked}
+            accessibilityLabel={t('Noise reduction')} hitSlop={12}
+            onValueChange={enabled => app.setNoiseReductionMode(enabled ? 'gtcrn' : 'off')} />
+        </View>
+        <Text variant="bodyMedium" style={{ color: theme.colors.onSurfaceVariant }}>{t('Experimental · on-device (GTCRN). May affect speech.')}</Text>
+        {app.noiseReductionFallback && <Text variant="bodyMedium" accessibilityLiveRegion="polite" style={{ color: theme.colors.onSurfaceVariant }}>
+          {t('Noise reduction is unavailable. Listening continues without it.')}</Text>}
+        {app.noiseReductionLocked && !app.booting && <Text variant="bodyMedium" style={{ color: theme.colors.onSurfaceVariant }}>
+          {t('Stop setup or pause listening to change this.')}</Text>}
+        {!!app.noiseReductionStorageError && <Text variant="bodyMedium" accessibilityLiveRegion="polite"
+          style={{ color: theme.colors.error }}>{app.noiseReductionStorageError}</Text>}
         {app.activeRule ? <>
           <Text variant="bodyLarge" style={{ color: theme.colors.onSurface }}
             accessibilityLabel={t('Listening for: {task}', { task: app.activeRule.task?.summary ?? spell(app.activeRule.token ?? '') })}>{t('Listening for: {task}', { task: app.activeRule.task?.summary ?? app.activeRule.token ?? '' })}</Text>

@@ -1,0 +1,138 @@
+{
+  "id": "01-india-station-pa",
+  "arm": "before",
+  "reference": "<UNVERIFIED_TRANSCRIPT/>",
+  "input_sha256": "b9b7c42f09da1b4669071e4d61858baa344bd63e37a54c29e01682b4f01368a0",
+  "source_audio_seconds": 55.458,
+  "status": "completed",
+  "scoring_version": "unicode-marks-v2",
+  "sent_frames": 1797,
+  "schedule_rebases": 0,
+  "maximum_send_lateness_ms": 1.8848580020858208,
+  "unfinished_utterance_ids": [],
+  "connection_seconds": 68.54475300599915,
+  "attempt_seconds": 68.79650334299913,
+  "transcript": "से चलकर बंगलोर को जाने वाली चौंतीस तीस हजरत निजामुद्दीन बंगलोर राजधानी एक्सप्रेस अपने निर्धारित समय से चार। सजग, चालीस मिनट बारह ते अट्ठाईस मिनट के देरी से आने की संभावना है। Your attention, please, two four three zero Rajdhani Express. From Hazrat Nizamuddin to Bangalore, which is scheduled to arrive at... Four hours, forty minutes, divided by fifty minutes. कृपया ध्यान दीजिए, बिलासपुर से चलकर इंदौर को जाने वाली बयासी चौंतीस। बिलासपुर इंदौर नर्मदा एक्सप्रेस अपने निर्धारित समय चार बजकर पच्चीस मिनट पर से पैंतीस मिनट के विल के आने की संभावना है। May I have your attention please eight two three four",
+  "events": [
+    {
+      "elapsed_s": 0.04574964600033127,
+      "message": {
+        "type": "connected",
+        "message": "STT service ready — VAD service connected",
+        "request_id": "01a1d99b-d818-7506-95c0-c3f98b665864",
+        "config": {
+          "sample_rate": 16000,
+          "chunk_size": 512,
+          "partials_enabled": false,
+          "partial_interval_ms": 450,
+          "partial_max_window_s": 15.0,
+          "language_code": "indic-auto",
+          "format": "verbatim"
+        },
+        "timestamp": "2026-11-14T10:30:31.766541+00:00"
+      }
+    },
+    {
+      "elapsed_s": 0.5420478699998057,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "ub67ddafb",
+        "t_ms": 212,
+        "timestamp": "2026-11-14T10:30:32.263864+00:00"
+      }
+    },
+    {
+      "elapsed_s": 14.72787333800079,
+      "message": {
+        "type": "transcript",
+        "text": "से चलकर बंगलोर को जाने वाली चौंतीस तीस हजरत निजामुद्दीन बंगलोर राजधानी एक्सप्रेस अपने निर्धारित समय से चार। सजग, चालीस मिनट बारह ते अट्ठाईस मिनट के देरी से आने की संभावना है।",
+        "audio_duration_ms": 14400.0,
+        "segment_id": "01a1d99b-d818-7506-95c0-c3f98b665864-seg-1",
+        "segment_index": 1,
+        "utterance_id": "ub67ddafb",
+        "is_final": true,
+        "latency": 263,
+        "prefetched": false,
+        "timestamp": "2026-11-14T10:30:46.448156+00:00",
+        "detected_language_code": "hi-IN"
+      }
+    },
+    {
+      "elapsed_s": 15.446574375000637,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "udec3fc8d",
+        "t_ms": 15092,
+        "timestamp": "2026-11-14T10:30:47.165902+00:00"
+      }
+    },
+    {
+      "elapsed_s": 30.850316530999407,
+      "message": {
+        "type": "transcript",
+        "text": "Your attention, please, two four three zero Rajdhani Express. From Hazrat Nizamuddin to Bangalore, which is scheduled to arrive at... Four hours, forty minutes, divided by fifty minutes.",
+        "audio_duration_ms": 15796.0,
+        "segment_id": "01a1d99b-d818-7506-95c0-c3f98b665864-seg-2",
+        "segment_index": 2,
+        "utterance_id": "udec3fc8d",
+        "is_final": true,
+        "latency": 218,
+        "prefetched": false,
+        "timestamp": "2026-11-14T10:31:02.569825+00:00",
+        "detected_language_code": "en-IN"
+      }
+    },
+    {
+      "elapsed_s": 34.43962081099926,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "u34b17b0b",
+        "t_ms": 34100,
+        "timestamp": "2026-11-14T10:31:06.160857+00:00"
+      }
+    },
+    {
+      "elapsed_s": 50.941338545999315,
+      "message": {
+        "type": "transcript",
+        "text": "कृपया ध्यान दीजिए, बिलासपुर से चलकर इंदौर को जाने वाली बयासी चौंतीस। बिलासपुर इंदौर नर्मदा एक्सप्रेस अपने निर्धारित समय चार बजकर पच्चीस मिनट पर से पैंतीस मिनट के विल के आने की संभावना है।",
+        "audio_duration_ms": 16852.0,
+        "segment_id": "01a1d99b-d818-7506-95c0-c3f98b665864-seg-3",
+        "segment_index": 3,
+        "utterance_id": "u34b17b0b",
+        "is_final": true,
+        "latency": 273,
+        "prefetched": false,
+        "timestamp": "2026-11-14T10:31:22.662395+00:00",
+        "detected_language_code": "hi-IN"
+      }
+    },
+    {
+      "elapsed_s": 51.59982908699931,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "ud72fee08",
+        "t_ms": 51252,
+        "timestamp": "2026-11-14T10:31:23.320479+00:00"
+      }
+    },
+    {
+      "elapsed_s": 56.1304952699993,
+      "message": {
+        "type": "transcript",
+        "text": "May I have your attention please eight two three four",
+        "audio_duration_ms": 5044.0,
+        "segment_id": "01a1d99b-d818-7506-95c0-c3f98b665864-seg-4",
+        "segment_index": 4,
+        "utterance_id": "ud72fee08",
+        "is_final": true,
+        "latency": 119,
+        "prefetched": false,
+        "timestamp": "2026-11-14T10:31:27.851837+00:00",
+        "detected_language_code": "en-IN"
+      }
+    }
+  ],
+  "reference_score_eligible": false,
+  "score": null
+}

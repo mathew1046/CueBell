@@ -29,10 +29,14 @@ class ListenerService : Service() {
   private var recorder: AudioRecord? = null
   private var capture: Thread? = null
   private val recording = AtomicBoolean(false)
+  private var captureActive: AtomicBoolean? = null
   private var wake: PowerManager.WakeLock? = null
   private var baseUrl = ""
   private var bearer = ""
   private var mode = "monitor"
+  private var noiseReductionMode = "off"
+  private class DenoiserPreparation { @Volatile var cancelled = false }
+  private var denoiserPreparation: DenoiserPreparation? = null
   private var stopping = false
   private var waitingForTask = false
   @Volatile private var generation = 0
@@ -86,7 +90,9 @@ class ListenerService : Service() {
         baseUrl = intent.getStringExtra("url") ?: baseUrl
         bearer = intent.getStringExtra("token") ?: bearer
         mode = "monitor"
+        noiseReductionMode = intent.getStringExtra("noiseReductionMode") ?: "off"
         ListenerMemory.mode = mode
+        ListenerMemory.noiseReductionMode = noiseReductionMode
         retries = 0
         connect()
       }
@@ -96,7 +102,10 @@ class ListenerService : Service() {
     baseUrl = intent.getStringExtra("url") ?: ""
     bearer = intent.getStringExtra("token") ?: ""
     mode = intent.getStringExtra("mode") ?: "monitor"
+    noiseReductionMode = intent.getStringExtra("noiseReductionMode") ?: "off"
     ListenerMemory.mode = mode
+    ListenerMemory.noiseReductionMode = noiseReductionMode
+    ListenerMemory.noiseReduction = NoiseReductionDiagnostics.off()
     ListenerMemory.running = true
     if (!NotificationGate.visible(this)) {
       stopping = true; stopSelf()
@@ -181,9 +190,11 @@ class ListenerService : Service() {
                 "LISTENING" -> {
                   notificationManager.cancel(2)
                   val gap = if (gapSince > 0) (SystemClock.elapsedRealtime() - gapSince) / 1000 else 0
-                  status("LISTENING", if (gap > 0) "Listening again after a ${gap}s gap. Check the display."
+                  val message = if (gap > 0) "Listening again after a ${gap}s gap. Check the display."
                     else if (mode == "request") "Speak your request. Short pauses are OK; wait for it to finish."
-                    else "Listening · keep your phone near the announcement speaker.")
+                    else "Listening · keep your phone near the announcement speaker."
+                  val fallback = noiseReductionMode == "gtcrn" && ListenerMemory.noiseReduction.fallbackReason != null
+                  status("LISTENING", if (fallback) "$message Noise reduction unavailable; using original audio." else message)
                   gapSince = 0
                 }
                 "DEGRADED", "DISCONNECTED" -> {
@@ -245,9 +256,53 @@ class ListenerService : Service() {
     })
   }
 
-  @Suppress("MissingPermission")
   private fun startCapture(gen: Int, stream: WebSocket) {
     if (recording.get()) return
+    if (noiseReductionMode != "gtcrn") {
+      // Do not load JNI, initialize a processor or allocate enhancement buffers.
+      ListenerMemory.noiseReduction = NoiseReductionDiagnostics.off()
+      startPreparedCapture(gen, stream, null)
+      return
+    }
+    val previous = denoiserPreparation
+    if (previous != null) {
+      if (!previous.cancelled) return // Duplicate READY while preloading.
+      // A cancelled native constructor cannot safely be interrupted. Bound work
+      // to one initializer; a reconnect can immediately use raw capture instead.
+      publishNoiseReduction(NoiseReductionDiagnostics(activeMode = "off",
+        fallbackReason = "previous_initialization_still_running"))
+      startPreparedCapture(gen, stream, null)
+      return
+    }
+    val preparation = DenoiserPreparation()
+    denoiserPreparation = preparation
+    Thread({
+      val reducer = GtcrnNoiseReducer.fromAssets(assets, java.io.File(noBackupFilesDir, "noise-reduction"))
+      if (preparation.cancelled) {
+        reducer.close()
+        main.post { if (denoiserPreparation === preparation) denoiserPreparation = null }
+      } else main.post {
+        if (denoiserPreparation === preparation) denoiserPreparation = null
+        if (preparation.cancelled || gen != generation || stopping) {
+          reducer.close()
+        } else {
+          publishNoiseReduction(reducer.diagnostics)
+          startPreparedCapture(gen, stream, reducer)
+        }
+      }
+    }, "CueBell-DenoiserPreload").start()
+  }
+
+  private fun publishNoiseReduction(diagnostics: NoiseReductionDiagnostics) {
+    ListenerMemory.noiseReduction = diagnostics
+    ListenerMemory.emit(diagnostics.json().put("type", "noise_reduction"))
+    if (diagnostics.fallbackReason != null && !stopping) {
+      status(ListenerMemory.state, "Noise reduction unavailable. Listening with original microphone audio.")
+    }
+  }
+
+  @Suppress("MissingPermission")
+  private fun startPreparedCapture(gen: Int, stream: WebSocket, reducer: GtcrnNoiseReducer?) {
     try {
       val minimum = AudioRecord.getMinBufferSize(16000, AudioFormat.CHANNEL_IN_MONO,
         AudioFormat.ENCODING_PCM_16BIT)
@@ -265,14 +320,18 @@ class ListenerService : Service() {
       val level = AudioLevel()
       ListenerMemory.audioLevel = level
       recording.set(true)
+      val active = AtomicBoolean(true)
+      captureActive = active
       capture = Thread({
         Process.setThreadPriority(Process.THREAD_PRIORITY_AUDIO)
         val samples = ShortArray(512)
+        val enhanced = if (reducer != null) ShortArray(512) else null
         val frame = ByteArray(1024)
+        var reportedFallback = reducer?.fallbackReason
         var filled = 0
         var lastFrameAt = SystemClock.elapsedRealtime()
         try {
-          while (recording.get() && gen == generation) {
+          while (active.get() && gen == generation) {
             val read = audio.read(samples, filled, 512 - filled, AudioRecord.READ_BLOCKING)
             check(read > 0) { "Microphone interrupted" }
             filled += read
@@ -281,19 +340,49 @@ class ListenerService : Service() {
             // Never replay stale capture after an OS stall or network backlog.
             check(now - lastFrameAt < 500 && stream.queueSize() < 8192) { "Audio coverage gap" }
             lastFrameAt = now
-            Pcm16.encode(samples, frame)
+            if (enhanced != null) {
+              reducer!!.process(samples, enhanced)
+              if (reducer.fallbackReason != reportedFallback) {
+                reportedFallback = reducer.fallbackReason
+                val diagnostics = reducer.diagnostics
+                main.post { if (gen == generation && !stopping) publishNoiseReduction(diagnostics) }
+              }
+            }
+            if (!active.get() || gen != generation) break
+            // Synchronous inference cannot be interrupted. Recheck frame age
+            // before sending so a long native stall cannot emit stale audio.
+            check(SystemClock.elapsedRealtime() - now < 500 && stream.queueSize() < 8192) {
+              "Audio coverage gap"
+            }
+            // The off branch passes the original samples directly to the original encoder.
+            Pcm16.encode(enhanced ?: samples, frame)
             check(stream.send(frame.toByteString())) { "Audio connection closed" }
             level.update(samples)
             filled = 0
           }
         } catch (_: Exception) {
-          main.post { fail(gen, "Microphone or audio transport interrupted. Check the display.") }
-        } finally { samples.fill(0); frame.fill(0) }
+          if (active.get()) main.post { if (active.get())
+            fail(gen, "Microphone or audio transport interrupted. Check the display.") }
+        } finally {
+          val diagnostics = reducer?.diagnostics
+          try { reducer?.close() } finally {
+            samples.fill(0); enhanced?.fill(0); frame.fill(0)
+          }
+          if (diagnostics != null) main.post {
+            if (gen == generation) ListenerMemory.noiseReduction = diagnostics
+          }
+        }
       }, "CueBell-PCM").apply { start() }
-    } catch (_: Exception) { fail(gen, "Microphone unavailable. Close other recording apps and retry.", true) }
+    } catch (_: Exception) {
+      reducer?.close()
+      fail(gen, "Microphone unavailable. Close other recording apps and retry.", true)
+    }
   }
 
   private fun stopCapture() {
+    denoiserPreparation?.cancelled = true
+    captureActive?.set(false)
+    captureActive = null
     ListenerMemory.audioLevel = null
     recording.set(false)
     val audio = recorder

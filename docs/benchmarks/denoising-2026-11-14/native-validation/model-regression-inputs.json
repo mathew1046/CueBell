@@ -1,0 +1,8 @@
+{
+  "modelSha256": "e77603ac0c23dac3227dd2d7135b3a585cbee2679048aecfa886657d3ae1b534",
+  "pcmSha256": "8cf18ec980bf77ccd0046f2f5b27cb54257a1966b153cc67517519aa36e1b46c",
+  "sourceSha256": "c898a65eb4c965e5f42a2ae35fc50a3e4bd0dbf6cbb30073a8b03f5b82e5fa64",
+  "paddedToWhole512SampleFrames": true,
+  "onnxruntimeSha256": "c4f8994d56191d9d2c92a961b39fe790459f2c5d155f912b239506ea31359534",
+  "boundary": "host native math/model correctness; not Android timing acceptance"
+}

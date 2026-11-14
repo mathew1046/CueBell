@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "sample_rate": 16000,
+  "frame_samples": 512,
+  "inputs": [
+    {
+      "id": "01-breathing-far",
+      "case_id": "01-breathing-far",
+      "variant": "real-recorded",
+      "relative_path": "before/01-breathing-far.wav",
+      "sha256": "994b30be2d14790d5c1004748f7be824347f69bde96ef31ece53471d40998393",
+      "pcm_sha256": "a7f0ae8f9ddeb91a8569a43bf91594ff1df9ffe909e19f387dfdf414a8972b3b",
+      "sample_count": 160000,
+      "sample_zero_offset": 0
+    },
+    {
+      "id": "02-baby-far",
+      "case_id": "02-baby-far",
+      "variant": "real-recorded",
+      "relative_path": "before/02-baby-far.wav",
+      "sha256": "5ad704de38f4f386d6a87f7397e0e13b75196cd310daa5187db4ac23a584c0d8",
+      "pcm_sha256": "3705d2eebf474e95ec91ee963306c9bc3888b9d98644c402f0fb39c7fb0896a4",
+      "sample_count": 160000,
+      "sample_zero_offset": 0
+    },
+    {
+      "id": "03-typing-far",
+      "case_id": "03-typing-far",
+      "variant": "real-recorded",
+      "relative_path": "before/03-typing-far.wav",
+      "sha256": "078bd7f9b4c613decb812c8d6a07dfbe575a2463594460ba532b6c0095b5522e",
+      "pcm_sha256": "ccac02f664d54e85a2b65bcea8b0ed7dcd44581147abe76f94c70be955bc73e8",
+      "sample_count": 160000,
+      "sample_zero_offset": 0
+    },
+    {
+      "id": "04-creaky-far",
+      "case_id": "04-creaky-far",
+      "variant": "real-recorded",
+      "relative_path": "before/04-creaky-far.wav",
+      "sha256": "a519d19c7b4c7c59bbe9fcbadd8b40de7a32e0f69e4a8398ae91c037815df4b7",
+      "pcm_sha256": "df262437d9212317ed1413856901a65681fab6f6fc4075520f459f3c0505d3e3",
+      "sample_count": 160000,
+      "sample_zero_offset": 0
+    }
+  ]
+}

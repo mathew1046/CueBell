@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "model": "prisma-v3.0",
+  "language": "indic-auto",
+  "reference_hints_sent": false,
+  "new_luna_calls": 0,
+  "scoring_version": "unicode-marks-v2",
+  "concurrency": 2,
+  "normalization": "Unicode NFKC, lowercase, punctuation removed; apostrophes retained; no numeric/spelling rewriting",
+  "connection_seconds": 46.47853364900038,
+  "results": [
+    {
+      "id": "03-typing-far",
+      "arm": "after",
+      "reference": "Stay right here where you are, kid, he called. Are you a thrower of flame",
+      "input_sha256": "1a309c9e81f086c498f7a0967d07b8a32ef372d38ef0f44e0b64725a91872bbd",
+      "source_audio_seconds": 10.0,
+      "status": "completed",
+      "scoring_version": "unicode-marks-v2",
+      "sent_frames": 376,
+      "schedule_rebases": 0,
+      "maximum_send_lateness_ms": 3.4043070004372566,
+      "unfinished_utterance_ids": [],
+      "connection_seconds": 23.199573466000402,
+      "attempt_seconds": 23.69342004500004,
+      "transcript": "Let's say right here. রিয়ার। યુઅર। कीट ही कोड। Are you a thrower of flying?",
+      "reference_score_eligible": true,
+      "score": {
+        "reference_words": 15,
+        "hypothesis_words": 15,
+        "errors": 9,
+        "substitutions": 7,
+        "insertions": 1,
+        "deletions": 1,
+        "wer": 0.6
+      }
+    },
+    {
+      "id": "03-typing-far",
+      "arm": "before",
+      "reference": "Stay right here where you are, kid, he called. Are you a thrower of flame",
+      "input_sha256": "078bd7f9b4c613decb812c8d6a07dfbe575a2463594460ba532b6c0095b5522e",
+      "source_audio_seconds": 10.0,
+      "status": "completed",
+      "scoring_version": "unicode-marks-v2",
+      "sent_frames": 376,
+      "schedule_rebases": 0,
+      "maximum_send_lateness_ms": 3.8672990003760788,
+      "unfinished_utterance_ids": [],
+      "connection_seconds": 23.27896018299998,
+      "attempt_seconds": 23.769920345999708,
+      "transcript": "Stay right here. রিয়ার। યુઅર। Kid he called. Are you a thrower of flame?",
+      "reference_score_eligible": true,
+      "score": {
+        "reference_words": 15,
+        "hypothesis_words": 14,
+        "errors": 3,
+        "substitutions": 2,
+        "insertions": 0,
+        "deletions": 1,
+        "wer": 0.2
+      }
+    }
+  ]
+}

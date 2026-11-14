@@ -1,0 +1,2 @@
+PASS: actual native GTCRN, original/patched frontend, two exact-reset passes
+frames_per_pass=920 compared_samples=941568 max_float_error=0 rms_float_error=0 max_pcm16_lsb_error=0 differing_pcm16_samples=0 nonzero_output_pcm16_samples=929834 output_rms=0.0589267848833

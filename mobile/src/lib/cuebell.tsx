@@ -1,6 +1,7 @@
 import { createContext, ReactNode, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { AccessibilityInfo, AppState, Keyboard, PermissionsAndroid, Permission, Platform } from 'react-native';
 import Listener from '../../modules/queue-listener';
+import type { NoiseReductionMode } from '../../modules/queue-listener';
 import type { Tone } from '../components/ui';
 import { haptic, spell } from './a11y';
 import { api, ensureSession, loadConnection, removeConnection, saveConnection } from './api';
@@ -11,6 +12,8 @@ import { startListeningIfCurrent } from './start-listening';
 import { Connection, Intent, NativeSnapshot, QueueAlert, QueueEvent, Rule } from './types';
 import { useLanguage } from './i18n';
 import { translateServiceMessage } from './i18n/translate';
+import { canChangeNoiseReduction, isNoiseReductionFallback } from './noise-reduction';
+import { useNoiseReductionPreference } from './use-noise-reduction';
 
 function useCueBellState() {
   const { t, language } = useLanguage();
@@ -43,6 +46,8 @@ function useCueBellState() {
   const lastHealthAnnouncement = useRef('');
   const lastListening = useRef<boolean | null>(null);
   const setupAttempt = useRef(0);
+  const { mode: noiseReductionMode, ready: noiseReductionReady, storageError: noiseReductionStorageError,
+    getMode: getNoiseReductionMode, setMode: updateNoiseReductionMode } = useNoiseReductionPreference();
 
   const addEvent = useCallback((event: QueueEvent) => {
     if (suppressMonitor.current && (event.rule || event.alert || event.type === 'observation' ||
@@ -98,6 +103,8 @@ function useCueBellState() {
     setPermissionError(false);
     try {
       requireProcessingConsent(() => consentRef.current);
+      const selectedNoiseReductionMode = await getNoiseReductionMode();
+      if (!allowed()) return;
       const snapshot: NativeSnapshot = JSON.parse(Listener.snapshot());
       const handoff = mode === 'monitor' && snapshot.running && snapshot.mode === 'request' && snapshot.state === 'PROCESSING';
       if (!handoff && AppState.currentState !== 'active') throw new Error('Open the app to start the microphone.');
@@ -124,7 +131,9 @@ function useCueBellState() {
         await startListeningIfCurrent(() => {
           requireProcessingConsent(() => consentRef.current);
           return allowed();
-        }, async () => { await activate?.(c); }, async () => { await Listener.start(c.url, c.token, mode); });
+        }, async () => { await activate?.(c); }, async options => {
+          await Listener.start(c.url, c.token, mode, options);
+        }, selectedNoiseReductionMode);
       } catch (error) {
         if (error instanceof Error && /permission|notification/i.test(error.message)) setPermissionError(true);
         throw error;
@@ -133,7 +142,7 @@ function useCueBellState() {
       setCaptureError(true);
       throw error;
     }
-  }, [prepareSession]);
+  }, [getNoiseReductionMode, prepareSession]);
 
   const activateProposal = useCallback(async (id: string, current: () => boolean = () => true) => {
     await start('monitor', async c => {
@@ -226,6 +235,7 @@ function useCueBellState() {
         if (['STOPPING', 'STOPPED', 'ERROR'].includes(event.state ?? '')) setupAttempt.current++;
         sync();
       }
+      if (event.type === 'noise_reduction') sync();
       if (event.type === 'transcript' && event.mode === 'request' && event.segment &&
         lastSpoken.current !== event.segment.id) {
         lastSpoken.current = event.segment.id;
@@ -292,6 +302,13 @@ function useCueBellState() {
   });
 
   const activeRule = rule && !['STOPPED', 'EXPIRED'].includes(rule.status) ? rule : null;
+  const noiseReductionLocked = !noiseReductionReady || booting || !canChangeNoiseReduction(native, operation, busy);
+  const setNoiseReductionMode = (next: NoiseReductionMode) => {
+    // Recheck native/ref state: a delayed UI event must not change a pending start.
+    const snapshot: NativeSnapshot = JSON.parse(Listener.snapshot());
+    if (noiseReductionLocked || !canChangeNoiseReduction(snapshot, operation, operating.current || analyzing.current)) return;
+    updateNoiseReductionMode(next);
+  };
   const phase = listeningPhase(native, operation, captureError);
   const captureMode = operation?.mode ?? native.mode;
   const listening = phase === 'LISTENING';
@@ -335,7 +352,11 @@ function useCueBellState() {
   return {
     consent, toggleConsent: () => { consentRef.current = !consent; setConsent(!consent); haptic.tap(); },
     request, editRequest: (text: string) => { setRequest(text); setProposal(null); setClarification(''); },
-    busy, error: translateServiceMessage(language, error, 'Something went wrong. Please try again.'), clearError: () => setError(''), permissionError, booting,
+    busy, error: translateServiceMessage(language, error, 'Something went wrong. Please try again.'), clearError: () => setError(''), permissionError,
+    booting: booting || !noiseReductionReady,
+    noiseReductionMode, setNoiseReductionMode, noiseReductionLocked,
+    noiseReductionFallback: isNoiseReductionFallback(native),
+    noiseReductionStorageError: noiseReductionStorageError ? t(noiseReductionStorageError) : '',
     // Model clarifications are user-facing content in the request's language. Do not
     // hide an unsupported-capability explanation behind a generic setup prompt.
     proposal, clearProposal: () => setProposal(null), clarification: translateServiceMessage(language, clarification, clarification),

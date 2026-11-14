@@ -20,3 +20,5 @@ artifacts/
 *.aab
 .impeccable/*
 !.impeccable/design.json
+# Raw source pages include embedded third-party tokens; retain them locally only.
+docs/benchmarks/station-pa-2026-11-14/recordings/source/*.html

@@ -1,0 +1,31 @@
+[
+  {
+    "variant": "dft",
+    "path": "/home/mathew/Arrakis/CueBell/artifacts/CueBell-denoising-benchmark-fg-dft-v2.apk",
+    "bytes": 238275526,
+    "sha256": "0ca042ab8778f1787df49aa8ba6796056eeee4d237aa0bd67f36d78190fbcc09",
+    "command": [
+      "./gradlew",
+      ":queue-listener:assembleDebugAndroidTest",
+      ":queue-listener:testDebugUnitTest",
+      "-PreactNativeArchitectures=arm64-v8a",
+      "--max-workers=4",
+      "--console=plain"
+    ]
+  },
+  {
+    "variant": "fft",
+    "path": "/home/mathew/Arrakis/CueBell/artifacts/CueBell-denoising-benchmark-fg-fft-v2.apk",
+    "bytes": 238275526,
+    "sha256": "632792d38300e1d62443d69ebc61f55ed09eee123e55394c5cb9f6972a58cd10",
+    "command": [
+      "./gradlew",
+      ":queue-listener:assembleDebugAndroidTest",
+      ":queue-listener:testDebugUnitTest",
+      "-PreactNativeArchitectures=arm64-v8a",
+      "--max-workers=4",
+      "--console=plain",
+      "-PcuebellSherpaFftDir=/home/mathew/.cache/cuebell/sherpa-fft-v1-storage/dist"
+    ]
+  }
+]

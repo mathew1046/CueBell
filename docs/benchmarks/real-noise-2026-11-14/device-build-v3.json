@@ -1,0 +1,8 @@
+{
+  "apk": "/home/mathew/Arrakis/CueBell/artifacts/CueBell-denoising-real-noise-v3.apk",
+  "apk_sha256": "bcad3f25bbfce16381f73b886a1d157be2dd82da3659140b399dcac1bf543342",
+  "apk_bytes": 238275526,
+  "jni_sha256": "59964bf7d9cf9520231d6cce3f6728b05f3c0ecac765bd9182bd9fc9d0539c65",
+  "production_processor_changed": false,
+  "harness_change": "Accept final partial PCM frame; internal zero fill; output keeps original sample count and causal 16ms delay."
+}

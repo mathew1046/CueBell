@@ -1,0 +1,36 @@
+/proc/32534/task/32534 uelistener.test
+do_freezer_trap
+/proc/32534/task/32535 Signal Catcher
+do_freezer_trap
+/proc/32534/task/32536 perfetto_hprof_
+do_freezer_trap
+/proc/32534/task/32537 ADB-JDWP Connec
+do_freezer_trap
+/proc/32534/task/32538 Jit thread pool
+do_freezer_trap
+/proc/32534/task/32539 HeapTaskDaemon
+do_freezer_trap
+/proc/32534/task/32540 ReferenceQueueD
+do_freezer_trap
+/proc/32534/task/32541 FinalizerDaemon
+do_freezer_trap
+/proc/32534/task/32542 FinalizerWatchd
+do_freezer_trap
+/proc/32534/task/32543 binder:32534_1
+do_freezer_trap
+/proc/32534/task/32544 binder:32534_2
+do_freezer_trap
+/proc/32534/task/32546 binder:32534_3
+do_freezer_trap
+/proc/32534/task/32547 Profile Saver
+do_freezer_trap
+/proc/32534/task/32548 vivo.PerfThread
+do_freezer_trap
+/proc/32534/task/32549 POSIX timer 0
+do_freezer_trap
+/proc/32534/task/32550 Cleaner-0
+do_freezer_trap
+/proc/32534/task/32551 Instrumentation
+do_freezer_trap
+/proc/32534/task/32553 pool-3-thread-1
+do_freezer_trap
