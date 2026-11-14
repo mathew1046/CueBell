@@ -1,10 +1,12 @@
 import * as SecureStore from './storage';
+import { Platform } from 'react-native';
 import { Connection } from './types';
 import { createSessionManager, serviceOrigin } from './session';
 
 // Public routing configuration, supplied by the operator before building the APK.
 // This is not an API key. End users never enter or change it.
 const SERVICE_URL = process.env.EXPO_PUBLIC_API_URL ?? '';
+const ALLOW_INSECURE_LOCAL = Platform.OS === 'web' && process.env.EXPO_PUBLIC_ALLOW_INSECURE_LOCAL === 'true';
 export class SessionExpiredError extends Error {}
 
 const KEY = 'cuebell.connection.v1';
@@ -15,12 +17,12 @@ export async function loadConnection(): Promise<Connection | null> {
   if (!raw) return null;
   try {
     const value = JSON.parse(raw) as Connection;
-    return value.url === serviceOrigin(SERVICE_URL) && typeof value.token === 'string' &&
+    return value.url === serviceOrigin(SERVICE_URL, ALLOW_INSECURE_LOCAL) && typeof value.token === 'string' &&
       value.token.length > 0 && Number.isFinite(value.expires) && value.expires * 1000 > Date.now() ? value : null;
   } catch { return null; }
 }
 export const ensureSession = createSessionManager({
-  origin: SERVICE_URL, load: loadConnection, save: saveConnection,
+  origin: SERVICE_URL, allowInsecureLocal: ALLOW_INSECURE_LOCAL, load: loadConnection, save: saveConnection,
   create: origin => api(origin, '/v1/sessions', {}),
   validate: async connection => {
     try { await api(connection, '/v1/state'); return true; }

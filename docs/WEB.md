@@ -16,10 +16,32 @@ npm run build:web
 npm run preview:web
 ```
 
-Open `http://127.0.0.1:4173`. Localhost is a secure context for microphone access.
-The public site requires HTTPS. The relay must use HTTPS and WSS, including when
-the web interface runs locally. `EXPO_PUBLIC_API_URL` is bundled at build time.
+Open http://127.0.0.1:4173. Localhost is a secure context for microphone access.
+The public site and relay require HTTPS/WSS. For a local relay, use the explicit
+development configuration below. `EXPO_PUBLIC_API_URL` is bundled at build time.
 It contains the public service origin, with no trailing path or credentials.
+
+### Run both services locally
+
+Keep provider credentials in `backend/.env`. From `backend`, start the relay:
+
+```sh
+ALLOW_APP_SESSIONS=true ALLOW_INSECURE_LOCAL=true \
+  WEB_ORIGINS='["http://127.0.0.1:4173","http://localhost:4173"]' \
+  .venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8000 --workers 1 --ws-max-size 8192 --no-access-log
+```
+
+In another terminal, from `mobile`:
+
+```sh
+EXPO_PUBLIC_API_URL=http://127.0.0.1:8000 EXPO_PUBLIC_ALLOW_INSECURE_LOCAL=true npm run build:web
+npm run preview:web
+```
+
+Open http://127.0.0.1:4173. The local HTTP/WS exception accepts only `localhost`,
+`127.0.0.1`, or `[::1]`, and only with the explicit build-time opt-in. For hosting,
+remove that opt-in and rebuild with the deployed HTTPS relay origin. Speech and
+text processing still use the providers configured in the local backend.
 
 ## Deploy
 
@@ -77,6 +99,7 @@ and local preferences.
 | Vibration | Used when requested and the browser exposes `navigator.vibrate`; unavailable on many browsers, including iOS Safari |
 | Alarm sound | Three audible pulses after a user listening action unlocks Web Audio, when sound was requested |
 | Spoken alerts | Optional locally installed browser voices for the selected language; voice availability varies by device |
+| Experimental GTCRN noise reduction | Android-only; its controls and stored selection do not apply to browser capture |
 | System notifications | Optional explicit permission and supported browser/OS notification APIs; mobile browsers may require installation |
 | Accessibility | Keyboard controls, semantic labels, live state announcements, text selection, reduced motion and system color preferences |
 | Languages | The existing 21 UI languages and added browser guidance are bundled; new translations are machine-generated and need native-speaker review |

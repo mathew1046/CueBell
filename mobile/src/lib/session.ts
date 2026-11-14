@@ -1,9 +1,11 @@
 import type { Connection } from './types';
 
-export function serviceOrigin(raw: string): string {
+export function serviceOrigin(raw: string, allowInsecureLocal = false): string {
   try {
     const url = new URL(raw.trim());
-    if (url.protocol !== 'https:' || url.username || url.password || url.search || url.hash ||
+    const local = allowInsecureLocal && url.protocol === 'http:' &&
+      ['localhost', '127.0.0.1', '[::1]'].includes(url.hostname);
+    if ((url.protocol !== 'https:' && !local) || url.username || url.password || url.search || url.hash ||
       (url.pathname !== '/' && url.pathname !== '')) throw new Error();
     return url.origin;
   } catch {
@@ -13,6 +15,7 @@ export function serviceOrigin(raw: string): string {
 
 type SessionOptions = {
   origin: string;
+  allowInsecureLocal?: boolean;
   load: () => Promise<Connection | null>;
   save: (value: Connection) => Promise<void>;
   create: (origin: string) => Promise<{ token: string; expires_at: number }>;
@@ -26,7 +29,7 @@ export function createSessionManager(options: SessionOptions) {
   return () => {
     if (pending) return pending;
     pending = (async () => {
-      const origin = serviceOrigin(options.origin);
+      const origin = serviceOrigin(options.origin, options.allowInsecureLocal);
       const now = options.now?.() ?? Date.now();
       const stored = await options.load();
       if (stored?.url === origin && typeof stored.token === 'string' && stored.token.length > 0 &&

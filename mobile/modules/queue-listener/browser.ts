@@ -1,5 +1,6 @@
 import type { NativeSnapshot, QueueEvent } from '../../src/lib/types';
 import { CaptureCancelledError } from '../../src/lib/listening';
+import { serviceOrigin } from '../../src/lib/session';
 import { audioContext, clearAlerts, dismissAlert, setLanguage, setSpokenAlertsEnabled,
   showAlert, silenceAlerts, spokenAlertsEnabled } from './browser-alerts';
 
@@ -165,7 +166,8 @@ export class BrowserListener {
 
   /** Start a secure visible-page stream or hand completed request capture over to its monitor. */
   async start(url: string, token: string, mode: 'request' | 'monitor'): Promise<void> {
-    if (!/^https:\/\//.test(url) || !token) throw new Error('A secure HTTPS backend URL is required.');
+    const origin = serviceOrigin(url, process.env.EXPO_PUBLIC_ALLOW_INSECURE_LOCAL === 'true');
+    if (!token) throw new Error('Your listening session is unavailable. Submit your request again.');
     const handoff = this.state.running && this.state.mode === 'request' && this.state.state === 'PROCESSING';
     if (document.visibilityState === 'hidden') throw new Error('Keep CueBell visible while starting the microphone.');
     if (this.state.running && !handoff) throw new Error('A listening session is already active.');
@@ -173,7 +175,7 @@ export class BrowserListener {
     this.closeTransport();
     this.stream = prepared;
     prepared = null;
-    this.url = url;
+    this.url = origin;
     this.token = token;
     this.retries = 0;
     this.state.mode = mode;
@@ -210,7 +212,7 @@ export class BrowserListener {
     this.status(this.retries ? 'RECONNECTING' : 'STARTING', this.retries ?
       'Reconnecting. Calls may have been missed.' : 'Connecting to speech recognition…');
     const url = new URL('/v1/stream', this.url);
-    url.protocol = 'wss:';
+    url.protocol = url.protocol === 'https:' ? 'wss:' : 'ws:';
     url.searchParams.set('mode', this.state.mode);
     const socket = new WebSocket(url);
     this.socket = socket;

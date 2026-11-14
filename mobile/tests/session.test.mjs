@@ -25,6 +25,23 @@ test('missing, insecure and credential-bearing origins fail without leaking conf
     assert.throws(() => serviceOrigin(url), /^Error: CueBell is temporarily unavailable\./);
   }
 });
+test('local development explicitly permits only loopback HTTP origins', async () => {
+  for (const url of ['http://localhost:8000', 'http://127.0.0.1:8000', 'http://[::1]:8000']) {
+    assert.throws(() => serviceOrigin(url));
+    assert.equal(serviceOrigin(url, true), url);
+  }
+  for (const url of ['http://service.cuebell.org', 'http://192.168.1.2:8000', 'http://0.0.0.0:8000',
+    'http://127.0.0.1.example.org', 'http://localhost.example.org', 'http://secret@localhost:8000',
+    'http://localhost:8000/api', 'http://localhost:8000?secret=value', 'ftp://localhost:8000']) {
+    assert.throws(() => serviceOrigin(url, true));
+  }
+  const local = 'http://127.0.0.1:8000';
+  const { ensure } = fixture({ origin: local, allowInsecureLocal: true, create: async value => {
+    assert.equal(value, local);
+    return { token: 'local-session', expires_at: 1000 };
+  } });
+  assert.equal((await ensure()).url, local);
+});
 test('first action automatically creates and securely saves a bearer session', async () => {
   const { ensure, calls } = fixture();
   const value = await ensure();
@@ -84,14 +101,27 @@ test('failed admission can be retried, and invalid responses are never persisted
 test('unconfigured builds cannot silently pass distribution checks', () => {
   for (const url of ['', 'http://localhost:8000', 'https://your-cuebell-service.example', `${origin}/api`]) {
     const result = spawnSync(process.execPath, ['scripts/check-service.mjs'], {
-      env: { ...process.env, EXPO_PUBLIC_API_URL: url }, encoding: 'utf8',
+      env: { ...process.env, EXPO_PUBLIC_API_URL: url, EXPO_PUBLIC_ALLOW_INSECURE_LOCAL: 'false' }, encoding: 'utf8',
     });
     assert.notEqual(result.status, 0);
   }
   const valid = spawnSync(process.execPath, ['scripts/check-service.mjs'], {
-    env: { ...process.env, EXPO_PUBLIC_API_URL: origin }, encoding: 'utf8',
+    env: { ...process.env, EXPO_PUBLIC_API_URL: origin, EXPO_PUBLIC_ALLOW_INSECURE_LOCAL: 'false' }, encoding: 'utf8',
   });
   assert.equal(valid.status, 0, valid.stderr);
+});
+test('local build opt-in cannot enable an insecure remote service', () => {
+  for (const [url, allowed] of [
+    ['http://localhost:8000', true], ['http://127.0.0.1:8000', true], ['http://[::1]:8000', true],
+    ['http://service.cuebell.org', false], ['http://192.168.1.2:8000', false],
+    ['http://localhost.example.org', false], ['http://secret@localhost:8000', false],
+    ['http://localhost:8000/api', false],
+  ]) {
+    const result = spawnSync(process.execPath, ['scripts/check-service.mjs'], {
+      env: { ...process.env, EXPO_PUBLIC_API_URL: url, EXPO_PUBLIC_ALLOW_INSECURE_LOCAL: 'true' }, encoding: 'utf8',
+    });
+    assert.equal(result.status === 0, allowed, url);
+  }
 });
 test('app screens contain workflow controls, not operator setup', () => {
   const screens = ['index', 'token', 'history', 'settings', 'help'];

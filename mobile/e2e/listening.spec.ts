@@ -1,7 +1,7 @@
 import { expect, test, type Page, type WebSocketRoute } from '@playwright/test';
 import catalogs from '../src/lib/i18n/catalogs.json';
 
-const service = 'https://cuebell.mathewjoseph.xyz';
+const service = process.env.EXPO_PUBLIC_API_URL || 'https://cuebell.mathewjoseph.xyz';
 const intent = { intent: 'monitor_announcement', context: 'hospital_pharmacy', token: '42',
   alert_preferences: ['visual', 'vibration', 'sound'], clarification: null };
 const rule = { id: 'rule-42', token: '42', status: 'ACTIVE', alert_preferences: intent.alert_preferences };
@@ -32,7 +32,7 @@ async function relay(page: Page) {
     if (path === '/v1/confirm') active = true;
     await route.fulfill({ json: data, headers: { 'Access-Control-Allow-Origin': '*' } });
   });
-  await page.routeWebSocket(`${service.replace('https:', 'wss:')}/v1/stream*`, socket => {
+  await page.routeWebSocket(`${service.replace(/^http/, 'ws')}/v1/stream*`, socket => {
     sockets.push(socket);
     let sentListening = false;
     socket.onMessage(message => {
@@ -75,6 +75,19 @@ test('initial Home is accessible, installable, and never asks for the microphone
   expect((await (await page.request.get('/manifest.webmanifest')).json()).display).toBe('standalone');
   await page.getByRole('button', { name: 'History', exact: true }).focus();
   await expect(page.getByRole('button', { name: 'History', exact: true })).toBeFocused();
+});
+
+test('browser ignores Android-only noise reduction preferences and controls', async ({ page }) => {
+  const mock = await relay(page);
+  await page.addInitScript(() => localStorage.setItem('cuebell.noise-reduction.v1', 'gtcrn'));
+  await page.goto('/settings');
+  await expect(page.getByRole('switch', { name: 'Spoken alerts' })).toBeVisible();
+  await expect(page.getByRole('switch', { name: 'Noise reduction', exact: true })).toHaveCount(0);
+  await expect(page.getByText('Noise reduction could not be restored. Off is selected.', { exact: true })).toHaveCount(0);
+  await typedTask(page);
+  await expect.poll(() => mock.frames.length).toBeGreaterThan(0);
+  await page.getByRole('button', { name: 'Stop', exact: true }).click();
+  await expect(page.getByRole('button', { name: 'Start', exact: true })).toBeVisible();
 });
 
 test('typed request streams real PCM, renders captions and alerts, and stops on Home', async ({ page }) => {
