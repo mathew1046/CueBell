@@ -38,7 +38,7 @@ export function SoftIconButton({ icon, label, onPress, disabled, hint, style, ex
 }) {
   const theme = useAppTheme();
   return <Pressable onPress={onPress} disabled={disabled} accessibilityRole="button" accessibilityLabel={label}
-    accessibilityHint={hint} accessibilityState={{ disabled: !!disabled, expanded }} hitSlop={6}
+    accessibilityHint={hint} accessibilityState={{ disabled: !!disabled, expanded }} aria-expanded={expanded} hitSlop={6}
     style={({ pressed }) => [styles.iconButton, { backgroundColor: theme.colors.surfaceVariant,
       boxShadow: pressed ? theme.shadow.inset : undefined, opacity: disabled ? 0.45 : 1 }, style]}>
     <Icon source={icon} size={26} color={theme.colors.onSurface} />
@@ -79,21 +79,6 @@ export function ScreenHeader({ title, status }: { title: string; status?: { tone
   </View>;
 }
 
-/** Each character in its own tile: prefixes and leading zeros stay visible and checkable. */
-export function TokenTiles({ token, size = 56, ink, tile, edge, label }: {
-  token: string; size?: number; ink?: string; tile?: string; edge?: string; label?: string;
-}) {
-  const theme = useAppTheme();
-  const { t } = useLanguage();
-  return <View accessible accessibilityRole="text" accessibilityLabel={`${label ?? t('Token')} ${spell(token)}`} style={styles.tiles}>
-    {token.split('').map((char, index) => <View key={index} style={[styles.tokenTile, {
-      minWidth: size * 0.82, borderRadius: Math.round(size * 0.2), borderColor: edge ?? theme.colors.onSurface,
-      backgroundColor: tile ?? theme.colors.surface }]}>
-      <Text style={[styles.tileText, { fontSize: size, lineHeight: Math.round(size * 1.18), color: ink ?? theme.colors.onSurface }]}>{char}</Text>
-    </View>)}
-  </View>;
-}
-
 const prefIcons: Record<string, string> = { visual: 'eye-outline', vibration: 'vibrate', sound: 'alarm-bell' };
 
 export function PrefChips({ values }: { values: Preference[] }) {
@@ -131,26 +116,53 @@ function AlertBody({ alert, scale = 1 }: { alert: QueueAlert; scale?: number }) 
     <View accessible accessibilityRole="header" style={styles.alertHead}>
       <Icon source={corrected ? 'alert-octagon' : 'bell-ring'} size={Math.round(36 * scale)} color={s.ink} />
       <Text style={[styles.alertTitle, { color: s.ink, fontSize: Math.round(30 * scale), lineHeight: Math.round(38 * scale) }]}>
-        {corrected ? t('Alert changed') : alert.summary ? t('Event detected') : t("It's your turn!")}</Text>
+        {corrected ? t('Alert changed') : alert.summary || t("It's your turn!")}</Text>
     </View>
-    {alert.summary ? <>
-      <Text style={[styles.alertCounter, { color: s.ink, fontSize: Math.round(24 * scale), lineHeight: Math.round(34 * scale) }]}>{alert.summary}</Text>
-      {corrected && <Text variant="bodyLarge" style={{ color: s.ink }}>{t('This alert was corrected or cancelled. Do not rely on the previous announcement.')}</Text>}
-      {!!alert.location && <Text variant="titleLarge" style={{ color: s.ink }}>{t('Location: {location}', { location: alert.location })}</Text>}
+    {corrected ? <Text variant="bodyLarge" style={{ color: s.ink }}>
+      {t('Check the official source.')}
+    </Text> : alert.summary ? (
+      !!alert.location && !alert.summary.includes(alert.location) &&
+      <Text variant="titleLarge" style={{ color: s.ink }}>{alert.location}</Text>
+    ) : <>
+      <Text testID="alert-token" selectable accessibilityLabel={`${t('Token')} ${spell(alert.token ?? '')}`}
+        style={[styles.alertToken, { color: s.ink, fontSize: Math.round(44 * scale), lineHeight: Math.round(54 * scale) }]}>
+        {alert.token}
+      </Text>
+      <Text style={[styles.alertCounter, { color: s.ink, fontSize: Math.round(26 * scale), lineHeight: Math.round(34 * scale) }]}>
+        {alert.counter ? t('Counter {counter}', { counter: alert.counter }) : t('Counter unknown — check the display.')}</Text>
+    </>}
+    <Disclosure key={`${alert.id}:${alert.state}`} label={t('Details')} color={s.ink}>
+      {corrected && <View style={{ gap: 4 }}>
+        <Text variant="labelLarge" style={{ color: s.ink }}>{t('Previous alert')}</Text>
+        <Text variant="bodyLarge" selectable style={{ color: s.ink }}>{alert.summary || t('Token {token}. {counter}', {
+          token: alert.token ?? '', counter: alert.counter ? t('Counter {counter}', { counter: alert.counter }) : t('Counter unclear'),
+        })}</Text>
+      </View>}
       {!!alert.evidence_text && <View style={{ gap: 4 }}>
         <Text variant="labelLarge" style={{ color: s.ink }}>{t('What was heard')}</Text>
         <Text variant="bodyLarge" selectable style={{ color: s.ink }}>{alert.evidence_text}</Text>
       </View>}
-    </> : <>
-    <TokenTiles token={alert.token ?? ''} size={Math.round(60 * scale)} ink={s.ink} tile="#FFFFFF" edge={s.edge} />
-    <Text style={[styles.alertCounter, { color: s.ink, fontSize: Math.round(26 * scale), lineHeight: Math.round(34 * scale) }]}>
-      {corrected ? t('Previous call corrected or cancelled.') : alert.counter ? t('Go to counter {counter}', { counter: alert.counter }) : t('Counter unclear')}</Text>
-    </>}
-    <View style={styles.alertNote}>
-      <Icon source="monitor-eye" size={22} color={s.ink} />
-      <Text variant="bodyLarge" style={[styles.flex, { color: s.ink }]}>{t('Check the official source.')}</Text>
-    </View>
+      {!corrected && <Text variant="bodyMedium" style={{ color: s.ink }}>{t('Check the official source.')}</Text>}
+    </Disclosure>
   </>;
+}
+
+/** Optional detail stays available to touch, keyboard and screen-reader users without filling the screen. */
+export function Disclosure({ label, children, color, icon }: {
+  label: string; children: ReactNode; color?: string; icon?: string;
+}) {
+  const [open, setOpen] = useState(false);
+  const theme = useAppTheme();
+  const ink = color ?? theme.colors.onSurface;
+  return <View>
+    <Pressable accessibilityRole="button" accessibilityLabel={label} accessibilityState={{ expanded: open }} aria-expanded={open}
+      onPress={() => setOpen(value => !value)} style={styles.disclosure}>
+      {icon && <Icon source={icon} size={24} color={ink} />}
+      <Text variant="labelLarge" style={{ color: ink, flex: 1 }}>{label}</Text>
+      <Icon source={open ? 'chevron-up' : 'chevron-down'} size={24} color={ink} />
+    </Pressable>
+    {open && <View style={styles.details}>{children}</View>}
+  </View>;
 }
 
 export function AlertCard({ alert, onSeen, onOpen, busy }: { alert: QueueAlert; onSeen: () => void; onOpen: () => void; busy: boolean }) {
@@ -161,8 +173,8 @@ export function AlertCard({ alert, onSeen, onOpen, busy }: { alert: QueueAlert; 
     <AlertBody alert={alert} />
     <Button mode="contained" icon="check-bold" buttonColor={s.ink} textColor={s.background} contentStyle={styles.bigAction}
       disabled={busy} onPress={onSeen}>{t('I’ve seen this')}</Button>
-    <Button mode="text" icon="fullscreen" textColor={s.ink} contentStyle={styles.action} onPress={onOpen}
-      accessibilityLabel={t('Show this alert full screen')}>{t('Full screen')}</Button>
+    <SoftIconButton icon="fullscreen" label={t('Show this alert full screen')} onPress={onOpen}
+      style={{ alignSelf: 'flex-end' }} />
   </View>;
 }
 
@@ -180,14 +192,15 @@ export function AlertTakeover({ alert, more, visible, busy, reduceMotion, onSeen
   return <Modal visible={visible} animationType="none" statusBarTranslucent navigationBarTranslucent onRequestClose={onLater}>
     <View style={[styles.flex, { backgroundColor: s.background }]}>
       <Animated.View pointerEvents="none" style={[StyleSheet.absoluteFill, styles.frame, { borderColor: s.edge, opacity: pulse }]} />
-      <ScrollView contentContainerStyle={[styles.takeover, { paddingTop: insets.top + 40, paddingBottom: insets.bottom + 32 }]}>
-        <AlertBody alert={alert} scale={1.3} />
-        {more > 0 && <Text variant="titleMedium" style={{ color: s.ink }}>{t('Additional alerts waiting: {count}', { count: more })}</Text>}
+      <ScrollView contentContainerStyle={[styles.takeover, { paddingTop: insets.top + 32, paddingBottom: insets.bottom + 32 }]}>
+        <AlertBody alert={alert} scale={1.15} />
+        {more > 0 && <Text variant="titleMedium" style={{ color: s.ink }}
+          accessibilityLabel={t('Additional alerts waiting: {count}', { count: more })}>+{more}</Text>}
         <View style={styles.takeoverActions}>
           <Button mode="contained" icon="check-bold" buttonColor={s.ink} textColor={s.background}
             contentStyle={styles.hugeAction} labelStyle={styles.hugeLabel} disabled={busy} onPress={onSeen}>{t('I’ve seen this')}</Button>
-          <Button mode="outlined" icon="arrow-left" textColor={s.ink} style={{ borderColor: s.ink, borderWidth: 2 }}
-            contentStyle={styles.bigAction} onPress={onLater}>{t('Back to app')}</Button>
+          <Button mode="text" icon="arrow-left" textColor={s.ink}
+            contentStyle={styles.bigAction} accessibilityLabel={t('Back to app')} onPress={onLater}>{t('Back')}</Button>
         </View>
       </ScrollView>
     </View>
@@ -212,18 +225,17 @@ const styles = StyleSheet.create({
   badgeText: { fontSize: 13, fontWeight: '800' },
   header: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', gap: 16, paddingHorizontal: 20, paddingVertical: 12 },
   pill: { flexDirection: 'row', maxWidth: '100%', flexShrink: 1, alignItems: 'center', gap: 6, borderRadius: 999, borderWidth: 1, paddingHorizontal: 12, minHeight: 36 },
-  tiles: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
-  tokenTile: { borderWidth: 3, paddingHorizontal: 8, paddingVertical: 4, alignItems: 'center', justifyContent: 'center' },
-  tileText: { fontWeight: '800', fontVariant: ['tabular-nums'], includeFontPadding: false, textAlign: 'center' },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   chip: { flexDirection: 'row', alignItems: 'center', gap: 6, borderRadius: 999, paddingHorizontal: 14, minHeight: 40 },
   notice: { flexDirection: 'row', alignItems: 'flex-start', gap: 12, padding: 16, borderRadius: 20, borderWidth: 1 },
   alertCard: { padding: 24, borderRadius: 28, borderWidth: 4, gap: 16 },
   alertHead: { flexDirection: 'row', alignItems: 'center', gap: 12 },
   alertTitle: { fontWeight: '800', flexShrink: 1 },
+  alertToken: { fontWeight: '800', fontVariant: ['tabular-nums'], writingDirection: 'ltr', textAlign: 'left' },
   alertCounter: { fontWeight: '700' },
-  alertNote: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  disclosure: { flexDirection: 'row', alignItems: 'center', gap: 12, minHeight: 48, paddingVertical: 8 },
+  details: { gap: 12, paddingBottom: 12 },
   frame: { borderWidth: 14 },
-  takeover: { paddingHorizontal: 32, gap: 24, flexGrow: 1, justifyContent: 'center' },
+  takeover: { width: '100%', maxWidth: 560, alignSelf: 'center', paddingHorizontal: 24, gap: 16, flexGrow: 1, justifyContent: 'center' },
   takeoverActions: { gap: 12, marginTop: 8 },
 });

@@ -83,7 +83,12 @@ same multilingual number/letter interpretation as setup, preserving prefixes and
 Never copy the task's identifier into an observation if it was not actually heard.
 A split phrase can use older segments only to complete the newest one. Include the newest source ID;
 never re-emit an old complete event. summary is a factual account of what was announced, in the task
-summary's language; it is not an instruction or an invented outcome. location is null or a verbatim
+summary's language; it is not an instruction or an invented outcome. Use one compact clause, ideally
+eight words or fewer (or similarly brief phrasing in that language). State the subject and event
+directly; omit introductions like 'The announcement says', repeated context and explanations.
+Preserve complete identifiers, meaningful qualifiers, negation and corrections even if more words
+are needed. Keep the full verbatim wording in evidence_text, not in summary.
+location is null or a verbatim
 span of this evidence. Do not add facts from the task that the announcement did not establish.
 
 NONMATCHES, CORRECTIONS AND REPETITIONS

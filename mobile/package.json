@@ -5,6 +5,7 @@
   "repository": "github:mathew1046/CueBell",
   "main": "expo-router/entry",
   "dependencies": {
+    "@expo/metro-runtime": "~58.0.17",
     "@expo/vector-icons": "^15.0.2",
     "eslint": "^9.39.5",
     "eslint-config-expo": "~58.0.4",
@@ -17,22 +18,29 @@
     "expo-secure-store": "~58.0.2",
     "expo-status-bar": "~58.0.4",
     "expo-system-ui": "~58.0.7",
+    "onnxruntime-web": "1.31.1",
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "react-native": "0.88.1",
     "react-native-paper": "^5.15.4",
     "react-native-safe-area-context": "~5.11.1",
-    "react-native-screens": "~4.30.1"
+    "react-native-screens": "~4.30.1",
+    "react-native-web": "^0.21.4"
   },
   "devDependencies": {
+    "@playwright/test": "^1.65.0",
     "@types/react": "~19.3.0",
     "typescript": "~6.0.3"
   },
   "scripts": {
-    "start": "expo start",
+    "start": "npm run prepare:web-audio && expo start",
     "android": "expo run:android",
     "ios": "expo run:ios",
-    "web": "expo start --web",
+    "web": "npm run prepare:web-audio && expo start --web",
+    "prepare:web-audio": "node scripts/prepare-web-audio.mjs",
+    "build:web": "npm run check:service && npm run prepare:web-audio && expo export --platform web",
+    "test:web": "playwright test",
+    "preview:web": "node scripts/serve-web.mjs",
     "lint": "expo lint",
     "typecheck": "tsc --noEmit",
     "check:service": "node scripts/check-service.mjs",

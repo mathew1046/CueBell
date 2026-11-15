@@ -1,3 +1,3 @@
 const { defineConfig } = require('eslint/config');
 const expoConfig = require('eslint-config-expo/flat');
-module.exports = defineConfig([expoConfig, { ignores: ['android/**', 'modules/**/android/**'] }]);
+module.exports = defineConfig([expoConfig, { ignores: ['android/**', 'modules/**/android/**', 'public/audio/vendor/**'] }]);

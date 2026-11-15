@@ -1,18 +1,11 @@
-import { requireNativeView } from 'expo';
 import { ComponentRef, useRef, useState } from 'react';
-import { NativeScrollEvent, NativeSyntheticEvent, ScrollView, StyleSheet, View, ViewProps } from 'react-native';
+import { NativeScrollEvent, NativeSyntheticEvent, ScrollView, StyleSheet, View } from 'react-native';
 import { Button, Text } from 'react-native-paper';
 import type { QueueEvent } from '../lib/types';
 import { useAppTheme } from '../lib/theme';
 import { useLanguage } from '../lib/i18n';
 
-const NativeWaveform = requireNativeView<ViewProps & { animate: boolean; barColor: string }>('QueueListener');
-
-export function ListeningWaveform({ animate, color, height }: { animate: boolean; color: string; height: number }) {
-  return <NativeWaveform animate={animate} barColor={color}
-    importantForAccessibility="no-hide-descendants" pointerEvents="none"
-    style={{ width: '100%', height }} />;
-}
+export { ListeningWaveform } from './waveform';
 
 export function LiveTranscription({ events, listening, mode }: {
   events: QueueEvent[]; listening: boolean; mode: 'request' | 'monitor';
@@ -33,8 +26,8 @@ export function LiveTranscription({ events, listening, mode }: {
   };
 
   return <View style={styles.section}>
-    <Text variant="titleLarge" accessibilityRole="header" style={{ color: theme.colors.onSurface }}>{t('Live Transcription')}</Text>
-    <View style={[styles.panel, { backgroundColor: theme.colors.surface, borderColor: theme.colors.outlineVariant }]}>
+    <View accessibilityLabel={t('Live Transcription')}
+      style={[styles.panel, { backgroundColor: theme.colors.surface, borderColor: theme.colors.outlineVariant }]}>
       {transcripts.length ? <ScrollView ref={viewport} nestedScrollEnabled style={styles.viewport}
         contentContainerStyle={styles.lines} onScroll={onScroll} scrollEventThrottle={32}
         onContentSizeChange={() => { if (follow.current) viewport.current?.scrollToEnd({ animated: false }); }}>

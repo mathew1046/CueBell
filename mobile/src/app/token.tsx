@@ -1,6 +1,6 @@
 import { useIsFocused, useRouter } from 'expo-router';
 import { useEffect } from 'react';
-import { AccessibilityInfo, Animated, KeyboardAvoidingView, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { Animated, KeyboardAvoidingView, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { ActivityIndicator, Button, Icon, Text, TextInput } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ConsentCard, ErrorBanner } from '../components/app';
@@ -8,6 +8,7 @@ import { actionStyles, Notice, ScreenHeader, usePulse } from '../components/ui';
 import { haptic, useReduceMotion } from '../lib/a11y';
 import { useCueBell } from '../lib/cuebell';
 import { useLanguage } from '../lib/i18n';
+import { announce } from '../lib/announce';
 import { useAppTheme } from '../lib/theme';
 
 export default function TokenScreen() {
@@ -45,26 +46,21 @@ export default function TokenScreen() {
         <Text variant="headlineSmall" style={[styles.center, { color: theme.colors.onSurface }]}>{t('Describe what to listen for')}</Text>
       </View> :
         <Pressable onPress={app.consent ? app.speak : () => {
-          haptic.stopped(); AccessibilityInfo.announceForAccessibility(t('First tick Allow audio and text processing, above.'));
-        }} disabled={app.busy} accessibilityRole="button"
+          haptic.stopped(); announce(t('First tick Allow audio and text processing, above.'));
+        }} disabled={app.busy || app.native.running} accessibilityRole="button"
           accessibilityLabel={app.consent ? t('Speak') : t('Speak. Tick Allow above first.')}
           accessibilityHint={t('For example: alert me when train 14922 arrives. Short pauses are OK.')}
-          accessibilityState={{ disabled: app.busy }}
+          accessibilityState={{ disabled: app.busy || app.native.running }}
           style={({ pressed }) => [styles.speak, { backgroundColor: theme.colors.primary, boxShadow: theme.shadow.hero,
-            transform: [{ scale: pressed ? 0.98 : 1 }] }]}>
+            transform: [{ scale: pressed && !reduceMotion ? 0.98 : 1 }] }]}>
           <Icon source="microphone" size={40} color={theme.colors.onPrimary} />
           <Text style={[styles.speakLabel, { color: theme.colors.onPrimary }]}>{t('Speak')}</Text>
         </Pressable>}
-      {(app.capturing || app.busy) && <Button mode="outlined" icon="stop" contentStyle={actionStyles.big} textColor={theme.colors.onSurface}
+      {(app.native.running || app.busy) && <Button mode="outlined" icon="stop" contentStyle={actionStyles.big} textColor={theme.colors.onSurface}
         style={{ borderColor: theme.colors.onSurface, borderWidth: 2 }} onPress={app.cancelCapture}>{t('Cancel')}</Button>}
 
-      <View style={styles.dividerRow} importantForAccessibility="no-hide-descendants">
-        <View style={[styles.rule, { backgroundColor: theme.colors.outlineVariant }]} />
-        <Text variant="labelLarge" style={{ color: theme.colors.onSurfaceVariant }}>{t('or type')}</Text>
-        <View style={[styles.rule, { backgroundColor: theme.colors.outlineVariant }]} />
-      </View>
-
       <TextInput mode="outlined" label={t('What should I listen for?')} multiline value={app.request} onChangeText={app.editRequest}
+        accessibilityLabel={t('What should I listen for?')}
         placeholder={t('Alert me when train 14922 arrives.')} outlineStyle={styles.outline} outlineColor={theme.colors.outline}
         activeOutlineColor={theme.colors.onSurface} style={[styles.input, { backgroundColor: theme.colors.surface }]}
         maxLength={1500} editable={!app.busy && !app.native.running} />
@@ -87,7 +83,6 @@ const styles = StyleSheet.create({
   micWrap: { width: 168, height: 168, alignItems: 'center', justifyContent: 'center' },
   micHalo: { position: 'absolute', width: 168, height: 168, borderRadius: 84 },
   mic: { width: 112, height: 112, borderRadius: 40, alignItems: 'center', justifyContent: 'center' },
-  dividerRow: { flexDirection: 'row', alignItems: 'center', gap: 12 }, rule: { flex: 1, height: 1 },
   input: { minHeight: 120, fontSize: 20 }, outline: { borderRadius: 20, borderWidth: 2 },
   reverse: { flexDirection: 'row-reverse' }, radius: { borderRadius: 20 },
 });

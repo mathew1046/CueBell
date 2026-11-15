@@ -1,16 +1,17 @@
 import { useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
-import { Linking, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { Platform, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { Button, Icon, Switch, Text } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Listener from '../../modules/queue-listener';
 import { ConsentCard, ErrorBanner } from '../components/app';
-import { actionStyles, ScreenHeader, SoftCard } from '../components/ui';
+import { actionStyles, Disclosure, ScreenHeader, SoftCard } from '../components/ui';
 import { spell } from '../lib/a11y';
 import { useCueBell } from '../lib/cuebell';
 import { useAppTheme } from '../lib/theme';
 import { ThemeMode, useThemeMode } from '../lib/themeMode';
 import { useLanguage } from '../lib/i18n';
+import { PermissionHelp } from '../components/permission-help';
 
 const modes: { value: ThemeMode; label: string; icon: string }[] = [
   { value: 'system', label: 'Auto', icon: 'theme-light-dark' },
@@ -45,7 +46,6 @@ export default function Settings() {
       <ErrorBanner />
       {section === 'accessibility' && accessibility}
 
-      {heading('Processing')}
       <ConsentCard />
 
       {heading('Appearance')}
@@ -66,7 +66,7 @@ export default function Settings() {
 
       {heading('Listening')}
       <SoftCard style={styles.group}>
-        <View style={styles.switchRow}>
+        {(Platform.OS === 'android' || Platform.OS === 'web') && <><View style={styles.switchRow}>
           <View style={styles.flex}>
             <Text variant="titleMedium" style={{ color: theme.colors.onSurface }}>{t('Noise reduction')}</Text>
             <Text variant="bodyMedium" style={{ color: theme.colors.onSurfaceVariant }}>{app.noiseReductionMode === 'gtcrn' ? t('On') : t('Off')}</Text>
@@ -81,28 +81,21 @@ export default function Settings() {
         {app.noiseReductionLocked && !app.booting && <Text variant="bodyMedium" style={{ color: theme.colors.onSurfaceVariant }}>
           {t('Stop setup or pause listening to change this.')}</Text>}
         {!!app.noiseReductionStorageError && <Text variant="bodyMedium" accessibilityLiveRegion="polite"
-          style={{ color: theme.colors.error }}>{app.noiseReductionStorageError}</Text>}
+          style={{ color: theme.colors.error }}>{app.noiseReductionStorageError}</Text>}</>}
         {app.activeRule ? <>
           <Text variant="bodyLarge" style={{ color: theme.colors.onSurface }}
-            accessibilityLabel={t('Listening for: {task}', { task: app.activeRule.task?.summary ?? spell(app.activeRule.token ?? '') })}>{t('Listening for: {task}', { task: app.activeRule.task?.summary ?? app.activeRule.token ?? '' })}</Text>
+            accessibilityLabel={t('Listening for: {task}', { task: app.activeRule.task?.summary ?? spell(app.activeRule.token ?? '') })}>{app.activeRule.task?.summary ?? app.activeRule.token}</Text>
           {app.native.running ? <Button mode="contained-tonal" icon="pause" contentStyle={actionStyles.big} disabled={app.busy}
             onPress={app.pause}>{t('Pause')}</Button> :
             <Button mode="contained" icon="microphone" contentStyle={actionStyles.big} disabled={app.busy || !app.consent}
               onPress={app.resume}>{t('Start Listening')}</Button>}
-          <Button mode="outlined" icon="stop" textColor={theme.colors.error} style={{ borderColor: theme.colors.error, borderWidth: 2 }}
+          <Button mode="outlined" icon="delete-outline" textColor={theme.colors.error} style={{ borderColor: theme.colors.error, borderWidth: 2 }}
             contentStyle={actionStyles.action} disabled={app.busy} onPress={app.stop}
-            accessibilityHint={t('Stops the microphone and clears your listening task and history from this phone')}>{t('Stop')}</Button>
+            accessibilityHint={t('Stops the microphone and clears your listening task and history from this phone')}>{t('Clear task')}</Button>
         </> : <Text variant="bodyLarge" style={{ color: theme.colors.onSurfaceVariant }}>{t('No listening task is active.')}</Text>}
       </SoftCard>
 
-      {heading('Phone')}
-      <Pressable onPress={() => void Linking.openSettings()} accessibilityRole="button" accessibilityLabel={t('Android permissions')}
-        accessibilityHint={t('Opens Android settings for microphone and notifications')}
-        style={({ pressed }) => [styles.row, { backgroundColor: theme.colors.surface, boxShadow: pressed ? theme.shadow.inset : theme.shadow.soft }]}>
-        <Icon source="cellphone-cog" size={28} color={theme.colors.onSurface} />
-        <Text variant="titleMedium" style={[styles.flex, { color: theme.colors.onSurface }]}>{t('Android permissions')}</Text>
-        <Icon source="chevron-right" size={28} color={theme.colors.onSurfaceVariant} />
-      </Pressable>
+      <Disclosure label={t('Permissions')} icon="shield-lock-outline"><PermissionHelp /></Disclosure>
     </ScrollView>
   </View>;
 }

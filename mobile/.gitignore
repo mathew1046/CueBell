@@ -35,6 +35,11 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
+test-results/
+playwright-report/
+
+# Reproducible browser model/runtime assets (prepare:web-audio)
+/public/audio/vendor/
 
 # generated native folders
 /ios

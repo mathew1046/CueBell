@@ -1,9 +1,10 @@
-import { Linking, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Button, Checkbox, Icon, Text } from 'react-native-paper';
 import { useCueBell } from '../lib/cuebell';
 import { useLanguage } from '../lib/i18n';
 import { useAppTheme } from '../lib/theme';
 import { actionStyles, SoftCard } from './ui';
+import { PermissionHelp } from './permission-help';
 
 export function ErrorBanner() {
   const { t } = useLanguage();
@@ -17,9 +18,7 @@ export function ErrorBanner() {
          style={[styles.flex, { color: theme.colors.onErrorContainer }]}>{app.error}</Text>
     </View>
     <View style={styles.row}>
-      {app.permissionError && <Button mode="contained" icon="cog-outline" buttonColor={theme.colors.onErrorContainer}
-        textColor={theme.colors.errorContainer} contentStyle={actionStyles.action}
-        onPress={() => void Linking.openSettings()}>{t('Open Android permissions')}</Button>}
+      {app.permissionError && <PermissionHelp />}
       <Button mode="outlined" textColor={theme.colors.onErrorContainer} contentStyle={actionStyles.action}
         style={{ borderColor: theme.colors.onErrorContainer }} onPress={app.clearError} accessibilityLabel={t('Dismiss error')}>{t('Dismiss')}</Button>
     </View>

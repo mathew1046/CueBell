@@ -1,16 +1,18 @@
 import { useIsFocused, useRouter } from 'expo-router';
 import { useState } from 'react';
-import { AccessibilityInfo, ActivityIndicator, Image, Pressable, ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
-import { Button, Icon, Text } from 'react-native-paper';
+import { ActivityIndicator, Image, Pressable, ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
+import { Icon, Text } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ConsentCard, ErrorBanner } from '../components/app';
 import { ListeningWaveform, LiveTranscription } from '../components/listening';
 import { LanguageMenu } from '../components/language-menu';
+import { WebAppSupport } from '../components/web-app';
 import { AlertCard, NavTile, Notice, SoftCard, SoftIconButton } from '../components/ui';
 import { spell, useReduceMotion } from '../lib/a11y';
 import { useCueBell } from '../lib/cuebell';
 import { useLanguage } from '../lib/i18n';
 import { useAppTheme } from '../lib/theme';
+import { announce } from '../lib/announce';
 
 export default function Home() {
   const { t, language } = useLanguage();
@@ -51,7 +53,7 @@ export default function Home() {
     }
     if (!consent) {
       setConsentRequested(true);
-      AccessibilityInfo.announceForAccessibility(t('Allow audio and text processing below before starting.'));
+      announce(t('Allow audio and text processing below before starting.'));
       return;
     }
     setConsentRequested(false);
@@ -82,6 +84,7 @@ export default function Home() {
         </View>
       </View>
 
+
       {app.booting ? <ActivityIndicator size="large" style={styles.restoring}
         accessibilityLabel={t('Restoring your session')} /> : <>
         <View style={[styles.heroGroup, { marginVertical: heroSpace }]}>
@@ -109,18 +112,22 @@ export default function Home() {
               </View>
             </View>
           </Pressable>
-          {captureInProgress && !showRequest && <Button mode="text"
-            icon={captionsOpen ? 'chevron-up' : 'chevron-down'}
-            accessibilityState={{ expanded: captionsOpen }} contentStyle={{ minHeight: 48 }}
-            onPress={() => setCaptionsOpen(!captionsOpen)}>{t('Live captions')}</Button>}
+          {captureInProgress && !showRequest && <Pressable accessibilityRole="button"
+            accessibilityLabel={t('Live captions')} accessibilityState={{ expanded: captionsOpen }} aria-expanded={captionsOpen}
+            style={styles.captionsToggle} onPress={() => setCaptionsOpen(!captionsOpen)}>
+            <Icon source={captionsOpen ? 'chevron-up' : 'chevron-down'} size={24} color={theme.colors.primary} />
+            <Text variant="labelLarge" style={{ color: theme.colors.primary, flexShrink: 1 }}>{t('Live captions')}</Text>
+          </Pressable>}
           {showTranscript && <LiveTranscription events={app.events}
             mode={showRequest ? 'request' : 'monitor'} listening={listening} />}
           {!!app.statusDetail && <Text variant="bodyMedium" style={{ color: theme.colors.onSurfaceVariant }}>{app.statusDetail}</Text>}
           {consentRequested && !consent && !native.running && <ConsentCard />}
           <ErrorBanner />
+          {app.noiseReductionFallback && <Notice tone="warn" icon="waveform" live="polite">
+            {t('Noise reduction is unavailable. Listening continues without it.')}</Notice>}
           {!captureInProgress && !!app.clarification &&
             <Notice tone="warn" icon="help-circle" live="polite">{app.clarification}</Notice>}
-          {showTranscript && !showRequest && app.latestUnclear &&
+          {!showRequest && app.latestUnclear &&
             <Notice tone="warn" icon="help-circle">{t('Unclear announcement. Check the display.')}</Notice>}
         </View>
 
@@ -152,6 +159,7 @@ export default function Home() {
           <NavTile icon="cog-outline" label={t('Settings')} onPress={() => router.push('/settings')} />
           <NavTile icon="help-circle-outline" label={t('Help')} onPress={() => router.push('/help')} />
         </View>
+        <WebAppSupport />
       </>}
     </ScrollView>
   </View>;
@@ -170,6 +178,7 @@ const styles = StyleSheet.create({
   shortcut: { width: 48, height: 48, borderRadius: 16 },
   restoring: { marginTop: 48 },
   heroGroup: { gap: 14 },
+  captionsToggle: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8, minHeight: 48, padding: 8 },
   hero: { alignSelf: 'center', paddingHorizontal: 18, paddingVertical: 24, justifyContent: 'center' },
   heroContent: { alignItems: 'center', gap: 11 },
   heroTitle: { width: '100%', fontSize: 26, lineHeight: 36, fontWeight: '700', textAlign: 'center' },

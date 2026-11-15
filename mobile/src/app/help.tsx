@@ -1,22 +1,28 @@
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { Platform, ScrollView, StyleSheet, View } from 'react-native';
 import { Icon, Text } from 'react-native-paper';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { ScreenHeader, SoftCard } from '../components/ui';
+import { Disclosure, ScreenHeader } from '../components/ui';
 import { useAppTheme } from '../lib/theme';
 import { useLanguage } from '../lib/i18n';
 
 const steps = [
   { icon: 'microphone', title: 'Describe your listening task', body: 'Say or type what to listen for and when to alert you: a train arriving, boarding starting, your name being called, or another spoken event.' },
   { icon: 'ear-hearing', title: 'Listening starts automatically', body: 'Once your request is understood, CueBell starts listening. No second tap is needed.' },
-  { icon: 'cellphone', title: 'Use your phone normally', body: 'Listening continues with the app in the background or the screen locked. Keep the microphone notification visible. Tap Stop Listening or Stop microphone to end it.' },
+  { icon: 'cellphone', title: Platform.OS === 'web' ? 'Keep CueBell visible' : 'Use your phone normally', body: Platform.OS === 'web'
+    ? 'Keep this page visible and your screen unlocked. Listening pauses when you hide this page.'
+    : 'Listening continues with the app in the background or the screen locked. Keep the microphone notification visible. Tap Stop Listening or Stop microphone to end it.' },
 ];
 
 const about = [
   { icon: 'cellphone-message', text: 'When speech matches your task, CueBell shows what was heard, vibrates and sounds an alarm, unless you ask for silent alerts.' },
-  { icon: 'account-voice', text: 'Spoken alerts use an installed offline Android voice when sound is enabled. Stop in Settings also clears your task and history.' },
+  { icon: 'account-voice', text: Platform.OS === 'web'
+    ? 'Spoken alerts use a locally installed browser voice when sound is enabled. Availability depends on your browser and language.'
+    : 'Spoken alerts use an installed offline Android voice when sound is enabled. Stop in Settings also clears your task and history.' },
   { icon: 'ear-hearing', text: 'CueBell listens to speech. It does not track live transport data, detect non-speech sounds, send messages or replace emergency warning systems.' },
   { icon: 'shield-lock-outline', text: 'Gnani Prisma processes microphone audio. OpenAI processes requests and announcement text. The app and relay save no recordings or transcripts on disk. Provider terms apply.' },
-  { icon: 'cellphone-information', text: 'Android can interrupt listening in the background. Keep the microphone notification visible. This is an aid, not an official source.' },
+  { icon: 'cellphone-information', text: Platform.OS === 'web'
+    ? 'Your browser can interrupt audio and may not support vibration or system notifications. Check the listening status and the official source.'
+    : 'Android can interrupt listening in the background. Keep the microphone notification visible. This is an aid, not an official source.' },
 ];
 
 export default function Help() {
@@ -29,24 +35,16 @@ export default function Help() {
     <ScreenHeader title={t('Help')} />
     <ScrollView contentContainerStyle={[styles.content, { paddingBottom: Math.max(insets.bottom, 24) + 24 }]}>
       <Text variant="titleMedium" accessibilityRole="header" style={muted}>{t('How it works')}</Text>
-      {steps.map((step, index) => <SoftCard key={step.title} style={styles.step}>
-        <View style={[styles.number, { backgroundColor: theme.colors.primary }]}>
-          <Text style={[styles.numberText, { color: theme.colors.onPrimary }]}>{index + 1}</Text>
-        </View>
-        <View style={styles.flex}>
-          <Text variant="titleMedium" style={ink}>{t(step.title)}</Text>
-          <Text variant="bodyMedium" style={muted}>{t(step.body)}</Text>
-        </View>
-        <Icon source={step.icon} size={28} color={theme.colors.onSurface} />
-      </SoftCard>)}
+      {steps.map(step => <Disclosure key={step.title} label={t(step.title)} icon={step.icon}>
+        <Text variant="bodyMedium" style={muted}>{t(step.body)}</Text>
+      </Disclosure>)}
 
-      <Text variant="titleMedium" accessibilityRole="header" style={[muted, styles.gap]}>{t('About & privacy')}</Text>
-      <SoftCard style={styles.about}>
+      <Disclosure label={t('About & privacy')} icon="shield-lock-outline">
         {about.map(item => <View key={item.icon} style={styles.row}>
           <Icon source={item.icon} size={24} color={theme.colors.onSurface} />
           <Text variant="bodyLarge" style={[styles.flex, ink]}>{t(item.text)}</Text>
         </View>)}
-      </SoftCard>
+      </Disclosure>
 
       <View style={styles.row}>
         <Icon source="monitor-eye" size={22} color={theme.colors.onSurfaceVariant} />
@@ -57,11 +55,7 @@ export default function Help() {
 }
 
 const styles = StyleSheet.create({
-  root: { flex: 1 }, flex: { flex: 1, gap: 2 }, gap: { marginTop: 8 },
+  root: { flex: 1 }, flex: { flex: 1, gap: 2 },
   content: { paddingHorizontal: 24, paddingTop: 8, gap: 16, maxWidth: 560, width: '100%', alignSelf: 'center' },
-  step: { flexDirection: 'row', alignItems: 'center', gap: 14 },
-  number: { width: 40, height: 40, borderRadius: 14, alignItems: 'center', justifyContent: 'center' },
-  numberText: { fontSize: 20, fontWeight: '800' },
-  about: { gap: 18 },
   row: { flexDirection: 'row', alignItems: 'flex-start', gap: 12 },
 });
