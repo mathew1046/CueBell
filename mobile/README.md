@@ -47,19 +47,23 @@ or config plugins, never generated Android/iOS source.
 
 ### Noise-reduction runtime and signing
 
-Normal builds use the checksum-pinned official sherpa-onnx AAR. The 1.4.0 ARM64
-preview uses the reviewed FFT runtime. Follow its [build/provenance guide](modules/queue-listener/android/native/sherpa-fft/README.md),
+Normal builds use the checksum-pinned official sherpa-onnx AAR. The 1.4.0 and 1.4.1 ARM64
+previews use the reviewed FFT runtime. Follow its [build/provenance guide](modules/queue-listener/android/native/sherpa-fft/README.md),
 then add `-PcuebellSherpaFftDir=/absolute/path/to/verified/dist` to the ARM64 release
 command. Gradle checks the tracked artifact lock, not just the directory.
 
-Local previews use development/debug signing, not a store key. The 1.4.0
-certificate matches 1.3.1 for updates. Configure production signing through a
+Local previews use development/debug signing, not a store key. The 1.4.1
+build verifies the same signing certificate as 1.4.0 for in-place updates. Configure production signing through a
 config plugin or your EAS project. `eas.json` supplies an internal APK profile;
 remote builds/uploads need separate setup.
 
-[1.4.0 preview and checksum](https://github.com/mathew1046/CueBell/releases/tag/v1.4.0-preview):
-version 1.4.0/code 7, ARM64 only. [Historical verification](../docs/VERIFICATION.md)
+[1.4.1 preview and checksum](https://github.com/mathew1046/CueBell/releases/tag/v1.4.1-preview):
+version 1.4.1/code 8, ARM64 only. [Historical verification](../docs/VERIFICATION.md)
 is not a guarantee for new builds.
+
+On Linux ARM64, Android's standard x86-64 build tools require emulation
+(such as QEMU) and matching x86-64 system libraries. An x86-64 Linux build
+host avoids this extra setup.
 
 ## Task, language and audio behavior
 

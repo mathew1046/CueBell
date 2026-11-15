@@ -3,6 +3,16 @@
 Changes to downloadable Android previews are recorded here. Release assets and
 checksums are authoritative for each published build; historical APKs are not renamed.
 
+## 1.4.1-preview | 2026-11-15
+
+- Shorter interface labels and help, with supporting alert text under Details.
+- Live captions are collapsed by default; translations follow the simpler copy.
+- Includes current stream-recovery fixes and the Clear task control.
+- Version 1.4.1 / Android version code 8, ARM64 development preview.
+- Noise reduction remains experimental and off by default.
+
+[APK and checksum](https://github.com/mathew1046/CueBell/releases/tag/v1.4.1-preview).
+
 ## 1.4.0-preview — 2026-11-14
 
 ### Added

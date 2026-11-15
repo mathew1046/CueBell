@@ -3,7 +3,7 @@
     "name": "CueBell",
     "slug": "cuebell",
     "scheme": "cuebell",
-    "version": "1.4.0",
+    "version": "1.4.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -15,7 +15,7 @@
     },
     "android": {
       "package": "app.cuebell.mobile",
-      "versionCode": 7,
+      "versionCode": 8,
       "permissions": [
         "RECORD_AUDIO",
         "POST_NOTIFICATIONS",

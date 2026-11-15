@@ -5,7 +5,7 @@ CueBell listens for a spoken announcement you describe and gives a visual alert,
 ## 1. Open the app
 
 - **Web:** open [cuebell.mathewjoseph.xyz](https://cuebell.mathewjoseph.xyz). Keep the page visible and screen unlocked. Hiding it stops capture; return and restart listening.
-- **Android:** install the [development-signed preview](https://github.com/mathew1046/CueBell/releases/tag/v1.4.0-preview) for ARM64 phones running Android 7+. Start listening while the app is visible. Its microphone service can continue in the background or with the screen locked, subject to device restrictions.
+- **Android:** install the [development-signed preview](https://github.com/mathew1046/CueBell/releases/tag/v1.4.1-preview) for ARM64 phones running Android 7+. Start listening while the app is visible. Its microphone service can continue in the background or with the screen locked, subject to device restrictions.
 
 You need internet and microphone access, but no account, API key or server address.
 
