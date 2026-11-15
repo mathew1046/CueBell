@@ -8,6 +8,12 @@ CueBell turns spoken announcements into personal visual alerts, with optional vi
 
 [**Medium story**](https://medium.com/@mathewjosephparakka/what-if-you-cant-hear-your-turn-the-story-behind-cuebell-3879d5a3a353): What If You Can’t Hear Your Turn?
 
+## Demo video
+
+[<img src="mobile/public/demo/poster.jpg" alt="Watch the CueBell app demo" width="240">](https://cuebell.mathewjoseph.xyz/demo/index.html)
+
+[▶ Watch the demo](https://cuebell.mathewjoseph.xyz/demo/index.html) · [Download video](https://cuebell.mathewjoseph.xyz/demo/CueBell_demo_final.mp4)
+
 ## Example
 
 1. Type or say: **“Tell me when pharmacy token 442 is called. Vibrate.”**
