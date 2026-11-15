@@ -1,39 +1,24 @@
 # Security policy
 
-CueBell is a prototype with development-signed Android previews. It has not had
-an independent security audit. It is not a production medical alarm or an
-authoritative queue system.
+CueBell is an unaudited prototype with development-signed Android previews, not a production alarm or authoritative queue system.
 
 ## Report privately
 
-Use [GitHub private vulnerability reporting](https://github.com/mathew1046/CueBell/security/advisories/new).
-Include the affected release or commit, reproduction steps, likely impact and a
-minimal redacted example. Use synthetic data, never live keys, bearer tokens,
-patient information or unconsented audio.
+Use [GitHub private vulnerability reporting](https://github.com/mathew1046/CueBell/security/advisories/new). Include the release/commit, reproduction steps, impact and a minimal redacted example. Never include live keys, bearer tokens, patient data or unconsented audio.
 
-Do not publish exploit details in public issues before assessment. If a credential
-was exposed, revoke or rotate it immediately. Deleting a post or commit does not
-invalidate it.
+Do not publish exploit details before assessment. Revoke exposed credentials immediately; deleting a commit does not invalidate them.
 
-## Scope and support
+Reports about consent, microphone lifecycle, session isolation, origins, credentials, provider routing, transcripts and dependencies are welcome. Support is best effort, without a response-time guarantee or bounty. Older previews may not receive backports.
 
-Reports about microphone lifecycle, consent, session isolation, browser-origin
-checks, credentials, provider routing, transcript handling and dependencies are
-welcome. Assessment is best effort, with no response-time guarantee or bug bounty.
-Start with the newest preview; older versions may not receive backported fixes.
-
-Test a local instance with dummy credentials and mocked providers where possible.
-Do not stress the public deployment or scan third-party speech/text services.
+Test locally with mocked providers and dummy credentials. Do not stress the public service or scan third-party providers.
 
 ## Deployment requirements
 
-- Keep provider credentials and pairing codes on the backend, never in APKs, web exports or `EXPO_PUBLIC_` variables.
-- Use HTTPS/WSS, exact trusted proxy addresses and exact allowed browser origins. Keep the relay's upstream port private.
-- Native streams use headers; browser streams authenticate in the first message after Origin validation. Never put bearer tokens in URLs. Origin checking is not user authentication.
-- Anonymous admission is opt-in and permits paid-provider use. Add production admission controls, edge limits and provider spending limits.
-- Run one relay worker/instance. Sessions and rate limits are bounded, in-memory safeguards, not durable accounts or distributed abuse controls.
-- Exclude sensitive payloads, credentials and audio from application, proxy, host and monitoring logs.
-- Recheck dependencies before release. Historical audit results do not establish the current dependency risk.
+- Keep provider keys and pairing codes server-side, never in APKs, web exports or `EXPO_PUBLIC_` variables.
+- Use HTTPS/WSS, exact proxy/origin allowlists and a private upstream port.
+- Native streams authenticate with headers; browser streams use the first message after Origin validation. Never put bearer tokens in URLs. Origin checks are not user authentication.
+- Anonymous admission permits paid-provider use. Production needs admission controls, edge limits and spending limits.
+- Use one relay worker/instance. In-memory sessions and rate limits are not durable accounts or distributed abuse protection.
+- Exclude sensitive payloads, credentials and audio from all logs. Recheck dependencies before release.
 
-See [backend setup](backend/README.md), [browser deployment](docs/WEB.md),
-[privacy](docs/PRIVACY.md) and the [documentation index](docs/README.md).
+See [backend setup](backend/README.md), [web deployment](docs/WEB.md) and [privacy](docs/PRIVACY.md).

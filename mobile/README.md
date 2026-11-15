@@ -1,31 +1,28 @@
 # CueBell client development
 
-The Expo app shares screens and task logic across Android and browsers. Android
-adds a Kotlin foreground microphone service. The browser implementation uses web
-audio APIs and **stops listening when the page is hidden**. See the
-[web guide](../docs/WEB.md) for browser builds and limitations.
+Expo shares screens and task logic across Android and browsers. Android adds a
+Kotlin foreground microphone service; browsers **stop when the page is hidden**.
+See [web development](../docs/WEB.md).
 
 ## Requirements and configuration
 
-Use Node 24.3+ and npm; Android builds also need Java 17 and an Expo SDK 58-compatible
-Android SDK/NDK. The SDK also supports Node 22.13+. The custom native module does
-not run in Expo Go. Follow [AGENTS.md](AGENTS.md) before changing Expo APIs.
+Use Node 24.3+ and npm (SDK 58 also supports Node 22.13+). Android needs Java 17
+and compatible Android SDK/NDK. The native module cannot run in Expo Go.
+Read [AGENTS.md](AGENTS.md) before changing Expo APIs.
 
-From `mobile/`, copy [`.env.example`](.env.example) to `.env` only if no configured
-file exists. Set `EXPO_PUBLIC_API_URL` to the trusted HTTPS relay origin, without
-a path, query or credentials. This value is bundled at build time. The EAS preview
-and production profiles use `https://cuebell.mathewjoseph.xyz`.
+From `mobile/`, copy [`.env.example`](.env.example) only if `.env` is absent.
+Set `EXPO_PUBLIC_API_URL` to your trusted HTTPS relay origin, without path, query
+or credentials. It is bundled at build time; EAS preview/production use
+`https://cuebell.mathewjoseph.xyz`.
 
-There is no server URL field or pairing screen. After consent and a user action,
-the app requests an expiring bearer automatically. Its relay must explicitly set
-`ALLOW_APP_SESSIONS=true`. This permits paid-provider usage and is not production
-authentication. See [backend setup and admission controls](../backend/README.md).
-Never put provider keys, `DEMO_ACCESS_CODE` or long-lived credentials in an APK,
-web export or `EXPO_PUBLIC_` variable.
+There is no pairing/server-URL screen. After consent and a user action, the app
+requests an expiring bearer. The [backend](../backend/README.md) must explicitly
+enable `ALLOW_APP_SESSIONS=true`. This allows paid usage, not production identity.
+Never bundle provider keys, `DEMO_ACCESS_CODE` or long-lived credentials.
 
 ## Check and build Android
 
-From `mobile/`, after configuring the public origin:
+From `mobile/`:
 
 ```sh
 npm ci
@@ -36,96 +33,84 @@ npm run check:service
 npx expo prebuild --platform android --no-install
 ```
 
-From the generated `mobile/android/` directory:
+From generated `mobile/android/`:
 
 ```sh
 ./gradlew :queue-listener:testDebugUnitTest
 ./gradlew :app:assembleRelease -PreactNativeArchitectures=arm64-v8a,x86_64 --max-workers=4
 ```
 
-The APK is `android/app/build/outputs/apk/release/app-release.apk`, relative to
-`mobile/`. Use `-PreactNativeArchitectures=arm64-v8a` for an ARM64-only build.
-The app ID is `app.cuebell.mobile`, with scheme `cuebell`. Keep native source in
-`modules/queue-listener` and configuration in `app.json` or config plugins; do not
-hand-edit generated Android/iOS source.
+Output relative to `mobile/`: `android/app/build/outputs/apk/release/app-release.apk`.
+Use `-PreactNativeArchitectures=arm64-v8a` for ARM64 only. App ID:
+`app.cuebell.mobile`; scheme: `cuebell`. Edit `modules/queue-listener`, `app.json`
+or config plugins, never generated Android/iOS source.
 
 ### Noise-reduction runtime and signing
 
-Ordinary builds use the checksum-pinned official sherpa-onnx AAR. The published
-1.4.0 ARM64 preview instead uses the reviewed FFT runtime. To reproduce that
-variant, first follow the [native build and provenance guide](modules/queue-listener/android/native/sherpa-fft/README.md),
-then add `-PcuebellSherpaFftDir=/absolute/path/to/verified/dist` to the Gradle
-release command and build ARM64. Gradle checks the artifact against the tracked
-lock; a directory path alone does not authorize a replacement binary.
+Normal builds use the checksum-pinned official sherpa-onnx AAR. The 1.4.0 ARM64
+preview uses the reviewed FFT runtime. Follow its [build/provenance guide](modules/queue-listener/android/native/sherpa-fft/README.md),
+then add `-PcuebellSherpaFftDir=/absolute/path/to/verified/dist` to the ARM64 release
+command. Gradle checks the tracked artifact lock, not just the directory.
 
-Local preview release builds use a development/debug signing certificate, not a
-production/store key. The 1.4.0 preview certificate matches 1.3.1 for in-place
-updates. Configure your own production signing through a config plugin or your
-own EAS project before publishing. `eas.json` provides an internal APK profile;
-account setup, remote uploads and builds are not automatic.
+Local previews use development/debug signing, not a store key. The 1.4.0
+certificate matches 1.3.1 for updates. Configure production signing through a
+config plugin or your EAS project. `eas.json` supplies an internal APK profile;
+remote builds/uploads need separate setup.
 
-[Download the 1.4.0 preview and checksum](https://github.com/mathew1046/CueBell/releases/tag/v1.4.0-preview).
-It is version 1.4.0 / Android code 7, ARM64 only. See
-[verification](../docs/VERIFICATION.md) for historical checks, not a guarantee for
-new builds.
+[1.4.0 preview and checksum](https://github.com/mathew1046/CueBell/releases/tag/v1.4.0-preview):
+version 1.4.0/code 7, ARM64 only. [Historical verification](../docs/VERIFICATION.md)
+is not a guarantee for new builds.
 
-## Task and language behavior
+## Task, language and audio behavior
 
-A request identifies who or what to listen for and the spoken event that matters.
-A valid submitted request automatically activates after consent and permission
-checks; there is no second confirmation tap. Unclear requests must not activate.
-Alerts show the interpreted event, location when heard and verbatim evidence.
-This is speech monitoring, not live train tracking or general sound detection.
-Deploy a matching `speech-event-v1` backend and submit a fresh request after updates.
+A clear submitted request activates automatically after consent/permissions; no
+second confirmation tap. Unclear requests must not activate. Alerts include the
+interpreted event, location when heard and verbatim evidence. This monitors speech,
+not live transport or general sounds. Use a matching `speech-event-v1` backend;
+submit fresh requests after updates.
 
-The app bundles 21 UI languages, independent of Prisma's 10 speech languages.
-Catalogs are machine-generated and need native-speaker review. Original transcripts,
-identifiers and leading zeroes are not translated. Spoken Android alerts require
-a matching installed offline voice; there is no different-language/network fallback.
+The 21 UI languages differ from Prisma's 10 speech languages. Machine-generated
+catalogs need native-speaker review. Transcripts, identifiers and leading zeroes
+are not translated. Android spoken alerts require a matching installed offline
+voice, with no network/different-language fallback.
 
-For copy changes, from `mobile/`:
+From `mobile/`, update copy with:
 
 ```sh
 node scripts/extract-translations.mjs
 python3 scripts/generate-translations.py
 ```
 
-The second command contacts a translation service at development time and preserves
-reviewed translations. Never submit user requests or private announcements to it.
-The original three-pulse alarm can be regenerated with
-`python3 scripts/generate-alarm.py`. Notification permission, channel settings,
-volume and Do Not Disturb can silence sound or vibration.
+The second command contacts a translation service and preserves reviewed strings.
+Never send private requests/announcements. Regenerate the original three-pulse
+alarm with `python3 scripts/generate-alarm.py`. Permissions, channels, volume and
+Do Not Disturb can silence alerts.
 
-Experimental noise reduction is off by default and can be changed only while
-stopped. It runs locally for setup and monitoring, but replay studies found
-recognition regressions. See [noise reduction](../docs/NOISE_REDUCTION.md).
-Backend latency experiments also remain opt-in; see
-[pipeline optimization](../docs/PIPELINE_OPTIMIZATION.md).
+[Experimental denoising](../docs/NOISE_REDUCTION.md) is local, off by default and
+changeable only while stopped; studies found recognition regressions.
+[Pipeline latency settings](../docs/PIPELINE_OPTIMIZATION.md) also remain opt-in.
 
 ## Physical-device checklist
 
-Use synthetic identifiers and consenting speakers. Record the phone, OS, app
-version, backend version and exact results. Mock tests and emulator views do not
-establish microphone, vibration, audibility or locked-screen reliability.
+Use consenting speakers/synthetic identifiers. Record phone, OS, app/backend
+versions and outcomes. Mocks/emulators do not establish capture or audibility.
 
-1. Accept processing and test typed and spoken requests. Check permission denial/recovery, clarification, leading zeroes and automatic activation without another tap.
-2. Test a matching event, a wrong subject, negation, a future/delayed event, repetition, correction and cancellation. Check waveform activity and finalized live captions.
-3. Lock the screen and background the app. Verify the microphone notification, a known alert and the notification stop control. Repeat with the phone's battery restrictions enabled.
-4. Disable networking, microphone privacy and notification permission separately. Verify gap warnings, bounded reconnect and no stale-audio replay. Test sound/vibration combinations, channels and Do Not Disturb.
-5. Check **Stop Listening** releases capture but retains the task/history. **Settings → Stop** must clear local events and notifications, including offline, and report failed remote cleanup. The saved suppression flag must prevent the old monitor returning after restart. If suppression and session removal both fail, retry Stop or clear app storage before closing.
-6. Test voice stop while visible and locked, then explicit restart. Negated, quoted and PA/cancellation speech should not pause it. Nearby speakers can also pause it; use manual stop if recognition fails.
-7. Check TalkBack, enlarged text, reduced motion, both themes, language persistence and right-to-left layout. Test installed offline spoken-alert voices on the phone.
+1. Test typed/spoken setup, denial/recovery, clarification, leading zeroes and automatic activation.
+2. Test matching/wrong subjects, negation, delayed events, repetition, correction/cancellation, waveform and final captions.
+3. Background/lock the phone: verify microphone notification, known alert and notification stop. Repeat with battery restrictions.
+4. Separately disable network, microphone privacy and notifications. Check gaps, bounded reconnect, no stale replay, sound/vibration, channels and Do Not Disturb.
+5. **Home → Stop Listening** pauses capture, retaining task/history. **Settings → Clear task** clears local events/notifications even offline and reports failed remote cleanup. Older APKs may label this **Stop**. Suppression must prevent restoration; if suppression and session removal both fail, retry Clear task or clear app storage before closing.
+6. Test voice stop visible/locked, then explicit restart. Negated, quoted and PA/cancellation speech should not pause. Nearby speakers can pause; retain manual controls.
+7. Review TalkBack, large text, reduced motion, themes, language persistence, RTL and installed offline voices.
 
 ## Lifecycle and privacy
 
-The Android service owns capture, PCM framing, networking, reconnect and local
-alerts. It starts from a visible Activity, is non-sticky, has no boot receiver and
-releases capture, sockets and its timed wake lock on stop. Audio must negotiate
-16 kHz mono; it is not relabelled. Frames are 1024-byte PCM16LE, with bounded
-buffers and no replay after stalls.
+Android owns capture, framing, sockets/reconnect and alerts. It starts visibly,
+is non-sticky, has no boot receiver and releases capture/sockets/timed wake lock
+on stop. Audio negotiates 16 kHz mono, never relabelled; 1024-byte PCM16LE frames
+use bounded buffers without stale replay.
 
-Session metadata uses encrypted SecureStore (`cuebell.connection.v1`). The service
-keeps notification language/catalog data in private preferences. Audio/transcripts
-remain in bounded memory, not intentional recording files. See [privacy](../docs/PRIVACY.md),
-[security](../SECURITY.md), [architecture](../docs/ARCHITECTURE.md) and the
-[documentation index](../docs/README.md).
+Encrypted SecureStore uses `cuebell.connection.v1`; private preferences hold service
+notification language/catalog data. Audio/transcripts stay in bounded memory, not
+intentional recording files. See [privacy](../docs/PRIVACY.md),
+[security](../SECURITY.md) and [architecture](../docs/ARCHITECTURE.md).

@@ -2,63 +2,37 @@
 
 ## The problem
 
-A pharmacy calls a token over a loudspeaker. A person who cannot reliably hear it may need to watch a display continuously or ask a companion to listen. The same accessibility barrier can arise when a name, platform change or boarding call is announced only through speech.
+Audio-only announcements can force people who cannot reliably hear them to watch a display continuously or depend on a companion. CueBell aims to offer a personal visual cue using a phone microphone, without integration with venue software.
 
-CueBell aims to provide a personal alternative: **tell it what matters, then receive a visible cue when matching speech is detected.** It works through a phone microphone rather than requiring integration with the venue's queue software.
+## Example uses
 
-## Example journeys
+| Request or event | Intended response |
+| --- | --- |
+| “Tell me when pharmacy token 442 is called. Vibrate.” | Show the matching call and recognized counter, with vibration. Token 441 should not alert. |
+| “Tell me when Anjali is called.” | Show the matching name call. |
+| Token 442 changes from counter two to three. | Mark or update the earlier directions when the correction is recognized. |
 
-**Pharmacy collection**
+These are examples, not documented venue deployments. CueBell cannot identify a PA speaker or distinguish announcements from nearby conversation. It is supplemental; official displays and staff remain the fallback.
 
-- Request: “Tell me when pharmacy token 442 is called. Vibrate.”
-- Announcement: “Token 442, collect your medicine at counter two.”
-- Intended result: a visible call with counter information and the requested vibration.
-- Important check: token 441 should not trigger the same alert.
+## What is built
 
-**A name being called**
+Typed setup, visual alerts, captions, source text, scalable text, themes and multilingual labels provide alternatives to audio-only interaction. Listening status and coverage-gap warnings make interruptions visible. Android supports foreground-service capture; the browser requires a visible page.
 
-- Request: “Tell me when Anjali is called.”
-- Intended result: an alert grounded in the matching announcement, without requiring a queue token.
-- Limit: CueBell does not identify who is speaking or distinguish a loudspeaker from nearby conversation.
+Gnani Prisma v3.0 recognizes microphone audio. Requests and transcripts go to the configured OpenAI text fallback for interpretation, followed by evidence checks. Evon and Timbre are not integrated. Optional local GTCRN enhancement does not replace recognition. See [privacy](PRIVACY.md).
 
-**An announcement changing**
+## What the evidence shows
 
-- Initial call: token 442 to counter two.
-- Correction: token 442 should go to counter three.
-- Intended result: show the correction, rather than silently leaving outdated directions.
+Software tests, provider replays and device audio-processing experiments guide development. The [pipeline](PIPELINE_OPTIMIZATION.md) and [noise-reduction](NOISE_REDUCTION.md) reports explain their measured results and limits.
 
-These are use examples, not records of deployments at named hospitals or transport operators.
+They do not establish fewer missed turns, shorter waits, reliable live-venue accuracy or greater independence. Usability for deaf and hard-of-hearing, elderly and low-literacy users still needs representative-user testing.
 
-## What supports the intended benefit
+## Next: a consented field trial
 
-- Typed setup avoids requiring speech from every user.
-- Visual alerts remain available when sound or vibration is unavailable.
-- Captions and source speech make the interpretation inspectable.
-- Short controls, larger text, themes and multilingual labels reduce interface barriers.
-- Explicit listening status and coverage gaps avoid implying that silence means nothing happened.
-- Android capture can continue through a native foreground service; browser listening requires a visible page.
+1. Recruit representative users and obtain venue permission. Start with staged, non-sensitive speech.
+2. Compare existing call-noticing methods with CueBell assistance, retaining official displays, staff or companion support.
+3. Count noticed targets, missed calls and false alerts. Measure announcement-end-to-alert and acknowledgment delay.
+4. Include non-target speech, repeats, corrections, connection loss, phone placement, voices and languages.
+5. Ask whether setup, status and alerts are understandable; record device settings and accessibility needs.
+6. Publish denominators and failure examples. Separate speakers, sessions and venues used for improvements from those used for evaluation.
 
-These are implemented design choices. Their usability for elderly, low-literacy or deaf and hard-of-hearing users still needs representative-user testing.
-
-## What has and has not been measured
-
-The repository contains software tests, real-provider replays, device audio-processing benchmarks and recorded-noise experiments. [Pipeline](PIPELINE_OPTIMIZATION.md) and [noise](NOISE_REDUCTION.md) reports describe the results and limitations.
-
-It does **not** establish fewer missed turns, shorter waiting times, reliable live-venue accuracy or improved independence in daily use. Those are the outcomes the project should measure next, not numbers to infer from a unit-test pass rate.
-
-## A practical next field trial
-
-1. Recruit consenting representative users and obtain venue permission. Start with staged, non-sensitive announcements.
-2. Compare the existing way of noticing calls with CueBell assistance. Do not remove the official display, staff support or companion fallback.
-3. Measure correctly noticed target calls, missed calls, false alerts, time from announcement end to alert, and time to acknowledge.
-4. Test non-target speech, repeats, corrections, network loss, phone placement, different voices and language combinations.
-5. Ask whether setup, status and alerts are understandable. Record device/OS settings and accessibility needs.
-6. Report counts and failure examples. Keep speakers, sessions and venues separate when selecting improvements and evaluating them.
-
-Any recording or research logging needs separate consent, a defined retention period and access controls. Do not collect patient information or publish bystander audio.
-
-## Role of Gnani AI
-
-Gnani Prisma v3.0 turns the user's microphone audio into text for setup and monitoring. That makes Indian-language speech a functional part of the application rather than a decorative integration. CueBell then validates text-model output before producing an alert.
-
-The current text interpreter uses an explicitly configured OpenAI fallback. Evon and Timbre are not integrated. Local GTCRN is a separate third-party enhancement model; it does not replace Prisma recognition.
+Recording or research logs require separate consent, retention limits and access controls. Do not collect patient details or publish bystander audio.

@@ -4,48 +4,35 @@
 
 ## Platform
 
-Android and installable web app. Android 7+ ARM64 preview; iOS is not implemented.
+Android 7+ ARM64 preview and installable web app. No iOS implementation.
 
-## Stack
+## Users and purpose
 
-React Native, Expo, TypeScript and React Native Paper share the interface. Kotlin owns Android microphone capture and foreground-service delivery. The browser uses AudioWorklet. A single-worker FastAPI relay connects audio to Gnani Prisma v3.0 and text to a configured OpenAI fallback.
+Help people who are deaf or hard of hearing notice nearby spoken announcements. A user describes a token, name or event; matching speech produces a visual alert, with optional vibration and sound. These are listening tasks, not venue or transport integrations.
 
-## Users
+## Workflow
 
-People who are deaf or hard of hearing who want a personal cue for nearby spoken announcements. The initial example is a pharmacy token call; names and other speech-described events are supported tasks, not verified venue integrations.
+One task per session. Spoken or typed setup activates automatically after consent and permission checks. Captions, history, corrections and duplicate suppression help users inspect results. Keep the task, microphone status and stop control distinct.
 
-## Product Purpose
+## Stack and data
 
-Turn a user-described listening task into a visible, source-grounded alert, with optional vibration and sound. A valid request starts automatically after consent and permission checks. Keep the active task inspectable and Stop available.
+React Native, Expo, TypeScript and React Native Paper share the interface. Kotlin captures Android audio; AudioWorklet captures browser audio. A single-worker FastAPI relay sends audio to Gnani Prisma v3.0 and requests/transcripts to the configured OpenAI text fallback. Evon is not integrated. Provider keys stay server-side; public demo admission is not production authentication.
 
-## Operating Context
+Sessions expire and history is bounded in memory. There is no recording database. See [privacy](docs/PRIVACY.md).
 
-An internet connection and usable microphone position are required. Android starts capture while visible and uses a foreground service for continued capture. OS restrictions can interrupt it. Web listening stops when the page is hidden and requires explicit restart.
+## Operating limits
 
-## Capabilities and Constraints
+Internet and useful microphone placement are required. Android starts capture while visible; its foreground service can continue afterward, subject to OS restrictions. Web capture stops when hidden and needs explicit restart.
 
-- One active monitor per session.
-- Spoken or typed setup, captions, history, correction handling and duplicate suppression.
-- No required venue token format, fixed digit length or handwritten number parser.
-- Gnani automatic speech-language selection; English and 20 Indian UI languages.
-- Optional experimental GTCRN noise reduction, off by default.
-- No offline recognition, queue prediction, speaker identification or external transport tracking.
-- Expiring bearer sessions and bounded in-memory history; no recording database.
-- Provider keys stay server-side. Public demo admission is not production authentication.
-- Evon is not integrated. The OpenAI text fallback and provider data transfers are disclosed.
+Speech-language selection is automatic. English and 20 Indian UI languages are bundled, without a recognition-quality guarantee. Experimental local GTCRN noise reduction is off by default.
 
-## Accessibility & Inclusion
+No fixed token length is required. There is no offline recognition, queue prediction, speaker identification or external transport tracking.
 
-Typed setup, labelled controls, readable contrast, larger text, themes, visual alternatives to sound, and visible listening failures. Keep detailed explanations in Help without hiding processing recipients, consent, uncertainty or missed-call warnings. Representative-user usability remains to be evaluated.
+## Accessibility and principles
 
-## Product Principles
+- Provide typed setup, labelled controls, readable contrast, scalable text, themes and visual alternatives to sound.
+- Keep consent, uncertainty, listening failures and coverage gaps visible.
+- Do not use the target as a recognition hint. Validate source evidence before alerting, while recognizing that a transcript can be wrong.
+- Show corrections rather than silently retaining outdated directions.
 
-- Do not use the target as a recognition hint.
-- Validate source evidence before alerting; a transcript-grounded result can still be acoustically wrong.
-- Show corrections and uncertainty rather than guessing or erasing history.
-- Distinguish an active task from an actively connected microphone.
-- Treat CueBell as supplemental assistance, not the official announcement source.
-
-## Evidence and Next Steps
-
-See [measured results](docs/README.md#understand-the-results) and the [impact evaluation plan](docs/IMPACT.md). Controlled technical tests support development decisions; they do not yet establish real-world accessibility outcomes.
+CueBell is supplemental, not the official announcement source. Representative-user usability and real-world benefit remain unmeasured. See [engineering results](docs/README.md#understand-the-results) and the [field-evaluation plan](docs/IMPACT.md).

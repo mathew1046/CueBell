@@ -1,23 +1,13 @@
 # Community guidelines
 
-CueBell welcomes respectful participation, especially lived-experience feedback
-from deaf and hard-of-hearing people. No contributor should have to disclose a
-disability or medical history to take part.
+Welcome lived-experience feedback from deaf and hard-of-hearing people. Nobody must disclose a disability or medical history to participate.
 
-- Be considerate, specific and constructive. Critique ideas and behavior, not people.
-- Do not harass, discriminate, threaten or share another person's private information.
-- Avoid claims of universal accessibility or reliability without evidence.
-- Use synthetic examples; obtain consent before sharing recordings or photographs.
-- Keep issues and pull requests relevant to the project and respect maintainers'
-  moderation decisions.
+- Be constructive. Critique ideas and behavior, not people.
+- Do not harass, discriminate, threaten or share private information.
+- Avoid unsupported claims of universal accessibility or reliability.
+- Use synthetic examples. Obtain consent before sharing recordings or photographs.
+- Keep discussions relevant and respect moderation decisions.
 
-For non-sensitive conduct concerns, contact the maintainer through their GitHub
-profile and ask for a private channel before sharing personal details:
-https://github.com/mathew1046
+For conduct concerns, contact the [maintainer](https://github.com/mathew1046) and request a private channel before sharing personal details. Maintainers may remove harmful content, close discussions or restrict participation. These rules cover project-managed spaces, including issues and pull requests.
 
-Maintainers may edit/remove harmful content, close disruptive discussions or
-restrict participation to protect the community. These guidelines apply to this
-repository's issues, pull requests and other project-managed spaces.
-
-Security vulnerabilities use a separate private reporting process:
-https://github.com/mathew1046/CueBell/security/advisories/new
+Report vulnerabilities through the separate [private security process](SECURITY.md).

@@ -135,40 +135,32 @@ components:
 
 # Interface principles
 
-CueBell uses a calm Material 3 interface focused on one task: tell it what to listen for, inspect the active task, and notice the alert.
+One workflow: describe a task, inspect it, notice an alert.
 
-## Keep the main workflow simple
+## Keep controls simple
 
-- One active monitor, with a prominent Speak action and typed alternative.
-- Short labels instead of greeting paragraphs or repeated instructions.
-- No server URL, pairing code or provider settings in the user workflow.
-- Captions, history and detailed help can expand without obscuring the task.
-- A valid request activates automatically after consent and permissions; Stop stays available during setup and capture.
+- Offer spoken setup and a typed alternative.
+- Use short labels; keep captions, history and help expandable.
+- Keep connection settings and provider keys out of the user interface.
+- Activate valid requests automatically after consent and permissions.
+- Keep Stop Listening available during setup/capture and Clear task in Settings.
 
-## Do not hide essential information
+## Make state visible
 
-Processing recipients, consent, listening failures, uncertainty and the missed-call warning stay visible. An active task and an actively connected microphone are different states. Corrections must visibly replace or supersede outdated directions.
-
-Visual feedback accompanies sound and vibration. The app should never use color alone to indicate failure, listening health or an alert.
+Distinguish a saved task from a connected microphone. Show consent, processing recipients, listening failures, uncertainty and coverage gaps. Mark corrections rather than silently leaving outdated directions. Pair sound and vibration with visual feedback; never rely on color alone.
 
 ## Accessibility
 
-Use system font scaling, labelled controls, wrapping layouts, readable contrast and keyboard/screen-reader support. The primary Speak target is 64 dp; other actions should remain at least 48 dp. Large text and small screens must not hide Stop, consent or the latest warning.
+Support system font scaling, labelled controls, wrapping layouts, readable contrast, keyboards and screen readers. Target at least 48 dp for actions. Large text and small screens must not hide stopping, consent or warnings.
 
-English and 20 Indian UI languages are bundled. Translation coverage is not evidence of native-speaker review or speech-recognition accuracy. Test comprehension with representative users before claiming low-literacy or accessibility outcomes.
+English and 20 Indian UI languages are bundled. This does not establish native-speaker review, recognition accuracy or representative-user usability.
 
-## Platform differences
+## Platform limits
 
-Android uses native foreground-service capture and notification channels. Delivery still depends on permission, device policy, channel settings and Do Not Disturb.
+Android delivery depends on foreground-service permissions, device policy, notification channels and Do Not Disturb. Web listening requires a visible page; browser vibration, notifications, wake locks and audio vary. An installed web app does not gain Android background capture.
 
-The web interface shares the workflow but must explain visible-page listening. Browser vibration, notification, wake-lock and audio support vary by device. Do not imply an installed web app has Android foreground-service capabilities.
+CueBell is supplemental. Source/browser checks do not establish physical-device alert reliability or accessibility outcomes.
 
-## Implementation references
+## Implementation
 
-- [Theme and semantic colors](mobile/src/lib/theme.ts)
-- [Home](mobile/src/app/index.tsx) and [navigation](mobile/src/app/_layout.tsx)
-- [Shared components](mobile/src/components)
-- [Android and browser runtime](mobile/modules/queue-listener)
-- [Verification checklist](docs/VERIFICATION.md)
-
-The frontmatter preserves the existing machine-readable design tokens. Source and browser checks do not establish real-device alert reliability, TalkBack quality or representative-user usability.
+[Theme](mobile/src/lib/theme.ts) · [Home](mobile/src/app/index.tsx) · [Navigation](mobile/src/app/_layout.tsx) · [Components](mobile/src/components) · [Capture runtimes](mobile/modules/queue-listener) · [Verification](docs/VERIFICATION.md)

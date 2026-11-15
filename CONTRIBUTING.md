@@ -1,57 +1,36 @@
 # Contributing to CueBell
 
-Help improve access to spoken announcements through focused fixes, tests,
-documentation and accessibility feedback.
+Focused fixes, tests, documentation and accessibility feedback are welcome.
 
-## Before you start
+## Start here
 
-- Read the [documentation index](docs/README.md) and [architecture](docs/ARCHITECTURE.md).
-- Search [existing issues](https://github.com/mathew1046/CueBell/issues). Discuss large changes before implementation.
-- No project license has been selected. Ask the maintainer about contribution and reuse terms before substantial work.
-- For mobile changes, follow [mobile/AGENTS.md](mobile/AGENTS.md) and the matching Expo SDK documentation. Keep native changes in the local module or config plugins, not generated Android/iOS directories.
+Read the [architecture](docs/ARCHITECTURE.md), search [issues](https://github.com/mathew1046/CueBell/issues) and discuss large changes first. No project license is selected; ask about contribution and reuse terms before substantial work.
 
-## Local checks
+Follow [mobile/AGENTS.md](mobile/AGENTS.md) and version-matched Expo documentation for mobile work. Put native changes in local modules or config plugins, not generated directories.
 
-Use Python 3.12+, Node 24.3+ and npm. Android builds also need Java 17 and an
-Expo SDK 58-compatible Android SDK/NDK. Expo Go cannot load the native service.
+## Setup and checks
 
-From the repository root:
+Use [backend setup](backend/README.md), [Android setup](mobile/README.md) or [web setup](docs/WEB.md). Requirements include Python 3.12+, Node 24.3+ and npm; Android also needs Java 17 and the SDK/NDK compatible with Expo SDK 58. Expo Go cannot load the native service.
+
+With dependencies installed, run from the repository root:
 
 ```sh
-cd backend
-python3.12 -m venv .venv
-.venv/bin/python -m pip install -r requirements.lock
-.venv/bin/python -m pip install --no-deps -e .
-.venv/bin/python -m pytest -q
-.venv/bin/python -m ruff check app tests
-.venv/bin/python -m ruff format --check app tests
+(cd backend && .venv/bin/python -m pytest -q)
+(cd backend && .venv/bin/python -m ruff check app tests)
+(cd backend && .venv/bin/python -m ruff format --check app tests)
+(cd mobile && npm test && npm run typecheck && npm run lint)
+(cd mobile && npx playwright install --with-deps chromium)
+(cd mobile && EXPO_PUBLIC_API_URL=https://cuebell.mathewjoseph.xyz npm run test:web)
 ```
 
-In a separate terminal, from the repository root:
+These provider checks are mocked; browser tests use a synthetic microphone and mock relay. Native JUnit, APK and physical-device checks are separate. See [verification](docs/VERIFICATION.md).
 
-```sh
-cd mobile
-npm ci
-npm test
-npm run typecheck
-npm run lint
-npx playwright install --with-deps chromium
-EXPO_PUBLIC_API_URL=https://cuebell.mathewjoseph.xyz npm run test:web
-```
+## Pull requests
 
-These checks use mocked provider output, not live recognition. Browser tests use
-a synthetic microphone and mock relay. GitHub Actions runs these backend, mobile
-and browser checks; native JUnit, APK and physical-device checks are separate.
-See [Android development](mobile/README.md), [web development](docs/WEB.md) and
-the [verification record](docs/VERIFICATION.md) for scope and known limits.
+- Explain the user problem. Keep changes focused and add regression tests.
+- Report commands, failures and untested behavior. Do not equate mocks or replays with venue reliability.
+- Preserve consent, stop controls, source validation, gap warnings and server-only credentials.
+- For UI changes, check large text, contrast, screen-reader labels and both themes. For lifecycle changes, test denied permissions, interruptions and stop/restart.
+- Exclude generated native directories, APKs, signing keys and credentials. Use synthetic identifiers and consenting speakers; redact logs and screenshots.
 
-## Pull request checklist
-
-- Explain the user problem, keep the diff focused and add regression tests for behavior changes.
-- Report commands run, failures and untested behavior. Do not present mock, emulator or replay results as real-venue reliability.
-- Preserve consent, visible start/stop controls, source validation, coverage-gap warnings and server-only provider credentials.
-- Check large text, contrast, screen-reader labels and both themes for UI changes. Test denied permissions, interruption and stop/restart for lifecycle changes.
-- Keep generated native directories, APKs, signing keys, `.env` files and credentials out of commits.
-- Use synthetic identifiers and consenting speakers. Redact screenshots/logs; do not upload patient details, bearer tokens or unconsented venue audio.
-
-Report security issues [privately](SECURITY.md), not in public issues.
+Report vulnerabilities [privately](SECURITY.md).

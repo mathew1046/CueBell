@@ -1,6 +1,6 @@
 # Deployment operations
 
-`ops/` keeps deployment reference scripts and service templates in version control. The app itself does not import this directory.
+`ops/` contains reference deployment scripts/templates, not app runtime code.
 
 ## What runs in production
 

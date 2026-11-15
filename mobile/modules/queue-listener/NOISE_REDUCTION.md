@@ -8,20 +8,14 @@ options)` is `{ noiseReductionMode?: NoiseReductionMode }`; omitted means `off`.
 The same options apply to request and monitor sessions. Selection is fixed for a
 capture session; stop before changing it.
 
-**Integration outcome (2026-11-14): experimental, not performance-qualified.**
-The FFT variant passed a short shell-context phone test, but both original and FFT
-builds failed the previous single-call 32 ms managed foreground-service gate.
-The functional overload policy below now tolerates bounded transient overruns;
-those earlier results do not validate this revised policy. Enabled-mode latency
-and ASR non-regression have not been established; the default remains `off`.
-Full results:
-[Native benchmark](../../../docs/NOISE_REDUCTION_BENCHMARK_2026-11-14.md)
-
-Subsequent sourced-recording tests found background-noise reduction but repeatable
-Gnani language/script and word-error regressions. Recognition-preserving shipping
-is not qualified by those results. Real-noise audio, observations, and the revised
-policy's validation are recorded in:
-[Recorded-noise results](../../../docs/REAL_NOISE_DENOISING_2026-11-14.md)
+**Experimental, off by default.** A short FFT shell-context phone test passed,
+but original/FFT builds failed the earlier single-call 32 ms foreground-service
+gate. The revised bounded-debt policy below tolerates transient overruns; old
+results do not validate it. Sourced-recording replays improved background quality
+but regressed Gnani language/script and word error, so recognition-preserving
+shipping is not qualified. See [native timing](../../../docs/NOISE_REDUCTION_BENCHMARK_2026-11-14.md)
+and [revised-policy replay evidence](../../../docs/REAL_NOISE_DENOISING_2026-11-14.md).
+The detailed contract below is retained for implementation and benchmark authors.
 
 The native `snapshot()` JSON includes `noiseReductionMode` (selection) and
 `noiseReduction` (the diagnostic snapshot). `onEvent` emits a
@@ -225,24 +219,16 @@ Module checks (from generated `mobile/android/`):
 ./gradlew :queue-listener:testDebugUnitTest --console=plain --max-workers=2
 ```
 
-Passed: **33 JVM tests**, including **17 streaming-policy tests**, with the locked
-FFT artifact selected. Log:
-/tmp/opencode/cuebell-denoising/processing-debt-jvm.log
+Historical result: **33 JVM tests**, including **17 streaming-policy tests**,
+passed with the locked FFT artifact. They cover framing/raw continuity (including
+aliased buffers), model validation, malformed/non-finite output, recoverable
+JVM/linkage errors, bounded debt, fallback history, reset/close and overflow.
+These are logic checks, not Android performance acceptance. Earlier packaging
+checks inspected model/notices/classes and four JNI ABIs.
 
-The checks cover
-ordered state/framing, exact raw PCM with silence/extremes,
-missing/corrupt models before JNI, and numbered-sample continuity through short
-or oversized results, NaN/infinities, JVM/native-linkage errors and cumulative
-processing-debt fallback. Startup and midstream failures are checked with separate
-and aliased buffers. Reset, no replay at close, use-after-close rejection and
-idempotent/error-safe release are covered. Successful enhanced output is also
-checked against a non-identity engine to verify that fallback uses original raw
-history and rejects debt-limit-exceeding enhanced candidates. Debt tests cover
-observed transient overruns and recovery, sustained overload, exact boundaries,
-no advance credit, initialization exclusion, error precedence, snapshots/reset
-and overflow protection.
-Previous library packaging checks
-inspected model, notices, Kotlin dependency classes and all four JNI ABIs.
+The historical log `/tmp/opencode/cuebell-denoising/processing-debt-jvm.log` is a
+local build product, not a repository download. Full old verification details:
+[pre-refactor contract](https://github.com/mathew1046/CueBell/blob/8c9406f6528474848b11eb67308a1638fe9a78da/mobile/modules/queue-listener/NOISE_REDUCTION.md#verification).
 
 Mobile checks (from `mobile/`):
 

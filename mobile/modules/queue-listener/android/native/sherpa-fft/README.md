@@ -2,8 +2,11 @@
 
 This is a **modified native build**, not an official sherpa binary. It replaces
 only the streaming transform implementation in sherpa-onnx 2.0.1. Model weights,
-model state, ONNX Runtime, windowing, overlap-add, hop size, Kotlin framing and the
-32 ms fail-open policy remain the same. It is not a FastEnhancer model switch.
+model state, ONNX Runtime, windowing, overlap-add, hop size and Kotlin framing
+remain unchanged. The adapter accounts against 32 ms frames using a bounded
+processing-debt fail-open policy, not a single-call hard deadline; see the
+[integration contract](../../../NOISE_REDUCTION.md#functional-overload-policy).
+This is not a FastEnhancer model switch.
 
 Upstream source commit: `af2d8d81dbfa61c4cea4c568da78f3982edca005`.
 Source archive SHA-256:
@@ -50,9 +53,8 @@ python3 mobile/modules/queue-listener/android/native/sherpa-fft/build.py \
   --work-dir "$HOME/.cache/cuebell/sherpa-fft-v1" --jobs 4
 ```
 
-The script validates the source checksum, tests the transform against a class
-extracted from the verified original, applies the exact patch, builds the full
-JNI ABI for arm64-v8a, strips the result and writes `dist/provenance.json`.
+The script verifies source, tests against the extracted original transform,
+applies the patch, builds/strips arm64-v8a JNI and writes `dist/provenance.json`.
 The ONNX Runtime static archive remains pinned to **1.28.2**, SHA-256
 `bc68410f35f13df82c260830bf476ee5565f5efd0ec7622297829a929613c6c0`:
 https://github.com/csukuangfj/onnxruntime-libs/releases/download/v1.28.2/onnxruntime-android-arm64-v8a-static_lib-1.28.2.zip
@@ -72,14 +74,13 @@ Gradle selects the reviewed experiment only with an explicit property:
   --console=plain --max-workers=2
 ```
 
-Run that command from the generated mobile Android build directory. APK builds and device jobs are separate from this runtime build. Use `-PreactNativeArchitectures=arm64-v8a` for an arm64
-app experiment. Gradle verifies the binary, source/header/patch/build-script hashes
-against **`artifact-lock.json`**, then overlays only arm64 JNI onto the verified
-official AAR. Other ABIs remain official. Omit the property to return to the
-official binary; this is a Gradle input, so cached FFT outputs are replaced.
-The packaged `noise-reduction/runtime-provenance.json` records the selected build
-and patched ABIs. Rebuilt binaries with a different hash require explicit review
-and a lock update; a manifest alone cannot authorize arbitrary replacement.
+Run from generated `mobile/android/`; APK/device jobs are separate. For an ARM64
+app use `-PreactNativeArchitectures=arm64-v8a`. Gradle checks binary/source/header/
+patch/build-script hashes against **`artifact-lock.json`**, overlaying only arm64
+JNI on the verified official AAR. Other ABIs stay official. Omit the property to
+restore official output, including cached builds. Packaged
+`noise-reduction/runtime-provenance.json` identifies the build/patched ABIs.
+Different rebuild hashes need review and lock updates; manifests alone authorize nothing.
 
 ## Correctness checks
 
@@ -144,12 +145,9 @@ Observed checks:
   selection was checked for exact binary hashes and matching metadata.
 - Mobile lint/typecheck and `git diff --check` passed.
 
-Logs/results:
-/tmp/opencode/cuebell-denoising/fft/math-tests/results.txt
-/tmp/opencode/cuebell-denoising/fft/math-tests/sanitized-results.txt
-/tmp/opencode/cuebell-denoising/fft/host-regression/results.txt
-/tmp/opencode/cuebell-denoising/fft/host-regression/inputs.json
-/tmp/opencode/cuebell-denoising/fft/module-check.log
+Historical local logs were under `/tmp/opencode/cuebell-denoising/fft/`; they are
+not supplied in a fresh checkout. Exact filenames and the full old observations:
+[pre-refactor record](https://github.com/mathew1046/CueBell/blob/8c9406f6528474848b11eb67308a1638fe9a78da/mobile/modules/queue-listener/android/native/sherpa-fft/README.md#validated-artifact-2026-11-14).
 
 The isolated host transform timing was 475.16 µs → 18.53 µs per equivalent
 512-sample frame in one Clang run; this excludes model inference and scheduling,
