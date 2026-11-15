@@ -1,0 +1,12 @@
+{
+  "trial": {
+    "id": "10-dishwasher-near",
+    "variant": "delayed-raw",
+    "format": "verbatim",
+    "path": "/home/mathew/Arrakis/CueBell-denoiser-diagnosis-20261115/docs/benchmarks/gnani-denoiser-diagnosis-2026-11-15/stream-ablations/controls/10-dishwasher-near-delay-raw.wav",
+    "sha256": "4dba1da1e789f9933297d61487e43f4fe51a8457e6cb9d85554151d72e2f06d0",
+    "reference": "So, if anybody solicits by phone, make sure you mail the dough to the above. Serve the coleslaw after I add",
+    "seconds": 10.0
+  },
+  "attempted": true
+}

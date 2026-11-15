@@ -1,0 +1,41 @@
+{
+  "file_id": "4ef00243-0db8-413e-94ee-d49db4a4a1c6",
+  "job_id": "01a1db5a-84eb-78d4-9212-26251592cb4b",
+  "original_path": "clip-02.wav",
+  "language_code": "hi-IN",
+  "duration_seconds": 55.46,
+  "model": "prisma-v3.0",
+  "mode": "transcribe",
+  "segments": [
+    {
+      "segment_id": 0,
+      "start_time": 0,
+      "end_time": 30.816,
+      "text": "से चलकर बंगलोर को जाने वाली चौंतीस तीस हरियालीसामुद्दीन बंगलोर राजधानी एक्सप्रेस अपने निर्धारित समय चार। लगकर चालीस मिनट व ऐसे पचास मिनट की देरी से आने की संभावना है। May I have your attention please? From Hyderabad and Ahmedabad to Bangalore, it is scheduled to arrive at Four hours, thirty minutes. Total time: five fifty minutes.",
+      "speaker_id": 1,
+      "confidence": null,
+      "language_detected": "en-IN"
+    },
+    {
+      "segment_id": 1,
+      "start_time": 33.74,
+      "end_time": 51.04,
+      "text": "कृपया ध्यान दीजिए। ट्रेन की जानकारी। पैंतीस मिनट की देरी से आने की संभावना है।",
+      "speaker_id": 1,
+      "confidence": null,
+      "language_detected": "hi-IN"
+    },
+    {
+      "segment_id": 2,
+      "start_time": 51.04,
+      "end_time": 55.458,
+      "text": "May I have your attention please?",
+      "speaker_id": 1,
+      "confidence": null,
+      "language_detected": "en-IN"
+    }
+  ],
+  "full_transcript": "से चलकर बंगलोर को जाने वाली चौंतीस तीस हरियालीसामुद्दीन बंगलोर राजधानी एक्सप्रेस अपने निर्धारित समय चार। लगकर चालीस मिनट व ऐसे पचास मिनट की देरी से आने की संभावना है। May I have your attention please? From Hyderabad and Ahmedabad to Bangalore, it is scheduled to arrive at Four hours, thirty minutes. Total time: five fifty minutes. कृपया ध्यान दीजिए। ट्रेन की जानकारी। पैंतीस मिनट की देरी से आने की संभावना है। May I have your attention please?",
+  "created_at": "2026-11-14T18:38:32Z",
+  "engine": "go-batch-asr"
+}

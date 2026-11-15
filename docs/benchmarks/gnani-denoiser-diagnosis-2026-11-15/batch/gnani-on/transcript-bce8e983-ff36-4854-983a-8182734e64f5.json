@@ -1,0 +1,50 @@
+{
+  "file_id": "bce8e983-ff36-4854-983a-8182734e64f5",
+  "job_id": "01a1db5a-8d2b-795a-9daf-ee14eef708af",
+  "original_path": "clip-02.wav",
+  "language_code": "hi-IN",
+  "duration_seconds": 55.46,
+  "model": "prisma-v3.0",
+  "mode": "transcribe",
+  "segments": [
+    {
+      "segment_id": 0,
+      "start_time": 0.076,
+      "end_time": 14.88,
+      "text": "चलकर बंगलोर को जाने वाली चौंतीस तीस हजरों से नामुद्दीन बंगलोर राजधानी एक्सप्रेस अपने निर्धारित समय से। चालीस मिनट से अट्ठाईस मिनट की देरी से आने की संभावना है।",
+      "speaker_id": 1,
+      "confidence": null,
+      "language_detected": "hi-IN"
+    },
+    {
+      "segment_id": 1,
+      "start_time": 14.88,
+      "end_time": 30.848,
+      "text": "May I have your attention please? From Hyderabad and Tamil Nadu, so Bangalore is scheduled to arrive late. Four hours thirty minutes.",
+      "speaker_id": 1,
+      "confidence": null,
+      "language_detected": "en-IN"
+    },
+    {
+      "segment_id": 2,
+      "start_time": 33.772,
+      "end_time": 51.04,
+      "text": "कृपया ध्यान दीजिए। प्रयागराज से जबलपुर, इंदौर, नर्मदा एक्सप्रेस अपने निर्धारित समय चार बजकर पच्चीस मिनट पर। पैंतीस मिनट की देरी से आने की संभावना है।",
+      "speaker_id": 1,
+      "confidence": null,
+      "language_detected": "hi-IN"
+    },
+    {
+      "segment_id": 3,
+      "start_time": 51.04,
+      "end_time": 55.458,
+      "text": "May I have your attention please?",
+      "speaker_id": 1,
+      "confidence": null,
+      "language_detected": "en-IN"
+    }
+  ],
+  "full_transcript": "चलकर बंगलोर को जाने वाली चौंतीस तीस हजरों से नामुद्दीन बंगलोर राजधानी एक्सप्रेस अपने निर्धारित समय से। चालीस मिनट से अट्ठाईस मिनट की देरी से आने की संभावना है। May I have your attention please? From Hyderabad and Tamil Nadu, so Bangalore is scheduled to arrive late. Four hours thirty minutes. कृपया ध्यान दीजिए। प्रयागराज से जबलपुर, इंदौर, नर्मदा एक्सप्रेस अपने निर्धारित समय चार बजकर पच्चीस मिनट पर। पैंतीस मिनट की देरी से आने की संभावना है। May I have your attention please?",
+  "created_at": "2026-11-14T18:38:47Z",
+  "engine": "go-batch-asr"
+}

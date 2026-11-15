@@ -1,0 +1,12 @@
+[
+  {
+    "arm": "gnani-off",
+    "status": "completed",
+    "error_type": null
+  },
+  {
+    "arm": "gnani-on",
+    "status": "completed",
+    "error_type": null
+  }
+]

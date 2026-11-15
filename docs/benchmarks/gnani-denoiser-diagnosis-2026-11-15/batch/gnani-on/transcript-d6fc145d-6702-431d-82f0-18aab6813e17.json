@@ -1,0 +1,23 @@
+{
+  "file_id": "d6fc145d-6702-431d-82f0-18aab6813e17",
+  "job_id": "01a1db5a-8d2b-795a-9daf-ee14eef708af",
+  "original_path": "clip-12.wav",
+  "language_code": "en-IN",
+  "duration_seconds": 10,
+  "model": "prisma-v3.0",
+  "mode": "transcribe",
+  "segments": [
+    {
+      "segment_id": 0,
+      "start_time": 1.26,
+      "end_time": 10,
+      "text": "Naturally curly hair runs in my family more often; these offices are. రెస్ట్రిక్టెడ్.",
+      "speaker_id": 1,
+      "confidence": null,
+      "language_detected": "en-IN"
+    }
+  ],
+  "full_transcript": "Naturally curly hair runs in my family more often; these offices are. రెస్ట్రిక్టెడ్.",
+  "created_at": "2026-11-14T18:38:49Z",
+  "engine": "go-batch-asr"
+}

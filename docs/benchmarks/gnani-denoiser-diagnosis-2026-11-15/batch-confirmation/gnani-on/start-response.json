@@ -1,0 +1,5 @@
+{
+  "job_id": "01a1db66-30f6-7564-9376-ff3f185fcf47",
+  "status": "STARTING",
+  "message": "Job start accepted. File validation and queueing are running in the background. Poll GET /stt/v3/batch/jobs/{job_id} to track progress."
+}

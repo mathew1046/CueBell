@@ -1,0 +1,23 @@
+{
+  "file_id": "51e1d743-afa8-4534-8889-8b11f7601179",
+  "job_id": "01a1db5a-84eb-78d4-9212-26251592cb4b",
+  "original_path": "clip-14.wav",
+  "language_code": "en-IN",
+  "duration_seconds": 10,
+  "model": "prisma-v3.0",
+  "mode": "transcribe",
+  "segments": [
+    {
+      "segment_id": 0,
+      "start_time": 0.716,
+      "end_time": 10,
+      "text": "So, if anybody has doubts about notes here, you may get out to the about. Love the girls love, as per I ask.",
+      "speaker_id": 1,
+      "confidence": null,
+      "language_detected": "en-IN"
+    }
+  ],
+  "full_transcript": "So, if anybody has doubts about notes here, you may get out to the about. Love the girls love, as per I ask.",
+  "created_at": "2026-11-14T18:38:32Z",
+  "engine": "go-batch-asr"
+}

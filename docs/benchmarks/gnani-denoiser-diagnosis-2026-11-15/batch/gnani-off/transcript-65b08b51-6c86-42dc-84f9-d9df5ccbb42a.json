@@ -1,0 +1,23 @@
+{
+  "file_id": "65b08b51-6c86-42dc-84f9-d9df5ccbb42a",
+  "job_id": "01a1db5a-84eb-78d4-9212-26251592cb4b",
+  "original_path": "clip-10.wav",
+  "language_code": "en-IN",
+  "duration_seconds": 29.4,
+  "model": "prisma-v3.0",
+  "mode": "transcribe",
+  "segments": [
+    {
+      "segment_id": 0,
+      "start_time": 2.508,
+      "end_time": 27.2,
+      "text": "The next train to arrive at platform. Four is the forty-eight ten strength service to London Paddington. Calling out to path world Westfield. And London Parliament platform four by the forty forty eight",
+      "speaker_id": 1,
+      "confidence": null,
+      "language_detected": "en-IN"
+    }
+  ],
+  "full_transcript": "The next train to arrive at platform. Four is the forty-eight ten strength service to London Paddington. Calling out to path world Westfield. And London Parliament platform four by the forty forty eight",
+  "created_at": "2026-11-14T18:38:33Z",
+  "engine": "go-batch-asr"
+}

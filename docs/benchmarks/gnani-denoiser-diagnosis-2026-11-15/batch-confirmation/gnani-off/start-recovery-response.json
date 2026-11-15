@@ -1,0 +1,8 @@
+{
+  "status_code": 202,
+  "body": {
+    "job_id": "01a1db66-8877-71d0-af19-e937b5a3ef1b",
+    "status": "STARTING",
+    "message": "Job start accepted. File validation and queueing are running in the background. Poll GET /stt/v3/batch/jobs/{job_id} to track progress."
+  }
+}

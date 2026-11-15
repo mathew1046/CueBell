@@ -1,0 +1,23 @@
+{
+  "file_id": "44518ff8-b875-4d9e-99b6-df1848038abc",
+  "job_id": "01a1db5a-84eb-78d4-9212-26251592cb4b",
+  "original_path": "clip-06.wav",
+  "language_code": "en-IN",
+  "duration_seconds": 53,
+  "model": "prisma-v3.0",
+  "mode": "transcribe",
+  "segments": [
+    {
+      "segment_id": 0,
+      "start_time": 4.748,
+      "end_time": 8.32,
+      "text": "Staying clear, but for free, free travel for staying clear, but...",
+      "speaker_id": 1,
+      "confidence": null,
+      "language_detected": "en-IN"
+    }
+  ],
+  "full_transcript": "Staying clear, but for free, free travel for staying clear, but...",
+  "created_at": "2026-11-14T18:38:31Z",
+  "engine": "go-batch-asr"
+}

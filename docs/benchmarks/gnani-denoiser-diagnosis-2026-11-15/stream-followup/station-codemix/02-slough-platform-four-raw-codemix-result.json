@@ -1,0 +1,141 @@
+{
+  "id": "02-slough-platform-four",
+  "variant": "raw",
+  "format": "codemix",
+  "path": "/home/mathew/Arrakis/CueBell-denoiser-diagnosis-20261115/docs/benchmarks/station-pa-2026-11-14/audio/before/02-slough-platform-four.wav",
+  "sha256": "e45e4f4fbcf81a007d418edb55ac3e85a460ba5a0b71197390a3b5c69e9c09ab",
+  "reference": "<UNVERIFIED_TRANSCRIPT/>",
+  "seconds": 23.214125,
+  "input_sha256": "e45e4f4fbcf81a007d418edb55ac3e85a460ba5a0b71197390a3b5c69e9c09ab",
+  "source_audio_seconds": 23.214125,
+  "status": "completed",
+  "scoring_version": "unicode-marks-v2",
+  "sent_frames": 789,
+  "schedule_rebases": 0,
+  "maximum_send_lateness_ms": 1.7582569998921826,
+  "unfinished_utterance_ids": [],
+  "connection_seconds": 36.27346771199518,
+  "attempt_seconds": 36.428329112997744,
+  "transcript": "हो, देईल। Service to breeding.  Platform 4 for the 8700 hours first Great Western Service to breeding.",
+  "events": [
+    {
+      "elapsed_s": 0.04826226300065173,
+      "message": {
+        "type": "connected",
+        "message": "STT service ready — VAD service connected",
+        "request_id": "01a1db6a-9956-7a21-9651-2a61d7c34b19",
+        "config": {
+          "sample_rate": 16000,
+          "chunk_size": 512,
+          "partials_enabled": false,
+          "partial_interval_ms": 450,
+          "partial_max_window_s": 15.0,
+          "language_code": "indic-auto",
+          "format": "codemix"
+        },
+        "timestamp": "2026-11-14T18:55:58.879862+00:00"
+      }
+    },
+    {
+      "elapsed_s": 5.544526645993756,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "u937ffaa3",
+        "t_ms": 5236,
+        "timestamp": "2026-11-14T18:56:04.372220+00:00"
+      }
+    },
+    {
+      "elapsed_s": 6.165146934996301,
+      "message": {
+        "type": "transcript",
+        "text": "हो, देईल।",
+        "audio_duration_ms": 1300.0,
+        "segment_id": "01a1db6a-9956-7a21-9651-2a61d7c34b19-seg-1",
+        "segment_index": 1,
+        "utterance_id": "u937ffaa3",
+        "is_final": true,
+        "latency": 81,
+        "prefetched": false,
+        "timestamp": "2026-11-14T18:56:04.996947+00:00",
+        "detected_language_code": "hi-IN"
+      }
+    },
+    {
+      "elapsed_s": 8.676225424998847,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "u9632df1d",
+        "t_ms": 8372,
+        "timestamp": "2026-11-14T18:56:07.507751+00:00"
+      }
+    },
+    {
+      "elapsed_s": 10.562951227999292,
+      "message": {
+        "type": "transcript",
+        "text": "Service to breeding.",
+        "audio_duration_ms": 2324.0,
+        "segment_id": "01a1db6a-9956-7a21-9651-2a61d7c34b19-seg-2",
+        "segment_index": 2,
+        "utterance_id": "u9632df1d",
+        "is_final": true,
+        "latency": 66,
+        "prefetched": false,
+        "timestamp": "2026-11-14T18:56:09.272179+00:00",
+        "detected_language_code": "en-IN"
+      }
+    },
+    {
+      "elapsed_s": 10.596697439999843,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "ub4315e86",
+        "t_ms": 10292,
+        "timestamp": "2026-11-14T18:56:09.427633+00:00"
+      }
+    },
+    {
+      "elapsed_s": 14.42510022100032,
+      "message": {
+        "type": "transcript",
+        "text": "",
+        "audio_duration_ms": 4032.0,
+        "segment_id": "01a1db6a-9956-7a21-9651-2a61d7c34b19-seg-3",
+        "segment_index": 3,
+        "utterance_id": "ub4315e86",
+        "is_final": true,
+        "latency": 17,
+        "prefetched": false,
+        "timestamp": "2026-11-14T18:56:13.257054+00:00"
+      }
+    },
+    {
+      "elapsed_s": 14.600721757997235,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "ud0ad85c4",
+        "t_ms": 14292,
+        "timestamp": "2026-11-14T18:56:13.425876+00:00"
+      }
+    },
+    {
+      "elapsed_s": 20.948131721997925,
+      "message": {
+        "type": "transcript",
+        "text": "Platform 4 for the 8700 hours first Great Western Service to breeding.",
+        "audio_duration_ms": 6368.0,
+        "segment_id": "01a1db6a-9956-7a21-9651-2a61d7c34b19-seg-4",
+        "segment_index": 4,
+        "utterance_id": "ud0ad85c4",
+        "is_final": true,
+        "latency": 172,
+        "prefetched": false,
+        "timestamp": "2026-11-14T18:56:19.779687+00:00",
+        "detected_language_code": "en-IN"
+      }
+    }
+  ],
+  "reference_score_eligible": false,
+  "score": null
+}

@@ -1,0 +1,75 @@
+{
+  "id": "10-dishwasher-near",
+  "variant": "delayed-raw",
+  "format": "verbatim",
+  "path": "/home/mathew/Arrakis/CueBell-denoiser-diagnosis-20261115/docs/benchmarks/gnani-denoiser-diagnosis-2026-11-15/stream-ablations/controls/10-dishwasher-near-delay-raw.wav",
+  "sha256": "4dba1da1e789f9933297d61487e43f4fe51a8457e6cb9d85554151d72e2f06d0",
+  "reference": "So, if anybody solicits by phone, make sure you mail the dough to the above. Serve the coleslaw after I add",
+  "seconds": 10.0,
+  "input_sha256": "4dba1da1e789f9933297d61487e43f4fe51a8457e6cb9d85554151d72e2f06d0",
+  "source_audio_seconds": 10.0,
+  "status": "completed",
+  "scoring_version": "unicode-marks-v2",
+  "sent_frames": 376,
+  "schedule_rebases": 0,
+  "maximum_send_lateness_ms": 1.3764169998466969,
+  "unfinished_utterance_ids": [],
+  "connection_seconds": 23.27088095599902,
+  "attempt_seconds": 23.38767308399838,
+  "transcript": "If anybody salutes by phone, make sure you mail that out to the above. So the girls love, after I add.",
+  "events": [
+    {
+      "elapsed_s": 0.02914818199496949,
+      "message": {
+        "type": "connected",
+        "message": "STT service ready — VAD service connected",
+        "request_id": "01a1db65-23d8-73bb-af15-25007caae43b",
+        "config": {
+          "sample_rate": 16000,
+          "chunk_size": 512,
+          "partials_enabled": false,
+          "partial_interval_ms": 450,
+          "partial_max_window_s": 15.0,
+          "language_code": "indic-auto",
+          "format": "verbatim"
+        },
+        "timestamp": "2026-11-14T18:50:01.112705+00:00"
+      }
+    },
+    {
+      "elapsed_s": 1.7239273699960904,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "u1a1446a6",
+        "t_ms": 1396,
+        "timestamp": "2026-11-14T18:50:02.788982+00:00"
+      }
+    },
+    {
+      "elapsed_s": 10.709247421000327,
+      "message": {
+        "type": "transcript",
+        "text": "If anybody salutes by phone, make sure you mail that out to the above. So the girls love, after I add.",
+        "audio_duration_ms": 9428.0,
+        "segment_id": "01a1db65-23d8-73bb-af15-25007caae43b-seg-1",
+        "segment_index": 1,
+        "utterance_id": "u1a1446a6",
+        "is_final": true,
+        "latency": 188,
+        "prefetched": false,
+        "timestamp": "2026-11-14T18:50:11.788686+00:00",
+        "detected_language_code": "en-IN"
+      }
+    }
+  ],
+  "reference_score_eligible": true,
+  "score": {
+    "reference_words": 21,
+    "hypothesis_words": 21,
+    "errors": 7,
+    "substitutions": 5,
+    "insertions": 1,
+    "deletions": 1,
+    "wer": 0.3333333333333333
+  }
+}

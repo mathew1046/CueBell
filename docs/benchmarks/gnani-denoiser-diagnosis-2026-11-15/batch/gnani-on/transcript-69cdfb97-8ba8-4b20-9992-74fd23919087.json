@@ -1,0 +1,23 @@
+{
+  "file_id": "69cdfb97-8ba8-4b20-9992-74fd23919087",
+  "job_id": "01a1db5a-8d2b-795a-9daf-ee14eef708af",
+  "original_path": "clip-13.wav",
+  "language_code": "en-IN",
+  "duration_seconds": 10,
+  "model": "prisma-v3.0",
+  "mode": "transcribe",
+  "segments": [
+    {
+      "segment_id": 0,
+      "start_time": 0.748,
+      "end_time": 10,
+      "text": "So, if anybody salutes by phone, make sure you mail that out to the above. Serve the girls love after I add.",
+      "speaker_id": 1,
+      "confidence": null,
+      "language_detected": "en-IN"
+    }
+  ],
+  "full_transcript": "So, if anybody salutes by phone, make sure you mail that out to the above. Serve the girls love after I add.",
+  "created_at": "2026-11-14T18:38:40Z",
+  "engine": "go-batch-asr"
+}

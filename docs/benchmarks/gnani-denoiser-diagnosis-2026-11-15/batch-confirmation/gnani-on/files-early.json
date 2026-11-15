@@ -1,0 +1,38 @@
+{
+  "seconds_after_start_response_minimum": 2,
+  "http_status": 200,
+  "body": {
+    "job_id": "01a1db66-30f6-7564-9376-ff3f185fcf47",
+    "data": [
+      {
+        "file_id": "c94d2ec2-4ba6-4fac-b0a1-d8792de27a7f",
+        "original_path": "clip-04.wav",
+        "status": "FAILED",
+        "duration_seconds": "23.21",
+        "transcript_url": null,
+        "error_message": "no speech detected in 23s of audio",
+        "created_at": "2026-11-14T18:51:10.170904Z",
+        "completed_at": "2026-11-14T18:51:12.202978Z",
+        "progress_percent": 100,
+        "stage": null
+      },
+      {
+        "file_id": "e0b4c5ea-e95d-4a63-bf27-5a588173261f",
+        "original_path": "clip-03.wav",
+        "status": "IN_PROGRESS",
+        "duration_seconds": "23.21",
+        "transcript_url": null,
+        "error_message": null,
+        "created_at": "2026-11-14T18:51:10.170904Z",
+        "completed_at": null,
+        "progress_percent": 28,
+        "stage": "diarize"
+      }
+    ],
+    "pagination": {
+      "has_more": false,
+      "next_cursor": null,
+      "total_count": 2
+    }
+  }
+}

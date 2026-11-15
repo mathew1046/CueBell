@@ -1,0 +1,75 @@
+{
+  "id": "04-aircon-near",
+  "variant": "raw",
+  "format": "codemix",
+  "path": "/home/mathew/Arrakis/CueBell-denoiser-diagnosis-20261115/docs/benchmarks/real-noise-2026-11-14/audio-near-v4/before/04-aircon-near.wav",
+  "sha256": "9f29eb0640b80dde1c51148ca4705400862dc65dc2fa0561feb1ee3e9dd7d6e9",
+  "reference": "Naturally, curly hair runs in my family. More often these officers are restricted.",
+  "seconds": 10.0,
+  "input_sha256": "9f29eb0640b80dde1c51148ca4705400862dc65dc2fa0561feb1ee3e9dd7d6e9",
+  "source_audio_seconds": 10.0,
+  "status": "completed",
+  "scoring_version": "unicode-marks-v2",
+  "sent_frames": 376,
+  "schedule_rebases": 0,
+  "maximum_send_lateness_ms": 1.270653992833104,
+  "unfinished_utterance_ids": [],
+  "connection_seconds": 23.03994535899983,
+  "attempt_seconds": 23.332374942998285,
+  "transcript": "Naturally curly hair runs in my family more often; these offices are. Restricted to.",
+  "events": [
+    {
+      "elapsed_s": 0.04660035299457377,
+      "message": {
+        "type": "connected",
+        "message": "STT service ready — VAD service connected",
+        "request_id": "01a1db63-5de4-77e8-8ecf-dc690902f23e",
+        "config": {
+          "sample_rate": 16000,
+          "chunk_size": 512,
+          "partials_enabled": false,
+          "partial_interval_ms": 450,
+          "partial_max_window_s": 15.0,
+          "language_code": "indic-auto",
+          "format": "codemix"
+        },
+        "timestamp": "2026-11-14T18:48:04.903041+00:00"
+      }
+    },
+    {
+      "elapsed_s": 1.8644920759979868,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "u796e6500",
+        "t_ms": 1556,
+        "timestamp": "2026-11-14T18:48:06.722692+00:00"
+      }
+    },
+    {
+      "elapsed_s": 10.709470475994749,
+      "message": {
+        "type": "transcript",
+        "text": "Naturally curly hair runs in my family more often; these offices are. Restricted to.",
+        "audio_duration_ms": 9300.0,
+        "segment_id": "01a1db63-5de4-77e8-8ecf-dc690902f23e-seg-1",
+        "segment_index": 1,
+        "utterance_id": "u796e6500",
+        "is_final": true,
+        "latency": 165,
+        "prefetched": false,
+        "timestamp": "2026-11-14T18:48:15.567629+00:00",
+        "detected_language_code": "en-IN"
+      }
+    }
+  ],
+  "reference_score_eligible": true,
+  "score": {
+    "reference_words": 13,
+    "hypothesis_words": 14,
+    "errors": 2,
+    "substitutions": 1,
+    "insertions": 1,
+    "deletions": 0,
+    "wer": 0.15384615384615385
+  }
+}

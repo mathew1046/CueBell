@@ -1,0 +1,12 @@
+{
+  "url": "wss://api.vachana.ai/stt/v3/stream",
+  "headers": {
+    "model": "prisma-v3.0",
+    "language_code": "indic-auto",
+    "x-sample-rate": "16000",
+    "format": "codemix",
+    "x-idle-timeout-sec": "900"
+  },
+  "reference_hints_sent": false,
+  "denoise_parameter_sent": false
+}

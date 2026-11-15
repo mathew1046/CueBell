@@ -1,0 +1,23 @@
+{
+  "file_id": "5433f8b7-62c6-405d-9262-b9a8b8a92925",
+  "job_id": "01a1db5a-84eb-78d4-9212-26251592cb4b",
+  "original_path": "clip-12.wav",
+  "language_code": "ta-IN",
+  "duration_seconds": 10,
+  "model": "prisma-v3.0",
+  "mode": "transcribe",
+  "segments": [
+    {
+      "segment_id": 0,
+      "start_time": 1.26,
+      "end_time": 10,
+      "text": "நேச்சுரலி கர்லி ஹேர்ஸ் ரன்ஸ் இன் மை ஃபேமிலி, மோர் ஆஃப்டன் திஸ் ஆஃபீஸர்ஸ் ஆர். రెస్ట్రిక్టెడ్.",
+      "speaker_id": 1,
+      "confidence": null,
+      "language_detected": "ta-IN"
+    }
+  ],
+  "full_transcript": "நேச்சுரலி கர்லி ஹேர்ஸ் ரன்ஸ் இன் மை ஃபேமிலி, மோர் ஆஃப்டன் திஸ் ஆஃபீஸர்ஸ் ஆர். రెస్ట్రిక్టెడ్.",
+  "created_at": "2026-11-14T18:38:32Z",
+  "engine": "go-batch-asr"
+}

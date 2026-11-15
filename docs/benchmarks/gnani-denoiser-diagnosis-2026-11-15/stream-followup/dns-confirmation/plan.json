@@ -1,0 +1,46 @@
+{
+  "trials": [
+    {
+      "id": "04-aircon-near",
+      "variant": "delayed-raw",
+      "format": "verbatim",
+      "path": "/home/mathew/Arrakis/CueBell-denoiser-diagnosis-20261115/docs/benchmarks/gnani-denoiser-diagnosis-2026-11-15/stream-ablations/controls/04-aircon-near-delay-raw.wav",
+      "sha256": "f4b439e47ed0b67202f1d2710db23b69333ec9bd742439cf325de2036bf4e187",
+      "reference": "Naturally, curly hair runs in my family. More often these officers are restricted.",
+      "seconds": 10.0
+    },
+    {
+      "id": "04-aircon-near",
+      "variant": "gtcrn",
+      "format": "codemix",
+      "path": "/home/mathew/Arrakis/CueBell-denoiser-diagnosis-20261115/docs/benchmarks/real-noise-2026-11-14/audio-near-v4/after/04-aircon-near.wav",
+      "sha256": "8cf66900fc534a4f2dc5fdafc2cd76315a4c53bf3ba17fe56e777b83594d9e17",
+      "reference": "Naturally, curly hair runs in my family. More often these officers are restricted.",
+      "seconds": 10.0
+    },
+    {
+      "id": "10-dishwasher-near",
+      "variant": "gtcrn",
+      "format": "codemix",
+      "path": "/home/mathew/Arrakis/CueBell-denoiser-diagnosis-20261115/docs/benchmarks/real-noise-2026-11-14/audio-near-v4/after/10-dishwasher-near.wav",
+      "sha256": "43ad2a4d2f3430fee66c413685d6897c6f79f77cc27a040e14fbc6c1f3f634d3",
+      "reference": "So, if anybody solicits by phone, make sure you mail the dough to the above. Serve the coleslaw after I add",
+      "seconds": 10.0
+    },
+    {
+      "id": "10-dishwasher-near",
+      "variant": "gain-delayed-raw",
+      "format": "verbatim",
+      "path": "/home/mathew/Arrakis/CueBell-denoiser-diagnosis-20261115/docs/benchmarks/gnani-denoiser-diagnosis-2026-11-15/stream-ablations/controls/10-dishwasher-near-gain-delay-raw.wav",
+      "sha256": "673e527ff19958364b85875d8dd05e7104d53654da6431eeeda87bf04ef2f215",
+      "reference": "So, if anybody solicits by phone, make sure you mail the dough to the above. Serve the coleslaw after I add",
+      "seconds": 10.0
+    }
+  ],
+  "reserved_seconds": 180,
+  "prior_conservative_seconds": 6962.710570596997,
+  "total_authorized_seconds": 7200.0,
+  "reference_hints_sent": false,
+  "input_waveforms_changed": false,
+  "selection": "Prespecified follow-up of observed regressions; not held-out"
+}

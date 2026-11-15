@@ -1,0 +1,28 @@
+{
+  "trials": [
+    {
+      "id": "02-slough-platform-four",
+      "variant": "raw",
+      "format": "codemix",
+      "path": "/home/mathew/Arrakis/CueBell-denoiser-diagnosis-20261115/docs/benchmarks/station-pa-2026-11-14/audio/before/02-slough-platform-four.wav",
+      "sha256": "e45e4f4fbcf81a007d418edb55ac3e85a460ba5a0b71197390a3b5c69e9c09ab",
+      "reference": "<UNVERIFIED_TRANSCRIPT/>",
+      "seconds": 23.214125
+    },
+    {
+      "id": "02-slough-platform-four",
+      "variant": "gtcrn",
+      "format": "codemix",
+      "path": "/home/mathew/Arrakis/CueBell-denoiser-diagnosis-20261115/docs/benchmarks/station-pa-2026-11-14/audio/after/02-slough-platform-four.wav",
+      "sha256": "8df2bac99f57b30671d950d26d5d3902cda044ebf785d5e1258771ba43a99900",
+      "reference": "<UNVERIFIED_TRANSCRIPT/>",
+      "seconds": 23.214125
+    }
+  ],
+  "reserved_seconds": 118,
+  "prior_conservative_seconds": 7055.905466166996,
+  "total_authorized_seconds": 7200.0,
+  "reference_hints_sent": false,
+  "input_waveforms_changed": false,
+  "selection": "Prespecified follow-up of observed regressions; not held-out"
+}

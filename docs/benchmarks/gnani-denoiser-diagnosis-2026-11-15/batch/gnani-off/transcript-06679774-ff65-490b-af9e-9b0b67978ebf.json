@@ -1,0 +1,32 @@
+{
+  "file_id": "06679774-ff65-490b-af9e-9b0b67978ebf",
+  "job_id": "01a1db5a-84eb-78d4-9212-26251592cb4b",
+  "original_path": "clip-15.wav",
+  "language_code": "en-IN",
+  "duration_seconds": 10,
+  "model": "prisma-v3.0",
+  "mode": "transcribe",
+  "segments": [
+    {
+      "segment_id": 0,
+      "start_time": 0.844,
+      "end_time": 4.576,
+      "text": "Stay right here, we are.",
+      "speaker_id": 1,
+      "confidence": null,
+      "language_detected": "en-IN"
+    },
+    {
+      "segment_id": 1,
+      "start_time": 4.576,
+      "end_time": 10,
+      "text": "\"Your kid,\" he called, \"are you a thrower of flame?\"",
+      "speaker_id": 1,
+      "confidence": null,
+      "language_detected": "en-IN"
+    }
+  ],
+  "full_transcript": "Stay right here, we are. \"Your kid,\" he called, \"are you a thrower of flame?\"",
+  "created_at": "2026-11-14T18:38:28Z",
+  "engine": "go-batch-asr"
+}

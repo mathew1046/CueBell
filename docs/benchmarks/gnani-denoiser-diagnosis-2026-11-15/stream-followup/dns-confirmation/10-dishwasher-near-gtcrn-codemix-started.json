@@ -1,0 +1,12 @@
+{
+  "trial": {
+    "id": "10-dishwasher-near",
+    "variant": "gtcrn",
+    "format": "codemix",
+    "path": "/home/mathew/Arrakis/CueBell-denoiser-diagnosis-20261115/docs/benchmarks/real-noise-2026-11-14/audio-near-v4/after/10-dishwasher-near.wav",
+    "sha256": "43ad2a4d2f3430fee66c413685d6897c6f79f77cc27a040e14fbc6c1f3f634d3",
+    "reference": "So, if anybody solicits by phone, make sure you mail the dough to the above. Serve the coleslaw after I add",
+    "seconds": 10.0
+  },
+  "attempted": true
+}

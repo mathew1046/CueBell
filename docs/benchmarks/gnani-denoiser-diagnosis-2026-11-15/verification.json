@@ -1,0 +1,26 @@
+{
+  "base_commit": "7e793b2d5d460267bd8f5a26ab296e7659858e3a",
+  "source_sha256": {
+    "backend/benchmarks/denoising/analyze_diagnosis.py": "b6a9e38b599f0bbaf2880823d7a51e90698565abec3d1a0a88eb2334693e08fd",
+    "backend/benchmarks/denoising/confirm_batch.py": "bfe9050c33c5ee579f5179220ad04382f82cd0f16deef7c0d338218635fd1281",
+    "backend/benchmarks/denoising/diagnose_batch.py": "7850bb39acdfc792c23e3ada62ab4f622ae3bc5d0615cee7c251bfe8bacbe129",
+    "backend/benchmarks/denoising/diagnose_stream.py": "06f21720616c9342d55e91ea692451ac58cdde6ba0d75390183fa7b075d532e3",
+    "backend/benchmarks/denoising/followup_stream.py": "d0b94062ead3461f977eb5cc3c1450dd3ec200a001d13ed454fce445c2a9c72e",
+    "backend/benchmarks/denoising/test_confirm_batch.py": "a4043f24320a479b1e6dce54aa2dbcced3335141b40de64ae027911470bab7db",
+    "backend/benchmarks/denoising/test_diagnose_stream.py": "951dd80648131a25247aba07699c671adcd90b571b8d17fd12ec0b4e8fef4e59",
+    "backend/app/gnani.py": "879bc42230eeee5385d9cc1ae9eb0d65163d3ab48fc76ef9e2d6e7bfc5fe1bdd",
+    "backend/app/config.py": "5d91901cfcd1bd13cff89d729fb2e1b9a9eab3c71af6d9bce937c3b29b457260",
+    "backend/benchmarks/denoising/transcribe.py": "17dcbd7ca8a2bf05a8d2d17f1171317e4ec2fffdf9c41ec7356c4a5bf4c220cc"
+  },
+  "private_credential_scan": {
+    "text_files": 144,
+    "matches": 0
+  },
+  "production_and_transport_unchanged": [
+    "backend/app/gnani.py",
+    "backend/app/config.py",
+    "backend/benchmarks/denoising/transcribe.py"
+  ],
+  "all_stream_request_headers_verified_except_format": true,
+  "provider_calls_finished": true
+}

@@ -1,0 +1,12 @@
+{
+  "trial": {
+    "id": "02-slough-platform-four",
+    "variant": "raw",
+    "format": "codemix",
+    "path": "/home/mathew/Arrakis/CueBell-denoiser-diagnosis-20261115/docs/benchmarks/station-pa-2026-11-14/audio/before/02-slough-platform-four.wav",
+    "sha256": "e45e4f4fbcf81a007d418edb55ac3e85a460ba5a0b71197390a3b5c69e9c09ab",
+    "reference": "<UNVERIFIED_TRANSCRIPT/>",
+    "seconds": 23.214125
+  },
+  "attempted": true
+}

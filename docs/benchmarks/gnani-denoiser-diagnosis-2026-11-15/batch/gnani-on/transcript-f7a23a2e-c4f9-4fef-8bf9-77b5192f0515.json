@@ -1,0 +1,23 @@
+{
+  "file_id": "f7a23a2e-c4f9-4fef-8bf9-77b5192f0515",
+  "job_id": "01a1db5a-8d2b-795a-9daf-ee14eef708af",
+  "original_path": "clip-09.wav",
+  "language_code": "hi-IN",
+  "duration_seconds": 29.4,
+  "model": "prisma-v3.0",
+  "mode": "transcribe",
+  "segments": [
+    {
+      "segment_id": 0,
+      "start_time": 3.628,
+      "end_time": 5.28,
+      "text": "",
+      "speaker_id": -1,
+      "confidence": null,
+      "language_detected": null
+    }
+  ],
+  "full_transcript": "",
+  "created_at": "2026-11-14T18:38:52Z",
+  "engine": "go-batch-asr"
+}

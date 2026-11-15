@@ -1,0 +1,23 @@
+{
+  "file_id": "3d3c2376-e791-4e09-b29e-ad66d3ee5c09",
+  "job_id": "01a1db5a-84eb-78d4-9212-26251592cb4b",
+  "original_path": "clip-09.wav",
+  "language_code": "en-IN",
+  "duration_seconds": 29.4,
+  "model": "prisma-v3.0",
+  "mode": "transcribe",
+  "segments": [
+    {
+      "segment_id": 0,
+      "start_time": 3.02,
+      "end_time": 27.136,
+      "text": "Train to arrive at platform four is the fourteen forty eight tenth trains. Service to London Paddington, calling at Padwell, West End, Evening Broadway. London Paddington platform four for the fourteen forty eight ten trains service To London Paddington.",
+      "speaker_id": 1,
+      "confidence": null,
+      "language_detected": "en-IN"
+    }
+  ],
+  "full_transcript": "Train to arrive at platform four is the fourteen forty eight tenth trains. Service to London Paddington, calling at Padwell, West End, Evening Broadway. London Paddington platform four for the fourteen forty eight ten trains service To London Paddington.",
+  "created_at": "2026-11-14T18:38:29Z",
+  "engine": "go-batch-asr"
+}

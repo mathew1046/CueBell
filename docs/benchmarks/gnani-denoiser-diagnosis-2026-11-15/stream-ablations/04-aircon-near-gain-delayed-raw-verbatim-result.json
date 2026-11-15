@@ -1,0 +1,75 @@
+{
+  "id": "04-aircon-near",
+  "variant": "gain-delayed-raw",
+  "format": "verbatim",
+  "path": "/home/mathew/Arrakis/CueBell-denoiser-diagnosis-20261115/docs/benchmarks/gnani-denoiser-diagnosis-2026-11-15/stream-ablations/controls/04-aircon-near-gain-delay-raw.wav",
+  "sha256": "e66ca2ca4bc50d528512a1f4479e6c63c045d706ed4083723987bd36bfd0f53f",
+  "reference": "Naturally, curly hair runs in my family. More often these officers are restricted.",
+  "seconds": 10.0,
+  "input_sha256": "e66ca2ca4bc50d528512a1f4479e6c63c045d706ed4083723987bd36bfd0f53f",
+  "source_audio_seconds": 10.0,
+  "status": "completed",
+  "scoring_version": "unicode-marks-v2",
+  "sent_frames": 376,
+  "schedule_rebases": 0,
+  "maximum_send_lateness_ms": 1.413802005117759,
+  "unfinished_utterance_ids": [],
+  "connection_seconds": 23.05132080299518,
+  "attempt_seconds": 23.239156020994415,
+  "transcript": "నేచురల్లీ కర్లీ హెయిర్ వ్రాన్స్ ఇన్ మై ఫ్యామిలీ. More often these officers are restricted to.",
+  "events": [
+    {
+      "elapsed_s": 0.04902738999953726,
+      "message": {
+        "type": "connected",
+        "message": "STT service ready — VAD service connected",
+        "request_id": "01a1db64-139a-7f02-a550-b34fd0c8b028",
+        "config": {
+          "sample_rate": 16000,
+          "chunk_size": 512,
+          "partials_enabled": false,
+          "partial_interval_ms": 450,
+          "partial_max_window_s": 15.0,
+          "language_code": "indic-auto",
+          "format": "verbatim"
+        },
+        "timestamp": "2026-11-14T18:48:51.419448+00:00"
+      }
+    },
+    {
+      "elapsed_s": 1.903671571999439,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "ube5e9d95",
+        "t_ms": 1588,
+        "timestamp": "2026-11-14T18:48:53.270696+00:00"
+      }
+    },
+    {
+      "elapsed_s": 10.762569250000524,
+      "message": {
+        "type": "transcript",
+        "text": "నేచురల్లీ కర్లీ హెయిర్ వ్రాన్స్ ఇన్ మై ఫ్యామిలీ. More often these officers are restricted to.",
+        "audio_duration_ms": 9268.0,
+        "segment_id": "01a1db64-139a-7f02-a550-b34fd0c8b028-seg-1",
+        "segment_index": 1,
+        "utterance_id": "ube5e9d95",
+        "is_final": true,
+        "latency": 198,
+        "prefetched": false,
+        "timestamp": "2026-11-14T18:49:02.114359+00:00",
+        "detected_language_code": "te-IN"
+      }
+    }
+  ],
+  "reference_score_eligible": true,
+  "score": {
+    "reference_words": 13,
+    "hypothesis_words": 14,
+    "errors": 8,
+    "substitutions": 7,
+    "insertions": 1,
+    "deletions": 0,
+    "wer": 0.6153846153846154
+  }
+}

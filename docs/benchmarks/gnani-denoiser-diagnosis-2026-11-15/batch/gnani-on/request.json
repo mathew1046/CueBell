@@ -1,0 +1,190 @@
+{
+  "config": {
+    "model": "prisma-v3.0",
+    "language_code": "indic-auto",
+    "format": "verbatim",
+    "mode": "transcribe",
+    "with_diarization": false,
+    "is_multi_channel": false,
+    "with_denoise": true
+  },
+  "uploads": [
+    {
+      "id": "03-slough-through-train",
+      "cohort": "station",
+      "custom_denoise": false,
+      "path": "/home/mathew/Arrakis/CueBell-denoiser-diagnosis-20261115/docs/benchmarks/station-pa-2026-11-14/audio/before/03-slough-through-train.wav",
+      "sha256": "87250b4e8f16793e0b33957108df7cc62fc538ee2e5eb0f7fa348621c781b30c",
+      "samples": 848069,
+      "seconds": 53.0043125,
+      "upload_name": "clip-05.wav",
+      "algorithmic_delay_samples": 0
+    },
+    {
+      "id": "03-typing-far",
+      "cohort": "dns-far",
+      "custom_denoise": false,
+      "path": "/home/mathew/Arrakis/CueBell-denoiser-diagnosis-20261115/docs/benchmarks/real-noise-2026-11-14/audio-far-v4/before/03-typing-far.wav",
+      "sha256": "078bd7f9b4c613decb812c8d6a07dfbe575a2463594460ba532b6c0095b5522e",
+      "samples": 160000,
+      "seconds": 10.0,
+      "upload_name": "clip-15.wav",
+      "algorithmic_delay_samples": 0
+    },
+    {
+      "id": "05-southall-platform-pa",
+      "cohort": "station",
+      "custom_denoise": false,
+      "path": "/home/mathew/Arrakis/CueBell-denoiser-diagnosis-20261115/docs/benchmarks/station-pa-2026-11-14/audio/before/05-southall-platform-pa.wav",
+      "sha256": "e396e872a48cc04a7e216146953d104d4a8d4e9dd16ddd94f25cb938f5bddc0d",
+      "samples": 470344,
+      "seconds": 29.3965,
+      "upload_name": "clip-09.wav",
+      "algorithmic_delay_samples": 0
+    },
+    {
+      "id": "04-slough-distant-pa",
+      "cohort": "station",
+      "custom_denoise": false,
+      "path": "/home/mathew/Arrakis/CueBell-denoiser-diagnosis-20261115/docs/benchmarks/station-pa-2026-11-14/audio/before/04-slough-distant-pa.wav",
+      "sha256": "92c4f9640c11ec9168805a3d65fa7eb6065b4b34cd1d65dd6fb8d36d8f83a357",
+      "samples": 433575,
+      "seconds": 27.0984375,
+      "upload_name": "clip-07.wav",
+      "algorithmic_delay_samples": 0
+    },
+    {
+      "id": "02-slough-platform-four",
+      "cohort": "station",
+      "custom_denoise": true,
+      "path": "/home/mathew/Arrakis/CueBell-denoiser-diagnosis-20261115/docs/benchmarks/station-pa-2026-11-14/audio/after/02-slough-platform-four.wav",
+      "sha256": "8df2bac99f57b30671d950d26d5d3902cda044ebf785d5e1258771ba43a99900",
+      "samples": 371426,
+      "seconds": 23.214125,
+      "upload_name": "clip-04.wav",
+      "algorithmic_delay_samples": 256
+    },
+    {
+      "id": "10-dishwasher-near",
+      "cohort": "dns-near",
+      "custom_denoise": true,
+      "path": "/home/mathew/Arrakis/CueBell-denoiser-diagnosis-20261115/docs/benchmarks/real-noise-2026-11-14/audio-near-v4/after/10-dishwasher-near.wav",
+      "sha256": "43ad2a4d2f3430fee66c413685d6897c6f79f77cc27a040e14fbc6c1f3f634d3",
+      "samples": 160000,
+      "seconds": 10.0,
+      "upload_name": "clip-14.wav",
+      "algorithmic_delay_samples": 256
+    },
+    {
+      "id": "01-india-station-pa",
+      "cohort": "station",
+      "custom_denoise": true,
+      "path": "/home/mathew/Arrakis/CueBell-denoiser-diagnosis-20261115/docs/benchmarks/station-pa-2026-11-14/audio/after/01-india-station-pa.wav",
+      "sha256": "59f00e85383cf41e3d341e1d88739b1d8d06fd85825ca8bf3a2a71b9edb5b5b9",
+      "samples": 887328,
+      "seconds": 55.458,
+      "upload_name": "clip-02.wav",
+      "algorithmic_delay_samples": 256
+    },
+    {
+      "id": "03-slough-through-train",
+      "cohort": "station",
+      "custom_denoise": true,
+      "path": "/home/mathew/Arrakis/CueBell-denoiser-diagnosis-20261115/docs/benchmarks/station-pa-2026-11-14/audio/after/03-slough-through-train.wav",
+      "sha256": "8d9ffbd1caed9f0f3ee227dd20e3da71f3a9c502360cdb5b0e5ccaca09d3b3b9",
+      "samples": 848069,
+      "seconds": 53.0043125,
+      "upload_name": "clip-06.wav",
+      "algorithmic_delay_samples": 256
+    },
+    {
+      "id": "02-slough-platform-four",
+      "cohort": "station",
+      "custom_denoise": false,
+      "path": "/home/mathew/Arrakis/CueBell-denoiser-diagnosis-20261115/docs/benchmarks/station-pa-2026-11-14/audio/before/02-slough-platform-four.wav",
+      "sha256": "e45e4f4fbcf81a007d418edb55ac3e85a460ba5a0b71197390a3b5c69e9c09ab",
+      "samples": 371426,
+      "seconds": 23.214125,
+      "upload_name": "clip-03.wav",
+      "algorithmic_delay_samples": 0
+    },
+    {
+      "id": "03-typing-far",
+      "cohort": "dns-far",
+      "custom_denoise": true,
+      "path": "/home/mathew/Arrakis/CueBell-denoiser-diagnosis-20261115/docs/benchmarks/real-noise-2026-11-14/audio-far-v4/after/03-typing-far.wav",
+      "sha256": "1a309c9e81f086c498f7a0967d07b8a32ef372d38ef0f44e0b64725a91872bbd",
+      "samples": 160000,
+      "seconds": 10.0,
+      "upload_name": "clip-16.wav",
+      "algorithmic_delay_samples": 256
+    },
+    {
+      "id": "04-aircon-near",
+      "cohort": "dns-near",
+      "custom_denoise": false,
+      "path": "/home/mathew/Arrakis/CueBell-denoiser-diagnosis-20261115/docs/benchmarks/real-noise-2026-11-14/audio-near-v4/before/04-aircon-near.wav",
+      "sha256": "9f29eb0640b80dde1c51148ca4705400862dc65dc2fa0561feb1ee3e9dd7d6e9",
+      "samples": 160000,
+      "seconds": 10.0,
+      "upload_name": "clip-11.wav",
+      "algorithmic_delay_samples": 0
+    },
+    {
+      "id": "10-dishwasher-near",
+      "cohort": "dns-near",
+      "custom_denoise": false,
+      "path": "/home/mathew/Arrakis/CueBell-denoiser-diagnosis-20261115/docs/benchmarks/real-noise-2026-11-14/audio-near-v4/before/10-dishwasher-near.wav",
+      "sha256": "7548654cd7523ee31f0fdf1359e7b112de7df42840903e21ec3144de9c6e299c",
+      "samples": 160000,
+      "seconds": 10.0,
+      "upload_name": "clip-13.wav",
+      "algorithmic_delay_samples": 0
+    },
+    {
+      "id": "04-aircon-near",
+      "cohort": "dns-near",
+      "custom_denoise": true,
+      "path": "/home/mathew/Arrakis/CueBell-denoiser-diagnosis-20261115/docs/benchmarks/real-noise-2026-11-14/audio-near-v4/after/04-aircon-near.wav",
+      "sha256": "8cf66900fc534a4f2dc5fdafc2cd76315a4c53bf3ba17fe56e777b83594d9e17",
+      "samples": 160000,
+      "seconds": 10.0,
+      "upload_name": "clip-12.wav",
+      "algorithmic_delay_samples": 256
+    },
+    {
+      "id": "04-slough-distant-pa",
+      "cohort": "station",
+      "custom_denoise": true,
+      "path": "/home/mathew/Arrakis/CueBell-denoiser-diagnosis-20261115/docs/benchmarks/station-pa-2026-11-14/audio/after/04-slough-distant-pa.wav",
+      "sha256": "d52fab328ecd2b7fed9b7abb4e385ad49a3285d0dc9e1b29767191460bbec6af",
+      "samples": 433575,
+      "seconds": 27.0984375,
+      "upload_name": "clip-08.wav",
+      "algorithmic_delay_samples": 256
+    },
+    {
+      "id": "01-india-station-pa",
+      "cohort": "station",
+      "custom_denoise": false,
+      "path": "/home/mathew/Arrakis/CueBell-denoiser-diagnosis-20261115/docs/benchmarks/station-pa-2026-11-14/audio/before/01-india-station-pa.wav",
+      "sha256": "b9b7c42f09da1b4669071e4d61858baa344bd63e37a54c29e01682b4f01368a0",
+      "samples": 887328,
+      "seconds": 55.458,
+      "upload_name": "clip-01.wav",
+      "algorithmic_delay_samples": 0
+    },
+    {
+      "id": "05-southall-platform-pa",
+      "cohort": "station",
+      "custom_denoise": true,
+      "path": "/home/mathew/Arrakis/CueBell-denoiser-diagnosis-20261115/docs/benchmarks/station-pa-2026-11-14/audio/after/05-southall-platform-pa.wav",
+      "sha256": "c5934c424b0de20bec6b465b889b46eecf95138ab2a20c2c5d76903e3f4bb536",
+      "samples": 470344,
+      "seconds": 29.3965,
+      "upload_name": "clip-10.wav",
+      "algorithmic_delay_samples": 256
+    }
+  ],
+  "status": "create_attempt_started"
+}

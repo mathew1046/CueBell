@@ -1,0 +1,12 @@
+{
+  "trial": {
+    "id": "04-aircon-near",
+    "variant": "gain-delayed-raw",
+    "format": "verbatim",
+    "path": "/home/mathew/Arrakis/CueBell-denoiser-diagnosis-20261115/docs/benchmarks/gnani-denoiser-diagnosis-2026-11-15/stream-ablations/controls/04-aircon-near-gain-delay-raw.wav",
+    "sha256": "e66ca2ca4bc50d528512a1f4479e6c63c045d706ed4083723987bd36bfd0f53f",
+    "reference": "Naturally, curly hair runs in my family. More often these officers are restricted.",
+    "seconds": 10.0
+  },
+  "attempted": true
+}

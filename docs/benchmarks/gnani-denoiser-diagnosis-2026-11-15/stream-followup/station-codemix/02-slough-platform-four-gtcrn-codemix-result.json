@@ -1,0 +1,116 @@
+{
+  "id": "02-slough-platform-four",
+  "variant": "gtcrn",
+  "format": "codemix",
+  "path": "/home/mathew/Arrakis/CueBell-denoiser-diagnosis-20261115/docs/benchmarks/station-pa-2026-11-14/audio/after/02-slough-platform-four.wav",
+  "sha256": "8df2bac99f57b30671d950d26d5d3902cda044ebf785d5e1258771ba43a99900",
+  "reference": "<UNVERIFIED_TRANSCRIPT/>",
+  "seconds": 23.214125,
+  "input_sha256": "8df2bac99f57b30671d950d26d5d3902cda044ebf785d5e1258771ba43a99900",
+  "source_audio_seconds": 23.214125,
+  "status": "completed",
+  "scoring_version": "unicode-marks-v2",
+  "sent_frames": 789,
+  "schedule_rebases": 0,
+  "maximum_send_lateness_ms": 2.459866002027411,
+  "unfinished_utterance_ids": [],
+  "connection_seconds": 36.26017698200303,
+  "attempt_seconds": 36.453311452998605,
+  "transcript": "Platform four for the eight seven hundred hours first grade western service to breeding  For the 8700 hours, first Great Western Service to breeding.",
+  "events": [
+    {
+      "elapsed_s": 0.05357736800215207,
+      "message": {
+        "type": "connected",
+        "message": "STT service ready — VAD service connected",
+        "request_id": "01a1db6a-997c-76b6-9059-b75920cc21b8",
+        "config": {
+          "sample_rate": 16000,
+          "chunk_size": 512,
+          "partials_enabled": false,
+          "partial_interval_ms": 450,
+          "partial_max_window_s": 15.0,
+          "language_code": "indic-auto",
+          "format": "codemix"
+        },
+        "timestamp": "2026-11-14T18:55:58.910137+00:00"
+      }
+    },
+    {
+      "elapsed_s": 4.554241206002189,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "uf38725a9",
+        "t_ms": 4244,
+        "timestamp": "2026-11-14T18:56:03.423676+00:00"
+      }
+    },
+    {
+      "elapsed_s": 10.527511818007042,
+      "message": {
+        "type": "transcript",
+        "text": "Platform four for the eight seven hundred hours first grade western service to breeding",
+        "audio_duration_ms": 6452.0,
+        "segment_id": "01a1db6a-997c-76b6-9059-b75920cc21b8-seg-1",
+        "segment_index": 1,
+        "utterance_id": "uf38725a9",
+        "is_final": true,
+        "latency": 142,
+        "prefetched": false,
+        "timestamp": "2026-11-14T18:56:09.395307+00:00",
+        "detected_language_code": "en-IN"
+      }
+    },
+    {
+      "elapsed_s": 10.604899286001455,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "ua838233c",
+        "t_ms": 10292,
+        "timestamp": "2026-11-14T18:56:09.473276+00:00"
+      }
+    },
+    {
+      "elapsed_s": 14.508560309004679,
+      "message": {
+        "type": "transcript",
+        "text": "",
+        "audio_duration_ms": 4032.0,
+        "segment_id": "01a1db6a-997c-76b6-9059-b75920cc21b8-seg-2",
+        "segment_index": 2,
+        "utterance_id": "ua838233c",
+        "is_final": true,
+        "latency": 86,
+        "prefetched": false,
+        "timestamp": "2026-11-14T18:56:13.371462+00:00"
+      }
+    },
+    {
+      "elapsed_s": 14.63600695500645,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "uab4b3043",
+        "t_ms": 14324,
+        "timestamp": "2026-11-14T18:56:13.505474+00:00"
+      }
+    },
+    {
+      "elapsed_s": 20.949957971002732,
+      "message": {
+        "type": "transcript",
+        "text": "For the 8700 hours, first Great Western Service to breeding.",
+        "audio_duration_ms": 6368.0,
+        "segment_id": "01a1db6a-997c-76b6-9059-b75920cc21b8-seg-3",
+        "segment_index": 3,
+        "utterance_id": "uab4b3043",
+        "is_final": true,
+        "latency": 156,
+        "prefetched": false,
+        "timestamp": "2026-11-14T18:56:19.812010+00:00",
+        "detected_language_code": "en-IN"
+      }
+    }
+  ],
+  "reference_score_eligible": false,
+  "score": null
+}

@@ -1,0 +1,75 @@
+{
+  "id": "10-dishwasher-near",
+  "variant": "gtcrn",
+  "format": "verbatim",
+  "path": "/home/mathew/Arrakis/CueBell-denoiser-diagnosis-20261115/docs/benchmarks/real-noise-2026-11-14/audio-near-v4/after/10-dishwasher-near.wav",
+  "sha256": "43ad2a4d2f3430fee66c413685d6897c6f79f77cc27a040e14fbc6c1f3f634d3",
+  "reference": "So, if anybody solicits by phone, make sure you mail the dough to the above. Serve the coleslaw after I add",
+  "seconds": 10.0,
+  "input_sha256": "43ad2a4d2f3430fee66c413685d6897c6f79f77cc27a040e14fbc6c1f3f634d3",
+  "source_audio_seconds": 10.0,
+  "status": "completed",
+  "scoring_version": "unicode-marks-v2",
+  "sent_frames": 376,
+  "schedule_rebases": 0,
+  "maximum_send_lateness_ms": 1.914253007271327,
+  "unfinished_utterance_ids": [],
+  "connection_seconds": 23.055237941996893,
+  "attempt_seconds": 23.266698175000784,
+  "transcript": "So, if anybody has doubts about notes here, you may get out to the about. Love the girls love, as per I asked.",
+  "events": [
+    {
+      "elapsed_s": 0.06522525599575602,
+      "message": {
+        "type": "connected",
+        "message": "STT service ready — VAD service connected",
+        "request_id": "01a1db64-c95f-72f2-82db-22c162c13471",
+        "config": {
+          "sample_rate": 16000,
+          "chunk_size": 512,
+          "partials_enabled": false,
+          "partial_interval_ms": 450,
+          "partial_max_window_s": 15.0,
+          "language_code": "indic-auto",
+          "format": "verbatim"
+        },
+        "timestamp": "2026-11-14T18:49:37.958799+00:00"
+      }
+    },
+    {
+      "elapsed_s": 1.480010150000453,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "ua31bb59f",
+        "t_ms": 1140,
+        "timestamp": "2026-11-14T18:49:39.389015+00:00"
+      }
+    },
+    {
+      "elapsed_s": 10.873224679999112,
+      "message": {
+        "type": "transcript",
+        "text": "So, if anybody has doubts about notes here, you may get out to the about. Love the girls love, as per I asked.",
+        "audio_duration_ms": 9780.0,
+        "segment_id": "01a1db64-c95f-72f2-82db-22c162c13471-seg-1",
+        "segment_index": 1,
+        "utterance_id": "ua31bb59f",
+        "is_final": true,
+        "latency": 202,
+        "prefetched": false,
+        "timestamp": "2026-11-14T18:49:48.782262+00:00",
+        "detected_language_code": "en-IN"
+      }
+    }
+  ],
+  "reference_score_eligible": true,
+  "score": {
+    "reference_words": 21,
+    "hypothesis_words": 23,
+    "errors": 15,
+    "substitutions": 13,
+    "insertions": 2,
+    "deletions": 0,
+    "wer": 0.7142857142857143
+  }
+}

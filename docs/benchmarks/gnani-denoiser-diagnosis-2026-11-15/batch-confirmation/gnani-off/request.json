@@ -1,0 +1,22 @@
+{
+  "config": {
+    "model": "prisma-v3.0",
+    "language_code": "indic-auto",
+    "format": "verbatim",
+    "mode": "transcribe",
+    "with_diarization": false,
+    "is_multi_channel": false,
+    "with_denoise": false
+  },
+  "status": "create_attempt_started",
+  "files": [
+    {
+      "name": "clip-03.wav",
+      "sha256": "e45e4f4fbcf81a007d418edb55ac3e85a460ba5a0b71197390a3b5c69e9c09ab"
+    },
+    {
+      "name": "clip-04.wav",
+      "sha256": "8df2bac99f57b30671d950d26d5d3902cda044ebf785d5e1258771ba43a99900"
+    }
+  ]
+}

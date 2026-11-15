@@ -1,0 +1,23 @@
+{
+  "file_id": "d30b1d1d-6f0c-42c6-b4b6-c07591777080",
+  "job_id": "01a1db5a-8d2b-795a-9daf-ee14eef708af",
+  "original_path": "clip-03.wav",
+  "language_code": "en-IN",
+  "duration_seconds": 23.21,
+  "model": "prisma-v3.0",
+  "mode": "transcribe",
+  "segments": [
+    {
+      "segment_id": 0,
+      "start_time": 16.652,
+      "end_time": 21.024,
+      "text": "It's first great Western service to breeding.",
+      "speaker_id": 1,
+      "confidence": null,
+      "language_detected": "en-IN"
+    }
+  ],
+  "full_transcript": "It's first great Western service to breeding.",
+  "created_at": "2026-11-14T18:38:48Z",
+  "engine": "go-batch-asr"
+}

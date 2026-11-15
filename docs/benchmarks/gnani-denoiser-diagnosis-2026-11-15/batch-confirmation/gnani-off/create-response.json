@@ -1,0 +1,7 @@
+{
+  "job_id": "01a1db66-8877-71d0-af19-e937b5a3ef1b",
+  "status": "CREATED",
+  "total_files_accepted": 2,
+  "created_at": "2026-11-14T18:51:32.671847Z",
+  "message": "2 file(s) uploaded. Call POST /stt/v3/batch/jobs/{job_id}/start to begin processing."
+}

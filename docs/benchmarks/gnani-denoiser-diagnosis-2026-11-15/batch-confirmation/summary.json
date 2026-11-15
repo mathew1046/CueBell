@@ -1,0 +1,161 @@
+{
+  "schema": 1,
+  "results": [
+    {
+      "id": "02-slough-platform-four",
+      "cohort": "station",
+      "custom_denoise": true,
+      "path": "/home/mathew/Arrakis/CueBell-denoiser-diagnosis-20261115/docs/benchmarks/station-pa-2026-11-14/audio/after/02-slough-platform-four.wav",
+      "sha256": "8df2bac99f57b30671d950d26d5d3902cda044ebf785d5e1258771ba43a99900",
+      "samples": 371426,
+      "seconds": 23.214125,
+      "upload_name": "clip-04.wav",
+      "reference": "<UNVERIFIED_TRANSCRIPT/>",
+      "uploader_facts": {
+        "platform": "4",
+        "departure_time": "07:00",
+        "destination": "Reading"
+      },
+      "algorithmic_delay_samples": 256,
+      "gnani_denoise_requested": false,
+      "file_status": "COMPLETED",
+      "error": null,
+      "transcript": "Four four for the eight seven hundred hours first grade Western Service to Freddy. Towel and bedding. Platform four for the eight seven hundred hours first Great Western Service to breeding.",
+      "score": null,
+      "segments": [
+        {
+          "segment_id": 0,
+          "start_time": 3.916,
+          "end_time": 21.056,
+          "text": "Four four for the eight seven hundred hours first grade Western Service to Freddy. Towel and bedding. Platform four for the eight seven hundred hours first Great Western Service to breeding.",
+          "speaker_id": 1,
+          "confidence": null,
+          "language_detected": "en-IN"
+        }
+      ],
+      "provider_model": "prisma-v3.0",
+      "provider_engine": "go-batch-asr",
+      "transcript_evidence": "gnani-off/transcript-b10c7551-ab1d-4a5f-a094-801fcbcc4026.json",
+      "gnani_denoise_execution": "unverified: inspect provider stage/metadata"
+    },
+    {
+      "id": "02-slough-platform-four",
+      "cohort": "station",
+      "custom_denoise": false,
+      "path": "/home/mathew/Arrakis/CueBell-denoiser-diagnosis-20261115/docs/benchmarks/station-pa-2026-11-14/audio/before/02-slough-platform-four.wav",
+      "sha256": "e45e4f4fbcf81a007d418edb55ac3e85a460ba5a0b71197390a3b5c69e9c09ab",
+      "samples": 371426,
+      "seconds": 23.214125,
+      "upload_name": "clip-03.wav",
+      "reference": "<UNVERIFIED_TRANSCRIPT/>",
+      "uploader_facts": {
+        "platform": "4",
+        "departure_time": "07:00",
+        "destination": "Reading"
+      },
+      "algorithmic_delay_samples": 0,
+      "gnani_denoise_requested": false,
+      "file_status": "COMPLETED",
+      "error": null,
+      "transcript": "हो, देईल। Service to breading, collagen, mineral hair, fiber, and breading. Platform four for the eight seven hundred hours first Great Western Service to breeding.",
+      "score": null,
+      "segments": [
+        {
+          "segment_id": 0,
+          "start_time": 4.78,
+          "end_time": 6.368,
+          "text": "हो, देईल।",
+          "speaker_id": 1,
+          "confidence": null,
+          "language_detected": "hi-IN"
+        },
+        {
+          "segment_id": 1,
+          "start_time": 8.044,
+          "end_time": 21.056,
+          "text": "Service to breading, collagen, mineral hair, fiber, and breading. Platform four for the eight seven hundred hours first Great Western Service to breeding.",
+          "speaker_id": 1,
+          "confidence": null,
+          "language_detected": "en-IN"
+        }
+      ],
+      "provider_model": "prisma-v3.0",
+      "provider_engine": "go-batch-asr",
+      "transcript_evidence": "gnani-off/transcript-e22f0bcc-6f6b-4b07-bdef-8b55efba826f.json",
+      "gnani_denoise_execution": "unverified: inspect provider stage/metadata"
+    },
+    {
+      "id": "02-slough-platform-four",
+      "cohort": "station",
+      "custom_denoise": true,
+      "path": "/home/mathew/Arrakis/CueBell-denoiser-diagnosis-20261115/docs/benchmarks/station-pa-2026-11-14/audio/after/02-slough-platform-four.wav",
+      "sha256": "8df2bac99f57b30671d950d26d5d3902cda044ebf785d5e1258771ba43a99900",
+      "samples": 371426,
+      "seconds": 23.214125,
+      "upload_name": "clip-04.wav",
+      "reference": "<UNVERIFIED_TRANSCRIPT/>",
+      "uploader_facts": {
+        "platform": "4",
+        "departure_time": "07:00",
+        "destination": "Reading"
+      },
+      "algorithmic_delay_samples": 256,
+      "gnani_denoise_requested": true,
+      "file_status": "FAILED",
+      "error": "no speech detected in 23s of audio",
+      "transcript": "",
+      "score": null,
+      "segments": [],
+      "provider_model": null,
+      "provider_engine": null,
+      "transcript_evidence": "gnani-on/transcript-c94d2ec2-4ba6-4fac-b0a1-d8792de27a7f.json",
+      "gnani_denoise_execution": "unverified: inspect provider stage/metadata"
+    },
+    {
+      "id": "02-slough-platform-four",
+      "cohort": "station",
+      "custom_denoise": false,
+      "path": "/home/mathew/Arrakis/CueBell-denoiser-diagnosis-20261115/docs/benchmarks/station-pa-2026-11-14/audio/before/02-slough-platform-four.wav",
+      "sha256": "e45e4f4fbcf81a007d418edb55ac3e85a460ba5a0b71197390a3b5c69e9c09ab",
+      "samples": 371426,
+      "seconds": 23.214125,
+      "upload_name": "clip-03.wav",
+      "reference": "<UNVERIFIED_TRANSCRIPT/>",
+      "uploader_facts": {
+        "platform": "4",
+        "departure_time": "07:00",
+        "destination": "Reading"
+      },
+      "algorithmic_delay_samples": 0,
+      "gnani_denoise_requested": true,
+      "file_status": "COMPLETED",
+      "error": null,
+      "transcript": "It's first great Western service to breeding.",
+      "score": null,
+      "segments": [
+        {
+          "segment_id": 0,
+          "start_time": 16.652,
+          "end_time": 21.024,
+          "text": "It's first great Western service to breeding.",
+          "speaker_id": 1,
+          "confidence": null,
+          "language_detected": "en-IN"
+        }
+      ],
+      "provider_model": "prisma-v3.0",
+      "provider_engine": "go-batch-asr",
+      "transcript_evidence": "gnani-on/transcript-e0b4c5ea-e95d-4a63-bf27-5a588173261f.json",
+      "gnani_denoise_execution": "unverified: inspect provider stage/metadata"
+    }
+  ],
+  "reference_hints_sent": false,
+  "full_station_wer_available": false,
+  "gnani_denoise_config_is_execution_proof": false,
+  "batch_source_audio_reserved_seconds": 92.8565,
+  "prior_gnani_seconds": 6869.854070596997,
+  "budget_accounting": "Prior stream time, all batch submissions, diagnostic attempt time",
+  "prior_conservative_seconds": 6869.854070596997,
+  "initial_batch_audio_seconds": 872.6854999999999,
+  "diagnostic_stream_attempt_seconds": 279.3228956469975
+}

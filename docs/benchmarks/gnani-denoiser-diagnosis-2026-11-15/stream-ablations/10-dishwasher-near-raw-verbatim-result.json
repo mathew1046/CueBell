@@ -1,0 +1,75 @@
+{
+  "id": "10-dishwasher-near",
+  "variant": "raw",
+  "format": "verbatim",
+  "path": "/home/mathew/Arrakis/CueBell-denoiser-diagnosis-20261115/docs/benchmarks/real-noise-2026-11-14/audio-near-v4/before/10-dishwasher-near.wav",
+  "sha256": "7548654cd7523ee31f0fdf1359e7b112de7df42840903e21ec3144de9c6e299c",
+  "reference": "So, if anybody solicits by phone, make sure you mail the dough to the above. Serve the coleslaw after I add",
+  "seconds": 10.0,
+  "input_sha256": "7548654cd7523ee31f0fdf1359e7b112de7df42840903e21ec3144de9c6e299c",
+  "source_audio_seconds": 10.0,
+  "status": "completed",
+  "scoring_version": "unicode-marks-v2",
+  "sent_frames": 376,
+  "schedule_rebases": 0,
+  "maximum_send_lateness_ms": 1.682359004917089,
+  "unfinished_utterance_ids": [],
+  "connection_seconds": 23.05040953400021,
+  "attempt_seconds": 23.27239472400106,
+  "transcript": "So, if anybody has doubts by phone, make sure you mail that out to the above. Serve the coals love after I add.",
+  "events": [
+    {
+      "elapsed_s": 0.049929827997402754,
+      "message": {
+        "type": "connected",
+        "message": "STT service ready — VAD service connected",
+        "request_id": "01a1db64-6e77-741a-baa8-d82836f7568b",
+        "config": {
+          "sample_rate": 16000,
+          "chunk_size": 512,
+          "partials_enabled": false,
+          "partial_interval_ms": 450,
+          "partial_max_window_s": 15.0,
+          "language_code": "indic-auto",
+          "format": "verbatim"
+        },
+        "timestamp": "2026-11-14T18:49:14.685806+00:00"
+      }
+    },
+    {
+      "elapsed_s": 1.6152672379976138,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "uc8955172",
+        "t_ms": 1300,
+        "timestamp": "2026-11-14T18:49:16.257945+00:00"
+      }
+    },
+    {
+      "elapsed_s": 10.71534717400209,
+      "message": {
+        "type": "transcript",
+        "text": "So, if anybody has doubts by phone, make sure you mail that out to the above. Serve the coals love after I add.",
+        "audio_duration_ms": 9492.0,
+        "segment_id": "01a1db64-6e77-741a-baa8-d82836f7568b-seg-1",
+        "segment_index": 1,
+        "utterance_id": "uc8955172",
+        "is_final": true,
+        "latency": 193,
+        "prefetched": false,
+        "timestamp": "2026-11-14T18:49:25.351500+00:00",
+        "detected_language_code": "en-IN"
+      }
+    }
+  ],
+  "reference_score_eligible": true,
+  "score": {
+    "reference_words": 21,
+    "hypothesis_words": 23,
+    "errors": 6,
+    "substitutions": 4,
+    "insertions": 2,
+    "deletions": 0,
+    "wer": 0.2857142857142857
+  }
+}

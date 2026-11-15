@@ -1,0 +1,50 @@
+{
+  "file_id": "141783e3-6c0c-42b9-85cb-0fd54589efc1",
+  "job_id": "01a1db5a-84eb-78d4-9212-26251592cb4b",
+  "original_path": "clip-01.wav",
+  "language_code": "hi-IN",
+  "duration_seconds": 55.46,
+  "model": "prisma-v3.0",
+  "mode": "transcribe",
+  "segments": [
+    {
+      "segment_id": 0,
+      "start_time": 0,
+      "end_time": 14.688,
+      "text": "से चलकर बंगलोर को जाने वाली चौंतीस तीस हजरत निजामुद्दीन बंगलोर राजधानी एक्सप्रेस अपने निर्धारित समय से चार। सजग, चालीस मिनट बारह से पचास मिनट के देरी से आने की संभावना है।",
+      "speaker_id": 1,
+      "confidence": null,
+      "language_detected": "hi-IN"
+    },
+    {
+      "segment_id": 1,
+      "start_time": 14.764,
+      "end_time": 30.848,
+      "text": "Your attention, please, two four three zero Rajdhani Express. From Hazrat Nizamuddin to Bangalore, which is scheduled to arrive at... Four hours, forty minutes, divided by fifty minutes.",
+      "speaker_id": 1,
+      "confidence": null,
+      "language_detected": "en-IN"
+    },
+    {
+      "segment_id": 2,
+      "start_time": 33.74,
+      "end_time": 50.88,
+      "text": "कृपया ध्यान दीजिए, बिलासपुर से चलकर इंदौर को जाने वाली बयासी चौंतीस। बिलासपुर इंदौर नर्मदा एक्सप्रेस अपने निर्धारित समय चार बजकर पच्चीस मिनट पर से पैंतीस मिनट के विल के आने की संभावना है।",
+      "speaker_id": 1,
+      "confidence": null,
+      "language_detected": "hi-IN"
+    },
+    {
+      "segment_id": 3,
+      "start_time": 50.924,
+      "end_time": 55.458,
+      "text": "May I have your attention please eight two three four",
+      "speaker_id": 1,
+      "confidence": null,
+      "language_detected": "en-IN"
+    }
+  ],
+  "full_transcript": "से चलकर बंगलोर को जाने वाली चौंतीस तीस हजरत निजामुद्दीन बंगलोर राजधानी एक्सप्रेस अपने निर्धारित समय से चार। सजग, चालीस मिनट बारह से पचास मिनट के देरी से आने की संभावना है। Your attention, please, two four three zero Rajdhani Express. From Hazrat Nizamuddin to Bangalore, which is scheduled to arrive at... Four hours, forty minutes, divided by fifty minutes. कृपया ध्यान दीजिए, बिलासपुर से चलकर इंदौर को जाने वाली बयासी चौंतीस। बिलासपुर इंदौर नर्मदा एक्सप्रेस अपने निर्धारित समय चार बजकर पच्चीस मिनट पर से पैंतीस मिनट के विल के आने की संभावना है। May I have your attention please eight two three four",
+  "created_at": "2026-11-14T18:38:30Z",
+  "engine": "go-batch-asr"
+}

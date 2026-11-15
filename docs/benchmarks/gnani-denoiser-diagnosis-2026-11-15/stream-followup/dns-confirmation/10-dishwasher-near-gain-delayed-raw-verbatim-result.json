@@ -1,0 +1,75 @@
+{
+  "id": "10-dishwasher-near",
+  "variant": "gain-delayed-raw",
+  "format": "verbatim",
+  "path": "/home/mathew/Arrakis/CueBell-denoiser-diagnosis-20261115/docs/benchmarks/gnani-denoiser-diagnosis-2026-11-15/stream-ablations/controls/10-dishwasher-near-gain-delay-raw.wav",
+  "sha256": "673e527ff19958364b85875d8dd05e7104d53654da6431eeeda87bf04ef2f215",
+  "reference": "So, if anybody solicits by phone, make sure you mail the dough to the above. Serve the coleslaw after I add",
+  "seconds": 10.0,
+  "input_sha256": "673e527ff19958364b85875d8dd05e7104d53654da6431eeeda87bf04ef2f215",
+  "source_audio_seconds": 10.0,
+  "status": "completed",
+  "scoring_version": "unicode-marks-v2",
+  "sent_frames": 376,
+  "schedule_rebases": 0,
+  "maximum_send_lateness_ms": 1.186899004096631,
+  "unfinished_utterance_ids": [],
+  "connection_seconds": 23.043546105000132,
+  "attempt_seconds": 23.262712235002255,
+  "transcript": "But if Saluboy's by phone notes here, you may get out to the about. The girl's love after I had.",
+  "events": [
+    {
+      "elapsed_s": 0.03347110100003192,
+      "message": {
+        "type": "connected",
+        "message": "STT service ready — VAD service connected",
+        "request_id": "01a1db6a-3e8a-7ed8-b1d5-0bc639b9a730",
+        "config": {
+          "sample_rate": 16000,
+          "chunk_size": 512,
+          "partials_enabled": false,
+          "partial_interval_ms": 450,
+          "partial_max_window_s": 15.0,
+          "language_code": "indic-auto",
+          "format": "verbatim"
+        },
+        "timestamp": "2026-11-14T18:55:35.620557+00:00"
+      }
+    },
+    {
+      "elapsed_s": 2.0590601170042646,
+      "message": {
+        "type": "speech_start",
+        "utterance_id": "u08fe7fd9",
+        "t_ms": 1748,
+        "timestamp": "2026-11-14T18:55:37.646760+00:00"
+      }
+    },
+    {
+      "elapsed_s": 10.787248420005199,
+      "message": {
+        "type": "transcript",
+        "text": "But if Saluboy's by phone notes here, you may get out to the about. The girl's love after I had.",
+        "audio_duration_ms": 9044.0,
+        "segment_id": "01a1db6a-3e8a-7ed8-b1d5-0bc639b9a730-seg-1",
+        "segment_index": 1,
+        "utterance_id": "u08fe7fd9",
+        "is_final": true,
+        "latency": 300,
+        "prefetched": false,
+        "timestamp": "2026-11-14T18:55:46.369042+00:00",
+        "detected_language_code": "en-IN"
+      }
+    }
+  ],
+  "reference_score_eligible": true,
+  "score": {
+    "reference_words": 21,
+    "hypothesis_words": 20,
+    "errors": 13,
+    "substitutions": 12,
+    "insertions": 0,
+    "deletions": 1,
+    "wer": 0.6190476190476191
+  }
+}

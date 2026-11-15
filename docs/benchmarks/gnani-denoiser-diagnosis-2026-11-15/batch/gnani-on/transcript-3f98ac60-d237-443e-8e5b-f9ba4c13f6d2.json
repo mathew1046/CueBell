@@ -1,0 +1,32 @@
+{
+  "file_id": "3f98ac60-d237-443e-8e5b-f9ba4c13f6d2",
+  "job_id": "01a1db5a-8d2b-795a-9daf-ee14eef708af",
+  "original_path": "clip-10.wav",
+  "language_code": "en-IN",
+  "duration_seconds": 29.4,
+  "model": "prisma-v3.0",
+  "mode": "transcribe",
+  "segments": [
+    {
+      "segment_id": 0,
+      "start_time": 2.892,
+      "end_time": 15.268,
+      "text": "The next train to arrive at platform. Four is the forty-eight tenth strength service to London Paddington.",
+      "speaker_id": 1,
+      "confidence": null,
+      "language_detected": "en-IN"
+    },
+    {
+      "segment_id": 1,
+      "start_time": 15.268,
+      "end_time": 27.264,
+      "text": "",
+      "speaker_id": -1,
+      "confidence": null,
+      "language_detected": null
+    }
+  ],
+  "full_transcript": "The next train to arrive at platform. Four is the forty-eight tenth strength service to London Paddington.",
+  "created_at": "2026-11-14T18:38:39Z",
+  "engine": "go-batch-asr"
+}
