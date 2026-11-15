@@ -1,37 +1,30 @@
 # Contributing to CueBell
 
-Thank you for helping make audio-only queue announcements more accessible.
-Useful contributions include reproducible bug reports, accessibility feedback,
-documentation, tests and small, focused fixes.
+Help improve access to spoken announcements through focused fixes, tests,
+documentation and accessibility feedback.
 
-## Before starting
+## Before you start
 
-- Search existing issues and open one before a large feature or architecture change.
-- Read the product scope and repository instructions, including `mobile/AGENTS.md`
-  for mobile work. Check the matching Expo SDK docs before changing native APIs.
-- No project license has been selected. Clarify contribution/reuse terms with the
-  maintainer before substantial work; do not assume an open-source license.
-- Keep claims proportionate to evidence. A mocked test is not a live-language or
-  accessibility-usability result.
+- Read the [documentation index](docs/README.md) and [architecture](docs/ARCHITECTURE.md).
+- Search [existing issues](https://github.com/mathew1046/CueBell/issues). Discuss large changes before implementation.
+- No project license has been selected. Ask the maintainer about contribution and reuse terms before substantial work.
+- For mobile changes, follow [mobile/AGENTS.md](mobile/AGENTS.md) and the matching Expo SDK documentation. Keep native changes in the local module or config plugins, not generated Android/iOS directories.
 
-Issues:
-https://github.com/mathew1046/CueBell/issues
+## Local checks
 
-## Development checks
+Use Python 3.12+, Node 24.3+ and npm. Android builds also need Java 17 and an
+Expo SDK 58-compatible Android SDK/NDK. Expo Go cannot load the native service.
 
-Use Python 3.12+, Node 24.3+ and npm. Java 17 and an SDK-compatible Android toolchain
-are needed only for native builds/tests. Expo Go cannot load the native service.
-
-From the repository root, backend checks are:
+From the repository root:
 
 ```sh
 cd backend
 python3.12 -m venv .venv
 .venv/bin/python -m pip install -r requirements.lock
 .venv/bin/python -m pip install --no-deps -e .
-.venv/bin/pytest -q
-.venv/bin/ruff check app tests
-.venv/bin/ruff format --check app tests
+.venv/bin/python -m pytest -q
+.venv/bin/python -m ruff check app tests
+.venv/bin/python -m ruff format --check app tests
 ```
 
 In a separate terminal, from the repository root:
@@ -42,28 +35,23 @@ npm ci
 npm test
 npm run typecheck
 npm run lint
+npx playwright install --with-deps chromium
+EXPO_PUBLIC_API_URL=https://cuebell.mathewjoseph.xyz npm run test:web
 ```
 
-These automated checks use mocked providers and do not need real API keys or
-microphone access. GitHub Actions runs the same backend/mobile checks. Native
-JUnit tests, APK builds and physical-device checks are separate; follow:
-https://github.com/mathew1046/CueBell/blob/main/mobile/README.md
+These checks use mocked provider output, not live recognition. Browser tests use
+a synthetic microphone and mock relay. GitHub Actions runs these backend, mobile
+and browser checks; native JUnit, APK and physical-device checks are separate.
+See [Android development](mobile/README.md), [web development](docs/WEB.md) and
+the [verification record](docs/VERIFICATION.md) for scope and known limits.
 
 ## Pull request checklist
 
-- Explain the user problem and keep the change focused.
-- Add regression tests for behavior changes; run the relevant checks above.
-- Keep generated `mobile/android/` and `mobile/ios/`, APKs, signing keys, `.env`
-  files and provider credentials out of commits.
-- Preserve explicit consent, visible start/stop controls, source-evidence checks,
-  coverage-gap reporting and the separation between app and backend credentials.
-- For interface work, check large text, contrast, screen-reader labels and both
-  themes. For lifecycle changes, test denial, interruption and stop/restart.
-- Say what was not tested. Never describe emulator-only or mocked checks as
-  physical-phone, live-recognition or real-venue verification.
+- Explain the user problem, keep the diff focused and add regression tests for behavior changes.
+- Report commands run, failures and untested behavior. Do not present mock, emulator or replay results as real-venue reliability.
+- Preserve consent, visible start/stop controls, source validation, coverage-gap warnings and server-only provider credentials.
+- Check large text, contrast, screen-reader labels and both themes for UI changes. Test denied permissions, interruption and stop/restart for lifecycle changes.
+- Keep generated native directories, APKs, signing keys, `.env` files and credentials out of commits.
+- Use synthetic identifiers and consenting speakers. Redact screenshots/logs; do not upload patient details, bearer tokens or unconsented venue audio.
 
-Use synthetic token numbers and consenting speakers. Redact screenshots/logs;
-do not upload patient details, bearer tokens or unconsented venue audio.
-
-Security issues must be reported privately:
-https://github.com/mathew1046/CueBell/security/advisories/new
+Report security issues [privately](SECURITY.md), not in public issues.

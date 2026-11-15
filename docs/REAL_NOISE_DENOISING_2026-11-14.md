@@ -1,254 +1,137 @@
-# CueBell: sourced real-noise denoising observations
+# Recorded DNS5 noise: before/after evidence
 
-## Decision
+Date: 14 November 2026. Follow-up to the [original native device gate](NOISE_REDUCTION_BENCHMARK_2026-11-14.md).
 
-**Background noise is reduced, but recognition preservation has not passed.**
-Shipping is conditional on the denoiser working properly; relaxing the earlier
-latency target does not resolve the observed recognition regressions. The public
-1.3.1 release remains the baseline. The experiment is complete; the feature stays
-off by default on the uncommitted `feat/on-device-denoising` branch. No new public
-release was made. This decision is based on recognition quality, not the deferred
-latency optimization target.
+## Outcome
 
-**Delivered:** 16 verified before/after pairs, 32 WAVs in a ZIP. All 16 recordings
-remained fully enhanced in the final phone replay. Background-quality estimates
-improved for all 16, but four of 11 eligible recognition pairs worsened, six tied,
-and one improved. Two of the regressions reproduced in a confirmation run.
+**The revised runtime fully enhanced all 16 recordings, and background-quality estimates improved on all 16. Recognition preservation did not pass.** Of 11 reference-eligible Gnani pairs, one improved, six tied and four worsened. Two regressions repeated in confirmation trials.
 
-Audio bundle:
-/home/mathew/Arrakis/CueBell/artifacts/CueBell-real-noise-before-after-2026-11-14.zip
+At this campaign's close, the public 1.3.1 release remained the baseline, with no new public release. The experimental branch remained off by default. Deferring latency optimization did not remove the recognition problem. This audio delivery was not a release qualification.
 
-Unpacked audio:
-/home/mathew/Arrakis/CueBell/artifacts/CueBell-real-noise-before-after-2026-11-14/
+## Sources and method
 
-## Source and processing
+- Microsoft DNS Challenge 5 development set, Track 2 Speakerphone: **16 existing noisy recordings**, 12 near-speaker and four far-speaker, each ten seconds.
+- Filename-hash selection preceded outcomes. The first near selection used case-sensitive `Primary`; the separate far cohort corrected that limitation with case-insensitive matching. This is a small sample, not a representative public-address benchmark.
+- Only input preparation: conversion to mono PCM16 at 16 kHz. No generated speech/noise, artificial mixing, normalization, trimming or added reverberation.
+- Production Kotlin GTCRN reducer and pinned FFT JNI ran on the I2404 phone in standalone `app_process` file replay, not a live microphone/foreground-service test. Each clip used a fresh engine.
+- Each output retained **160,000 samples** and the **16 ms causal alignment delay**. Only the partial final frame was internally zero-filled; no output padding or end-of-stream flush.
 
-- Microsoft DNS Challenge 5 development set, Track 2 Speakerphone: **16 existing
-  noisy recordings**, 12 near-speaker and four far-speaker clips, each 10 seconds.
-- No generated speech, generated noise, artificial mixing, level normalization,
-  trimming, or added reverberation. The source WAVs and supplied transcripts are
-  retained. Conversion to mono PCM16 at 16 kHz is the only input preparation.
-- Deterministic filename-hash selection precedes enhancement results. The first
-  near selection used a case-sensitive `Primary` suffix; the separate far cohort
-  corrects that selection limitation with case-insensitive matching. These are
-  small samples, not a representative estimate of all public-address conditions.
-- GTCRN runs on the connected I2404 Android phone, using the production Kotlin
-  reducer and the pinned FFT native runtime. This is file replay in a standalone
-  Android process, not a microphone/foreground-service deployment validation.
-- The 16 ms causal alignment delay is retained. Each output remains 160,000
-  samples. Only the partial final processing frame is internally zero-filled;
-  there is no output padding or end-of-stream flush.
+Sources: [project](https://github.com/microsoft/DNS-Challenge), [official archive](https://dnschallengepublic.blob.core.windows.net/dns5archive/V5_dev_testset.zip), [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), [attribution and modifications](benchmarks/real-noise-2026-11-14/ATTRIBUTION.md).
 
-Source project: https://github.com/microsoft/DNS-Challenge
+## Runtime improvement: availability, not a new waveform
 
-Official archive: https://dnschallengepublic.blob.core.windows.net/dns5archive/V5_dev_testset.zip
+The original single-call ≥32 ms policy fully enhanced **8/12 near and 3/4 far clips**. Five fallback outputs remain in the evidence but are not labeled fully denoised.
 
-License: https://creativecommons.org/licenses/by/4.0/
+The revised policy permits recoverable transient overruns, tracking cumulative debt with a **64 ms limit** against the same **32 ms frame interval**. Exceptions and invalid results still fail open immediately. A post-inference frame-age check rejects excessively old output after a synchronous native stall. This is not a hard end-to-end latency bound.
 
-Attribution and modification details:
-/home/mathew/Arrakis/CueBell/docs/benchmarks/real-noise-2026-11-14/ATTRIBUTION.md
+Final v4 replay fully enhanced **12/12 near and 4/4 far clips**, with **5,008/5,008 active frames**. Fully enhanced availability rose from **11/16 (68.75%) to 16/16 (100%)**. Bypass WAVs matched their inputs, and all **11 previously successful outputs were byte-identical**. The policy changed availability without changing those enhanced waveforms.
 
-## Initial runtime availability
-
-The original policy permanently disabled enhancement after any processing call
-of 32 ms or longer. On real recordings, eight of 12 near clips and three of four
-far clips remained fully enhanced. The other five outputs are retained as raw
-evidence, **not presented as fully denoised audio**.
-
-The replacement policy accounts for cumulative processing debt, with a 64 ms
-limit and the same 32 ms frame interval. Brief valid overruns can recover; invalid
-results and exceptions still fail open immediately. This changes availability,
-not the normal enhanced waveform. A post-inference frame-age check also prevents
-an excessively old frame being sent after a synchronous native stall.
-
-### Final bounded-debt replay
-
-The updated v4 harness fully enhanced **12/12 near and 4/4 far clips**. All 5,008
-replay frames remained active, all bypass WAVs matched their inputs, and all
-11 previously successful before/after pairs were byte-identical to the initial
-outputs. The new policy changed availability without changing those waveforms.
-
-| Cohort | Active replay frames | Processing p50 / p99 | Maximum call | Calls ≥32 ms | Peak processing debt |
+| Cohort | Active frames | Processing p50 / p99 | Max call | Calls ≥32 ms | Peak debt |
 | --- | ---: | ---: | ---: | ---: | ---: |
 | Near | 3,756 / 3,756 | 4.608 / 10.882 ms | 50.922 ms | 3 | 18.913 ms |
 | Far | 1,252 / 1,252 | 4.682 / 13.280 ms | 51.201 ms | 3 | 22.028 ms |
 
-There were 14 completion-deadline misses across both cohorts, with a maximum
-27.610 ms lateness, but no fallback, dropped frames, or schedule rebases. The
-separate 16 ms signal delay remains. Both reset checks stayed active and produced
-identical outputs. Each clip starts a fresh engine; these results do not establish
-long-session, battery, live-microphone, or foreground-service performance. The
-earlier strict latency gate is not claimed to pass.
+There were **14 completion-deadline misses**, maximum lateness **27.610 ms**, but no fallback, dropped frames or schedule rebases. Both reset checks stayed active with identical outputs. The separate 16 ms signal delay remains. These fresh-engine ten-second replays do not pass the earlier strict latency gate or establish battery, long-session or live-microphone performance.
 
-APK SHA256: `b9318ebbb40a85633063175e7f478e492754faacd18889d2f74dbcd9926e7ac9`.
-The runtime/model locks and compiled-source hashes are retained in the evidence.
+APK SHA-256: `b9318ebbb40a85633063175e7f478e492754faacd18889d2f74dbcd9926e7ac9`. Model/runtime locks and compiled-source hashes remain in the evidence.
 
-## Initial acoustic-quality observations
+## Estimated audio quality
 
-Only the 11 fully enhanced initial pairs were scored. The runtime exclusions
-are explicit; these aggregates must not be described as the full 16-clip result.
+Official non-personalized DNSMOS: SIG estimates speech quality, BAK background quality and OVRL overall quality. Higher is better. These are **model estimates**, not human ratings, intelligibility, SNR or recognition accuracy. No paired clean reference exists. The scorer uses one 9.01-second window per ten-second clip, leaving 0.99 seconds unscored; it does not align or normalize audio. No subjective listening evaluation is claimed.
 
-| Cohort | Scored pairs | Background quality, before → after | Speech quality, before → after | Overall quality, before → after |
+### Initial successful outputs only
+
+| Cohort | Pairs | BAK before → after | SIG before → after | OVRL before → after |
 | --- | ---: | ---: | ---: | ---: |
 | Near | 8 | 2.441 → 3.941 | 3.369 → 3.096 | 2.352 → 2.812 |
 | Far | 3 | 2.906 → 3.838 | 3.280 → 3.111 | 2.502 → 2.723 |
 
-The background-quality proxy improved in all 11 pairs. Overall quality improved
-in 10; predicted speech quality fell in all 11. This is the reason recognition
-was checked rather than equating lower noise with better CueBell performance.
+Background improved on all 11; overall improved on ten; speech quality fell on all 11. Runtime exclusions mean these are not the full 16-clip results.
 
-### Final acoustic-quality observations: all 16 recordings
+### Final complete output set
 
-| Cohort | Scored pairs | Background quality, before → after | Speech quality, before → after | Overall quality, before → after |
+| Cohort | Pairs | BAK before → after | SIG before → after | OVRL before → after |
 | --- | ---: | ---: | ---: | ---: |
 | Near | 12 | 2.444 → 3.940 | 3.382 → 3.112 | 2.355 → 2.828 |
 | Far | 4 | 2.727 → 3.889 | 3.065 → 3.022 | 2.295 → 2.627 |
 | All, equal clip weight | 16 | 2.514 → 3.927 | 3.303 → 3.089 | 2.340 → 2.778 |
 
-Background quality improved in **16/16**, overall quality in **15/16**, and speech
-quality in **1/16**. Speech-quality estimates fell in the other 15. Near breathing
-was the sole overall-quality decline, from 3.060 to 3.017 (approximately −0.042).
-Far creaky noise was the sole speech-quality improvement.
+Background improved on **16/16**, overall on **15/16**, and speech on **1/16**. The other 15 speech estimates fell. Near breathing was the only overall decline, **3.060 → 3.017** (approximately -0.042 using unrounded scores); far creaky noise was the only speech improvement.
 
-PCM-limit sample counts were 239 before and 258 after across all recordings.
-Far typing accounted for 238 before and all 258 after; near mouse clicks had one
-before and none after. These are threshold counts in converted PCM, not proof of
-historical clipping in the original recording. No gain normalization was applied
-to hide the level changes or saturation.
+PCM-limit sample counts were **239 before / 258 after**. Far typing accounted for 238 before and all 258 after; near mouse clicks had one before and none after. These are converted-PCM threshold counts, not proof of historical clipping. No gain normalization hid these changes.
 
-These are the official non-personalized DNSMOS SIG/BAK/OVRL **model estimates**,
-not human ratings or an SNR measurement. No paired clean reference is available.
-The pinned implementation scores one 9.01-second window in each 10-second clip;
-the remaining 0.99 seconds are outside that metric's coverage. Audio is neither
-aligned nor normalized for scoring. No subjective listening evaluation is claimed.
+## Actual Gnani recognition
 
-## Real Gnani recognition
+Released Prisma, `indic-auto`, VAD and observation settings were held equal. Reference text was not sent as a hint. Audio used 512-sample paced frames; paired connections ran concurrently with randomized condition order. No Luna calls were needed.
 
-Seven initial pairs had both fully enhanced output and an eligible source
-transcript: five near and two far. Source transcripts containing unknown-speech
-markers were excluded from numerical WER. The same released Prisma model,
-`indic-auto` language setting, and VAD settings were used for both conditions.
-Reference text was never supplied as a recognition hint. Audio was paced in
-512-sample frames; two paired connections ran concurrently, with randomized
-condition order and equal final observation windows. No Luna calls were needed
-for this speech-recognition comparison.
+Initial eligibility required fully enhanced output and a complete source reference: five near pairs and two far pairs. References with unknown-speech markers were excluded from numerical WER.
 
 | Initial cohort | Reference words | Before errors / WER | After errors / WER |
 | --- | ---: | ---: | ---: |
-| Near: five pairs | 94 | 13 / 13.83% | 21 / 22.34% |
-| Far: two pairs | 33 | 13 / 39.39% | 19 / 57.58% |
+| Near, five pairs | 94 | 13 / 13.83% | 21 / 22.34% |
+| Far, two pairs | 33 | 13 / 39.39% | 19 / 57.58% |
 
-Across the seven pairs, one improved, four tied, and two worsened. Repeating both
-regressing pairs reproduced their before/after error rates:
+Initial outcomes: one improved, four tied, two worsened. Both regressions repeated: near air conditioning **15.38% → 92.31%**, far typing **20.00% → 60.00%**, identical rates in the first and confirmation trials.
 
-| Recording | First before → after WER | Confirmation before → after WER |
-| --- | ---: | ---: |
-| Near, air conditioning | 15.38% → 92.31% | 15.38% → 92.31% |
-| Far, typing | 20.00% → 60.00% | 20.00% → 60.00% |
+### Final coverage: 11 eligible pairs out of 16
 
-### Final recognition coverage
-
-After v4 recovered the remaining outputs, the four additional near recordings
-with complete source references were also tested. This completes all **11
-eligible pairs out of 16**. The five excluded references contain unknown-speech
-markers: near water, breathing, and cutlery; far baby and creaky noise. Their
-audio and acoustic-quality results remain included in the delivery.
+After v4 recovered all audio, the four remaining reference-eligible near recordings were tested. Five incomplete references remained excluded: near water, breathing and cutlery; far baby and creaky noise. Their audio/quality results remain included.
 
 | Final cohort | Reference words | Before errors / WER | After errors / WER |
 | --- | ---: | ---: | ---: |
-| Near: nine pairs | 183 | 36 / 19.67% | 58 / 31.69% |
-| Far: two pairs | 33 | 13 / 39.39% | 19 / 57.58% |
+| Near, nine pairs | 183 | 36 / 19.67% | 58 / 31.69% |
+| Far, two pairs | 33 | 13 / 39.39% | 19 / 57.58% |
 | All 11 pairs | 216 | 49 / 22.69% | 77 / 35.65% |
 
-The final paired outcomes are **one improved, six tied, four worsened**.
-Confirmation trials are not counted again in these averages.
+Aggregate WER increased **12.96 percentage points**, calculated from the counts. Confirmations are not counted again. Final directions: **one improved, six tied, four worsened**.
 
-| Recording | Before WER | After WER | Observation |
+| Recording | Before WER | After WER | Result |
 | --- | ---: | ---: | --- |
 | Near baby | 31.82% | 22.73% | Improved |
 | Near typing | 5.26% | 5.26% | Tied |
-| Near air conditioning | 15.38% | 92.31% | Worse; English → Tamil detection; repeated |
-| Near dog | 45.00% | 70.00% | Worse; English → Tamil detection |
+| Near air conditioning | 15.38% | 92.31% | Worse; English/Tamil-script change; repeated |
+| Near dog | 45.00% | 70.00% | Worse; English/Tamil-script change |
 | Near mouse clicks | 11.11% | 11.11% | Tied |
 | Near clatter | 19.23% | 19.23% | Tied |
 | Near creaky noise | 4.55% | 4.55% | Tied |
-| Near dishwasher | 28.57% | 71.43% | Worse despite English detection in both arms |
+| Near dishwasher | 28.57% | 71.43% | Worse; English in both arms |
 | Near door | 13.64% | 13.64% | Tied |
 | Far breathing | 55.56% | 55.56% | Tied |
-| Far typing | 20.00% | 60.00% | Worse; mixed-language/word changes; repeated |
+| Far typing | 20.00% | 60.00% | Worse; language/script and word changes; repeated |
 
-The air-conditioning clip's reference begins “Naturally, curly hair runs in my
-family.” Before enhancement, Gnani detected English. After enhancement, it
-detected Tamil and rendered most of the English utterance in Tamil script. The
-far typing clip already triggered mixed-language recognition before enhancement;
-the enhanced version introduced additional language/script and word changes.
-**Strict English-reference WER penalizes these script changes:** this is a
-production recognizer interaction, not proof that a listener loses the same
-fraction of spoken information. There is no transliteration or numeric rewriting
-to make the scores appear better. End-to-end Luna interpretation/alert accuracy
-has not been measured on these recordings.
+Strict English-reference WER penalizes script changes as well as lexical errors. The air-conditioning reference begins “Naturally, curly hair runs in my family.” Enhanced recognition rendered most of it in Tamil script. Far typing already had mixed-language output before enhancement. These are recognizer interactions, not proof that listeners lose the same fraction of information. No transliteration/numeric rewriting was applied to improve scores. The [later diagnosis](GNANI_DENOISER_DIAGNOSIS_2026-11-15.md) tests script, delay and level controls.
 
-The dishwasher regression is not explained by a detected-language switch: both
-arms were labeled English, while substitutions increased from four to 13 and
-insertions remained two. Thus the concern is broader than English-reference
-scoring of an alternative script. Source transcripts themselves contain some
-awkward wording and have not been independently re-transcribed by a listener;
-the paired test holds those same references constant.
+Dishwasher is a separate concern: both arms were labeled English, but substitutions rose from **four to 13**, with **two insertions** in each. Source transcripts contain awkward wording and were not independently re-transcribed; paired conditions use the same references. No end-to-end Luna alert accuracy was measured here.
 
 ### Scoring correction
 
-An initial tokenizer used Python `\w`, which splits Indic combining vowel marks
-and inflated some preliminary word counts. The corrected `unicode-marks-v2`
-scorer retains letters, combining marks, numbers, and internal apostrophes after
-NFKC/lowercase normalization. Five accounting tests pass, including Indic-script
-word integrity. All rates above use the corrected scorer. Original provider
-responses and preliminary score files are preserved; corrected initial scores
-are in a separate evidence file.
+The first tokenizer used Python `\w`, splitting Indic combining marks and inflating preliminary word counts. The corrected `unicode-marks-v2` scorer retains letters, combining marks, numbers and internal apostrophes after NFKC/lowercase normalization. Five accounting tests passed, including Indic word integrity. All rates here use corrected scoring. Original responses and preliminary scores remain unchanged; corrected initial scores are separate.
 
-## Evidence
+## Evidence and delivery
 
-Root:
-/home/mathew/Arrakis/CueBell/docs/benchmarks/real-noise-2026-11-14/
+Root: [`benchmarks/real-noise-2026-11-14/`](benchmarks/real-noise-2026-11-14/).
 
-- `recordings/` and `recordings-far/`: original audio, converted input, source
-  transcripts, member hashes, selection metadata, and device manifests.
-- `device-real-noise-v3b/` and `device-real-noise-far-v3/`: initial device results,
-  per-frame timing, bypass controls, and the outputs rejected after fallback.
-- `audio-near-initial/` and `audio-far-initial/`: verified fully enhanced initial
-  pairs, with explicit excluded IDs and provenance.
-- `quality-near-initial.json` and `quality-far-initial.json`: complete initial
-  DNSMOS results and signal statistics.
-- `asr-initial-rescored.json`: corrected word-error accounting for initial pairs.
-- `asr-near-initial/`, `asr-far-initial/`, `asr-near-confirmation/`, and
-  `asr-far-confirmation/`: immutable provider events, transcripts, language
-  decisions, timing, hashes, and connection usage.
+| Evidence | Contents |
+| --- | --- |
+| `recordings/`, `recordings-far/` | Source/converted audio, transcripts, selection, hashes and device manifests |
+| `device-real-noise-v3b/`, `device-real-noise-far-v3/` | Initial device frames, timings, bypass and rejected fallback output |
+| `audio-near-initial/`, `audio-far-initial/` | Initial fully enhanced pairs, exclusions and provenance |
+| `quality-near-initial.json`, `quality-far-initial.json` | Initial DNSMOS and signal statistics |
+| `asr-initial-rescored.json` | Corrected initial WER |
+| `asr-near-initial/`, `asr-far-initial/`, `asr-near-confirmation/`, `asr-far-confirmation/` | Immutable transcripts, events, language, timing, hashes and usage |
+| `audio-near-v4/`, `audio-far-v4/` | All 16 final pairs with strict exports, hashes and provenance |
+| `device-real-near-v4/`, `device-real-far-v4/`, `device-build-v4.json`, `v4-audio-verification.json`, [timing summary](benchmarks/real-noise-2026-11-14/v4-timing-summary.json) | Final runtime, inputs, active coverage and initial-output equivalence |
+| `quality-near-v4.json`, `quality-far-v4.json`, [quality summary](benchmarks/real-noise-2026-11-14/quality-final-summary.json) | Full 16-clip quality results |
+| `asr-near-completion/`, [final ASR analysis](benchmarks/real-noise-2026-11-14/asr-final-analysis.json) | Additional trials and canonical 11-pair scores with evidence hashes |
 
-- `audio-near-v4/` and `audio-far-v4/`: all 16 final pairs, strict export checks,
-  hashes, and provenance; no fallback output is labeled fully enhanced.
-- `device-real-near-v4/`, `device-real-far-v4/`, `device-build-v4.json`,
-  `v4-audio-verification.json`, and `v4-timing-summary.json`: final physical-device
-  results, compiled inputs, active-frame checks, and initial-output equivalence.
-- `quality-near-v4.json`, `quality-far-v4.json`, and `quality-final-summary.json`:
-  full 16-clip DNSMOS results and signal statistics.
-- `asr-near-completion/` and `asr-final-analysis.json`: additional provider trials
-  and the canonical 11-pair recognition analysis, with input/evidence hashes.
+The original delivery contained **16 before/after pairs, 32 WAVs**, in `artifacts/CueBell-real-noise-before-after-2026-11-14.zip` and the corresponding unpacked directory. Those are historical local delivery paths, not files promised in this checkout. Use the benchmark evidence paths above for retained material.
 
-## Verification and provider usage
+## Historical verification and provider usage
 
-- Backend: **487 passed, one optional numerical-test module skipped** in the app
-  environment. The DNSMOS numerical suite separately passed **25 tests** in its
-  isolated environment; two fixture scores matched the official implementation.
-- Native: **33 JVM tests passed**, including 17 streaming-policy checks.
-- Mobile: prior **49 tests passed**; lint and typecheck passed after the policy
-  changes. Backend Ruff and whitespace checks passed.
-- Every delivered WAV is mono PCM16, 16 kHz, 160,000 samples; all source and output
-  hashes were verified. Provenance and attribution accompany the audio.
-- This real-noise study used **26 Gnani connections / 600.776 seconds**, including
-  confirmations, with no new Luna calls and no generated TTS.
-- Combined with the prior campaign: **82.093 / 120 authorized Gnani minutes** and
-  **419 / 600 authorized Luna attempts**. The prior 1,250 TTS characters are
-  unchanged. No provider key is included in the deliverables.
+- Backend: **487 passed**, one optional numerical-test module skipped. Isolated DNSMOS suite: **25 passed**, with two fixture scores matching the official implementation.
+- Native: **33 JVM tests**, including **17 streaming-policy checks**, passed. Prior mobile suite: **49 passed**. Mobile lint/typecheck after policy changes, backend Ruff and whitespace checks passed.
+- Delivered WAVs were mono PCM16, 16 kHz, 160,000 samples, with verified source/output hashes and attribution. These are campaign records, not newly rerun tests.
+- Study usage: **26 Gnani connections / 600.776 seconds**, including confirmations; no new Luna or generated TTS.
+- Cumulative authorized usage then: **82.093/120 Gnani minutes**, **419/600 Luna attempts**, unchanged **1,250 TTS characters**. No provider key was included.
 
-The audio bundle is a listening/evidence deliverable, not a new app release.
-Noise suppression is demonstrated, but recognition-preserving deployment remains
-unqualified. Latency optimization is deferred as requested.
+**Decision:** demonstrated noise suppression and improved short-replay availability, but not recognition-preserving deployment. Keep the raw default and experimental opt-in status.

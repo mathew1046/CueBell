@@ -1,30 +1,51 @@
-# Backend continuous deployment
+# Deployment operations
 
-Every new commit pushed to `main` is detected by the server's `cuebell-autodeploy.timer` (60 seconds after the previous check completes). Existing GitHub `Checks` runs separately. Deployment validation runs on the server and does not depend on GitHub Actions availability. PR branches do not deploy.
+`ops/` keeps deployment reference scripts and service templates in version control. The app itself does not import this directory.
 
-GitHub authentication currently lacks `workflow` scope, so no GitHub deployment workflow or deployment SSH secret is used. The server uses its existing authenticated Git access. Only trusted main-branch code should be merged: backend tests and package installation execute on this host.
+## What runs in production
 
-## Deployment flow
+The current server installs reviewed deployment entrypoints separately:
 
-1. Fetch current `origin/main`, serialize deployments using flock, and skip already deployed/previously failed commits.
-2. Archive the exact main commit to `/home/ubuntu/cuebell-releases/<SHA>` and install locked dependencies into a dedicated virtual environment.
-3. Run pytest, Ruff lint and Ruff formatting checks. If any fail, retain the running release.
-4. Check that the commit is still current main, atomically switch `current`, and restart `queuesaathi.service`.
-5. Verify HTTPS health, including provider-configuration flags. If startup or readiness fails, switch back to the previous release and restart it. Superseded commits are skipped rather than deployed out of order.
+- `/usr/local/libexec/cuebell-watch`: polls `origin/main` and skips deployed or previously failed commits.
+- `/usr/local/libexec/cuebell-deploy`: builds a release, runs checks, promotes it and rolls back on failed readiness.
+- `cuebell-autodeploy.timer`: starts the watcher roughly every minute after its previous check finishes.
+- `queuesaathi.service`: runs the FastAPI relay. This is a retained service name, not a second product.
+- `cuebell-web.service`: serves the production web export.
 
-API keys stay in `/home/ubuntu/queuesaathi/backend/.env` (mode 600), outside release archives and Git. The systemd EnvironmentFile uses that original path. The override in `/etc/systemd/system/queuesaathi.service.d/release.conf` launches `current/backend/.venv/bin/uvicorn` with working directory `current/backend`. In-flight sessions reset on restart.
+**The checked-in `deploy-backend.sh` and `watch-backend.sh` are earlier backend-only reference versions.** The installed entrypoints have since been extended for frontend tests/builds and restarting both services. Copying these older scripts over the installed files would lose that support. Changes to this folder do not automatically replace trusted entrypoints.
 
-Installed entrypoints `/usr/local/libexec/cuebell-watch` and `/usr/local/libexec/cuebell-deploy` are root-owned reviewed copies of these scripts. Updating scripts in Git does not automatically replace the trusted entrypoints.
+## Release flow
 
-## Operations
+1. Fetch the latest `main` commit and serialize deployments.
+2. Archive that exact SHA under `/home/ubuntu/cuebell-releases/<SHA>`.
+3. Install locked Python and Node dependencies. Run backend tests/lint/formatting, frontend unit tests/types/lint, and build the web export with its public API origin.
+4. Confirm the commit is still current `main`, then atomically switch the `current` symlink.
+5. Restart both services and verify public backend health and frontend readiness. On readiness failure, restore the previous release.
 
-- Health: https://cuebell.mathewjoseph.xyz/health
-- Deployment logs: `journalctl -u cuebell-autodeploy.service`
-- Timer: `systemctl status cuebell-autodeploy.timer`
-- Running service: `systemctl status queuesaathi`
-- Deployed SHA: `/home/ubuntu/cuebell-releases/deployed-sha`
-- Stop auto-deployment: `sudo systemctl disable --now cuebell-autodeploy.timer`
-- A failed commit is not retried every minute. Push a fix. To retry the same SHA, inspect the failure first, remove only its inactive release directory and `failed-sha`, then start the oneshot service.
-- Manual rollback: atomically point `current` at a validated previous release, restart the backend, and verify HTTPS. Pause the timer before a manual rollback to avoid redeployment of main.
+Releases retain separate Python environments and frontend builds. Backend credentials stay in the protected environment file outside the archives. Restarting the relay clears in-memory sessions. Automatic rollback does not reverse database migrations; the current relay has no database.
 
-Old releases are retained for rollback. Monitor disk space and remove unused releases, never `current` or the previous known-good release. Automatic rollback does not reverse database migrations. Sessions currently live in memory.
+GitHub CI runs independently. The server deployment gate does not run the entire browser/audio suite; see [verification](../docs/VERIFICATION.md) for the distinction.
+
+## Inspect or pause
+
+```sh
+systemctl status queuesaathi cuebell-web cuebell-autodeploy.timer
+journalctl -u cuebell-autodeploy.service -n 80 --no-pager
+readlink -f /home/ubuntu/cuebell-releases/current
+cat /home/ubuntu/cuebell-releases/deployed-sha
+curl --fail https://cuebell.mathewjoseph.xyz/health
+curl --fail --output /dev/null https://cuebell.mathewjoseph.xyz/
+
+# Pause only CueBell automatic deployment.
+sudo systemctl stop cuebell-autodeploy.timer
+# Resume it.
+sudo systemctl start cuebell-autodeploy.timer
+```
+
+A failed SHA is not retried every minute. Inspect the failure before retrying or deleting an inactive failed release. Keep the current and previous known-good releases for rollback and monitor disk usage.
+
+## Hosting boundaries
+
+The reverse proxy serves both layers on one origin. Route `/v1/` and `/health` to the loopback relay before the frontend catch-all, preserve WebSocket upgrades and set the forwarded HTTPS scheme. Keep provider secrets server-side and use an exact browser origin allowlist.
+
+Public demo admission can spend paid provider quota. Rate limits are not production identity; add suitable access controls and provider budgets before wider use. See [backend setup](../backend/README.md), [web setup](../docs/WEB.md) and [security](../SECURITY.md).

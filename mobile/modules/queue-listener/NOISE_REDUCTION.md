@@ -1,5 +1,7 @@
 # Native noise-reduction integration contract
 
+For the plain-language techniques and results, start with [Noise reduction](../../../docs/NOISE_REDUCTION.md). This document is the lower-level integration and benchmark contract.
+
 This feature is opt-in. `NoiseReductionMode = 'off' | 'gtcrn'` is exported from
 `index.ts`. The optional fourth argument to `QueueListener.start(url, token, mode,
 options)` is `{ noiseReductionMode?: NoiseReductionMode }`; omitted means `off`.
@@ -13,13 +15,13 @@ The functional overload policy below now tolerates bounded transient overruns;
 those earlier results do not validate this revised policy. Enabled-mode latency
 and ASR non-regression have not been established; the default remains `off`.
 Full results:
-/home/mathew/Arrakis/CueBell/docs/NOISE_REDUCTION_BENCHMARK_2026-11-14.md
+[Native benchmark](../../../docs/NOISE_REDUCTION_BENCHMARK_2026-11-14.md)
 
 Subsequent sourced-recording tests found background-noise reduction but repeatable
 Gnani language/script and word-error regressions. Recognition-preserving shipping
 is not qualified by those results. Real-noise audio, observations, and the revised
 policy's validation are recorded in:
-/home/mathew/Arrakis/CueBell/docs/REAL_NOISE_DENOISING_2026-11-14.md
+[Recorded-noise results](../../../docs/REAL_NOISE_DENOISING_2026-11-14.md)
 
 The native `snapshot()` JSON includes `noiseReductionMode` (selection) and
 `noiseReduction` (the diagnostic snapshot). `onEvent` emits a
@@ -184,7 +186,7 @@ build directory. There are no checked-in native binaries or edits to generated
 `mobile/android`. The model and license notices are packaged as Android assets.
 `verifyGtcrnModel` checks the bundled model at build time; the adapter checks again
 before loading. Offline builds can seed
-`/home/mathew/.gradle/caches/cuebell-denoising/sherpa-onnx-static-link-onnxruntime-2.0.1.aar`
+`~/.gradle/caches/cuebell-denoising/sherpa-onnx-static-link-onnxruntime-2.0.1.aar`
 (or the corresponding Gradle user-home cache on another machine).
 
 Uncompressed AAR payload: Kotlin `classes.jar` **245,045 B**; arm64-v8a JNI
@@ -217,7 +219,7 @@ https://raw.githubusercontent.com/k2-fsa/sherpa-onnx/v2.0.1/sherpa-onnx/csrc/onl
 
 ## Verification
 
-Module checks (working directory `/home/mathew/Arrakis/CueBell/mobile/android`):
+Module checks (from generated `mobile/android/`):
 
 ```sh
 ./gradlew :queue-listener:testDebugUnitTest --console=plain --max-workers=2
@@ -242,7 +244,7 @@ and overflow protection.
 Previous library packaging checks
 inspected model, notices, Kotlin dependency classes and all four JNI ABIs.
 
-Mobile checks (working directory `/home/mathew/Arrakis/CueBell/mobile`):
+Mobile checks (from `mobile/`):
 
 ```sh
 npm run lint
@@ -250,7 +252,7 @@ npm run typecheck
 npm run check:service
 ```
 
-These passed. The integration report above records the completed short device
+These historical checks passed. The integration report above records the completed short device
 experiments and failed foreground processing gates. Long-session thermals, battery
 cost, actual release-microphone timing and paired recognition remain unproven;
 passing module checks does not establish those outcomes.

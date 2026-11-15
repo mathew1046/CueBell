@@ -1,199 +1,132 @@
 # Verification record
 
-This is an evidence record, not an accuracy benchmark or a reliability guarantee.
-Results are grouped by preview version; historical checks are labelled separately.
+This is an evidence record, not an accuracy benchmark or reliability guarantee.
+Historical release checks below are not fresh results for the current checkout.
+Use the [documentation index](README.md) for study reports and
+[Android](../mobile/README.md) / [browser](WEB.md) guides for repeatable checks.
 
-## 1.4.0-preview — 2026-11-14
+## How to read the evidence
 
-### Automated checks
+| Check | What it can establish | What it cannot establish |
+| --- | --- | --- |
+| Backend/mobile unit tests | Logic against controlled inputs and mocked provider decisions. | Live speech/model accuracy. |
+| Browser tests | UI, synthetic microphone framing, mock relay handling; some real local GTCRN worker checks. | Real microphone acoustics, all browsers, physical vibration or screen-reader speech. |
+| Provider connection/health | Configuration presence or successful authentication/negotiation, depending on the check. | Recognition quality or a complete alert. |
+| Real-provider audio replay | Behavior on the stated recordings and labels through actual providers. | General accuracy, live venue performance or phone microphone reliability. |
+| APK build/signature | Packaging, compilation and stated artifact properties. | Physical-device lifecycle, audibility or usability. |
 
-| Check | Result and scope |
+**Browser review status:** two repeatable browser audio checks failed on the
+current review host. This record does not claim that the browser suite passes
+in full. Review timing, fallback and environment evidence before release; do not
+substitute unit-test success for a passing browser audio check.
+
+## Documentation review | 15 November 2026
+
+The documentation refactor was checked against application source at `af0173d` and the saved benchmark artifacts. Only Markdown changed; raw benchmark data, source snapshots, models, application code and historical release files were left intact.
+
+- Backend: **508 tests passed**, one optional module skipped; Ruff lint and formatting passed.
+- Client: **81 unit tests passed**; TypeScript and lint passed.
+- Headline setup, enhancement availability, background-quality and word-error figures were recalculated from saved JSON/JSONL evidence. This did not make new paid-provider calls or rerun phone benchmarks.
+- Local documentation links and heading anchors were checked. Release-specific checks below remain historical.
+
+## 1.4.0-preview | 14 November 2026
+
+### Recorded checks
+
+| Check | Historical result |
 | --- | --- |
-| Backend | 487 tests passed; one optional numerical-module test module skipped in the backend environment. Ruff lint and app/test formatting passed. |
-| Mobile | 49 tests passed with version 1.4.0 / code 7, including the newly tracked source and evidence. TypeScript, lint and build-time service-origin validation passed. |
-| Native Android | 33 JUnit tests passed with zero failures, errors or skips. The ARM64 release build succeeded with the pinned FFT runtime. |
-| DNSMOS tooling | Its 25 numerical tests passed separately in the pinned scoring environment during the recorded-noise evaluation. |
+| Backend | 487 tests passed; one optional numerical-module test module skipped. Ruff lint and formatting passed. |
+| Mobile | 49 tests passed, including version 1.4.0 / code 7 metadata. TypeScript, lint and service-origin validation passed. |
+| Android | 33 JUnit tests passed, with no failures/errors/skips. ARM64 release build succeeded with the pinned FFT runtime. |
+| DNSMOS tooling | 25 numerical tests passed separately in the pinned scoring environment. |
+| Targeted source review | Whitespace checks passed, with original upstream/evidence whitespace retained. A scan of 500 staged text files found no configured private backend values; this was not a comprehensive audit. |
 
-Source whitespace checks passed. Downloaded source pages/transcripts, raw device
-logs and the checksum-pinned upstream patch retain their original whitespace.
-The 500 staged text files were checked for configured private backend values;
-no matches were found. These are targeted checks, not a comprehensive audit.
+All 16 selected DNS5 clips and five complete station-PA recordings completed
+phone replay with the bounded-debt FFT implementation. All 5,883 station processing
+frames were enhanced without fallback, retaining the 16 ms causal delay. These
+were replay checks, not live-microphone or long-session measurements. Estimated
+background quality improved, but actual Gnani and GPT-6 Luna checks found
+recognition regressions. Noise reduction remains experimental and off by default.
 
-### Noise-reduction evidence
+Source reports:
+[station PA](https://github.com/mathew1046/CueBell/blob/v1.4.0-preview/docs/STATION_PA_DENOISING_2026-11-14.md),
+[recorded noise](https://github.com/mathew1046/CueBell/blob/v1.4.0-preview/docs/REAL_NOISE_DENOISING_2026-11-14.md).
+See also [noise reduction](NOISE_REDUCTION.md).
 
-- All 16 selected DNS5 recorded-noise clips and all five genuine station-PA
-  recordings completed phone replay with the bounded-debt FFT implementation.
-- The station recordings retained their original noise and complete duration.
-  All 5,883 processing frames were enhanced, with no fallback; the 16 ms causal
-  delay was retained. These are replay results, not live-microphone or long-session
-  reliability measurements.
-- Estimated background quality improved, but actual Gnani and GPT-6 Luna checks
-  found reproducible recognition regressions. The feature is released for
-  hands-on comparison, off by default.
+### Published artifact
 
-Recorded observations and before/after provenance:
-https://github.com/mathew1046/CueBell/blob/v1.4.0-preview/docs/STATION_PA_DENOISING_2026-11-14.md
-https://github.com/mathew1046/CueBell/blob/v1.4.0-preview/docs/REAL_NOISE_DENOISING_2026-11-14.md
+[Release and checksum](https://github.com/mathew1046/CueBell/releases/tag/v1.4.0-preview).
+Package `app.cuebell.mobile`, version 1.4.0 / code 7, ARM64 only. The APK was
+non-debuggable, with a development certificate matching 1.3.1 for in-place updates.
+Signature and 16 KB ZIP alignment checks passed. Compiled origin, microphone
+foreground service, cleartext rejection and unchanged alarm bytes were checked.
+No configured private backend values, environment files or keystores were found
+in the APK by targeted packaging checks, not an independent audit.
 
-### Release artifact
-
-- Package `app.cuebell.mobile`, version 1.4.0, Android version code 7, ARM64 only.
-- APK signature and 16 KB ZIP alignment passed. The development signing
-  certificate matches 1.3.1 for in-place updates; the APK is non-debuggable.
-- Verified the compiled service origin, microphone foreground service, cleartext
-  rejection, and unchanged alarm bytes. No configured private backend values or
-  environment/keystore files were found in the APK.
-- Packaged FFT JNI SHA256:
-  `59964bf7d9cf9520231d6cce3f6728b05f3c0ecac765bd9182bd9fc9d0539c65`.
-- Packaged GTCRN model SHA256:
-  `e77603ac0c23dac3227dd2d7135b3a585cbee2679048aecfa886657d3ae1b534`.
-- APK size: 25,167,101 bytes. SHA256:
-  `99c6700e865951a20f250bea49fb8e3b5a072814c336d8b3e7563bb2f6c192e9`.
-
-Release artifact and checksum:
-https://github.com/mathew1046/CueBell/releases/tag/v1.4.0-preview
-
-## 1.3.1-preview — 2026-11-14
-
-### Automated checks
-
-| Check | Result and scope |
+| Artifact | Recorded SHA-256 |
 | --- | --- |
-| Backend | The included latency implementation passed 410 tests; lint and formatting passed. GitHub Actions also passed for implementation commit `09b7cf19ddecd4b6df2dab05ff35ee1be624aae0`. |
-| Mobile | 43 tests passed with version 1.3.1 / code 6, including metadata consistency. TypeScript, lint and build-time service-origin validation passed. |
-| Native Android | 14 JUnit tests passed, with no failures, errors or skips. ARM64 release compilation succeeded. |
-| Expo Doctor | 19 of 20 checks passed. The dependency-version check recommends seven newer SDK 58 patch releases; the tested dependency versions are retained. |
+| APK, 25,167,101 bytes | `99c6700e865951a20f250bea49fb8e3b5a072814c336d8b3e7563bb2f6c192e9` |
+| FFT JNI | `59964bf7d9cf9520231d6cce3f6728b05f3c0ecac765bd9182bd9fc9d0539c65` |
+| GTCRN model | `e77603ac0c23dac3227dd2d7135b3a585cbee2679048aecfa886657d3ae1b534` |
 
-The patch-version notice lists Expo 58.0.23 (recommended 58.0.25), Constants
-58.0.15 (58.0.16), Font 58.0.11 (58.0.12), Linking 58.0.16 (58.0.17), Router
-58.0.30 (58.0.31), SecureStore 58.0.2 (58.0.3) and StatusBar 58.0.4 (58.0.5).
-Existing Node module-type and Starlette/httpx deprecation warnings are recorded
-in the corresponding test output.
+## 1.3.1-preview | 14 November 2026
 
-### Real-provider replay evidence
+- Backend: 410 tests, lint and formatting passed. [Implementation CI](https://github.com/mathew1046/CueBell/actions/runs/43481314804) passed for `09b7cf19ddecd4b6df2dab05ff35ee1be624aae0`.
+- Mobile: 43 tests, TypeScript, lint and service-origin checks passed, including version 1.3.1 / code 6 metadata.
+- Android: 14 JUnit tests passed with no failures/errors/skips; ARM64 release compiled.
+- Expo Doctor: 19/20 checks passed. The remaining check recommended seven newer SDK 58 package patches; tested versions were retained. Node module-type and Starlette/httpx deprecation warnings were recorded in test output.
 
-- 24 ElevenLabs fixtures in six languages; 22 experiment runs and 174 case attempts
-  using real Gnani Prisma and GPT-6 Luna through a local backend.
-- Fast/speech-aware spoken setup: six of six trials passed, median confirmation
-  6.21 seconds; baseline six of six passed, median 10.75 seconds.
-- Full monitoring: baseline 23 passed / 1 failed / 4 inconclusive; candidate
-  22 / 2 / 4 after uniform label review. The target-and-counter quality gate was
-  not met, so experimental latency controls remain opt-in.
-- These are synthetic backend replays, not physical-phone microphone,
-  notification, battery or real-venue accuracy measurements.
+Real-provider replay used 24 ElevenLabs fixtures in six languages, 22 runs and
+174 case attempts through local Gnani Prisma and GPT-6 Luna. Fast/speech-aware
+setup passed 6/6, median 6.21 s; baseline passed 6/6, median 10.75 s. Monitoring
+baseline was 23 passed / 1 failed / 4 inconclusive; candidate was 22 / 2 / 4 after
+uniform label review. The target-and-counter quality gate failed, so latency
+settings remain opt-in. These synthetic replays do not measure physical-phone
+microphones, battery, notifications or real-venue accuracy.
 
-Results, failed cases, provider errors and reproducible evidence:
-https://github.com/mathew1046/CueBell/blob/v1.3.1-preview/docs/LATENCY_BENCHMARK_2026-11-13.md
+[Full latency evidence](https://github.com/mathew1046/CueBell/blob/v1.3.1-preview/docs/LATENCY_BENCHMARK_2026-11-13.md)
+and [pipeline optimization](PIPELINE_OPTIMIZATION.md).
 
-Implementation CI:
-https://github.com/mathew1046/CueBell/actions/runs/43481314804
+[Published release](https://github.com/mathew1046/CueBell/releases/tag/v1.3.1-preview):
+`app.cuebell.mobile`, version 1.3.1 / code 6, ARM64, minimum SDK 24, target 36,
+compile 37. Non-debuggable APK, development certificate matching 1.3.0; signature,
+16 KB alignment, origin, service, cleartext rejection and original alarm checked.
+Targeted scans found no configured private values or environment/keystore files.
+APK: 16,002,893 bytes; SHA-256:
+`cd76b8d6ef7c70069c59b167aa73ca9dd0c42bdb4908f52f8c3ea6c3cf321505`.
 
-### Release artifact
+## Earlier previews
 
-- Package `app.cuebell.mobile`, version 1.3.1, Android version code 6;
-  ARM64 only, minimum SDK 24, target SDK 36, compile SDK 37.
-- APK signature and 16 KB ZIP alignment passed. The non-debuggable APK uses the
-  same development signing certificate as 1.3.0 for in-place updates.
-- Verified the compiled service origin, native microphone service and
-  cleartext-traffic rejection. The bundled alarm bytes match the original.
-- No environment/keystore files or configured private backend values were found
-  in the APK; this is a targeted packaging check, not a comprehensive audit.
-- APK size: 16,002,893 bytes. SHA-256:
-  `cd76b8d6ef7c70069c59b167aa73ca9dd0c42bdb4908f52f8c3ea6c3cf321505`.
+| Release | Recorded automated checks | Artifact |
+| --- | --- | --- |
+| [1.3.0, 8 November 2026](https://github.com/mathew1046/CueBell/releases/tag/v1.3.0-preview) | Backend 280, mobile 43, Android JUnit 14 passed; lint/types passed; Expo Doctor 20/20; ARM64 compiled. | Version code 5, ARM64, minimum SDK 24, target 36. Non-debuggable, development certificate matching 1.2.0. Signature, 16 KB alignment, origin, permissions, foreground service and original 2.4-second alarm checked. |
+| [1.2.0, 7 November 2026](https://github.com/mathew1046/CueBell/releases/tag/v1.2.0-preview) | Backend 253, mobile 28, Android JUnit 12 passed; lint/types passed; Expo Doctor 20/20; ARM64 compiled. | Version code 4, ARM64. Non-debuggable, development certificate matching 1.1.0. Signature, 16 KB alignment, origin, listener/pause handler and downloaded checksum checked. |
 
-Release artifact and checksum:
-https://github.com/mathew1046/CueBell/releases/tag/v1.3.1-preview
+Both releases had targeted packaging scans with no configured private values or
+environment/keystore files found. Hosted health, anonymous admission, authenticated
+state and temporary-session deletion succeeded. These smoke checks made no
+microphone capture or paid-model request; health flags meant configured, not
+provider-validated. Version 1.3.0 advertised `speech-event-v1`.
 
-## 1.3.0-preview — 2026-11-08
+The 1.3.0 APK was 16,002,897 bytes, SHA-256:
+`960a706317959c0023e0d279635acf4cbe00910c14af60157a85bd5cf4f35e3b`.
+Multilingual voice-stop unit tests injected model decisions and checked grounding,
+priority, state and cleanup, not live semantic accuracy.
 
-### Automated checks
+### Older checks, not current-device verification
 
-| Check | Result and scope |
-| --- | --- |
-| Backend | 280 tests passed, including general-task schemas, grounded matching, corrections, session admission and voice-stop routing. Ruff lint and formatting passed. The admission suite also passed after making its exact rate-limit boundary clock deterministic. |
-| Mobile | 43 tests passed, including automatic activation/cancellation, general-task UI, 21 language catalogs, native alert configuration, sessions and stop recovery. TypeScript and lint passed. |
-| Native Android | 14 JUnit tests passed: PCM framing, waveform levels, WebSocket rejection, bounded speech queuing and foreground-request handoff. |
-| Toolchain | All 20 Expo Doctor checks passed. ARM64 release compilation succeeded. |
+- An Android 16 emulator review inspected light/dark themes and enlarged text.
+- Version 1.1.0 installed on a phone and cold launch returned `Status: ok`. The phone was asleep; no unlock, visible-screen review or microphone capture was performed.
+- Hosted typed-intent probes and staged English/Malayalam text checks covered intent, calls, negation, injection abstention, corrections, lifecycle and leading zeroes using `gpt-6-luna`.
+- Gnani authentication and negotiation succeeded at 16 kHz / 512 samples. Forty-eight paced tone/silence frames reported no provider error. This was not spoken-audio recognition testing.
 
-### Release artifact and service smoke checks
+## Still not established
 
-- Package `app.cuebell.mobile`, version 1.3.0, Android version code 5;
-  ARM64 only, Android 7+ (minimum SDK 24), target SDK 36.
-- Non-debuggable APK with a development signing certificate matching 1.2.0.
-  APK signature verification and 16 KB ZIP alignment passed.
-- Verified the hosted origin in the compiled bundle, native microphone service
-  and permissions, and the named alarm resource with the original 2.4-second audio.
-- No previous origin, environment/keystore files or configured private environment
-  values were found in the APK. This is not a comprehensive security audit.
-- Service health reported both providers configured. Temporary anonymous admission
-  returned `monitoring_schema: speech-event-v1`; authenticated state and session
-  deletion returned HTTP 200. No microphone or paid-model request was made.
-- APK size: 16,002,897 bytes. SHA-256:
-  `960a706317959c0023e0d279635acf4cbe00910c14af60157a85bd5cf4f35e3b`.
+- General real-venue accuracy, false/missed-alert rates or end-to-end latency.
+- Current-APK sustained microphone capture, real-venue voice stop and locked-screen delivery.
+- TalkBack usability, physical vibration/alarm audibility, OEM battery behavior and endurance.
+- Fewer missed turns, shorter waits or successful venue deployments.
 
-Release artifact and checksum:
-https://github.com/mathew1046/CueBell/releases/tag/v1.3.0-preview
-
-These checks do not establish real-phone speech, vibration, alarm audibility or
-locked-screen reliability. No device microphone capture was performed for this release.
-
-## 1.2.0-preview — 2026-11-07
-
-### Automated checks
-
-| Check | Result and scope |
-| --- | --- |
-| Backend | 253 tests passed: schema/source evidence, confirmation, correction/repeat aliases, acknowledgment, stale results, coverage gaps, cleanup, authorization, automatic session admission and voice-stop routing. Ruff lint and formatting passed. |
-| Mobile | 28 tests passed: session reuse/expiry/revocation, consent, configuration, branding and stop/storage/remote-cleanup recovery. TypeScript and lint passed. |
-| Native Android | 12 JUnit tests passed: PCM16 framing, waveform boundaries, permanent/retryable WebSocket rejection and bounded initialization-time speech queuing. |
-| Toolchain | All 20 Expo Doctor checks passed. ARM64 release compilation succeeded. |
-
-Multilingual voice-stop tests mock model decisions and validate source grounding,
-priority, pause state and cleanup. They do **not** measure live recognition or
-semantic accuracy in those languages.
-
-### Release artifact and service smoke checks
-
-- Package `app.cuebell.mobile`, version 1.2.0, Android version code 4; ARM64 only.
-- Release APK is non-debuggable but uses a **development signing certificate**.
-  Its certificate matches the 1.1.0 preview for in-place updates.
-- Verified the configured origin in the compiled bundle, absence of the previous
-  origin, native listener/pause handler, APK signature and 16 KB ZIP alignment.
-- No environment/keystore files or configured private environment values were
-  found in the APK. This is not a comprehensive security audit.
-- Uploaded assets were downloaded again and checked against the SHA-256 file.
-  The public APK download returned HTTP 200 with matching bytes/checksum.
-- Service health reported both providers configured. Automatic session admission,
-  authenticated state and deletion of the temporary session returned HTTP 200.
-  No microphone capture or paid-model request was made for this check.
-
-Published artifact and checksum:
-https://github.com/mathew1046/CueBell/releases/tag/v1.2.0-preview
-
-## Historical checks — not new-release device verification
-
-- Earlier minimal-interface review launched on an Android 16 emulator and
-  inspected light/dark themes and enlarged text.
-- Version 1.1.0 installed on a physical phone, and its cold-launch request returned
-  `Status: ok`. The phone was asleep, so no fresh visible-screen check or unlock
-  was attempted. No phone microphone capture was started.
-- Earlier hosted typed-intent checks returned expected token/preferences.
-- Staged English/Malayalam text-model checks covered intent, calls, negation,
-  injection abstention, corrections, HTTP lifecycle and leading zeroes using
-  the account-enabled `gpt-6-luna` model.
-- Gnani authentication/stream negotiation succeeded at 16 kHz / 512 samples.
-  Forty-eight paced synthetic tone/silence frames produced no reported provider
-  error. This was **not spoken-audio recognition testing**.
-
-## Not established
-
-- Real PA speech accuracy, false-alert/missed-call rates and end-to-end latency.
-- Real-venue voice-stop accuracy, locked-screen delivery and sustained
-  physical-phone microphone behavior of the current APK.
-- TalkBack usability, alert vibration/sound, OEM battery management and endurance.
-- Fewer missed turns, reduced waiting time or successful venue deployments.
-
-Automated tests, emulator captures and an accepted socket connection do not
-establish real-world reliability. Use consenting speakers or staged recordings,
-and follow the device checklist before a supervised demonstration:
-https://github.com/mathew1046/CueBell/blob/main/mobile/README.md
+Use consenting speakers or staged recordings and the [device checklist](../mobile/README.md#physical-device-checklist)
+before a supervised demonstration. Tests, emulator views and accepted sockets do
+not establish real-world reliability.

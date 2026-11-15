@@ -1,109 +1,96 @@
-# CueBell standalone backend
+# CueBell backend
 
-Python 3.12+ FastAPI relay for the separately installed native Android app. This
-directory is independently installable; it does not serve or build the APK.
-The Android preview uses a separately hosted deployment. Automated tests use dummy
-credentials and mocked providers. A separate local synthetic-audio campaign exercised
-real Gnani and GPT-6 Luna in six languages; physical PA/Android performance remains
-unmeasured. The local experiment report and opt-in latency settings are documented at:
-/home/mathew/Arrakis/CueBell/docs/LATENCY_BENCHMARK_2026-11-13.md
+A Python 3.12+ FastAPI relay for Android and browser clients. Gnani Prisma handles
+speech recognition. OpenAI is the explicitly authorized text fallback for task
+and announcement interpretation. No verified hosted Evon API is configured.
+The relay does not build the APK or serve the web export.
 
-Historical release evidence:
-https://github.com/mathew1046/CueBell/blob/main/docs/VERIFICATION.md
+See [architecture](../docs/ARCHITECTURE.md), [verification](../docs/VERIFICATION.md)
+and the [documentation index](../docs/README.md).
 
 ## Install and test
 
-Run from the `backend/` directory of your checkout:
+From `backend/`:
 
 ```sh
 python3.12 -m venv .venv
 .venv/bin/python -m pip install -r requirements.lock
 .venv/bin/python -m pip install --no-deps -e .
-.venv/bin/pytest -q
-.venv/bin/ruff check app tests
-.venv/bin/ruff format --check app tests
+.venv/bin/python -m pytest -q
+.venv/bin/python -m ruff check app tests
+.venv/bin/python -m ruff format --check app tests
 ```
 
-`requirements.lock` is `pip freeze --exclude-editable` from the tested Linux,
-Python 3.12 environment, including test/lint tools. It contains no local/editable
-paths and is not a hash-verified supply-chain lock. For unpinned development,
-install `.[dev]` instead. The Dockerfile installs runtime ranges from
-`pyproject.toml`, constrained by `requirements.lock`, without installing the full
-development snapshot.
+Tests use dummy credentials and mocked providers. They do not require microphone
+access or establish recognition accuracy. `requirements.lock` is a tested Linux,
+Python 3.12 dependency snapshot, including development tools, not a hash-verified
+lock. For unpinned development use `.venv/bin/python -m pip install -e '.[dev]'`.
+The Dockerfile installs runtime requirements constrained by the snapshot.
 
-## Configuration
+## Configure
 
-Copy `.env.example` to `.env` in the backend working directory, or inject the
-following environment variables with your host's secret manager. Never put
-provider keys or the operator pairing code in source control or the APK.
+Copy [`.env.example`](.env.example) to `backend/.env` only if no configured file
+exists, or inject variables through your host's secret manager. Settings load
+`.env` from the working directory. Keep provider keys and pairing codes server-side.
 
-| Variable | Default / requirement |
+| Variable | Purpose / default |
 | --- | --- |
-| `GNANI_API_KEY` | Required for speech; sent only to Gnani Prisma. |
-| `GNANI_LANGUAGE_CODE` | `indic-auto`; automatic detection among Prisma's 10 supported languages. Optional 1–4 language codes such as `ml-IN,en-IN` prioritize languages, not restrict recognition. |
-| `OPENAI_API_KEY` | Required for text intent and announcement interpretation. |
-| `OPENAI_MODEL` | Exact Responses API ID enabled in your account. The example uses account-verified `gpt-6-luna` with structured output support; no nickname or automatic substitution. |
-| `DEMO_ACCESS_CODE` | Operator-generated random pairing secret, at least 16 characters; required for code-based pairing. No usable default. |
-| `ALLOW_APP_SESSIONS` | `false`; explicitly set `true` to accept anonymous no-login demo app sessions without a pairing code. |
-| `ALLOW_INSECURE_LOCAL` | `false`; use `true` only for isolated local development, never public hosting. |
-| `MAX_SESSIONS` | `8`; allowed range 1–100. |
-| `SESSION_TTL_SECONDS` | `14400`; allowed range 60–86400. |
-| `CORRECTION_GRACE_SECONDS` | `1.2`; allowed range 0.2–10. Longer grace adds alert latency. |
-| `REQUEST_PAUSE_SECONDS` | `3.5`; allowed range 1–15. Quiet interval after finalized setup speech; interim speech keeps capture open. |
-| `REQUEST_TIMEOUT_SECONDS` | `90`; allowed range 20–180. Maximum spoken setup duration. |
+| `GNANI_API_KEY` | Required for speech recognition. |
+| `GNANI_LANGUAGE_CODE` | `indic-auto` detects among Prisma's 10 supported languages. A list of 1-4 codes, such as `ml-IN,en-IN`, prioritizes languages rather than restricting them. Do not use `auto`. |
+| `OPENAI_API_KEY`, `OPENAI_MODEL` | Required for text interpretation. Use an exact Responses API model ID enabled for your account. The example uses `gpt-6-luna`; there is no automatic model substitution. |
+| `DEMO_ACCESS_CODE` | Random pairing secret of at least 16 characters, required for code-based admission. No usable default. |
+| `ALLOW_APP_SESSIONS` | `false`. Set `true` explicitly for the current no-login app. Public anonymous access permits paid-provider use. |
+| `WEB_ORIGINS` | `[]`. JSON array of exact browser HTTPS origins, without paths or wildcards. Native clients need no entry. Loopback HTTP origins are accepted for development. |
+| `ALLOW_INSECURE_LOCAL` | `false`. Local development only, never public hosting. |
+| `MAX_SESSIONS` | `8`, range 1-100. |
+| `SESSION_TTL_SECONDS` | `14400`, range 60-86400. |
+| `CORRECTION_GRACE_SECONDS` | `1.2`, range 0.2-10; longer grace delays alerts. |
+| `REQUEST_PAUSE_SECONDS` | `3.5`, range 1-15; silence after finalized setup speech. Interim speech keeps capture open. |
+| `REQUEST_TIMEOUT_SECONDS` | `90`, range 20-180. |
 
-Additional opt-in latency controls are documented in `.env.example` and the local
-benchmark report above. They preserve baseline defaults: the faster experimental
-profile improved setup latency but did not pass the full monitoring quality gate.
+Optional scheduling, output, caching and VAD controls are listed in `.env.example`.
+Keep baseline defaults unless you have validated the trade-offs. The faster
+experimental profile improved setup latency but failed the full monitoring
+quality gate. See [pipeline optimization](../docs/PIPELINE_OPTIMIZATION.md).
 
-Generate a pairing code, for example, with
-`.venv/bin/python -c 'import secrets; print(secrets.token_urlsafe(32))'`.
-Give the user the public HTTPS backend URL and pairing code out of band. The
-app receives a short-lived session Bearer token; provider keys stay on the host.
+For local browser startup, use the [web guide](../docs/WEB.md#run-both-services-locally).
+`GET /health` checks liveness and configuration presence only. It does not verify
+credentials, billing, model availability or a working alert.
 
-### Opt-in no-login demo client
+### Session admission
 
-For a client with a preconfigured backend URL and no pairing screen, the operator
-must explicitly set `ALLOW_APP_SESSIONS=true` on the backend. The client sends
-`POST /v1/sessions` with the JSON object `{}` (`{"access_code":null}` is equivalent).
-Without that setting, missing/null codes return HTTP 401; deployed code-based
-access does not silently become anonymous. A supplied code is always checked:
-wrong codes still fail, and code-based pairing still requires a configured
-`DEMO_ACCESS_CODE` of at least 16 characters. Empty strings and malformed payloads
-are rejected, not treated as anonymous requests.
+`POST /v1/sessions` accepts `{"access_code":"your-code"}`. With
+`ALLOW_APP_SESSIONS=true`, `{}` or `{"access_code":null}` also works. Otherwise
+missing/null codes return 401. Supplied codes are always checked; empty strings
+and malformed payloads are not anonymous requests. The current app has no pairing
+screen, so its backend must explicitly enable anonymous admission.
 
-Only session admission changes. The response and subsequent Bearer-authenticated
-HTTP/WebSocket protocol, expiry (four hours by default), processing consent,
-per-session controls, TLS requirements, and provider privacy behavior are unchanged.
-No provider keys or pairing secret belong in the APK. No actual environment or
-deployment is changed by enabling support in this source tree.
+Sessions receive an expiring bearer token, four hours by default. Admission is
+limited to 20 attempts/minute globally. Anonymous admission also allows three
+successful sessions per effective client IP per rolling ten minutes, even after
+deletion. The bounded table holds 1024 IP buckets and rejects new IPs when full.
+Both modes share capacity and expiry; code admission does not consume the anonymous
+IP budget. Authenticated HTTP requests allow 30/minute/session. Session deletion
+remains available after that limit is exhausted.
 
-**Public anonymous access permits use of the operator's paid providers.** The
-in-process limits below provide no identity or anti-abuse guarantee. Before public
-production use, add a protective gateway with attestation and/or account
-authentication, edge abuse controls, and provider spending/budget restrictions.
-IP limits can be bypassed by distributed clients and can block legitimate users
-sharing a NAT; an anonymous endpoint is not production account authentication.
+These in-memory demo limits are not identity or reliable abuse prevention. Add
+account authentication or attestation, edge limits and provider spending controls
+before production use. Shared NATs can block legitimate users; distributed clients
+can bypass IP limits.
 
-`GET /health` is a configuration/liveness check only. Its flags indicate keys
-are present, **not** that credentials, billing, model availability, transcription
-quality, or an end-to-end alert have been verified.
+## Host behind TLS
 
-## Hosting with TLS and a trusted reverse proxy
+Run **one worker and one instance**. Sessions, history, pending alerts and rate
+limits live in process memory. Restarts lose them; multiple workers or replicas
+break stream consistency. There is no database, offline catch-up or push service.
 
-Use **one worker and one instance**. Sessions, history, proposals, deduplication,
-pending alerts, and rate limits live only in that process's memory. Restarts lose
-all sessions; multiple workers/replicas will break pairing and stream consistency.
-There is no database, cross-worker coordination, push notification service, or
-offline catch-up.
-
-Example host process behind a TLS proxy on the same machine:
+From `backend/`, behind a TLS proxy on the same host:
 
 ```sh
 .venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8000 --workers 1 --proxy-headers --forwarded-allow-ips 127.0.0.1 --ws-max-size 8192 --timeout-keep-alive 5 --no-access-log
 ```
 
-Example Caddy configuration (replace the illustrative domain and configure DNS):
+Example Caddy configuration, after configuring DNS for your own domain:
 
 ```text
 queue.example.org {
@@ -111,198 +98,62 @@ queue.example.org {
 }
 ```
 
-The illustrative app base URL is https://queue.example.org and the stream URL
-is wss://queue.example.org/v1/stream. The proxy must support WebSocket upgrades,
-strip/replace client-supplied forwarding headers, and allow long-lived streaming
-connections. Configure its idle/read timeouts and request rate limits explicitly;
-health checks must use HTTPS or the trusted proxy too.
+- Keep port 8000 private. Trust only exact proxy addresses, not `*`. Containerized proxies usually do not connect from `127.0.0.1`; configure their actual private address/network.
+- Support WebSocket upgrades and long-lived streams. Set proxy read/idle timeouts, upload timeouts and edge rate limits explicitly.
+- Replace client-supplied forwarding headers. TLS enforcement uses ASGI's effective scheme; anonymous limits use its effective client IP, not raw forwarding headers. Incorrect trust settings allow spoofing or group all clients under one IP.
+- Keep the upstream WebSocket limit at 8192 bytes. HTTP bodies are also bounded at 8192 bytes, including chunked bodies; this does not prevent slow uploads without server/proxy timeouts.
+- The Docker image runs unprivileged on port 8000. Inject secrets at runtime, use a private proxy network and retain one worker. Do not disable TLS enforcement to fix a proxy error.
+- Disable sensitive request, header and body logging in proxies, monitoring agents and error collectors.
 
-**Do not expose port 8000 publicly or trust arbitrary forwarded headers.** Only
-allow exact trusted proxy addresses in `--forwarded-allow-ips`; never use `*`
-unless network isolation actually prevents every untrusted direct connection.
-With a containerized proxy, its source address is not normally `127.0.0.1`:
-configure the exact proxy address/network and private networking accordingly.
-The app checks ASGI's effective `https`/`wss` scheme, not an untrusted raw
-`X-Forwarded-Proto` header. Keep the upstream WebSocket limit at 8192 bytes.
-Anonymous admission similarly uses only `request.client.host`, the ASGI server's
-effective client IP; it never reads raw `X-Forwarded-For` itself. Correct trusted
-proxy configuration is essential: without it, all clients may share the proxy IP;
-over-trusting proxies permits address spoofing.
-The application bounds actual HTTP bodies at 8192 bytes, including chunked
-bodies, but proxy/server timeouts are still needed against slow uploads.
+Deploy matching client/backend versions. A local prompt or APK change does not
+update the hosted relay. After a restart, submit a fresh task.
 
-The Docker image runs as an unprivileged user and exposes port 8000. Supply
-secrets at runtime (`--env-file` or a secret manager), not at image build time.
-Use a private network to the TLS proxy, keep one worker, and configure trusted
-proxy addresses as above. Do not disable TLS checks to work around proxy setup.
+## Client protocol
 
-## Native protocol
+Session creation advertises `monitoring_schema: "speech-event-v1"`. A request
+specifies a subject and a spoken event, such as train arrival, boarding or a name
+being called. It is not live transport tracking or non-speech sound detection.
+Prompts are in [`app/prompts.py`](app/prompts.py).
 
-### General speech-event monitoring (`speech-event-v1`)
+| Endpoint | Behavior |
+| --- | --- |
+| `POST /v1/sessions` | Admit a client; return token, expiry and processing disclosure. |
+| `POST /v1/intent` | `{"text":"...","consent_to_text_processing":true}` returns clarification or a one-use `proposal_id`. It does not activate listening. |
+| `POST /v1/confirm` | `{"proposal_id":"..."}` activates a valid grounded task. The client submits this automatically, without a second confirmation screen. |
+| `GET /v1/state` | Current task, bounded history/alerts and connection status. |
+| `POST /v1/control` | For example, `{"action":"pause","alert_id":null}`. Actions are `pause`, `resume`, `stop` and `acknowledge`; acknowledgment needs the alert ID. Pause/stop closes capture; stop clears observations, history, alerts and proposal. |
+| `DELETE /v1/session` | Revoke the session and close its stream. |
+| WebSocket `/v1/stream?mode=request` or `/v1/stream?mode=monitor` | Spoken setup or monitoring of a confirmed task; one stream per session. |
 
-New requests are no longer queue-token forms. The setup prompt builds a grounded
-`monitor_event` task with a subject, required condition, readable summary and any
-explicit identifiers. For example, “Notify me when train 14922 is here” requests
-an arrival announcement; it does not require a separate token or match every
-mention of that number. Names being called, boarding, spoken instructions and
-other speech-established events use the same path. Queue calls remain supported.
+Authenticated HTTP uses `Authorization: Bearer <session-token>`. Native WebSockets
+use that header plus `x-processing-consent: audio-gnani;text-openai`. Browsers must
+use an allowed Origin and authenticate in a bounded first message:
 
-The complete rewritten setup/event instructions live in `app/prompts.py`.
-The event prompt receives the confirmed task and bounded recent evidence. Exact
-source validation, identifier checks, correction grace, duplicate suppression,
-voice-stop priority and validated task activation remain enforced outside the prompt.
-The client automatically calls the one-use confirmation endpoint after a valid
-submitted request; this is not a second user confirmation screen. Consent and
-Android permission checks remain required.
-Alerts carry `summary`, `location`, `evidence_text` and `task_summary`; `token` and
-`counter` are null for general tasks. The old queue extractor remains only for
-legacy confirmed queue rules. No external tracking, messaging integration or
-non-speech sound recognition is implied. This is a supplementary aid, not an
-emergency-alert guarantee.
+```json
+{"type":"authenticate","token":"<session-token>","consent":"audio-gnani;text-openai"}
+```
 
-Deploy this backend together with the updated Android client. A prompt or APK
-change in the checkout does not update a separately hosted service. Deployment
-restarts discard in-memory sessions; users must submit and confirm a fresh task.
-Session creation advertises `monitoring_schema: "speech-event-v1"`.
+Never put bearer tokens in URLs. Wait for `status` with `state: READY`, then send
+real-time 1024-byte signed PCM16LE frames at 16 kHz mono: 512 samples, or 32 ms.
+Do not send WAV headers, compressed audio or bulk replay. Setup returns a final
+request transcript for the intent/confirmation flow; monitoring requires an active task.
 
-### Endpoints
+Controls are `{"type":"ping"}`, `{"type":"stop"}` and `{"type":"gap"}`.
+A gap forces reconnect and must warn that announcements may have been missed.
+A connected socket does not prove healthy microphone coverage. Validated voice
+stop takes priority over alerts: `monitor.pause` with `reason: voice` closes the
+stream, retains the task/history and requires explicit user restart.
 
-- `POST /v1/sessions`: `{"access_code":"…"}` → session `token`, expiry, disclosure.
-  The only payload change is optional `access_code`: `{}` or `{"access_code":null}`
-  creates the same session only when `ALLOW_APP_SESSIONS=true`.
-- Authenticated HTTP uses `Authorization: Bearer <session token>`.
-- `POST /v1/intent`: `{"text":"…","consent_to_text_processing":true}` →
-  `clarify` or `confirm` with a one-use `proposal_id`. This does not activate a monitor.
-- `POST /v1/confirm`: `{"proposal_id":"…"}` → confirmed active rule. Missing
-  slots or unsupported evidence cannot be confirmed.
-- `GET /v1/state`: current rule, bounded history/alerts, connection status.
-- `POST /v1/control`: `{"action":"pause|resume|stop|acknowledge","alert_id":null}`;
-  acknowledge requires the relevant alert ID. Pause/stop closes the microphone
-  stream. Stop clears retained session observations/history/alerts/proposal.
-- `DELETE /v1/session`: invalidates pairing and closes its stream, including
-  when the ordinary authenticated-request rate limit has been exhausted.
-- WebSocket `/v1/stream?mode=request|monitor` requires the same authorization
-  header and `x-processing-consent: audio-gnani;text-openai`. Browser `Origin`
-  headers are rejected; tokens are not accepted in query strings.
-- Wait for `status` with `state: READY`, then send real-time **1024-byte frames
-  of signed PCM16 little-endian, 16 kHz, mono** (512 samples / 32 ms). No WAV
-  headers, compressed audio, or bulk replay. `request` returns one final spoken
-  request transcript; the client submits that text through intent/confirmation.
-  `monitor` requires an active confirmed rule. Only one stream per session.
-- JSON controls remain `{"type":"ping"}`, `{"type":"stop"}`, and
-  `{"type":"gap"}`. A gap means audio coverage was lost and forces reconnect;
-  the app must disclose that calls may have been missed. A connected socket
-  alone does not mean microphone coverage is healthy.
-- During monitoring, extraction can return a semantic `stop_request` with verbatim
-  evidence and chronological source IDs including the newest segment. Validated
-  requests take priority over announcement events, clear pending calls and pause
-  the rule. The relay sends `monitor.pause` with `reason: voice`, then closes the
-  stream. The native client must stop capture and suppress reconnect on that event;
-  resume requires an explicit user action. Token/history are retained. Spoken setup
-  remains a request/confirmation flow and does not execute listening controls.
+## Provider and safety limits
 
-Session admission (anonymous and code-based combined) is limited globally to
-20 attempts/minute. Anonymous sessions additionally allow three successful
-admissions per effective client IP per rolling ten minutes, even if a session is
-deleted. At most 1024 IP buckets are retained; expired buckets are reclaimed and
-new IPs are rejected with HTTP 429 when the table is full, rather than evicting
-active limits. Both modes share the configured session capacity and expiry.
-Code-based sessions do not consume the anonymous IP budget. Ordinary authenticated
-HTTP requests remain limited to 30/minute/session. These single-process, in-memory
-demo safeguards are not identity, account authentication, reliable abuse prevention,
-or a substitute for edge rate limits and spending controls.
+- Gnani uses `wss://api.vachana.ai/stt/v3/stream`, `prisma-v3.0`, negotiated at 16000 Hz / 512 samples. Monitoring interprets final transcripts only. Streams end at 14 minutes, before the provider's 15-minute limit, requiring reconnect and a visible gap. Rejected provider credentials close the client with 4403 rather than repeated retries.
+- OpenAI receives text, not audio, through the Responses API with structured output, `store=false`, a 12-second timeout and no automatic SDK retries. Provider retention remains subject to provider terms.
+- Exact source spans, source IDs, chronology and identifiers are validated outside the prompt. These checks do not prove semantic accuracy or that an announcement is true. Voice stop is not speaker authentication; nearby speech can pause listening.
+- Corrections need a resolvable recent observation within 30 seconds. Unresolved corrections clear pending alerts. An issued alert can be marked corrected, not undone. Context is bounded to six segments / 15 seconds; stale work and coverage gaps invalidate pending context.
+- Legacy queue extraction remains for confirmed queue rules. It does not receive the user's target or preferences. Repeated token/counter alerts are suppressed for 45 seconds; a changed counter is distinct. Suppression can hide a genuine repeated call.
+- The relay does not intentionally record audio or transcripts to disk. Bounded session memory is cleared by stop, expiry, deletion or restart. See [privacy](../docs/PRIVACY.md) and [security](../SECURITY.md).
 
-## Providers, grounding, and safety limits
-
-- **Gnani only for speech**: wss://api.vachana.ai/stt/v3/stream,
-  `model: prisma-v3.0`. Negotiation must contain
-  `config.sample_rate: 16000` and `config.chunk_size: 512` before audio starts.
-   Final transcripts use `text`, `segment_id`, `is_final: true`. Setup combines
-  sentence finals after a quiet interval; interim results keep setup capture open.
-  Monitoring interprets finals only. Upstream connections are ended at 14 minutes, before the
-   documented 15-minute limit; the app must reconnect and show the coverage gap.
-- Automatic speech-language detection is enabled by `indic-auto`, not the
-  unsupported value `auto`. Optional provider `detected_language_code` metadata
-  derives from transcript script and may be absent; it is not acoustic confidence.
-  The text model interprets token languages/forms without a local number parser;
-  actual speech recognition remains limited by the provider's supported languages.
-  Upstream HTTP 401/403 closes the app stream with 4403 and configuration guidance,
-  avoiding repeated attempts with rejected credentials; transient failures retry.
-- **OpenAI is the explicitly authorized text fallback**, not a speech provider.
-  Text requests and PA transcript windows are sent using the configured model's
-  Responses API, structured output, `store=false`, a 12-second timeout and no
-  automatic SDK retries. This flag is not a promise about provider retention;
-   check current provider terms and obtain consent before any processing.
-- **Evon is unavailable**: no verified hosted API contract/endpoint is configured.
-  There is no guessed endpoint, Evon integration, or silent model substitution.
-- No venue token grammar, digit count, prefix whitelist, number dictionary or
-  counter range is enforced. The text model interprets setup and announcement
-  identifiers consistently; users review the proposed target before monitoring.
-  A clear token read-out alone can trigger a call, without a counter or keyword.
-  Visual, vibration and sound alerts are the default unless explicitly silenced.
-- Extraction does not receive the user's rule, target, alert preferences, or
-  match state. Recent observed PA tokens are supplied only as bounded, filtered
-  correction context; they are not the user's target. Evidence/source IDs,
-  chronology and exact source spans are checked before matching the confirmed
-  model-normalized target. Language/number semantics and counter interpretation
-  are model judgments, not independently verified by handwritten rules.
-- Voice-stop intent uses the same structured extraction call, not a phrase list
-  or an extra model request. The prompt covers multilingual/indirect requests and
-  excludes negations, quotations, hypotheticals and PA/cancellation instructions.
-  Deterministic checks validate only source provenance, not semantic correctness.
-  Recognition still depends on Gnani's supported languages and network/model
-  availability; no offline or instantaneous stop guarantee is made. There is no
-  speaker authentication, so nearby speech can pause monitoring. Keep manual and
-  Android notification stop controls available.
-- Corrections/cancellations need a resolvable recent observation (30 seconds).
-  Uncertain or unresolved corrections clear pending alerts instead of guessing.
-  An already-issued alert can be marked corrected, not physically undone. Split
-  phrase context is at most 6 segments/15 seconds; overdue interpretation closes
-  coverage instead of reusing a stale queue. Disconnects, gaps, pause/resume,
-  and replacement monitors invalidate pending/correction context.
-- Repeated token/counter alerts are suppressed for 45 seconds; a changed counter
-  is distinct. This heuristic can suppress a genuine repeated call. Uncertainty
-  handling intentionally favors missed alerts over unsafe guesses. Explicit
-  call-vs-negation semantics and counter/token association still depend on model
-  accuracy; substring grounding cannot establish that a PA announcement is true.
-- Audio/transcripts are not recorded to disk by this relay. Bounded recent
-  transcripts, observations, and history remain in session memory until stop,
-  expiry, deletion, or restart. Disable request/header/body capture in proxies,
-  monitoring agents and error collectors; never log pairing codes or tokens.
-
-This is an assistive monitor, not an official queue display or a medical/safety
-alarm. Noise, missed audio, late or wrong recognition, network interruption,
-OS background-microphone restrictions, notification permissions, and battery
-management can prevent an alert. The separate native app owns foreground-service
-capture and local vibration/sound/visual delivery; this backend does not send
-push alerts to a disconnected APK. Users must still check the official display.
-
-## Verification on 6 November 2026
-
-- 227 isolated backend tests and Ruff lint/format checks passed, including opt-in
-  anonymous admission, strict payload validation, IP/global/capacity limits, and
-  unchanged Bearer authentication, expiry, consent, and session controls.
-- Live account model discovery confirmed `gpt-6-luna`; the ignored local environment
-  selects it and `GNANI_LANGUAGE_CODE=indic-auto`.
-- Live English/Malayalam text intent/call extraction, negative announcements,
-  instruction-injection abstention, HTTP confirmation/lifecycle, number-word and
-  leading-zero handling, and counter correction through the reducer passed.
-  These staged text probes do not test speech, PA acoustics or deployment accuracy.
-- After the user corrected authorization, live Gnani streaming connected at
-  `wss://api.vachana.ai/stt/v3/stream` with `model=prisma-v3.0` and
-  `language_code=indic-auto`. Negotiation confirmed 16 kHz and 512-sample frames.
-  A synthetic 440 Hz tone followed by silence (48 paced 1,024-byte PCM frames,
-  1.536 seconds) was sent without a reported provider error. No transcript was
-  returned during the bounded check. This verifies connection and client-side streaming,
-  not speech recognition or end-to-end alert accuracy. Earlier HTTP 401 failures
-  are resolved; no endpoint/model change or authentication bypass was necessary.
-
-7 November regression run: 253 backend tests and Ruff lint/format checks passed.
-Voice-stop tests inject structured model decisions in multiple languages, verify
-source evidence, pause/stream closure, retained token, explicit resume, pending
-alert cancellation and unchanged spoken setup. They do not verify live model
-intent accuracy, spoken-language recognition or physical-phone background stopping.
-
-Official automatic-language contracts:
-https://docs.gnani.ai/api/STT/stt-websocket.md
-https://docs.gnani.ai/api/STT/models/prisma-v3.md
+CueBell is a supplementary aid, not a medical/safety alarm or official announcement
+source. Noise, incorrect interpretation, network gaps and device restrictions can
+prevent alerts. Android owns local foreground capture and alert delivery; browsers
+must remain visible. Neither receives backend push alerts after disconnecting.

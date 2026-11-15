@@ -1,270 +1,150 @@
-# Why clearer audio sometimes produced worse Gnani recognition
+# Gnani denoiser diagnosis: why cleaner audio can recognize worse
 
-Date: 15 November 2026. Base: `v1.4.0-preview`, commit
-`7e793b2d5d460267bd8f5a26ab296e7659858e3a`.
+Date: 15 November 2026. Historical base: `v1.4.0-preview`, commit `7e793b2d5d460267bd8f5a26ab296e7659858e3a`.
 
 ## Findings
 
-**There is more than one cause.** Controlled tests demonstrate output-script sensitivity,
-causal-shift sensitivity, and an audio-level contribution on particular recordings.
-They also show a remaining recognition regression that `codemix` does not fix.
-The results do not establish exactly which internal Gnani or GTCRN features cause every error.
+**There is more than one interaction.** Selected-case controls demonstrate output-script sensitivity, causal-shift sensitivity and an audio-level contribution. `codemix` helped one enhanced recording substantially, but did not fix another. These experiments do not identify every internal Gnani/GTCRN cause.
 
-**Requested double denoising was not a reliable fix.** It improved the script of one
-English recording but increased another recording's errors and repeatedly produced
-`no speech detected` on the Slough station announcement.
+**Requested double denoising was not a reliable fix.** It helped one English recording's output script, increased errors on another and repeatedly returned `no speech detected` on Slough platform four.
 
-**CueBell does not explicitly request a Gnani denoiser on its streaming connection.**
-Gnani documents an optional batch-only `with_denoise` flag, default `false`.
-The current public streaming contract has no equivalent documented switch.
-Whether the streaming server has any always-on internal enhancement remains unverified.
-Training on noisy speech and VAD are not proof of an explicit enhancement stage.
+**CueBell does not explicitly request a Gnani denoiser on its streaming connection.** The documented `with_denoise` flag is batch-only, default false. The public streaming contract has no documented equivalent. Always-on internal streaming enhancement remains unverified; VAD and noisy-speech training do not prove an explicit enhancement stage.
 
-## Study design and evidence
+## Design and evidence
 
-- 32 initial batch file evaluations: eight recordings × four conditions.
-  Five were complete authentic station field recordings; three were previously observed
-  DNS5 regressions: air conditioning, dishwasher noise, and distant typing.
-- Four repeat batch evaluations of Slough, with reversed on/off job order.
-- Twelve streaming controls on the two ten-second near-field DNS5 recordings.
-- Four repeat streaming controls, then two Slough `codemix` streaming evaluations.
-- Total: **54 recognition evaluations**, comprising 36 batch files and 18 streaming connections.
-  These are evaluations of eight selected recordings, not 54 independent recordings.
-- Reused the previously hash-verified raw and fully enhanced Android GTCRN recordings.
-  No speech/noise was generated or remixed. Additional signal controls only delayed
-  or uniformly attenuated the original recorded waveform.
-- Same `prisma-v3.0`, automatic language selection, and `verbatim` within the batch comparison;
-  no expected transcripts, names, identifiers, platform numbers, or uploader facts were sent.
-- Streaming reused CueBell's released transport: 16 kHz mono PCM16, 512-sample frames,
-  32 ms pacing, default VAD settings, and the same termination/observation policy.
-  All 18 connections completed with zero pacing rebases. Returned connection metadata
-  confirmed the requested `verbatim` or `codemix` format.
-- Selections were diagnostic cases with known problems, **not a held-out accuracy benchmark**.
-  Batch and streaming have different segmentation; their scores are reported separately.
+| Evaluation | Scope |
+| --- | --- |
+| Initial batch | 32 files: eight recordings × four conditions |
+| Batch confirmation | Four Slough evaluations, reversing on/off job order |
+| Initial streaming controls | 12 connections on two ten-second near-field DNS5 clips |
+| Streaming follow-up | Four repeat controls, then two Slough `codemix` connections |
+| Total | **54 evaluations: 36 batch files and 18 streaming connections**, not 54 independent recordings |
 
-Canonical machine-readable audit:
-/home/mathew/Arrakis/CueBell-denoiser-diagnosis-20261115/docs/benchmarks/gnani-denoiser-diagnosis-2026-11-15/analysis.json
+The eight selected recordings were five complete station field recordings and three known DNS5 regressions: air conditioning, dishwasher and distant typing. These are **diagnostic selections, not a held-out accuracy benchmark**. Batch and streaming segmentation differ, so scores stay separate.
 
-Full request, status, transcript, segment, hash, timing, and control evidence:
-/home/mathew/Arrakis/CueBell-denoiser-diagnosis-20261115/docs/benchmarks/gnani-denoiser-diagnosis-2026-11-15/
+Previously hash-verified raw and fully enhanced Android GTCRN audio was reused, without speech/noise generation or remixing. Signal controls only delayed or uniformly attenuated the original waveform. Batch held `prisma-v3.0`, automatic language and `verbatim` constant. No expected transcript, name, identifier, platform or uploader fact was sent.
 
-## 1. Requested Gnani denoising versus custom and double denoising
+Streaming reused released transport: 16 kHz mono PCM16, 512-sample / 32 ms pacing, default VAD and identical termination/observation policy. All 18 connections completed with zero pacing rebases. Returned metadata confirmed requested `verbatim`/`codemix`. Input hashes and headers were audited, with format the only declared header variable.
 
-The WER column uses only the three DNS5 recordings with complete reference transcripts:
-49 reference words per condition. Lower is better. The five station recordings lack
-independent full transcripts and are **not** included in WER.
+Canonical [analysis](benchmarks/gnani-denoiser-diagnosis-2026-11-15/analysis.json); [full requests, statuses, segments, transcripts, controls, hashes and usage](benchmarks/gnani-denoiser-diagnosis-2026-11-15/).
 
-| Custom GTCRN | Gnani batch `with_denoise` | DNS5 errors / words | DNS5 WER | Completed / 8 | Nonempty transcripts / 8 |
-|---|---|---:|---:|---:|---:|
+## 1. Custom, requested vendor and requested double denoising
+
+WER uses only the three DNS5 recordings with complete references: **49 reference words per condition**. All three completed in every arm. The five station recordings lack full independent transcripts and are excluded from WER; missing station speech is reported separately.
+
+| Custom GTCRN | Batch `with_denoise` requested | DNS5 errors / words | WER | Completed / 8 | Nonempty / 8 |
+| --- | --- | ---: | ---: | ---: | ---: |
 | Off | False | 11 / 49 | 22.45% | 6 | 6 |
 | Off | True | 10 / 49 | 20.41% | 6 | 5 |
 | On | False | 32 / 49 | 65.31% | 7 | 7 |
-| On | True — requested double | 22 / 49 | 44.90% | 5 | 5 |
+| On | True, requested double | 22 / 49 | 44.90% | 5 | 5 |
 
-Gnani-only saved **one reference word** in this small subset. That is insufficient
-evidence of a general accuracy improvement, especially alongside station omissions.
-Double denoising had ten fewer errors than custom-only, but twice the baseline errors.
-All three reference-bearing recordings completed in every condition; missing station
-speech is reported separately rather than disguised as a successful negative.
+Vendor-only saved **one word error**, not evidence of a general accuracy improvement. Requested double had **ten fewer errors than custom-only**, but **twice baseline errors**, alongside station omissions.
 
-### Real station outcomes
+### Station outcomes
 
-- **Slough platform four:** with the batch flag off, both raw and custom audio retained
-  a platform-four mention, although the departure time was already wrong in this batch run.
-  Raw audio with Gnani denoising requested retained only
-  `It's first great Western service to breeding.` Its sole reported speech segment was
-  16.652–21.024 seconds, losing the platform/time information.
-  With both denoisers requested, the job failed with `no speech detected in 23s of audio`.
-  All four statuses, full transcripts, and segment records repeated identically.
-- **Southall:** raw/flag-off returned speech spanning 3.020–27.136 seconds;
-  raw/flag-on completed with an empty transcript and a 3.628–5.280-second empty segment.
-  Double denoising returned only the first part of the announcement, followed by an empty segment.
-- **Slough through-train:** raw failed with either flag value; custom-only returned a
-  short, imperfect stand-clear fragment; double failed again.
-- **Distant Slough PA:** no usable speech in any of the four conditions.
-- **Indian station:** raw/flag-off retained Narmada Express and 8234. Custom-only lost
-  details from that announcement. Double recovered the name but introduced other errors.
-  There is no complete independent reference for a numerical accuracy claim here.
+| Recording | Observed batch result |
+| --- | --- |
+| Slough platform four | Flag off: raw and custom retain a platform-four mention, but departure time is already wrong. Raw/flag on retains only `It's first great Western service to breeding.`, with sole speech segment **16.652–21.024 s**, losing platform/time. Double fails: `no speech detected in 23s of audio`. All four statuses, full transcripts and segments repeat identically |
+| Southall | Raw/off speech spans **3.020–27.136 s**. Raw/on completes empty, with an empty **3.628–5.280 s** segment. Double returns only the first part, then an empty segment |
+| Slough through-train | Raw fails with either flag. Custom-only returns a short imperfect stand-clear fragment; double fails again |
+| Distant Slough PA | No usable speech in any of the four conditions |
+| Indian station | Raw/off retains Narmada Express and 8234. Custom loses details. Double recovers the name but adds other errors. No complete independent reference supports numerical accuracy |
 
-These outcomes implicate the **speech-detection/segmentation path as well as decoding**.
-They do not isolate a particular internal VAD implementation or prove which phonemes were removed.
+These outcomes implicate speech detection/segmentation as well as decoding. They do not identify an internal VAD implementation or prove which phonemes were removed.
 
-### Did the provider actually execute its denoiser?
+### Requested flag is not verified server execution
 
-The API accepted and echoed the requested flag; results changed repeatedly with that flag.
-However, the documented enhancement service can be bypassed during maintenance while a job
-still completes. None of the returned terminal metadata exposed an explicit
-`denoise_applied` or bypass indicator. An early Slough observation caught `diarize`,
-not `denoise`. Therefore this report calls these **requested on/off conditions**, not
-independently verified server enhancement execution. Different transcripts alone do not
-resolve that distinction.
+The API accepted/echoed `with_denoise`, and outcomes changed repeatably. However, documented maintenance behavior permits enhancement bypass while a job completes. Terminal metadata supplied no `denoise_applied` or bypass marker. An early Slough observation caught `diarize`, not `denoise`. Therefore these are **requested on/off conditions**, not verified execution of a server enhancement stage.
 
-The four job IDs, suitable for a provider-side trace check, are:
+Slough provider trace identifiers:
 
-- Initial off: `01a1db5a-84eb-78d4-9212-26251592cb4b`
-- Initial on: `01a1db5a-8d2b-795a-9daf-ee14eef708af`
-- Repeat on: `01a1db66-30f6-7564-9376-ff3f185fcf47`
-- Repeat off: `01a1db66-8877-71d0-af19-e937b5a3ef1b`
+| Attempt | Job ID |
+| --- | --- |
+| Initial off | `01a1db5a-84eb-78d4-9212-26251592cb4b` |
+| Initial on | `01a1db5a-8d2b-795a-9daf-ee14eef708af` |
+| Repeat on | `01a1db66-30f6-7564-9376-ff3f185fcf47` |
+| Repeat off | `01a1db66-8877-71d0-af19-e937b5a3ef1b` |
 
-Provider confirmation is still needed for: whether each requested-on job enhanced or
-bypassed; the enhancement implementation/version; and whether `/stt/v3/stream` has
-always-on preprocessing independent of the batch flag. No support ticket was submitted.
+Provider confirmation is still needed on actual enhancement/bypass, implementation/version and always-on preprocessing in `/stt/v3/stream`. No support ticket was submitted.
 
-## 2. Why the custom-denoiser result got worse: streaming controls
+## 2. Streaming controls: script, alignment and level
 
-| Streaming condition | Air conditioning, 13 words | Dishwasher, 21 words |
-|---|---:|---:|
-| Raw, `verbatim` | 2 errors — 15.38% | 6 errors — 28.57% |
-| Raw shifted by 16 ms, `verbatim` | 8 — 61.54% | 7 — 33.33% |
-| Shifted raw attenuated to enhanced global RMS, `verbatim` | 8 — 61.54% | 13 — 61.90% |
-| GTCRN, `verbatim` | 12 — 92.31% | 15 — 71.43% |
-| Raw, `codemix` | 2 — 15.38% | 6 — 28.57% |
-| GTCRN, `codemix` | 1 — 7.69% | 15 — 71.43% |
+| Condition | Air conditioning, 13 words | Dishwasher, 21 words |
+| --- | ---: | ---: |
+| Raw, `verbatim` | 2 errors / 15.38% | 6 / 28.57% |
+| Raw delayed 16 ms, `verbatim` | 8 / 61.54% | 7 / 33.33% |
+| Delayed raw attenuated to enhanced global RMS, `verbatim` | 8 / 61.54% | 13 / 61.90% |
+| GTCRN, `verbatim` | 12 / 92.31% | 15 / 71.43% |
+| Raw, `codemix` | 2 / 15.38% | 6 / 28.57% |
+| GTCRN, `codemix` | 1 / 7.69% | 15 / 71.43% |
 
-### A. Output style explains much of one apparent regression
+### Output mode helped one recording
 
-On the air-conditioning recording, custom audio in `verbatim` produced predominantly
-Tamil-script spellings of English speech. The **identical audio** with `codemix` produced
-English words in Latin script and reduced errors from 12 to one. That one-error result
-repeated, although the particular remaining error changed from a substitution to an insertion.
+On air conditioning, identical enhanced audio in `verbatim` produced mostly Tamil-script English; `codemix` produced Latin-script English, reducing errors **12 → 1**. The one-error outcome repeated, with the remaining error changing from substitution to insertion.
 
-This is stronger evidence than merely speculating that denoising destroyed speech.
-Strict English-reference WER was penalizing script changes in addition to lexical mistakes.
-Gnani documents `detected_language_code` as derived from final transcript script; its change
-does not, by itself, diagnose an independent acoustic language classifier.
-The output mode can affect decoding as well as presentation; this is not a post-hoc
-transliteration of the hypothesis to improve the score.
+Strict English-reference WER was penalizing script changes as well as lexical mistakes. Gnani documents `detected_language_code` as derived from final transcript script, so a changed label does not independently diagnose an acoustic language classifier. Output mode can affect decoding as well as presentation; this was not post-hoc transliteration to improve a score.
 
-### B. Small causal alignment changes matter
+### Causal alignment matters, but is not an isolated root cause
 
-Adding the same 256-sample/16-ms delay to raw audio, with **no denoising**, increased
-air-conditioning WER from 15.38% to 61.54% and changed part of the output to Telugu script.
-The result repeated exactly. Its reported speech start changed from 1556 to 1588 ms,
-and returned utterance duration from 9300 to 9268 ms.
+Adding **256 samples / 16 ms** to raw air-conditioning audio, without denoising, increased WER **15.38% → 61.54%** and changed some output to Telugu script. This repeated exactly. Reported speech start changed **1556 → 1588 ms**, and utterance duration **9300 → 9268 ms**.
 
-This establishes sensitivity to the causal-shift control, not that all of GTCRN's loss is
-caused by its delay. To match the production files, the control preserves total length:
-it prepends 16 ms of zeros and drops the final 16 ms. Leading alignment, the final boundary,
-VAD framing, and decoder context are therefore not separately isolated by this experiment.
-No artificial cloud waiting delay was added.
+To match production output length, the control prepends 16 ms zeros and drops the final 16 ms. Leading alignment, final boundary, VAD framing and decoder context are not separately isolated. No artificial cloud waiting was added, and the result does not attribute all GTCRN loss to delay.
 
-### C. Global level contributes on another recording
+### Global level contributes on dishwasher
 
-GTCRN's whole-recording RMS was 3.32 dB lower on air conditioning and 9.67 dB lower
-on the dishwasher recording. These are **global level differences, not noise-reduction
-SNR measurements**; removed background noise also contributes to the difference.
+Enhanced whole-recording RMS was **3.32 dB lower** for air conditioning and **9.67 dB lower** for dishwasher. These are global-level changes, **not noise-reduction SNR measurements**; removed background contributes too.
 
-On the dishwasher file, delay-only gave seven errors. Applying a uniform 0.328649 gain
-to that delayed raw waveform, without denoising, gave 13 errors, versus 15 for GTCRN.
-The 13-error control repeated exactly. Its reported speech start moved from 1396 to 1748 ms.
-Thus a level change is sufficient to reproduce a substantial regression on this case.
-It does not prove that restoring enhanced-audio gain would fix it, or quantify an additive
-percentage of GTCRN's total error causally attributable to volume.
+Dishwasher delay-only gave seven errors. Uniform **0.328649 gain** on delayed raw audio, with no denoising, gave **13 errors**, versus **15 for GTCRN**. The 13-error control repeated exactly; reported speech start moved **1396 → 1748 ms**. Level change is sufficient to reproduce a substantial regression here, but this does not prove gain restoration would fix enhanced audio or assign an additive percentage of causation to volume.
 
-### D. A genuine recognition problem remains
+### A recognition problem remains
 
-The dishwasher custom-audio result stayed at 15 errors in both `verbatim` and `codemix`,
-including the repeat. Both outputs were English. This regression cannot be dismissed
-as only an English-versus-Indic-script scoring artifact.
+Dishwasher GTCRN stayed at **15 errors** in both formats, including the repeat. Both were English. This cannot be dismissed as only a script-scoring artifact.
 
-GTCRN also changes the waveform beyond a scalar attenuation: after delay alignment and
-a best-fit scalar, residual energy was 10.97% of enhanced energy for air conditioning and
-29.98% for dishwasher. Those statistics include useful noise removal and do not identify
-speech distortion or individual lost phonemes. Spectral modification/ASR-domain mismatch
-remains a plausible contributor, rather than a fully isolated internal root cause.
+After delay alignment and best-fit scalar, residual waveform energy was **10.97% of enhanced energy** for air conditioning and **29.98%** for dishwasher. This includes useful noise removal, not an isolated speech-distortion measure. Spectral modification/ASR-domain mismatch remains plausible, not a proven internal mechanism or evidence of individual missing phonemes.
 
-## 3. Does `codemix` fix the real station announcement?
-
-Only partially in this one diagnostic pair:
+## 3. Station `codemix`: partial recovery, not a pass
 
 - Raw: `Platform 4 for the 8700 hours first Great Western Service to breeding.`
 - Custom: `Platform four for the eight seven hundred hours first grade western service to breeding ...`
 
-Both now contained the platform label, but both still got the uploader-described **07:00**
-departure and **Reading** destination wrong. The source is not a complete independently
-annotated transcript, so there is no station WER. This is not a complete announcement pass
-and does not establish that switching format fixes CueBell. It was an ASR component test,
-without a new Luna interpretation or live alert measurement.
+Both contain the platform label, but both still miss uploader-described **07:00** and **Reading**. There is no full independent station transcript or station WER. This one ASR pair did not include a new Luna interpretation or live alert measurement, and does not validate a global format change.
 
-## 4. What Gnani's research supports
+## 4. Research context and source limits
 
-The supplied research library was inspected through its public article collection; the
-initial page's “0” count was a client-rendering placeholder, not an empty library.
+The vendor article library was inspected through its public collection. Its initial displayed “0” was a client-rendering placeholder, not an empty library.
 
-The rural-noise article's denoising-paradox discussion and the acoustic-training article's
-preprocessing discussion both caution that perception-optimized enhancement can distort
-features an ASR model uses. They favor compatible/matched noise and codec training.
-The code-switching article discusses joint multilingual modeling, supporting caution about
-inferring a separate language-routing failure from a transcript's script.
+Gnani's rural-noise and acoustic-training articles caution that perception-optimized enhancement can alter features used by ASR, favoring compatible noise/codec training. Its code-switching article discusses joint multilingual modeling, which cautions against inferring separate language routing from script alone. These are earlier-2026 vendor descriptions, not proof of the deployed Prisma v3 frontend.
 
-These are vendor research descriptions from earlier 2026, not proof of the exact deployed
-Prisma v3 frontend. An independently checked paper, *When De-noising Hurts*, also reports
-ASR degradation with enhancement, but studied MetricGAN-plus and other recognizers, not
-this GTCRN/Gnani combination. Neither source replaces the controlled measurements above.
+The independently checked *When De-noising Hurts* paper also reports ASR degradation, but studies MetricGAN-plus and other recognizers, **not GTCRN/Gnani**. Literature supports caution, not a substitute for the controlled results.
 
-Sources:
+Sources retained from the original investigation, not newly live-verified by this documentation audit:
 
-https://www.gnani.ai/resources/research
+- [Gnani research collection](https://www.gnani.ai/resources/research)
+- [Rural India ASR and background noise](https://www.gnani.ai/resources/research/the-rural-india-asr-problem-engineering-speech-recognition-for-background-noise)
+- [Acoustic training on 14 million hours](https://www.gnani.ai/resources/research/how-we-train-acoustic-models-on-14-million-hours-of-telephonic-speech)
+- [Code-switching at 8 kHz](https://www.gnani.ai/resources/research/code-switching-at-8khz)
+- [When De-noising Hurts](https://arxiv.org/abs/2512.17562)
+- Gnani batch: [introduction](https://docs.gnani.ai/api/STTBatch/Introduction.md), [create job](https://docs.gnani.ai/api/STTBatch/Create_Job.md), [get files](https://docs.gnani.ai/api/STTBatch/Get_Job_Files.md)
+- Gnani [streaming contract](https://docs.gnani.ai/api/STT/stt-websocket.md), [Prisma v3](https://docs.gnani.ai/api/STT/models/prisma-v3.md)
 
-https://www.gnani.ai/resources/research/the-rural-india-asr-problem-engineering-speech-recognition-for-background-noise
+## Decision and next experiments
 
-https://www.gnani.ai/resources/research/how-we-train-acoustic-models-on-14-million-hours-of-telephonic-speech
+1. Do not recommend double denoising for station announcements: it repeatedly removed usable Slough speech.
+2. Keep raw audio as the baseline. One fewer word error across three selected vendor-only references does not outweigh station failures or prove broad benefit.
+3. Evaluate `codemix` on held-out multilingual announcements, scoring exact numbers, destinations, platforms, spoken stop and complete Luna interpretation.
+4. Evaluate level-aware, delay-aligned mild enhancement or blending against raw. Gain compensation and blending were **not validated fixes** here.
+5. Obtain provider traces before asserting actual server enhancement execution.
 
-https://www.gnani.ai/resources/research/code-switching-at-8khz
+Production app/backend defaults were not edited by this research. It ran in an isolated worktree without changing concurrent web-app work or the installed 1.4.0 APK.
 
-https://arxiv.org/abs/2512.17562
+## Accounting and historical verification
 
-https://docs.gnani.ai/api/STTBatch/Introduction.md
+- Batch submitted audio: **965.542 seconds**, including failures and confirmations.
+- New streaming time: **441.661796 connection-seconds**; conservative attempt time **445.399432 seconds**.
+- Prior use: **5717.845675 seconds**. Combined conservative use: **7128.787107/7200 seconds**, or **118.813118/120 minutes**, leaving **71.212893 seconds**. This combines batch audio and connection/attempt time for the spending guard, not an invoice or exact billed time.
+- No new Luna or TTS: cumulative **426 Luna attempts**, **1,250 TTS characters**.
+- HTTP 429 interrupted read-only collection; collection resumed without resubmission. A repeat job start also received 429. Recovery verified authoritative `CREATED` and `started_at: null`, then started that same job once, without duplicate upload/job.
+- **11 focused control/scoring/recovery tests passed**; Ruff passed on all **seven new Python files**. Saved-input audit passed. Scan of **144 new text files** found **zero configured private-credential matches**. Production transport/configuration and existing recognition/scoring helper remained byte-identical to release. These are recorded campaign checks, not newly rerun tests.
 
-https://docs.gnani.ai/api/STTBatch/Create_Job.md
-
-https://docs.gnani.ai/api/STTBatch/Get_Job_Files.md
-
-https://docs.gnani.ai/api/STT/stt-websocket.md
-
-https://docs.gnani.ai/api/STT/models/prisma-v3.md
-
-## 5. Decision and next useful changes
-
-1. **Do not recommend double denoising for station announcements from these results.**
-   It repeatedly removed the entire usable Slough speech result.
-2. **Keep raw audio as the comparison baseline.** Gnani-only's one-word gain in three
-   selected references does not outweigh the station failures or establish a broad benefit.
-3. **Evaluate `codemix` on a held-out multilingual announcement corpus**, scoring exact
-   numbers, destinations, platforms, spoken-stop behavior, and complete Luna interpretation.
-   It is a promising format intervention, not a validated global default change.
-4. **Evaluate level-aware, delay-aligned mild enhancement or blending** against raw audio.
-   Gain compensation and blending were not validated as fixes in this study.
-5. Obtain provider traces to settle the server-enhancement execution question; do not
-   infer it from VAD presence, marketing noise robustness, or echoed configuration.
-
-Production app/backend defaults were not edited. Research lives on an isolated worktree;
-the user's concurrent web-app work and installed 1.4.0 APK were not changed.
-
-## Accounting and reproducibility
-
-- Batch audio submitted: 965.542 seconds, counting failures and confirmations.
-- New streaming connection time: 441.661796 seconds; conservative attempt time: 445.399432 seconds.
-- Prior use: 5717.845675 seconds. Combined conservative use: **7128.787107 / 7200 seconds**
-  (118.813118 / 120 minutes), leaving 71.212893 seconds under the existing authorization.
-- No new Luna calls or TTS; prior totals remain 426 Luna attempts and 1250 submitted TTS characters.
-- Initial read-only collection encountered HTTP 429 and was resumed without resubmission.
-  One repeat job's start was rejected with 429. Recovery checked authoritative
-  `CREATED` / `started_at: null` before starting that same job once; no duplicate upload/job.
-- Provider batch charges and connection seconds are conservatively combined for the
-  existing spending guard; this is not a provider invoice or an exact billed-time statement.
-
-Benchmark helpers are under:
-/home/mathew/Arrakis/CueBell-denoiser-diagnosis-20261115/backend/benchmarks/denoising/
-
-`diagnose_batch.py`, `confirm_batch.py`, `diagnose_stream.py`, `followup_stream.py`, and
-`analyze_diagnosis.py` retain explicit input identities, local scoring references,
-provider request/response evidence, and bounded submission accounting.
-Production transport and scoring were reused. The analysis checks all input hashes and
-that the streaming headers are identical apart from the declared format variable.
-
-Final checks: 11 focused control/scoring/recovery tests passed; Ruff passed on all seven
-new Python files. The saved-input audit passed. A scan of 144 new text files found zero
-configured private-credential matches. Production transport, configuration, and the
-existing recognition/scoring helper were byte-identical to the release. Source hashes and
-verification details are in the campaign's `verification.json`.
+[Verification record](benchmarks/gnani-denoiser-diagnosis-2026-11-15/verification.json). Helpers under [`backend/benchmarks/denoising/`](../backend/benchmarks/denoising/): `diagnose_batch.py`, `confirm_batch.py`, `diagnose_stream.py`, `followup_stream.py`, `analyze_diagnosis.py`. They retain explicit input identities, local references, provider evidence and bounded accounting.

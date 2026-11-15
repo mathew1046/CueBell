@@ -2,203 +2,85 @@
 
 **Hear the announcement. See your turn.**
 
-## Short solution pitch
+CueBell turns spoken announcements into personal visual alerts, with optional vibration and sound. It is built for people who are deaf or hard of hearing, starting with a familiar problem: missing your token call in a busy pharmacy.
 
-**The problem:** People who are deaf or hard of hearing can miss important spoken announcements. In a busy pharmacy, missing a token call may mean waiting longer or needing someone else to help.
+[Try the web app](https://cuebell.mathewjoseph.xyz) · [Android preview](https://github.com/mathew1046/CueBell/releases/tag/v1.4.0-preview) · [60-second demo guide](DEMO.md) · [Documentation](docs/README.md)
 
-**Our solution:** CueBell is an Android app that acts as helping ears. It turns announcements that matter to the user into clear on-screen alerts, with vibration and sound options.
+## A simple example
 
-**How it works:** The user types or says what to listen for, such as “Tell me when pharmacy token 442 is called.” CueBell listens through the phone's microphone and uses speech recognition and AI to understand the announcement. When it detects a match, it shows the call and any counter details. The user can stop listening from the app or by voice.
+1. Type or say: **“Tell me when pharmacy token 442 is called. Vibrate.”**
+2. Accept the processing disclosure and allow microphone access. A valid request starts listening automatically.
+3. The announcement says: **“Token four four two, please go to counter two.”**
+4. CueBell shows the matching call and counter, with the requested alert.
 
-**Why it matters:** CueBell aims to help people wait more independently, without constantly watching a display or relying on another person. It gives each user a personal alert for the information they asked for.
+A non-matching token should not alert. Repeated calls are suppressed, and later corrections update the result. Live captions and listening status help the user check what was heard.
 
-**Current stage:** An Android prototype that needs an internet connection. The next step is testing with users in busy, real-world settings.
+**Why it matters:** audio-only information should not require constant attention to a display or dependence on a companion. CueBell aims to make that information personal and visible. This is a working prototype, not a measured reduction in missed turns or a completed accessibility field trial.
 
-## Project overview
+## What is built
 
-**Status:** active prototype · Android preview and installable web app
-
-The web app uses the same screens and speech backend. See [Web deployment](docs/WEB.md)
-for build commands, origin configuration and browser capability details. Keep the
-web page visible and the screen unlocked while listening.
-
-**Download the Android preview:**
-https://github.com/mathew1046/CueBell/releases/tag/v1.4.0-preview
-
-**Report a bug or suggest an improvement:**
-https://github.com/mathew1046/CueBell/issues
-
-Tell it who or what to listen for and when to alert you. A valid request starts monitoring automatically after consent and permission checks. A native Android microphone service listens while a separate, self-hosted backend interprets the speech.
-
-> “Listen for pharmacy token 442 and vibrate.”
->
-> Submit the request → monitoring starts → hear “Token 442 to counter two” → see an alert with the matching speech and counter details.
-
-**Prototype, not an official queue system. Calls can be missed. Always check the venue display or staff.**
-
-## Why CueBell?
-
-Imagine waiting for medicine in a crowded pharmacy. Your turn is announced over a loudspeaker, but you cannot reliably hear it. You may need to watch the display continuously or depend on someone else to notice the call.
-
-CueBell aims to make that moment more accessible: the person specifies their own token and receives a personal, visible cue when a matching announcement is detected.
-
-These are **intended benefits, not measured outcomes**. Fewer missed turns, real-world speech accuracy and reliable locked-screen delivery have not been established. The workflow also accepts tasks such as a train arrival, a name being called or flight boarding; these are speech-based monitors, not established venue deployments or live tracking.
-
-## What it does today
-
-- **Speak or type a request.** Describe the subject and trigger condition. Valid requests activate automatically after consent and Android permission checks; unclear requests ask for clarification. No second confirmation tap is needed.
-- **Listen through a native Android service.** Kotlin owns microphone capture, PCM framing, networking and notifications, rather than relying on background JavaScript timers.
-- **Check before alerting.** Structured model output must match the task and pass schema and source-evidence checks. Alerts include the event summary, location when heard and verbatim source speech; queue tokens are not required for general tasks.
-- **Handle changing announcements.** Calls, repeats, corrections, cancellations and uncertain interpretations are separate events. Unclear input is not coerced toward the user's token.
-- **Keep the session understandable.** Recent transcripts, listening status, coverage gaps, acknowledgment, pause and stop controls remain visible.
-- **Choose the app language.** English and 20 Indian languages have bundled UI translations, including native notifications. Sound-enabled alerts use a bundled three-pulse alarm; silent preferences remain respected.
-- **Stop by voice.** While monitoring, express that you want CueBell to stop listening, directly or indirectly. The text model interprets intent across languages, without a fixed command list; a source-grounded decision pauses the monitor and stops the native microphone, even with the app in the background. The token and history remain available, as with Home's Stop Listening.
-- **Keep provider keys off the phone.** The APK connects to your separately hosted backend using an expiring session credential.
-- **Open directly into the workflow.** No server URL, pairing code or developer settings screen. The release operator sets the service address before building; the app obtains its session automatically when you submit a request.
-
-### Task and identifier interpretation
-
-One active monitor per session, without assumed venue formats, digit counts, prefixes or counter ranges. The text model interprets spoken/written identifiers consistently across setup and announcements, without handwritten number parsers. The home card shows the active task; stop and edit it if the interpretation is wrong.
-
-Spoken setup waits for 3.5 seconds of transcript quiet after finalized speech instead of stopping on the first provider sentence; unfinished interim speech keeps capture open, up to 90 seconds overall. Recognition is limited by the speech provider's languages; model interpretation is not a guarantee of accuracy in every language or venue.
+- **Android and web:** shared task setup, captions, history, accessible controls and alerts.
+- **Natural-language tasks:** queue calls, a name being called or a stated transport announcement. No connection settings or API keys on the user's screen.
+- **Gnani Prisma v3.0:** streaming speech recognition with automatic language selection (`indic-auto`).
+- **Validated alerts:** structured text interpretation followed by source-evidence checks, correction handling and duplicate suppression.
+- **Experimental noise reduction:** optional on-device GTCRN, with native Android and browser implementations. Off by default.
+- **Multilingual interface:** English and 20 Indian languages. UI translations are not a guarantee of speech-recognition quality.
 
 ## How it works
 
 ```text
-Spoken request ── Gnani Prisma ──┐
-Typed request ──────────────────┴─> Text intent extraction
-                                      │
-                          Consent + valid task activation
-                                      │
-                         Active monitoring rule
-
-Android microphone foreground service
-    │  16 kHz mono PCM16LE · 1,024-byte frames
-    ▼
-Authenticated HTTPS/WSS backend relay
-    ▼
-Gnani Prisma v3.0 · automatic language detection
-    ▼
-Completed transcript → structured event extraction
-    ▼
-Deterministic validation → ordered correction-aware reducer
-    ▼
-Grounded task match → visual alert + optional vibration / sound
+Spoken or typed request → active listening task
+                                  ↓
+Microphone → optional local denoising → Gnani Prisma
+                                  ↓
+Transcript → text interpretation → validation → personal alert
 ```
 
-The user's target is **not** supplied as a speech-recognition hint. The text model evaluates the active subject and condition against the transcript; source evidence must pass validation. Announcements cannot create monitors or change alert preferences.
+The backend keeps provider keys private. Audio goes to **Gnani**; requests and transcripts go to the configured **OpenAI text-model fallback**. Evon is not integrated, and CueBell does not claim a Gnani-only model stack. The target is not used as a speech-recognition hint.
 
-Voice stopping depends on connectivity, speech recognition and model interpretation; it is not an instant or offline microphone kill switch. Speech-language coverage remains limited by the speech provider. There is no speaker identification, so a nearby person's request may also pause listening. Check that the microphone notification disappears; use the app or notification stop control if speech is missed. Mocked workflow tests and staged six-language provider replays cover voice stop; they do not establish real-world multilingual accuracy.
+The interface uses React Native, Expo and TypeScript. Android capture uses a Kotlin foreground service; web capture uses AudioWorklet. A Python/FastAPI relay manages sessions and the speech pipeline. See [architecture](docs/ARCHITECTURE.md).
 
-| Layer | Stack |
-| --- | --- |
-| Android interface | React Native, Expo SDK 58, TypeScript, Expo Router, React Native Paper / Material 3 |
-| Native background runtime | Kotlin local Expo module, `AudioRecord`, OkHttp WebSocket, microphone foreground service, notification channels |
-| Separate backend | Python 3.12+, FastAPI, bounded in-memory sessions; one worker / one instance |
-| Speech | Gnani Prisma `prisma-v3.0`, `indic-auto`; audio goes only to Gnani |
-| Text intent and events | OpenAI structured output, configured as `gpt-6-luna` in the tested account; explicitly authorized fallback for Evon |
-| Persistence | No database or app/relay recording files; bounded session memory and encrypted Android connection metadata |
+## Engineering results
 
-Gnani Evon is **not integrated**: its usable API contract has not been supplied. There is no invented endpoint or silent speech-provider substitution. Provider retention policies are separate from the app's no-recording policy.
+The project evaluates both **speed** and **whether the right alert survives**. A faster wrong token is not an improvement.
 
-## Try the Android preview
+- **42.2% lower spoken-setup delay in a controlled comparison:** median speech-end-to-confirmation fell from **10.75 s to 6.21 s**, with six successful replays in each arm. This tested profile remains opt-in because broader monitoring quality regressed. [Pipeline results](docs/PIPELINE_OPTIMIZATION.md).
+- **99.66% less transform scratch memory:** replacing GTCRN's quadratic DFT with a radix-2 FFT preserved the tested output while reducing transform tables/scratch from **4,210,688 to 14,336 bytes**. This is not total app memory. [Noise-reduction methods](docs/NOISE_REDUCTION.md).
+- **More complete denoising under recorded-noise replay:** revised overload handling increased fully enhanced clips from **11/16 to 16/16**. Estimated background quality improved on all 16 clips, but recognition did not consistently improve, so denoising stays off by default. [Noise results](docs/NOISE_REDUCTION.md).
 
-APK download:
-https://github.com/mathew1046/CueBell/releases/download/v1.4.0-preview/CueBell-1.4.0-arm64.apk
+See [verification](docs/VERIFICATION.md) for reproducible checks and the distinction between automated tests, provider replays and real-device evidence.
 
-Checksum:
-https://github.com/mathew1046/CueBell/releases/download/v1.4.0-preview/CueBell-1.4.0-SHA256SUMS
+Results are controlled experiments, not claims of reliable performance in every venue. Raw benchmark artifacts remain available alongside the reports.
 
-- Android 7+ on an ARM64 phone; iOS is not implemented.
-- Version **1.4.0**, Android version code **7**, package `app.cuebell.mobile`.
-- Experimental on-device noise reduction is available in **Settings → Listening** and is off by default. Stop listening before changing it.
-- Development-signed preview, **not a production/store distribution**. Its signing certificate matches the 1.3.1 preview for in-place updates.
-- The preview is preconfigured; there is no backend URL or provider-key setup on the phone. Sessions for an older deployment are not reused: submit your request again after updating.
-- **Expo Go cannot run the custom native microphone service.** Use the APK or a native development build.
+## Try it
 
-What's changed:
-https://github.com/mathew1046/CueBell/blob/main/CHANGELOG.md
+**Web:** open https://cuebell.mathewjoseph.xyz, enter a task and allow processing and microphone access. Keep the page visible and the screen unlocked while listening. Browser background listening is not supported.
 
-## Run a controlled demo
+**Android:** install the [v1.4.0 ARM64 preview](https://github.com/mathew1046/CueBell/releases/tag/v1.4.0-preview) on Android 7 or later. It is development-signed, not a store release. Expo Go cannot run the native capture service. Device settings can interrupt background capture or suppress sound and vibration.
 
-**Start with the complete demo guide:**
-https://github.com/mathew1046/CueBell/blob/main/DEMO.md
+Use consenting speakers or staged audio for a demo. See [DEMO.md](DEMO.md) for a short script and expected outcomes.
 
-The shortest reliable presentation path is:
+## Develop
 
-1. Run the separate backend with your provider credentials. For a controlled no-login demo, explicitly enable `ALLOW_APP_SESSIONS=true`; see the security warning below.
-2. Give it a publicly trusted HTTPS URL with WebSocket support. Set that origin as `EXPO_PUBLIC_API_URL` in the mobile build environment and build the APK. A stable host avoids rebuilding when a temporary tunnel changes.
-3. Install that APK on an Android phone and open it. **There is no connection setup in the app, and provider keys are never bundled.**
-4. Use the pencil to enter a request, allow processing, type “Listen for pharmacy token 442 and vibrate,” then tap **Start Listening**. Grant permissions and check the active task and listening status; there is no second confirmation tap.
-5. Have a consenting speaker announce a non-target token, then **“Pharmacy token four four two, please go to counter two.”** Inspect the transcript and resulting alert.
+- [Backend setup](backend/README.md): Python 3.12+, provider configuration and one-worker hosting.
+- [Android setup](mobile/README.md): Node.js 24+, native builds and device checks.
+- [Web setup](docs/WEB.md): production export, exact origin allowlist and HTTPS/WSS.
+- [Contributing](CONTRIBUTING.md): checks and review expectations.
 
-The guide includes exact commands, a three-minute script, correction and interruption checks, troubleshooting, and an honest fallback if the live pipeline fails.
+Provider credentials belong only on the backend. Public demo admission can consume paid quota; it is not production authentication.
 
-## Verification
+## Limits and responsible use
 
-The included backend work passed **410 tests**. Mobile checks cover 43 workflow tests, TypeScript and lint. The versioned verification record includes native tests, APK checks, device installation and toolchain notices:
-https://github.com/mathew1046/CueBell/blob/main/docs/VERIFICATION.md
+CueBell is a **supplemental aid**, not an official queue system, medical alarm or guaranteed notification service. Recognition errors, noise, nearby speech and network interruptions can cause missed or false alerts. Always check the venue display or staff. There is no offline recognition, queue-position prediction or PA-speaker identification.
 
-The real-provider latency campaign used 24 synthetic speech fixtures in six languages across 22 runs and 174 case attempts. A tested Fast/speech-aware setup profile reduced median confirmation time from 10.75 to 6.21 seconds, with six successful trials in each arm. Full monitoring validation did not preserve the target-and-counter quality gate, so experimental settings remain opt-in and baseline defaults are retained. These are backend replay measurements, not physical-phone or real-venue latency:
-https://github.com/mathew1046/CueBell/blob/main/docs/LATENCY_BENCHMARK_2026-11-13.md
+Audio and transcript history are not saved to recording files or a database by the app/relay. Provider processing and retention terms still apply. See [privacy](docs/PRIVACY.md), [security](SECURITY.md) and the [impact and evaluation plan](docs/IMPACT.md).
 
-GitHub Actions runs backend tests/lint and mobile tests/typecheck/lint without provider credentials. It does not build the APK, call paid providers or establish physical-phone reliability.
+## Team
 
-## Development and hosting
+**Mathew Joseph:** backend, speech/AI integration, Android background service, multilingual support, testing, deployment and releases.
 
-Backend installation, configuration, tests, TLS and single-worker hosting:
-https://github.com/mathew1046/CueBell/blob/main/backend/README.md
-
-Android setup, APK build, native tests and device checklist:
-https://github.com/mathew1046/CueBell/blob/main/mobile/README.md
-
-From the repository root, frontend checks are:
-
-```sh
-cd mobile
-npm ci
-npm test
-npm run typecheck
-npm run lint
-```
-
-Backend environment variables include `GNANI_API_KEY`, `GNANI_LANGUAGE_CODE=indic-auto`, `OPENAI_API_KEY`, an account-enabled `OPENAI_MODEL`, and a random `DEMO_ACCESS_CODE` of at least 16 characters. Keep them in the ignored backend environment or your host's secret manager.
-
-`EXPO_PUBLIC_API_URL` is a public routing address, not a secret. Never put provider keys or `DEMO_ACCESS_CODE` in any `EXPO_PUBLIC_` variable. The no-login demo admission mode is **off by default**: enabling it permits unauthenticated people to obtain limited bearer sessions and consume paid provider usage. Its IP/global rate and capacity limits are not production authentication. Before a public launch, add appropriate gateway/device-attestation or account admission and provider budgets; an APK's address or embedded code is not a security boundary.
-
-## Safety, privacy and limitations
-
-- **Supplemental aid only.** Noise, incorrect recognition or interpretation, and network problems can cause missed or false alerts. It is not a medical alarm or a substitute for official staff/displays.
-- **Android-first, Android 7+.** iOS is not implemented. Start capture while the app is visible. The native service is designed for background capture, but Android privacy controls, battery management or the OEM can stop/silence it. No boot restart or background start is implemented.
-- **Notifications are conditional.** Vibration/sound depend on hardware, permission, channel settings and Do Not Disturb. Visual feedback accompanies alerts; lock-screen content is private by default.
-- **No offline recognition or catch-up.** Lost audio is not replayed as a current call. Gaps are visible. Sessions expire after four hours by default; provider streams recycle before the documented 15-minute cap.
-- **No queue-position prediction or PA-speaker identification.** Nearby conversation can be captured. Use staged recordings or consenting speakers; do not record a real venue without permission.
-- **Processing is disclosed.** Audio goes to Gnani; requests/transcripts go to the configured OpenAI text fallback. No audio or transcripts are persisted by the app/relay, but provider terms still apply. Disable sensitive payload logging in hosting/monitoring tools.
-
-## Project documents
-
-- Contributor setup and review checklist: https://github.com/mathew1046/CueBell/blob/main/CONTRIBUTING.md
-- Release history: https://github.com/mathew1046/CueBell/blob/main/CHANGELOG.md
-- Privacy and data flow: https://github.com/mathew1046/CueBell/blob/main/docs/PRIVACY.md
-- Security reporting: https://github.com/mathew1046/CueBell/blob/main/SECURITY.md
-- Community guidelines: https://github.com/mathew1046/CueBell/blob/main/CODE_OF_CONDUCT.md
-- Original research architecture: https://github.com/mathew1046/CueBell/blob/main/implementation.md
-- Current product scope and subsequent decisions: https://github.com/mathew1046/CueBell/blob/main/PRODUCT.md
-- Interface principles and review record: https://github.com/mathew1046/CueBell/blob/main/DESIGN.md
-
-The later Android/background, general-task, automatic-activation and OpenAI-fallback decisions override the original plan's foreground-web / queue-only / manual-confirmation / Gnani-only scope. The basic queue-alert concept has prior art; this prototype does not claim to have invented it. Its intended contribution is an accessible multilingual workflow with personal listening tasks, correction-aware handling and honest coverage status—not a proven performance advantage.
-
-## Team contributions
-
-**Mathew Joseph** led the backend, speech/AI integration and Android background-service work, along with multilingual support, testing, deployment and releases. **Devadathan M R** led the mobile interface and navigation improvements, including live captions, waveform feedback, spoken alerts, accessibility controls and branding. Together, we developed CueBell, an Android prototype that turns relevant spoken announcements into clear visual alerts with optional vibration and sound.
-
-## Contributing and support
-
-Bug reports, accessibility feedback and small, focused improvements are welcome. Use the issue templates and include your app/Android version and reproducible steps using synthetic tokens. Do not post credentials, private patient information or unconsented venue recordings.
-
-For security vulnerabilities, use private reporting instead of a public issue:
-https://github.com/mathew1046/CueBell/security/advisories/new
+**Devadathan M R:** mobile interface and navigation, live captions, waveform feedback, spoken alerts, accessibility controls and branding.
 
 ## License
 
-No project license has been selected yet. Public source availability alone does not grant an open-source license; clarify reuse or redistribution with the maintainer before proceeding.
+No project-wide license has been selected. Public source availability does not grant reuse or redistribution rights. Bundled third-party components retain their own licenses and notices.

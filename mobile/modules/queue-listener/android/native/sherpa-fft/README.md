@@ -47,7 +47,7 @@ From the repository root:
 
 ```sh
 python3 mobile/modules/queue-listener/android/native/sherpa-fft/build.py \
-  --work-dir /home/mathew/.cache/cuebell/sherpa-fft-v1 --jobs 4
+  --work-dir "$HOME/.cache/cuebell/sherpa-fft-v1" --jobs 4
 ```
 
 The script validates the source checksum, tests the transform against a class
@@ -68,12 +68,11 @@ Gradle selects the reviewed experiment only with an explicit property:
 
 ```sh
 ./gradlew :queue-listener:testDebugUnitTest :queue-listener:assembleRelease \
-  -PcuebellSherpaFftDir=/home/mathew/.cache/cuebell/sherpa-fft-v1/dist \
+  -PcuebellSherpaFftDir="$HOME/.cache/cuebell/sherpa-fft-v1"/dist \
   --console=plain --max-workers=2
 ```
 
-Run that command from the generated mobile Android build directory. Main owns
-APK builds and device jobs. Use `-PreactNativeArchitectures=arm64-v8a` for an arm64
+Run that command from the generated mobile Android build directory. APK builds and device jobs are separate from this runtime build. Use `-PreactNativeArchitectures=arm64-v8a` for an arm64
 app experiment. Gradle verifies the binary, source/header/patch/build-script hashes
 against **`artifact-lock.json`**, then overlays only arm64 JNI onto the verified
 official AAR. Other ABIs remain official. Omit the property to return to the
@@ -101,7 +100,7 @@ Limits: max absolute float difference 2e-5 and at most one PCM16 LSB. Example:
 
 ```sh
 python3 mobile/modules/queue-listener/android/native/sherpa-fft/host-regression.py \
-  --work-dir /home/mathew/.cache/cuebell/sherpa-fft-v1 \
+  --work-dir "$HOME/.cache/cuebell/sherpa-fft-v1" \
   --model mobile/modules/queue-listener/android/src/main/assets/noise-reduction/gtcrn_simple.onnx \
   --wav docs/benchmarks/denoising-2026-11-14/fixtures/audio/colored-snr-p10/hi-positive.wav
 ```
@@ -121,17 +120,14 @@ eight `OnlineSpeechDenoiser` entry points are present. ELF LOAD alignment remain
 `0x4000`. Dependencies remain only `libandroid`, `liblog`, `libm`, `libdl`, `libc`;
 ORT and the C++ runtime are statically linked.
 
-Available artifact:
-/home/mathew/.cache/cuebell/sherpa-fft-v1-storage/dist/arm64-v8a/libsherpa-onnx-jni.so
+The original build stored `dist/arm64-v8a/libsherpa-onnx-jni.so` and
+`dist/provenance.json` in a disk-backed cache after its temporary filesystem filled.
+Those local build products are not supplied by this repository. Follow the build
+steps above to create them and compare with the tracked artifact lock.
 
-Provenance (complete flags and hashes):
-/home/mathew/.cache/cuebell/sherpa-fft-v1-storage/dist/provenance.json
-
-This run used `/tmp/opencode/cuebell-denoising/fft` as its logical build directory;
-bulky `_deps`, `lib` and `dist` directories were moved behind symlinks to the
-disk-backed cache when tmpfs filled. Use the available `dist` above for the exact
-locked artifact. Builds in other paths/toolchains can differ in embedded paths
-and must be reviewed before changing the binary lock.
+Builds in other paths/toolchains can differ in embedded paths and must be reviewed
+before changing the binary lock. The archived numerical and device evidence is
+linked from the [native benchmark](../../../../../../docs/NOISE_REDUCTION_BENCHMARK_2026-11-14.md).
 
 Observed checks:
 - Transform/reference max absolute difference: **5.96046447754e-08** forward and
