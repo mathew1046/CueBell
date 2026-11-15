@@ -4,7 +4,7 @@
 
 CueBell turns spoken announcements into personal visual alerts, with optional vibration and sound. It is built for people who are deaf or hard of hearing, starting with a familiar problem: missing your token call in a busy pharmacy.
 
-[Try the web app](https://cuebell.mathewjoseph.xyz) · [Android preview](https://github.com/mathew1046/CueBell/releases/tag/v1.4.0-preview) · [60-second demo guide](DEMO.md) · [Documentation](docs/README.md)
+[Try the web app](https://cuebell.mathewjoseph.xyz) · [Android preview](https://github.com/mathew1046/CueBell/releases/tag/v1.4.0-preview) · [How to use CueBell](DEMO.md) · [Documentation](docs/README.md)
 
 ## A simple example
 

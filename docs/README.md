@@ -6,7 +6,7 @@ Start with the user problem, then explore the engineering and evidence.
 
 - [Project overview](../README.md): what CueBell does and how to try it.
 - [Impact and evaluation](IMPACT.md): intended users, practical examples and what still needs field testing.
-- [Demo](../DEMO.md): a short, reproducible presentation.
+- [How to use CueBell](../DEMO.md): opening the app, setting a task, reading alerts and stopping listening.
 - [Architecture](ARCHITECTURE.md): capture, Gnani streaming, interpretation and alerts.
 - [Product scope](../PRODUCT.md) and [interface principles](../DESIGN.md).
 

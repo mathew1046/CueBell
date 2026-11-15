@@ -1,57 +1,96 @@
-# Demo CueBell
+# How to use CueBell
 
-**Goal:** show one personal listening task, a non-match and a matching announcement. Use a consenting speaker or staged recording, not private venue audio.
+CueBell listens for a spoken announcement you care about and turns it into a personal visual alert, with optional vibration and sound.
 
-## Prepare
+For example: **“Tell me when pharmacy token 442 is called. Vibrate.”**
 
-- Open [the web app](https://cuebell.mathewjoseph.xyz) or install the [Android preview](https://github.com/mathew1046/CueBell/releases/tag/v1.4.0-preview).
-- Check internet access, microphone permission and provider quota. A second device or consenting speaker supplies the announcements.
-- Keep the browser page visible and screen unlocked. On Android, start while visible and check notification permissions.
-- Rehearse before recording. The prototype can miss or misinterpret speech; use the actual result, not a fabricated transcript.
+## 1. Open the app
 
-For your own deployment, follow [backend setup](backend/README.md) and [web](docs/WEB.md) or [Android setup](mobile/README.md). Provider keys never go in the client.
+- **Web:** open [cuebell.mathewjoseph.xyz](https://cuebell.mathewjoseph.xyz).
+- **Android:** install the APK from the [Android preview release](https://github.com/mathew1046/CueBell/releases/tag/v1.4.0-preview). The preview is development-signed and supports ARM64 phones running Android 7 or later. Only install APKs you trust.
 
-## A 60-second script
+You need an internet connection and microphone access. No account, API key or server address needs to be entered in the current hosted app.
 
-**0–10 seconds: show the problem**
+On the web, **keep the page visible and the screen unlocked while listening**. Switching tabs, minimizing the browser or locking the screen stops capture. Return and start listening again.
 
-“If you cannot hear a pharmacy loudspeaker, a token call can be easy to miss. CueBell aims to make that call visible and personal.”
+## 2. Describe what to listen for
 
-**10–25 seconds: create the task**
+You can type your request or say it aloud.
 
-Enter: **“Tell me when pharmacy token 442 is called. Vibrate.”**
+### Type a request
 
-Accept the processing disclosure, submit and grant microphone permission. Check the active task and wait for Listening. A valid task activates without a second confirmation tap.
+1. On Home, tap the **pencil** beside the listening task.
+2. Read the processing disclosure and select **Allow audio & text processing**.
+3. In **What should I listen for?**, enter a clear request:
 
-**25–45 seconds: demonstrate the difference**
+   > Tell me when pharmacy token 442 is called. Vibrate.
 
-Say the following separately, pausing for recognition:
+4. Tap **Start Listening** and allow microphone access when prompted.
 
-1. “Pharmacy token four four one, please go to counter one.” Expect no target alert.
-2. “Pharmacy token four four two, please go to counter two.” Inspect the actual alert, destination and source text.
+### Say a request
 
-If interpretation takes longer, let it finish. Do not edit out waiting time in a way that implies faster live performance.
+1. On Home, tap **Start Listening**. If prompted, read and accept the processing disclosure, then tap it again.
+2. Allow microphone access and describe your task. For example:
 
-**45–60 seconds: show the engineering and limit**
+   > Alert me when train 14922 arrives.
 
-“Gnani Prisma transcribes the speech. CueBell checks the interpretation before alerting. We also tested pipeline latency and local noise reduction. It is supplemental assistance, not a replacement for the venue display or staff.”
+3. Finish speaking and wait while CueBell understands the request. Short pauses are allowed. You can also open the pencil screen and use **Speak**.
 
-Stop listening and confirm microphone capture ends. A 60-second video may use clearly labelled cuts; it is not a guaranteed 60-second workflow.
+A clear, valid request starts monitoring automatically. There is no second task-confirmation tap. If CueBell asks for clarification, make the subject and event more specific, then try again.
 
-## Optional follow-up checks
+**Check the active task before relying on it.** If a number, name or condition is wrong, stop listening and edit the request.
 
-- **Correction:** “Correction: token 442 should go to counter three, not counter two.” Check the visible update, not just the transcript.
-- **Repeat:** repeat a call and check that it does not create another immediate alert.
-- **Spoken setup:** try it after the typed flow. Recognition waits for completed speech; allow short pauses and inspect the task.
-- **Noise reduction:** compare the same staged audio and phone position with the setting off and on. Do not present a single rehearsal as a benchmark.
-- **Connection loss:** disconnect the network and inspect the gap warning. Missing audio is not replayed as a current announcement.
-- **Android background:** test on the actual phone. A native service is not a guarantee that every OEM, lock screen or notification configuration works.
+## 3. Wait for Listening
 
-## If something fails
+Keep the microphone within useful range of the announcement. Avoid covering it or placing the phone inside a bag.
 
-- No transcript: check Listening, microphone permission, page visibility, connectivity and speaker distance.
-- Transcript but no alert: inspect target digits, source evidence and uncertainty. Do not change the target to match a mistaken transcript.
-- No sound/vibration: check device support, permissions, volume, notification channels and Do Not Disturb.
-- Session or service error: submit again after the operator checks backend health, admission limits, credentials and quota. `/health` checks configuration, not successful recognition.
+- Wait for the **Listening** status. A saved task alone does not mean audio is being captured.
+- Expand **Live captions** to see the completed speech transcripts.
+- Open **History** to review recent session events.
+- Check any connection or unclear-announcement warning. Audio missed during a connection gap is not recovered afterward.
 
-Show a failure honestly. Automated tests or a prerecorded rehearsal can be a clearly labelled fallback, never a claimed live result. See [verification](docs/VERIFICATION.md) and [privacy](docs/PRIVACY.md).
+On Android, start listening while the app is visible. The microphone foreground service can then continue in the background or with the screen locked. Keep its ongoing notification available; phone battery restrictions and permissions can still interrupt it.
+
+## 4. Read the alert
+
+With the pharmacy task above, these examples illustrate the intended behavior:
+
+- **“Token 441, please go to counter one.”** No alert for your target token 442.
+- **“Token four four two, please go to counter two.”** A visible alert for the matching call, including the counter when recognized.
+- **“Correction: token 442 should go to counter three.”** A recognized correction updates the result rather than leaving the old directions unmarked.
+
+Read the alert and its source text. Acknowledge it using the alert's acknowledgment control when available. Sound and vibration depend on your request, device support, permissions, volume and notification settings.
+
+These are usage examples, not guarantees that every spoken announcement will be recognized correctly. Check the venue display or staff if the result is unclear.
+
+## 5. Pause, change or clear a task
+
+- **Pause capture:** tap **Stop Listening** on Home. The microphone stops, but the task and recent history remain.
+- **Resume:** tap **Start Listening** again. On the web, return to the visible page first.
+- **Change the task:** stop listening, tap the pencil, then enter a new request.
+- **Remove the task and history:** open **Settings** and choose **Clear task**. Older Android preview builds may label this action **Stop**.
+- **Android notification:** **Stop microphone** pauses capture. It does not replace clearing the task in Settings.
+
+A spoken stop request can also pause listening when recognized. Use the on-screen control if it does not respond.
+
+## Settings you may want
+
+- **Language:** use the language control to change interface labels. Speech-language detection is automatic; changing the interface language does not guarantee recognition in that language.
+- **Accessibility:** open accessibility settings for available display and spoken-alert options.
+- **Noise reduction:** experimental and off by default. Stop setup or pause listening before changing it in Settings. It runs locally, but can make some words harder to recognize. Turn it off if results worsen. [Methods and results](docs/NOISE_REDUCTION.md).
+
+## Common problems
+
+- **No captions:** check Listening, microphone permission, internet access, speaker distance and, on the web, page visibility.
+- **Captions appear but no alert:** check the active task and every digit or name. Wait for interpretation and inspect uncertainty warnings. Do not assume the transcript is correct.
+- **No vibration or sound:** check the requested alert type, phone volume, notification permission, channel settings and Do Not Disturb. Some browsers do not support vibration.
+- **Session expired:** submit your request again. Server restarts also clear active sessions.
+- **Service busy or unavailable:** wait before retrying. The hosted prototype has session and provider limits.
+
+## Privacy and safe use
+
+The consent disclosure explains the processing: audio goes to **Gnani Prisma**, while requests and transcripts go to the configured **OpenAI text fallback**. The app and relay do not intentionally save audio recordings or transcript history to disk; provider terms still apply. See [Privacy](docs/PRIVACY.md).
+
+Only capture speech where you have permission. For a first try, use your own voice or a consenting speaker in a quiet setting.
+
+**CueBell is a supplemental aid, not an official queue display or emergency alarm.** Noise, recognition errors, network interruptions and device restrictions can cause missed or incorrect alerts. Always keep another way to check important announcements.
