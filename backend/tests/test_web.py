@@ -1,5 +1,7 @@
 """Exercise browser admission against the real relay with mocked speech and text providers."""
 
+import asyncio
+import threading
 from contextlib import asynccontextmanager
 
 import pytest
@@ -10,7 +12,7 @@ from starlette.websockets import WebSocketDisconnect
 from app.config import Settings
 from app.main import create_app
 from tests.conftest import activate, pair
-from tests.test_stream import FakePrisma, ready, receive_type
+from tests.test_stream import CONSENT, FakePrisma, expect_closed, ready, receive_type
 
 ORIGIN = "https://app.example.com"
 
@@ -55,6 +57,69 @@ def test_browser_monitor_reuses_native_pcm_transcript_and_grounded_alert_pipelin
         assert alert["token"] == "P042"
         assert alert["counter"] == "2"
     assert created[0].audio == [b"\0" * 1024]
+
+
+@pytest.mark.parametrize("browser", [False, True])
+@pytest.mark.parametrize("optimized", [False, True])
+def test_stream_retries_during_provider_shutdown_without_losing_task(
+    settings, intelligence, monkeypatch, browser, optimized
+):
+    settings.web_origins = [ORIGIN]
+    settings.gnani_api_key = "dummy-test-key"
+    settings.optimized_scheduling = optimized
+    settings.outbound_writer = optimized
+    closing, release, created = threading.Event(), asyncio.Event(), []
+
+    @asynccontextmanager
+    async def provider(_settings):
+        fake = FakePrisma(transcripts=[])
+        created.append(fake)
+        try:
+            yield fake
+        finally:
+            if len(created) == 1:
+                closing.set()
+                await release.wait()
+
+    monkeypatch.setattr("app.main.prisma", provider)
+    with TestClient(create_app(settings, intelligence)) as client:
+        auth = pair(client)
+        activate(client, auth)
+        task = client.get("/v1/state", headers=auth).json()["rule"]
+        headers = {"Origin": ORIGIN} if browser else {**auth, **CONSENT}
+        with client.websocket_connect("/v1/stream?mode=monitor", headers=headers) as first:
+            if browser:
+                first.send_json(handshake(auth))
+            ready(first)
+            first.send_json({"type": "stop"})
+            try:
+                assert closing.wait(2)
+                with pytest.raises(WebSocketDisconnect) as rejected:
+                    with client.websocket_connect(
+                        "/v1/stream?mode=monitor", headers=headers
+                    ) as retry:
+                        if browser:
+                            retry.send_json(handshake(auth))
+                        retry.receive_json()
+                assert rejected.value.code == 4409  # Busy, not an invalid session.
+                assert len(created) == 1  # Never open overlapping provider streams.
+                state = client.get("/v1/state", headers=auth)
+                assert state.status_code == 200
+                assert state.json()["rule"] == task
+            finally:
+                first.portal.call(release.set)
+            expect_closed(first)
+
+        with client.websocket_connect("/v1/stream?mode=monitor", headers=headers) as retry:
+            if browser:
+                retry.send_json(handshake(auth))
+            ready(retry)
+            retry.send_bytes(b"\0" * 1024)
+            assert retry.receive_json()["state"] == "LISTENING"
+            retry.send_json({"type": "stop"})
+            expect_closed(retry)
+        assert len(created) == 2
+        assert client.get("/v1/state", headers=auth).json()["rule"] == task
 
 
 @pytest.mark.parametrize(

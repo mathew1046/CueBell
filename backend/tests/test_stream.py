@@ -528,9 +528,11 @@ def test_monitor_stream_dedups_provider_segments_and_alerts(relay, intelligence)
             == 409
         )
         with pytest.raises(WebSocketDisconnect) as error:
-            with client.websocket_connect("/v1/stream?mode=request", headers={**auth, **CONSENT}):
-                pass
-        assert error.value.code == 4403
+            with client.websocket_connect(
+                "/v1/stream?mode=request", headers={**auth, **CONSENT}
+            ) as duplicate:
+                duplicate.receive_json()
+        assert error.value.code == 4409
         socket.send_bytes(b"\0" * 1024)
         transcript = receive_type(socket, "transcript")
         assert transcript["mode"] == "monitor"

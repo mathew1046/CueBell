@@ -366,8 +366,8 @@ def create_app(settings: Settings | None = None, intelligence=None) -> FastAPI:
                 consent = socket.headers.get("x-processing-consent")
             session = lookup(authorization)
             mode = socket.query_params.get("mode", "monitor")
-            if mode not in {"request", "monitor"} or session.busy or session.extracting:
-                raise HTTPException(409, "Stream already open or mode invalid.")
+            if mode not in {"request", "monitor"}:
+                raise HTTPException(409, "Stream mode invalid.")
             if consent != "audio-gnani;text-openai":
                 raise HTTPException(400, "Processing disclosure must be accepted.")
             if mode == "monitor" and (
@@ -377,6 +377,15 @@ def create_app(settings: Settings | None = None, intelligence=None) -> FastAPI:
             if not settings.gnani_api_key:
                 raise HTTPException(503, "Configure GNANI_API_KEY on the backend.")
             model = ai() if mode == "monitor" else None
+            if session.busy or session.extracting:
+                # Provider shutdown can outlive the client's socket. Keep the task and
+                # exclusive stream ownership, but let clients retry this temporary conflict.
+                if not browser:
+                    await socket.accept()
+                await socket.close(
+                    4409, "A listening stream is still active or closing. Retry shortly."
+                )
+                return
         except (HTTPException, ValueError, KeyError, TimeoutError, WebSocketDisconnect):
             with suppress(RuntimeError, WebSocketDisconnect):
                 await socket.close(4403, "Check credentials, consent, and backend configuration.")

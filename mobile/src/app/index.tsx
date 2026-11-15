@@ -123,6 +123,8 @@ export default function Home() {
           {!!app.statusDetail && <Text variant="bodyMedium" style={{ color: theme.colors.onSurfaceVariant }}>{app.statusDetail}</Text>}
           {consentRequested && !consent && !native.running && <ConsentCard />}
           <ErrorBanner />
+          {app.noiseReductionFallback && <Notice tone="warn" icon="waveform" live="polite">
+            {t('Noise reduction is unavailable. Listening continues without it.')}</Notice>}
           {!captureInProgress && !!app.clarification &&
             <Notice tone="warn" icon="help-circle" live="polite">{app.clarification}</Notice>}
           {!showRequest && app.latestUnclear &&

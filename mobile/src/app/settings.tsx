@@ -66,7 +66,7 @@ export default function Settings() {
 
       {heading('Listening')}
       <SoftCard style={styles.group}>
-        {Platform.OS === 'android' && <><View style={styles.switchRow}>
+        {(Platform.OS === 'android' || Platform.OS === 'web') && <><View style={styles.switchRow}>
           <View style={styles.flex}>
             <Text variant="titleMedium" style={{ color: theme.colors.onSurface }}>{t('Noise reduction')}</Text>
             <Text variant="bodyMedium" style={{ color: theme.colors.onSurfaceVariant }}>{app.noiseReductionMode === 'gtcrn' ? t('On') : t('Off')}</Text>

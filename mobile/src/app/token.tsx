@@ -47,16 +47,16 @@ export default function TokenScreen() {
       </View> :
         <Pressable onPress={app.consent ? app.speak : () => {
           haptic.stopped(); announce(t('First tick Allow audio and text processing, above.'));
-        }} disabled={app.busy} accessibilityRole="button"
+        }} disabled={app.busy || app.native.running} accessibilityRole="button"
           accessibilityLabel={app.consent ? t('Speak') : t('Speak. Tick Allow above first.')}
           accessibilityHint={t('For example: alert me when train 14922 arrives. Short pauses are OK.')}
-          accessibilityState={{ disabled: app.busy }}
+          accessibilityState={{ disabled: app.busy || app.native.running }}
           style={({ pressed }) => [styles.speak, { backgroundColor: theme.colors.primary, boxShadow: theme.shadow.hero,
             transform: [{ scale: pressed && !reduceMotion ? 0.98 : 1 }] }]}>
           <Icon source="microphone" size={40} color={theme.colors.onPrimary} />
           <Text style={[styles.speakLabel, { color: theme.colors.onPrimary }]}>{t('Speak')}</Text>
         </Pressable>}
-      {(app.capturing || app.busy) && <Button mode="outlined" icon="stop" contentStyle={actionStyles.big} textColor={theme.colors.onSurface}
+      {(app.native.running || app.busy) && <Button mode="outlined" icon="stop" contentStyle={actionStyles.big} textColor={theme.colors.onSurface}
         style={{ borderColor: theme.colors.onSurface, borderWidth: 2 }} onPress={app.cancelCapture}>{t('Cancel')}</Button>}
 
       <TextInput mode="outlined" label={t('What should I listen for?')} multiline value={app.request} onChangeText={app.editRequest}

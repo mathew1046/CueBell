@@ -66,7 +66,7 @@ text processing still use the providers configured in the local backend.
    Expo exports a separate HTML file for each route. Configure clean HTML URLs
    if your host requires it.
 
-4. Serve `.js` and `.mjs` as JavaScript, the manifest as
+4. Serve `.js` and `.mjs` as JavaScript, `.wasm` as `application/wasm`, the manifest as
    `application/manifest+json`, and `sw.js` with revalidation. The supplied
    `_headers` file provides these security headers on hosts supporting that format.
    Apply equivalent headers on other hosts. Allow microphone and screen wake lock
@@ -99,7 +99,7 @@ and local preferences.
 | Vibration | Used when requested and the browser exposes `navigator.vibrate`; unavailable on many browsers, including iOS Safari |
 | Alarm sound | Three audible pulses after a user listening action unlocks Web Audio, when sound was requested |
 | Spoken alerts | Optional locally installed browser voices for the selected language; voice availability varies by device |
-| Experimental GTCRN noise reduction | Android-only; its controls and stored selection do not apply to browser capture |
+| Experimental GTCRN noise reduction | Opt-in under Settings → Noise reduction; same on-device model as Android, in a dedicated WebAssembly worker |
 | System notifications | Optional explicit permission and supported browser/OS notification APIs; mobile browsers may require installation |
 | Accessibility | Keyboard controls, semantic labels, live state announcements, text selection, reduced motion and system color preferences |
 | Languages | The existing 21 UI languages and added browser guidance are bundled; new translations are machine-generated and need native-speaker review |
@@ -115,6 +115,35 @@ Android foreground-service capabilities. Check the official announcement source.
 Browser audio authentication uses a bounded first WebSocket message after checking
 the configured Origin. The token never appears in a URL or a service worker cache.
 Native Android clients retain header authentication and the same audio protocol.
+
+### Low-latency browser denoising
+
+Noise reduction is off by default. Enable it before starting capture; the setting
+is retained locally and locked while listening. Both spoken setup and monitoring
+use it. The model and pinned ONNX Runtime Web 1.31.1 are served from the app's own
+origin. Denoising runs locally; the existing relay receives the processed audio.
+
+`prepare:web-audio` runs automatically for start, web and production export. It
+copies the existing checksum-verified Android GTCRN model and installed runtime
+into ignored `public/audio/vendor`. Publish these files with the rest of `dist`.
+The MIT licenses and ONNX Runtime third-party notices are included under `audio`.
+The worker uses one WASM thread; cross-origin isolation headers are not required.
+
+GTCRN retains 256 samples (16 ms at 16 kHz) of algorithmic delay. The existing
+512-sample (32 ms) relay packets are unchanged. There is one inference packet in
+flight and room for one waiting packet when the browser delivers a burst. Each
+packet keeps its original 32 ms arrival-to-output deadline, including waiting;
+there is no extra batching delay or growing backlog. The worker warms up before
+the relay connection opens, then resets its recurrent state. Cold-start model/runtime
+download and compilation are separate from steady-state processing latency.
+
+If initialization fails, the worker crashes, or a packet reaches its 32 ms
+processing/round-trip deadline, listening continues with raw audio and a visible
+localized warning. Fallback preserves the 256-sample alignment after denoising
+has started; it never replays a whole packet or skips its pending samples.
+Stopping, reconnecting or hiding the page terminates the worker and clears its
+state. Devices that cannot sustain real time fall back rather than accumulate
+latency. Switch noise reduction off for the lowest possible capture latency.
 
 ## Verify changes
 

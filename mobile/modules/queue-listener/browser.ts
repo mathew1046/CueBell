@@ -1,6 +1,8 @@
 import type { NativeSnapshot, QueueEvent } from '../../src/lib/types';
 import { CaptureCancelledError } from '../../src/lib/listening';
 import { serviceOrigin } from '../../src/lib/session';
+import type { QueueListenerStartOptions } from './index';
+import { BrowserNoiseReducer } from './browser-noise-reducer';
 import { audioContext, clearAlerts, dismissAlert, setLanguage, setSpokenAlertsEnabled,
   showAlert, silenceAlerts, spokenAlertsEnabled } from './browser-alerts';
 
@@ -9,6 +11,7 @@ export { primeAudio } from './browser-alerts';
 let prepared: MediaStream | null = null;
 let permissionGeneration = 0;
 let permissionRequest: Promise<void> | null = null;
+const microphoneConstraints = { channelCount: 1, echoCancellation: false, noiseSuppression: false, autoGainControl: true };
 
 const cancelHiddenPermission = () => {
   if (document.visibilityState === 'hidden') releasePreparedMicrophone();
@@ -45,9 +48,7 @@ async function acquireMicrophone(): Promise<void> {
   document.addEventListener('visibilitychange', cancelHiddenPermission);
   window.addEventListener('pagehide', releasePreparedMicrophone);
   try {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: {
-      channelCount: 1, echoCancellation: false, noiseSuppression: false, autoGainControl: true,
-    } });
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: microphoneConstraints });
     if (attempt !== permissionGeneration || document.hidden) {
       stream.getTracks().forEach(track => track.stop());
       throw new CaptureCancelledError();
@@ -82,6 +83,7 @@ export class BrowserListener {
   private wake: WakeLockSentinel | null = null;
   private listeningSince = 0;
   private lifecycleAttached = false;
+  private denoiser: BrowserNoiseReducer | null = null;
 
   snapshot = (): string => JSON.stringify(this.state);
   audioLevel = (): number => this.level;
@@ -124,6 +126,8 @@ export class BrowserListener {
   /** Stop every microphone track and disconnect worklet, waveform level and screen wake lock. */
   private releaseAudio(): void {
     this.level = 0;
+    this.denoiser?.close();
+    this.denoiser = null;
     if (this.processor) {
       this.processor.port.onmessage = null;
       this.processor.port.close();
@@ -165,7 +169,7 @@ export class BrowserListener {
   private pageLeaving = () => { void this.stop(); };
 
   /** Start a secure visible-page stream or hand completed request capture over to its monitor. */
-  async start(url: string, token: string, mode: 'request' | 'monitor'): Promise<void> {
+  async start(url: string, token: string, mode: 'request' | 'monitor', options?: QueueListenerStartOptions): Promise<void> {
     const origin = serviceOrigin(url, process.env.EXPO_PUBLIC_ALLOW_INSECURE_LOCAL === 'true');
     if (!token) throw new Error('Your listening session is unavailable. Submit your request again.');
     const handoff = this.state.running && this.state.mode === 'request' && this.state.state === 'PROCESSING';
@@ -179,6 +183,7 @@ export class BrowserListener {
     this.token = token;
     this.retries = 0;
     this.state.mode = mode;
+    this.state.noiseReductionMode = options?.noiseReductionMode === 'gtcrn' ? 'gtcrn' : 'off';
     this.state.running = true;
     if (!this.lifecycleAttached) {
       document.addEventListener('visibilitychange', this.pageHidden);
@@ -209,12 +214,32 @@ export class BrowserListener {
   /** Authenticate before sending audio and route relay events through guarded session callbacks. */
   private connect(): void {
     const generation = ++this.generation;
+    this.state.noiseReduction = { requestedMode: this.state.noiseReductionMode ?? 'off', activeMode: 'off', fallbackReason: null };
     this.status(this.retries ? 'RECONNECTING' : 'STARTING', this.retries ?
       'Reconnecting. Calls may have been missed.' : 'Connecting to speech recognition…');
+    if (this.state.noiseReductionMode === 'gtcrn') {
+      void this.prepareDenoiser(generation).then(() => {
+        if (generation === this.generation && this.state.running) this.openSocket(generation);
+      }).catch(() => this.fail(generation, 'Microphone processing was interrupted.', true));
+    } else this.openSocket(generation);
+  }
+
+  private prepareDenoiser(generation: number): Promise<void> {
+    this.denoiser = new BrowserNoiseReducer(({ frame }) => this.sendFrame(generation, frame), status => {
+      if (generation !== this.generation) return;
+      this.state.noiseReduction = status;
+      this.emit({ type: 'noise_reduction' });
+    });
+    return this.denoiser.ready;
+  }
+
+  /** Warm the optional model before connecting so startup cannot consume the relay audio deadline. */
+  private openSocket(generation: number): void {
     const url = new URL('/v1/stream', this.url);
     url.protocol = url.protocol === 'https:' ? 'wss:' : 'ws:';
     url.searchParams.set('mode', this.state.mode);
     const socket = new WebSocket(url);
+    let terminalMessage = '';
     this.socket = socket;
     this.lastMessage = Date.now();
     socket.onopen = () => {
@@ -231,13 +256,16 @@ export class BrowserListener {
         if (!event || typeof event.type !== 'string') throw new Error('Invalid stream response.');
         if (event.type === 'status') {
           if (event.state === 'READY') {
+            terminalMessage = '';
             void this.capture(generation).catch(error => this.fail(generation, error instanceof Error ? error.message : 'Microphone unavailable.', true));
           } else if (event.state === 'LISTENING') {
+            terminalMessage = '';
             this.listeningSince = Date.now();
             this.emit(event);
           } else if (['DISCONNECTED', 'DEGRADED'].includes(event.state ?? '')) {
+            terminalMessage = event.message ?? 'Listening interrupted. Calls may have been missed.';
             this.releaseAudio();
-            this.status('RECONNECTING', event.message ?? 'Listening interrupted. Calls may have been missed.');
+            this.status('RECONNECTING', terminalMessage);
           } else if (event.state !== 'STARTING') this.emit(event);
         } else if (event.type === 'transcript' && this.state.mode === 'request') {
           this.generation++;
@@ -253,8 +281,9 @@ export class BrowserListener {
         }
       } catch { this.fail(generation, 'The listening service returned an invalid response. Please try again.', true); }
     };
-    socket.onclose = ({ code }) => this.fail(generation, code === 4403 || code === 4401 ?
-      'Your listening session is unavailable. Submit your request again.' : 'Speech stream closed. Calls may have been missed.',
+    // Preserve a relay/provider explanation; 4409 is a retryable busy stream, not lost credentials.
+    socket.onclose = ({ code }) => this.fail(generation, terminalMessage || (code === 4403 || code === 4401 ?
+      'Your listening session is unavailable. Submit your request again.' : 'Speech stream closed. Calls may have been missed.'),
     [4401, 4403, 1008].includes(code));
     socket.onerror = () => this.fail(generation, 'Cannot reach the listening service. Check your internet connection.');
     this.watchdog = setInterval(() => {
@@ -268,10 +297,13 @@ export class BrowserListener {
   /** Share one live microphone with local RMS and bounded PCM delivery after relay readiness. */
   private async capture(generation: number): Promise<void> {
     if (this.processor) return;
+    // A provider can recover on the same socket after DEGRADED released all audio resources.
+    if (!this.denoiser && this.state.noiseReductionMode === 'gtcrn') await this.prepareDenoiser(generation);
+    if (generation !== this.generation) return;
     const audio = audioContext();
     await audio.resume();
     if (audio.state !== 'running') throw new Error('Audio is suspended. Tap Start Listening to retry.');
-    const stream = this.stream ?? await navigator.mediaDevices.getUserMedia({ audio: { channelCount: 1 } });
+    const stream = this.stream ?? await navigator.mediaDevices.getUserMedia({ audio: microphoneConstraints });
     if (generation !== this.generation) { stream.getTracks().forEach(track => track.stop()); return; }
     this.stream = stream;
     await audio.audioWorklet.addModule('/audio/capture-worklet.js');
@@ -290,7 +322,8 @@ export class BrowserListener {
       }
       this.lastAudio = now;
       this.level = data.rms;
-      this.socket.send(data.frame);
+      if (this.denoiser) this.denoiser.push(data);
+      else this.sendFrame(generation, data.frame);
       if (now - this.listeningSince > 30000 && this.state.state === 'LISTENING') this.retries = 0;
     };
     processor.onprocessorerror = () => this.fail(generation, 'Microphone processing was interrupted.', true);
@@ -306,6 +339,15 @@ export class BrowserListener {
         else void wake.release();
       }).catch(() => {});
     }
+  }
+
+  private sendFrame(generation: number, frame: ArrayBuffer): void {
+    if (generation !== this.generation || !this.state.running) return;
+    if (!this.socket || this.socket.readyState !== WebSocket.OPEN || this.socket.bufferedAmount > 8192) {
+      this.fail(generation, 'Audio frames were dropped. A call may be missed.');
+      return;
+    }
+    this.socket.send(frame);
   }
 
   /** End stale capture immediately and retry eligible monitors with bounded exponential delays. */

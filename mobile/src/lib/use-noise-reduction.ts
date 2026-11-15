@@ -5,10 +5,11 @@ import type { NoiseReductionMode } from '../../modules/queue-listener';
 import { readNoiseReductionMode } from './noise-reduction';
 
 const KEY = 'cuebell.noise-reduction.v1';
+const supported = Platform.OS === 'android' || Platform.OS === 'web';
 
 export function useNoiseReductionPreference() {
   const [mode, updateMode] = useState<NoiseReductionMode>('off');
-  const [ready, setReady] = useState(Platform.OS !== 'android');
+  const [ready, setReady] = useState(!supported);
   const [storageError, setStorageError] = useState('');
   const selected = useRef<NoiseReductionMode>('off');
   const restored = useRef(false);
@@ -16,7 +17,7 @@ export function useNoiseReductionPreference() {
   const writes = useRef(Promise.resolve());
 
   useEffect(() => {
-    if (Platform.OS !== 'android') return;
+    if (!supported) return;
     let mounted = true;
     loading.current = SecureStore.getItemAsync(KEY).then(value => {
       if (!mounted) return;
@@ -33,7 +34,7 @@ export function useNoiseReductionPreference() {
   }, []);
 
   const setMode = useCallback((next: NoiseReductionMode) => {
-    if (Platform.OS !== 'android' || !restored.current) return;
+    if (!supported || !restored.current) return;
     selected.current = readNoiseReductionMode(next);
     updateMode(selected.current);
     // Rapid changes must persist in order, including an explicit return to Off.

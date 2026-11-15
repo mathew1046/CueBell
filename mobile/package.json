@@ -18,6 +18,7 @@
     "expo-secure-store": "~58.0.2",
     "expo-status-bar": "~58.0.4",
     "expo-system-ui": "~58.0.7",
+    "onnxruntime-web": "1.31.1",
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "react-native": "0.88.1",
@@ -32,11 +33,12 @@
     "typescript": "~6.0.3"
   },
   "scripts": {
-    "start": "expo start",
+    "start": "npm run prepare:web-audio && expo start",
     "android": "expo run:android",
     "ios": "expo run:ios",
-    "web": "expo start --web",
-    "build:web": "npm run check:service && expo export --platform web",
+    "web": "npm run prepare:web-audio && expo start --web",
+    "prepare:web-audio": "node scripts/prepare-web-audio.mjs",
+    "build:web": "npm run check:service && npm run prepare:web-audio && expo export --platform web",
     "test:web": "playwright test",
     "preview:web": "node scripts/serve-web.mjs",
     "lint": "expo lint",
